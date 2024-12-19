@@ -1,4 +1,4 @@
-# E.A.T (Energy Analysis Tool)
+# E.A.T (Energy Analysis Tool) by PearCare.Inc
 F29SO - Software Engineering Project.
 
 ## Overview
