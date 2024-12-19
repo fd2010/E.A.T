@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap');
+
+.h1Light {
+    color: #000;
+    text-align: center;
+    align-items: center;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    backdrop-filter: blur(2px);
+}
+
+.bodyLight {
+    background-color: #FBF6D0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* This ensures full height centering */
+}
+
+.buttonHome {
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 24px;  /* Reduced from 32px for better proportion */
+    border-radius: 50px;  
+    border: none;
+    padding: 10px 20px;
+    width: 240px;
+    height: 100px;
+    display: block;
+    margin: 10px auto;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;  /* Helps with text spacing */
+}
