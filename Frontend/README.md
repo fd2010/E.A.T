@@ -39,3 +39,10 @@ frontend/
 └── README.md
 ```
 
+## Contributors
+### Main Contributors
+- Fraser Davies - Frontend developer 
+- Robin Pready - Frontend developer
+### Additional Contributors
+- Wen Di Lee - Main designer
+- Muskaan Garg - Part of programming front end

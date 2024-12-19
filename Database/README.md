@@ -18,4 +18,7 @@ Database configuration and schemas for the Energy Analysis Tool project.
   lastLogin: Date
 }
 ```
-
+## Contributors
+- Karan Kothari
+- Yasin Tella
+- Muskaan Garg

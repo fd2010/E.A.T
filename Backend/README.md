@@ -10,4 +10,7 @@ Backend server for the Energy Analysis Tool (E.A.T) project, handling data proce
 
 ## Project Structure
 
-## Contributing
+## Contributors
+- Karan Kothari
+- Yasin Tella
+- Muskaan Garg
