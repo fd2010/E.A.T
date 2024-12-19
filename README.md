@@ -33,6 +33,7 @@ The system supports four different user access levels:
 
 ### Installation
 Clone the repository
+git@github.com:fd2010/EAT.git
 
 ## Project Structure
 ...
