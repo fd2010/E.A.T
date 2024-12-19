@@ -17,3 +17,5 @@ Database configuration and schemas for the Energy Analysis Tool project.
   role: Enum['admin', 'facility_manager', 'line_manager', 'user'],
   lastLogin: Date
 }
+```
+
