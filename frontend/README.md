@@ -27,10 +27,11 @@ frontend/
 │   │       ├── layout.css
 │   │       └── components.css
 │   ├── html/        
-│   │   ├── index.html
-│   │   ├── login.html
 │   │   ├── dashboard.html
-│   │   └── devices.html
+│   │   ├── home.html
+│   │   ├── index.html 
+│   │   ├── login.html
+│   │   └── signup.html
 │   └── js/          
 │       └── scripts/
 │           ├── main.js
