@@ -35,5 +35,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1.2;  /* Helps with text spacing */
+    line-height: 1.2;  
+}
+
+#companyName {
+    color: #000;
+    text-align: center;
+    font-family: "Inria Serif";
+    font-size: 16px;
+}
+
+#line {
+    width: 110px;
+    height: 1px;
+    margin: 0;
+    background: #000;
 }
