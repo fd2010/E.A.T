@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap');
+
+/* Remove default password toggle */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-contacts-auto-fill-button,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+    display: none !important;
+}
+
+/* Form Container */
+.form-container {
+    border-radius: 65px;
+    width: 95%;
+    background: #F4E99E;
+    padding: 40px;
+    margin: 5%;
+}
+
+/* Form Group Layout */
+.form-group {
+    margin-bottom: 30px;
+    width: 80%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+}
+
+/* Label Styling */
+.form-group label {
+    display: block;
+    margin-bottom: 0;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 18px;
+    color: #000;
+    white-space: nowrap; 
+}
+
+/* Input Container */
+.input-container {
+    position: relative;
+    flex: 1; 
+    display: flex; 
+    align-items: center; 
+}
+
+/* Input Field */
+.form-group input {
+    width: 100%;
+    padding: 12px 70px 12px 12px;
+    border: none;
+    border-bottom: 1px solid #000;
+    background-color: transparent;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Username Icon (default icon positioning) */
+.input-container img:not(.lock-icon):not(.toggle-password) {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+}
+
+/* Lock Icon */
+.lock-icon {
+    position: absolute;
+    right: 12px; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+}
+
+
+/* Toggle Password Icon */
+.toggle-password {
+    position: absolute;
+    right: 40px; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Button Hover Effect */
+.buttonHome:hover {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 20%);
+    cursor: pointer;
+}
