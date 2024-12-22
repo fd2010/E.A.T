@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Signup user</title>
+        <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/formstyles.css">
+
+
+        
+    </head>
+    <body class = "bodyLight">
+
+        <div class = "container">
+            <h1 class = "h1Light"><b><u>SIGNUP</u></b></h1>
+
+            <!-- Back Button -->
+            <a href = "signup.html">
+                <img src="../../public/icons/back icon.png" alt="Back Icon" class="back-icon">
+            </a>
+
+            <form id="loginForm" onsubmit="event.preventDefault();">
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <div class="input-container">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            title="Please enter a valid email address (must include '@')"
+                            required>
+                        <img src="../../public/icons/email icon.png" alt="Email Icon">
+                    </div>
+                </div>
+                
+                <!-- Username -->
+                <div class="form-group">
+
+                    <label for="username">Username:</label>
+                    <div class="input-container">
+                        <input type="text" id="username" name="username" required>
+                        <img src="../../public/icons/User Profile Icon.png" alt="Username Icon">
+                    </div>
+                    
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <div class="input-container">
+                        <input type="password" id="password" name="password" required>
+                        <img src="../../public/icons/Lock Icon.png" alt="Lock Icon" class="lock-icon">
+                        <img src="../../public/icons/eye-open.png" alt="Toggle password" class="toggle-password" id="togglePassword">
+                    </div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <div class="input-container">
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        <img src="../../public/icons/Lock Icon.png" alt="Lock Icon" class="lock-icon">
+                        <img src="../../public/icons/eye-open.png" alt="Toggle password" class="toggle-password" id="toggleConfirmPassword">
+                    </div>
+                </div>
+
+                
+                <!-- Role Selection -->
+                <div class="form-group role-selection">
+                    <label>Select Role:</label>
+                    <div class="radio-container">
+                        <!-- Employee -->
+                        <div class="radio-option">
+                            <input type="radio" id="employee" name="role" value="employee" required>
+                            <label for="employee">Employee</label>
+                        </div>
+                        
+                        <!-- Line manager -->
+                        <div class="radio-option">
+                            <input type="radio" id="lineManager" name="role" value="lineManager">
+                            <label for="lineManager">Line Manager</label>
+                        </div>
+                        
+                        <!-- Facility manager -->
+                        <div class="radio-option">
+                            <input type="radio" id="facilityManager" name="role" value="facilityManager">
+                            <label for="facilityManager">Facility Manager</label>
+                        </div>
+                        
+                        <!-- System administrator -->
+                        <div class="radio-option">
+                            <input type="radio" id="systemAdmin" name="role" value="systemAdmin">
+                            <label for="systemAdmin">System Administrator</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Office ID -->
+                <div class="form-group">
+
+                    <label for="officeID">Office ID:</label>
+                    <div class="input-container">
+                        <input type="text" id="officeID" name="officeID" required>
+                        <img src="../../public/icons/office Icon.png" alt="office Icon">
+                    </div>
+                    
+                </div>
+
+                <!-- Employee ID -->
+                <div class="form-group">
+
+                    <label for="employeeID">Employee ID:</label>
+                    <div class="input-container">
+                        <input type="text" id="employeeID" name="employeeID" required>
+                        <img src="../../public/icons/office Icon.png" alt="office Icon">
+                    </div>
+                    
+                </div>
+
+                
+
+                <!-- Submit Button -->
+                <button type="submit" class="buttonHome" style="background-color: #C1E6E3;">SIGN UP</button>
+
+            </form>
+
+            <!-- Back Button -->
+            <a href = "signup.html">
+                <img src="../../public/icons/back icon.png" alt="Back Icon" class="back-icon">
+            </a>
+        
+        </div>
+        <script src="../js/scripts/forms.js"></script>
+    </body>
+
+</html>

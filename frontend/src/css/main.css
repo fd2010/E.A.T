@@ -18,7 +18,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* This ensures full height centering */
+    min-height: 100vh; 
 }
 
 .buttonHome {
@@ -51,3 +51,39 @@
     margin: 0;
     background: #000;
 }
+
+
+.container {
+    border-radius: 65px;
+    width: 95%;
+    background: #F4E99E;
+    padding: 40px;
+    margin: 5%;
+}
+
+.boxChoice {
+    display: flex; 
+    justify-content: center; 
+    width: 100%; 
+    margin-top: 20px;
+    gap: 5px;
+}
+
+.boxChoice a {
+    background-color: #292D32; 
+    text-decoration: none; 
+    outline: none; 
+    color: #000; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.back-icon{
+    position: relative;
+    left: 20px;
+    top: 20px;   
+    width: 20px;
+    height: 20px;
+}
+
