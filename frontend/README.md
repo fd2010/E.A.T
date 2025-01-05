@@ -47,3 +47,6 @@ frontend/
 ### Additional Contributors
 - Wen Di Lee - Main designer
 - Muskaan Garg - Part of programming front end
+
+
+All images on this website are sourced from 'https://www.iconfinder.com/' and are free to use without requiring a link back, unless otherwise stated. Please note that some images are not for sale and are used under specific license terms.

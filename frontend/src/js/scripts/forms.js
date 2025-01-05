@@ -39,9 +39,15 @@ document.getElementById('confirmPassword').addEventListener('input', function() 
     const password = document.getElementById('password').value;
     const confirmPassword = this.value;
     
-    if (password !== confirmPassword) {
-        this.setCustomValidity('Passwords do not match');
-    } else {
-        this.setCustomValidity('');
-    }
+    try {
+        if (password === null || confirmPassword === null) {
+            throw new Error('Password fields cannot be null');
+        }
+        
+        if (password !== confirmPassword) {
+            this.setCustomValidity('Passwords do not match');
+        } else {
+            this.setCustomValidity('');
+        }
+     } catch (error) {}
 });

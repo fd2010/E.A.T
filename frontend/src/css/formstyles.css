@@ -142,3 +142,17 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     color: red; 
     cursor: help;
 }
+
+.info-optional{
+    color: red; 
+    cursor: help;
+    font-size: 12px;
+}
+
+.form-section{
+    border-radius: 65px; 
+    width: 40%; 
+    margin: 0 auto; 
+    padding: 20px; 
+    background: #e4ce7e;
+}

@@ -12,6 +12,18 @@
     backdrop-filter: blur(2px);
 }
 
+.h2Light {
+    color: #000;
+    text-align: center;
+    align-items: center;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    backdrop-filter: blur(2px);
+}
+
 .bodyLight {
     background-color: #FBF6D0;
     display: flex;
