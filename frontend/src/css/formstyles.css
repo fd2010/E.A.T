@@ -137,3 +137,8 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     display: block;
     margin: 30px auto 0;
 }
+
+.info-star{
+    color: red; 
+    cursor: help;
+}
