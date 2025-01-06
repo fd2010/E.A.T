@@ -83,7 +83,7 @@ Merge after approval
 * Yasin Tella - myt2000@hw.ac.uk - Back-end  
 
 ## License
-...
+Please follow the LICENSE file
 
 ## Acknowledgments
 
