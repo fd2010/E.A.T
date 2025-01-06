@@ -48,5 +48,11 @@ frontend/
 - Wen Di Lee - Main designer
 - Muskaan Garg - Part of programming front end
 
+## Notes
+Need to fix the following add room consitancy
+change colours of add room 
+fix button sizes for add room
+make add room functionality look better
+*all for signupOffice.html
 
 All images on this website are sourced from 'https://www.iconfinder.com/' and are free to use without requiring a link back, unless otherwise stated. Please note that some images are not for sale and are used under specific license terms.

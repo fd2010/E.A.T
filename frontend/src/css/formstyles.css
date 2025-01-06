@@ -8,8 +8,6 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     display: none !important;
 }
 
-
-
 /* Form Group Layout */
 .form-group {
     margin-bottom: 30px;
@@ -35,25 +33,43 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 /* Input Container */
 .input-container {
     position: relative;
-    flex: 1; 
-    display: flex; 
-    align-items: center; 
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
 }
 
-/* Input Field */
+/* Base input styling */
 .form-group input {
     width: 100%;
-    padding: 12px 70px 12px 12px;
+    padding: 12px 40px 12px 12px;
     border: none;
     border-bottom: 1px solid #000;
     background-color: transparent;
     font-family: "Kay Pho Du", sans-serif;
     font-size: 16px;
     outline: none;
+    min-width: 0;
 }
 
-/* Username Icon (default icon positioning) */
+/* Password input specific styling */
+.form-group input[type="password"] {
+    padding-right: 70px;
+}
+
+/* Single icon positioning */
 .input-container img:not(.lock-icon):not(.toggle-password) {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+}
+
+/* Double icon positioning for password fields */
+.lock-icon {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -62,20 +78,9 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     height: 20px;
 }
 
-/* Lock Icon */
-.lock-icon {
-    position: absolute;
-    right: 12px; 
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-}
-
-/* Toggle Password Icon */
 .toggle-password {
     position: absolute;
-    right: 40px; 
+    right: 40px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
@@ -138,21 +143,74 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     margin: 30px auto 0;
 }
 
-.info-star{
+.info-star {
     color: red; 
     cursor: help;
 }
 
-.info-optional{
+.info-optional {
     color: red; 
     cursor: help;
     font-size: 12px;
 }
 
-.form-section{
+.form-section {
     border-radius: 65px; 
     width: 40%; 
     margin: 0 auto; 
     padding: 20px; 
     background: #e4ce7e;
+}
+
+#roomAddingButtons {
+    background-color: #dbc98fd0;
+    border-radius: 65px;
+    padding: 15px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
+
+/* Room management buttons */
+.buttonHome.addDevice,
+.buttonHome.removeRoom {
+    width: 30px;
+    height: 30px;
+    min-width: 24px;
+    line-height: 1;
+    padding: 4px 8px;
+    margin: 0 5px;
+    border-radius: 80px;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 12px;
+}
+
+.buttonHome.addDevice {
+    background-color: #C1E6E3;
+}
+
+.buttonHome.removeRoom {
+    background-color: #ff6b6b;
+}
+
+#roomAddingButtons .form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#deviceDisplay {
+    background-color: #DBC99F;
+    padding: 15px;
+    border-radius: 65px;
+    margin-top: 10px;
+}
+
+/* Device display buttons */
+#deviceDisplay .buttonHome {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
 }
