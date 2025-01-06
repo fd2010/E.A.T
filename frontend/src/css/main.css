@@ -73,15 +73,27 @@
     margin: 5%;
 }
 
-.boxChoice {
+/* .boxChoice {
     display: flex; 
     justify-content: center; 
     width: 100%; 
     margin-top: 20px;
     gap: 5px;
 }
+    */
 
-.boxChoice a {
+
+
+.boxChoice {
+    display: flex; 
+    justify-content: center; 
+    width: 100%; 
+    margin-top: 20px;
+    gap: 40px; 
+    position: relative; 
+}
+
+.boxChoice div a {
     background-color: #292D32; 
     text-decoration: none; 
     outline: none; 
@@ -89,6 +101,16 @@
     display: flex; 
     justify-content: center; 
     align-items: center;
+} 
+
+.boxChoice::after { 
+    content: '';
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    width: 2px;
+    background-color: black;
+    transform: translateX(-50%);
 }
 
 .back-icon{

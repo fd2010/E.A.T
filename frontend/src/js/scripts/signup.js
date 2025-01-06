@@ -2,7 +2,7 @@
 const deviceTypes = {
     'Lights': '../../../public/icons/Lights.png',
     'A/C': '../../../public/icons/AC(MIT).png',
-    'Speaker': '../../../public/icons/Speaker.png',
+    'Speaker': '../../../public/icons/Speaker(MIT).png',
     'Projector': '../../../public/icons/Projector.png'
 };
 
