@@ -1,9 +1,9 @@
 // Define device types with their icon's'
 const deviceTypes = {
-    'Lights': '../../../public/icons/Lights.png',
-    'A/C': '../../../public/icons/AC(MIT).png',
-    'Speaker': '../../../public/icons/Speaker(MIT).png',
-    'Projector': '../../../public/icons/Projector.png'
+    'Lights': '../../../public/icons/Lights-inverted.png',
+    'A/C': '../../../public/icons/AC(MIT)-inverted.png',
+    'Speaker': '../../../public/icons/Speaker(MIT)-inverted.png',
+    'Projector': '../../../public/icons/Projector-inverted.png'
  };
  
  // initialise room counter
@@ -43,6 +43,16 @@ const deviceTypes = {
  
     // Add event listener for adding devices to room
     roomInput.querySelector('.addDevice').addEventListener('click', () => {
+
+
+        // Make sure user enters a room name
+        const roomName = roomInput.querySelector('.input-container input').value;
+        if (!roomName.trim()) {
+            alert('Please enter a room name before adding devices');
+            return;
+        }
+
+
         // Create device selection form
         const deviceSelect = document.createElement('div');
         deviceSelect.className = 'form-group';
@@ -50,21 +60,41 @@ const deviceTypes = {
         // Set up device selection form
         deviceSelect.innerHTML = 
         `
-            <label>Device Type:<span class="info-star">*</span></label>
+        <div id="deviceSelect" style="padding: 15px;">
+            <label id="deviceTypeColour">Device Type:<span class="info-star">*</span></label>
 
             <div class="input-container" style="gap: 5px;">
+                <div style="display: flex; flex: 1; border-bottom: 1px solid #FFFFFF;">
+                    <select id="deviceTypeColour" style="width: 100%; padding: 12px; border: none; background-color: #9BA87C; font-family: 'Kay Pho Du', sans-serif; font-size: 16px; outline: none;">
+                        ${Object.keys(deviceTypes).map(device => 
+                            `<option value="${device}" id="deviceTypeColour" style="background-color: #9BA87C;">${device}</option>`
+                        ).join('')}
+                    </select>
 
-                <select style="width: 100%; padding: 12px; border: none; border-bottom: 1px solid #000; background-color: transparent; font-family: 'Kay Pho Du', sans-serif; font-size: 16px; outline: none;">
-                    ${Object.keys(deviceTypes).map(device => 
-                        `<option value="${device}">${device}</option>`
-                    ).join('')}
-                </select>
+                    <input id="deviceTypeColour" type="text" placeholder="Name" style="width: 100%; border: none; color: #F0F0FF;" class="device-name-input" required>
+                </div>
 
-                <input type="text" placeholder="Name" style="width: 100%;" required>
-
-                <button type="button" class="buttonHome addDeviceConfirm" style="background-color: #C1E6E3; padding: 8px; margin-left: -60px;">Add</button>
+                <button type="button" class="buttonHome addDeviceConfirm addDevice" style="background-color: #C1E6E3; padding: 8px; margin-left: 5px;">Add</button>
             </div>
+        </div>
         `;
+
+        // Adding styling for the placeholder text 
+        const style = document.createElement('style');
+        style.textContent = 
+        `
+            .device-name-input::placeholder {
+                color: #F0F0FF !important;
+                opacity: 1;
+            }
+            .device-name-input:-ms-input-placeholder {
+                color: #F0F0FF !important;
+            }
+            .device-name-input::-ms-input-placeholder {
+                color: #F0F0FF !important;
+            }
+        `;
+        document.head.appendChild(style);
  
         // Add device selection form to devices container
         devicesDiv.appendChild(deviceSelect);
@@ -89,16 +119,16 @@ const deviceTypes = {
             // Set up device display element
             deviceDiv.innerHTML = 
             `
-                <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <img src="${deviceTypes[selectedDevice]}" alt="${selectedDevice}" style="width: 24px; height: 24px;">
-                        <div style="font-family: 'Kay Pho Du', sans-serif;">
-                            <div>${deviceName}</div>
-                            <div style="font-size: 12px; color: #666;">${selectedDevice}</div>
-                        </div>
+            <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="${deviceTypes[selectedDevice]}" alt="${selectedDevice}" style="width: 24px; height: 24px;">
+                    <div style="font-family: 'Kay Pho Du', sans-serif;">
+                        <div id="deviceTypeColour">${deviceName}</div>
+                        <div id="deviceTypeColour" style="font-size: 12px; color: #F0F0FF;">${selectedDevice}</div>
                     </div>
-                    <button type="button" class="buttonHome removeDevice" style="background-color: #ff6b6b; padding: 5px 10px;">Remove</button>
                 </div>
+                <button type="button" class="buttonHome removeDevice" style="background-color: #ff6b6b; padding: 5px 10px;">Remove</button>
+            </div>
             `;
  
             // Replace selection form with device display

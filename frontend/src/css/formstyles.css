@@ -202,7 +202,7 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 }
 
 #deviceDisplay {
-    background-color: #DBC99F;
+    background-color: #9BA87C;
     padding: 15px;
     border-radius: 65px;
     margin-top: 10px;
@@ -213,4 +213,14 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     padding: 5px 10px;
     border-radius: 15px;
     font-size: 14px;
+}
+
+#deviceSelect{
+    background-color: #9BA87C;
+    padding: 5px;
+    border-radius: 25px;
+}
+
+#deviceTypeColour{
+    color: #FFFFFF;
 }
