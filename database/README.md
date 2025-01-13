@@ -11,8 +11,9 @@ Database configuration and schemas for the Energy Analysis Tool project.
 ### User Schema
 ```javascript
 {
-  username: String,
+  officeID: String,
   email: String,
+  username: String,
   password: String,
   role: Enum['admin', 'facility_manager', 'line_manager', 'user'],
   lastLogin: Date
