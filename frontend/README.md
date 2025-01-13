@@ -28,13 +28,13 @@ frontend/
 │   │       └── components.css
 │   ├── html/     
 │   │   ├── Dashboard/
-│   │   |   └── dashboard.html
+│   │   │   └── dashboard.html
 │   │   ├── login/
-|   |   |   └── login.html
+│   │   │   └── login.html
 │   │   ├── signup/
-|   |   |   ├── signup.html
-|   |   |   ├── signupOffice.html
-|   |   |   └── signupUser.html
+│   │   │   ├── signup.html
+│   │   │   ├── signupOffice.html
+│   │   │   └── signupUser.html
 │   │   ├── home.html
 │   │   ├── index.html 
 │   │   └── welcome.html
