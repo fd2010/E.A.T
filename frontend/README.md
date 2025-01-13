@@ -26,16 +26,24 @@ frontend/
 │   │       ├── main.css
 │   │       ├── layout.css
 │   │       └── components.css
-│   ├── html/        
-│   │   ├── dashboard.html
+│   ├── html/     
+│   │   ├── Dashboard/
+│   │   |   └── dashboard.html
+│   │   ├── login/
+|   |   |   └── login.html
+│   │   ├── signup/
+|   |   |   ├── signup.html
+|   |   |   ├── signupOffice.html
+|   |   |   └── signupUser.html
 │   │   ├── home.html
 │   │   ├── index.html 
-│   │   ├── login.html
-│   │   └── signup.html
+│   │   └── welcome.html
 │   └── js/          
 │       └── scripts/
 │           ├── main.js
 │           ├── auth.js
+│           ├── forms.js
+│           ├── signup.js
 │           └── dashboard.js
 └── README.md
 ```
