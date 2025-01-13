@@ -11,6 +11,7 @@ Database configuration and schemas for the Energy Analysis Tool project.
 ### User Schema
 ```javascript
 {
+  userID: String,
   officeID: String,
   email: String,
   username: String,
