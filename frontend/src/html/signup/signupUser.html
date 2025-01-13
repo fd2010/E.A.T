@@ -5,20 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Signup user</title>
         <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="../../css/main.css">
-        <link rel="stylesheet" href="../../css/formstyles.css">
-
-
-        
+        <link rel="stylesheet" href="/frontend/src/css/main.css">
+        <link rel="stylesheet" href="/frontend/src/css/formstyles.css">
     </head>
-    <body class = "bodyLight">
+    <body class="bodyLight">
 
-        <div class = "container">
-            <h1 class = "h1Light"><b><u>SIGNUP</u></b></h1>
+        <div class="container">
+            <h1 class="h1Light"><b><u>SIGNUP</u></b></h1>
 
             <!-- Back Button -->
-            <a href = "signup.html">
-                <img src="../../../public/icons/back icon.png" alt="Back Icon" class="back-icon">
+            <a href="/frontend/src/html/signup/signup.html">
+                <img src="/frontend/public/icons/back icon.png" alt="Back Icon" class="back-icon">
             </a>
 
             <form id="loginForm" onsubmit="event.preventDefault();">
@@ -37,61 +34,52 @@
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                 title="Please enter a valid email address (must include '@')"
                                 required>
-                            <img src="../../../public/icons/email icon.png" alt="Email Icon">
+                            <img src="/frontend/public/icons/email icon.png" alt="Email Icon">
                         </div>
                     </div>
-
 
                     <!-- Office ID -->
                     <div class="form-group">
-
-                        <label for="officeID">Office ID:<span class ="info-star" title="Please enter the Office ID">*</span></label>
+                        <label for="officeID">Office ID:<span class="info-star" title="Please enter the Office ID">*</span></label>
                         <div class="input-container">
                             <input type="text" id="officeID" name="officeID" required>
-                            <img src="../../../public/icons/office Icon.png" alt="office Icon">
+                            <img src="/frontend/public/icons/office Icon.png" alt="office Icon">
                         </div>
-                        
                     </div>
-
                 </section>
 
                 <br>
 
                 <!-- Username and password -->
                 <section class="form-section">
-
                     <h2 class="h2Light"><u>Username and Password</u></h2>
                 
                     <!-- Username -->
                     <div class="form-group">
-
-                        <label for="username">Username:<span class ="info-star" title="Please create valid username">*</span></label>
+                        <label for="username">Username:<span class="info-star" title="Please create valid username">*</span></label>
                         <div class="input-container">
                             <input type="text" id="username" name="username" required>
-                            <img src="../../../public/icons/User Profile Icon.png" alt="Username Icon">
+                            <img src="/frontend/public/icons/User Profile Icon.png" alt="Username Icon">
                         </div>
-                        
                     </div>
-
 
                     <!-- Password -->
                     <div class="form-group">
-                        <label for="password">Password:<span class ="info-star" title="Please enter a secure password">*</span></label>
+                        <label for="password">Password:<span class="info-star" title="Please enter a secure password">*</span></label>
                         <div class="input-container">
                             <input type="password" id="password" name="password" required>
-                            <img src="../../../public/icons/Lock Icon.png" alt="Lock Icon" class="lock-icon">
-                            <img src="../../../public/icons/eye-open.png" alt="Toggle password" class="toggle-password" id="togglePassword">
+                            <img src="/frontend/public/icons/Lock Icon.png" alt="Lock Icon" class="lock-icon">
+                            <img src="/frontend/public/icons/eye-open.png" alt="Toggle password" class="toggle-password" id="togglePassword">
                         </div>
                     </div>
 
-
                     <!-- Confirm Password -->
                     <div class="form-group">
-                        <label for="confirmPassword">Confirm Password:<span class ="info-star" title="Please re-type password">*</span></label>
+                        <label for="confirmPassword">Confirm Password:<span class="info-star" title="Please re-type password">*</span></label>
                         <div class="input-container">
                             <input type="password" id="confirmPassword" name="confirmPassword" required>
-                            <img src="../../../public/icons/Lock Icon.png" alt="Lock Icon" class="lock-icon">
-                            <img src="../../../public/icons/eye-open.png" alt="Toggle password" class="toggle-password" id="toggleConfirmPassword">
+                            <img src="/frontend/public/icons/Lock Icon.png" alt="Lock Icon" class="lock-icon">
+                            <img src="/frontend/public/icons/eye-open.png" alt="Toggle password" class="toggle-password" id="toggleConfirmPassword">
                         </div>
                     </div>
                 </section>
@@ -103,7 +91,7 @@
                     <h2 class="h2Light"><u>Role Selection</u></h2>
                     <!-- Role Selection -->
                     <div class="form-group role-selection">
-                        <label>Select Role:<span class ="info-star" title="Select valid role">*</span></label>
+                        <label>Select Role:<span class="info-star" title="Select valid role">*</span></label>
                         <div class="radio-container">
                             <!-- Employee -->
                             <div class="radio-option">
@@ -132,26 +120,22 @@
                     </div>   
                 </section>
 
-
                 <!-- Submit Button -->
                 <button type="submit" class="buttonHome" style="background-color: #C1E6E3;">SIGN UP</button>
-
             </form>
 
             <!-- Back Button -->
-            <a href = "signup.html">
-                <img src="../../../public/icons/back icon.png" alt="Back Icon" class="back-icon">
+            <a href="/frontend/src/html/signup/signup.html">
+                <img src="/frontend/public/icons/back icon.png" alt="Back Icon" class="back-icon">
             </a>
-        
         </div>
 
         <!-- Company name -->
-        <div class = "divLight">
-            <p id = "companyName">PearCare.Inc</p>
-            <div id = "line"></div>
+        <div class="divLight">
+            <p id="companyName">PearCare.Inc</p>
+            <div id="line"></div>
         </div>
 
-        <script src="../../js/scripts/forms.js"></script>
+        <script src="/frontend/src/js/scripts/forms.js"></script>
     </body>
-
 </html>
