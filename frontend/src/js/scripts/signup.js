@@ -1,4 +1,4 @@
-// Define device types with their icon's'
+// Define device types with their icons 
 const deviceTypes = {
     'Lights': '../../../public/icons/Lights-inverted.png',
     'A/C': '../../../public/icons/AC(MIT)-inverted.png',
@@ -6,12 +6,12 @@ const deviceTypes = {
     'Projector': '../../../public/icons/Projector-inverted.png'
  };
  
- // initialise room counter
+ // Initialise room counter
  let roomCounter = 0;
  
  // Add event listener for the "Add Room" button
  document.getElementById('addRoom').addEventListener('click', () => {
-    roomCounter++;// increment room counter
+    roomCounter++;// Increment room counter
  
     // Create devices container with styling
     const devicesDiv = document.createElement('div');
@@ -27,8 +27,10 @@ const deviceTypes = {
         <label for="room${roomCounter}">Room Name:<span class="info-star" title="Please enter room name">*</span></label>
 
         <div class="input-container">
+
             <input type="text" id="room${roomCounter}" name="room${roomCounter}" required>
             <img src="../../../public/icons/conferance room icon.png" alt="Conferance Room Icon">
+        
         </div>
 
         <button type="button" class="buttonHome addDevice" style="background-color: #C1E6E3;">+</button>
@@ -65,6 +67,7 @@ const deviceTypes = {
 
             <div class="input-container" style="gap: 5px;">
                 <div style="display: flex; flex: 1; border-bottom: 1px solid #FFFFFF;">
+
                     <select id="deviceTypeColour" style="width: 100%; padding: 12px; border: none; background-color: #9BA87C; font-family: 'Kay Pho Du', sans-serif; font-size: 16px; outline: none;">
                         ${Object.keys(deviceTypes).map(device => 
                             `<option value="${device}" id="deviceTypeColour" style="background-color: #9BA87C;">${device}</option>`
@@ -72,6 +75,7 @@ const deviceTypes = {
                     </select>
 
                     <input id="deviceTypeColour" type="text" placeholder="Name" style="width: 100%; border: none; color: #F0F0FF;" class="device-name-input" required>
+                
                 </div>
 
                 <button type="button" class="buttonHome addDeviceConfirm addDevice" style="background-color: #C1E6E3; padding: 8px; margin-left: 5px;">Add</button>
@@ -81,7 +85,8 @@ const deviceTypes = {
 
         // Adding styling for the placeholder text 
         const style = document.createElement('style');
-        style.textContent = 
+        // CSS styling for the placeholder text, using !important to override the default styling
+        style.textContent =
         `
             .device-name-input::placeholder {
                 color: #F0F0FF !important;
@@ -120,14 +125,21 @@ const deviceTypes = {
             deviceDiv.innerHTML = 
             `
             <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+                
                 <div style="display: flex; align-items: center; gap: 10px;">
+
                     <img src="${deviceTypes[selectedDevice]}" alt="${selectedDevice}" style="width: 24px; height: 24px;">
+
                     <div style="font-family: 'Kay Pho Du', sans-serif;">
+
                         <div id="deviceTypeColour">${deviceName}</div>
                         <div id="deviceTypeColour" style="font-size: 12px; color: #F0F0FF;">${selectedDevice}</div>
+
                     </div>
                 </div>
+
                 <button type="button" class="buttonHome removeDevice" style="background-color: #ff6b6b; padding: 5px 10px;">Remove</button>
+
             </div>
             `;
  
@@ -143,6 +155,6 @@ const deviceTypes = {
  
     // Add event listener for removing entire room
     roomInput.querySelector('.removeRoom').addEventListener('click', () => {
-        devicesDiv.remove(); // remove entire container with room and devices
+        devicesDiv.remove(); // Remove entire container with room and devices
     });
  });
