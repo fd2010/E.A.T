@@ -166,6 +166,15 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     box-sizing: border-box;
 }
 
+/* Ensure container doesn't restrict form section width on mobile */
+.container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 #roomAddingButtons {
     background-color: #dbc98fd0;
     border-radius: 65px;
@@ -257,10 +266,17 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 }
 
 @media screen and (max-width: 480px) {
-    .form-section {
-        width: 100%;
+    .container {
+        width: 98%;
         padding: 10px;
-        border-radius: 20px;
+        margin: 10px auto;
+    }
+
+    .form-section {
+        width: 95%;
+        padding: 15px;
+        border-radius: 30px;
+        margin: 10px auto;
     }
 
     .form-group {
