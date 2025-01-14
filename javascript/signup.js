@@ -1,9 +1,9 @@
 // Define device types with their icons 
 const deviceTypes = {
-    'Lights': 'Lights-inverted.png',
-    'A/C': 'AC(MIT)-inverted.png',
-    'Speaker': 'Speaker(MIT)-inverted.png',
-    'Projector': 'Projector-inverted.png'
+    'Lights': './images/icons/Lights-inverted.png',
+    'A/C': './images/icons/AC(MIT)-inverted.png',
+    'Speaker': './images/icons/Speaker(MIT)-inverted.png',
+    'Projector': './images/icons/Projector-inverted.png'
  };
  
  // Initialise room counter
@@ -29,7 +29,7 @@ const deviceTypes = {
         <div class="input-container">
 
             <input type="text" id="room${roomCounter}" name="room${roomCounter}" required>
-            <img src="conferance room icon.png" alt="Conferance Room Icon">
+            <img src="./images/icons/conferance room icon.png" alt="Conferance Room Icon">
         
         </div>
 

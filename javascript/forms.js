@@ -11,10 +11,10 @@ function togglePasswordVisibility(inputId, toggleButton) {
     const passwordInput = document.getElementById(inputId);
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleButton.src = 'eye-closed.png';
+        toggleButton.src = './images/icons/eye-closed.png';
     } else {
         passwordInput.type = 'password';
-        toggleButton.src = 'eye-open.png';
+        toggleButton.src = './images/icons/eye-open.png';
     }
 }
 
