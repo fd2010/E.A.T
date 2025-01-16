@@ -7,9 +7,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="./css/formstyles.css">
-
-
-        
+        <!-- database link -->
+        <script type="module" src="./database/firebase-config.js" defer></script>
     </head>
     <body class = "bodyLight">
 
@@ -25,7 +24,9 @@
 
                 <!-- ID section -->
                 <section class="form-section">
+                    
                     <h2 class="h2Light"><u>Identification details</u></h2>
+
                     <!-- Email -->
                     <div class="form-group">
                         <label for="email">Email:<span class="info-star" title="Please enter your company email">*</span></label>
@@ -48,10 +49,23 @@
                         <label for="officeID">Office ID:<span class ="info-star" title="Please enter the Office ID">*</span></label>
                         <div class="input-container">
                             <input type="text" id="officeID" name="officeID" required>
-                            <img src="./images/icons/office Icon.png" alt="office Icon">
+                            <img src="./images/icons/office Icon.png" alt="Office Icon">
                         </div>
                         
                     </div>
+
+                    <!-- Prefered Name -->
+                    <div class="form-group">
+
+                        <label for="prefName">Prefered Name:<span class ="info-star" title="Please enter the name you would like to be displayed on your account">*</span></label>
+                        <div class="input-container">
+                            <input type="text" id="prefName" name="prefName" required>
+                            <img src="./images/icons/user icon.png" alt="User Icon">
+                        </div>
+                        
+                    </div>
+
+
 
                 </section>
 
@@ -134,7 +148,7 @@
 
 
                 <!-- Submit Button -->
-                <button type="submit" class="buttonHome" style="background-color: #C1E6E3;">SIGN UP</button>
+                <button type="submit" id="submit" class="buttonHome" style="background-color: #C1E6E3;">SIGN UP</button>
 
             </form>
 
