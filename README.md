@@ -7,6 +7,8 @@ E.A.T is a web-based energy monitoring and control system designed for office en
 ## Description
 The Energy Analysis Tool (E.A.T) is designed to provide organisations with comprehensive energy management capabilities. The system consists of a web-based application that interacts with server-end technologies to monitor and control energy usage in office environments.
 
+The web application can be accessed via this url: https://fd2010.github.io/E.A.T/
+
 ## Key features
 
 * Energy consumption monitoring and visualisation
