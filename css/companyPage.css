@@ -1,22 +1,38 @@
 /* For the company page */
 
-/* Thinking of using the following colour scheme - https://coolors.co/827377-016fb9-22aed1-6d8ea0-70b77e */
+/* Thinking of using the following colour scheme - https://coolors.co/827377-002035-22aed1-6d8ea0-70b77e */
 
 
 .navBarDiv {
     background-color: #827377;
-    margin: 0px;
-    display:block;
+    display:flex;
+    clear: both;
+    height: 90px;
 
-    /*width:max-content;
-    height: 40px;*/
+    margin: 2vw;
+
+    border-radius: 50px;
+    justify-content: space-evenly;
+
 }
 
 .navBarDiv a {
-    color:#016FB9;
-    font-size: 18px;
-    padding: 15px 17px;
+    color:#002035;
+    font-size: 1.5vw;
+    font-family: "Kay Pho Du", sans-serif;
+
+    padding: 0.8vw;
+    display: flex;
+    align-items: center;
+
     float:left;
     text-align: center;
 
+}
+
+#pClogo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 10px;
 }
