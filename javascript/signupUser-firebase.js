@@ -41,7 +41,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         const email = document.getElementById('email').value;
         const officeID = document.getElementById('officeID').value;
         const prefName = document.getElementById('prefName').value;
-        const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
         const selectedRole = getSelectedRole();
@@ -70,7 +69,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             email: email,
             officeID: officeID,
             prefName: prefName,
-            username: username,
             role: selectedRole,
             lastLogin: new Date().toISOString(),
             createdAt: new Date().toISOString()
