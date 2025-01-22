@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard - E.A.T</title>
+        <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./css/main.css">
+        <link rel="stylesheet" href="./css/formstyles.css">
+    </head>
+    <body class="bodyLight">
+        <!-- Initial loading state -->
+        <div style="text-align: center; padding: 20px;">
+            Initialising dashboard...
+        </div>
+
+        <!-- Error display & handling -->
+        <div id="errorDisplay" style="display: none; color: red; text-align: center; padding: 20px;"></div>
+        <script>
+            window.onerror = function(msg, url, line, col, error) {
+                const errorDisplay = document.getElementById('errorDisplay');
+                errorDisplay.style.display = 'block';
+                errorDisplay.innerHTML = `An error occurred: ${msg}<br>Line: ${line}`;
+                console.error('Global error:', error);
+                return false;
+            };
+        </script>
+        
+        <script type="module" src="./javascript/dashboard.js"></script>
+    </body>
+</html>
