@@ -24,17 +24,22 @@ const deviceTypes = {
     roomInput.className = 'form-group';
     roomInput.innerHTML = 
     `
-        <label for="room${roomCounter}">Room Name:<span class="info-star" title="Please enter room name">*</span></label>
+        <div class="room-input-wrapper" style="display: flex; flex-direction: column; width: 100%; gap: 10px;">
+            <label for="room${roomCounter}" style="text-align:center;">Room Name:<span class="info-star" title="Please enter room name">*</span></label>
+            
+            <div class="input-container" style="margin: 10px 0;">
+                <input type="text" 
+                    id="room${roomCounter}" 
+                    name="room${roomCounter}" 
+                    style="width: 100%; color: #000; background-color: transparent;" 
+                    required>
+            </div>
 
-        <div class="input-container">
-
-            <input type="text" id="room${roomCounter}" name="room${roomCounter}" required>
-            <img src="./images/icons/conferance room icon.png" alt="Conferance Room Icon">
-        
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button type="button" class="buttonHome addDevice" style="background-color: #C1E6E3; width: 40px; height: 40px; min-width: 40px; border-radius: 50%;">+</button>
+                <button type="button" class="buttonHome removeRoom" style="background-color: #ff6b6b; width: 40px; height: 40px; min-width: 40px; border-radius: 50%;">x</button>
+            </div>
         </div>
-
-        <button type="button" class="buttonHome addDevice" style="background-color: #C1E6E3;">+</button>
-        <button type="button" class="buttonHome removeRoom" style="background-color: #ff6b6b;">x</button>
     `;
  
     // Add room input to devices container
