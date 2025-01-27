@@ -7,15 +7,92 @@
         <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="./css/formstyles.css">
+        <link rel="stylesheet" href="./css/dashboard.css">
     </head>
     <body class="bodyLight">
-        <!-- Initial loading state -->
-        <div style="text-align: center; padding: 20px;">
-            Initialising dashboard...
+        <!-- Loading and Error States -->
+        <div id="loadingState" style="text-align: center; padding: 20px;">
+            Loading dashboard...
+        </div>
+        <div id="errorDisplay" style="display: none; color: red; text-align: center; padding: 20px;"></div>
+
+        <!-- Main Dashboard Content (hidden initially) -->
+        <div id="dashboardContent" class="dashboard-container" style="display: none;">
+            <!-- Top Section -->
+            <div class="top-section">
+                <!-- Greeting -->
+                <div class="greeting-container">
+                    <div class="greeting-bubble">
+
+                        <label> Hi, <span id="prefName">Loading...</span> </label>
+
+                        <span class="role-badge" id="userRole">Loading...</span>
+                    </div>
+
+
+                    <div class="profile-section">
+                        <div class="profile-icon">
+                            <img src="./images/icons/User Profile Icon.png" alt="User Icon" style="width: 80%; height: 80%;">
+                        </div>
+                        <!-- Logout Button -->
+                        <button id="logoutBtn" class="logout-button">
+                            Logout
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Info Cards -->
+                <div class="info-cards">
+                    <div class="info-card weather">
+
+                        <div class="info-card-content">
+                            <div class="info-icon">
+                                <img src="./images/icons/weather clouds.png" alt="Weather Icon">
+                            </div>
+
+                            <div class="info-details">
+                                <div class="temperature">10°C</div>
+                                <div class="info-label">Current Temperature</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="info-card energy">
+
+                        <div class="info-card-content">
+                            <div class="info-icon">
+                                <img src="./images/icons/lightning_icon(MIT).png" alt="Lightning Icon">
+                            </div>
+
+                            <div class="info-details">
+                                <div class="energy-value">10.5 kwh</div>
+                                <div class="info-label">Today: £27.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            <!-- Room Navigation -->
+            <div class="room-navigation">
+                <div class="room-tabs" id="roomTabs">
+                </div>
+            </div>
+
+            <!-- Devices Grid -->
+            <div class="devices-grid" id="devicesGrid">
+            </div>
+
         </div>
 
-        <!-- Error display & handling -->
-        <div id="errorDisplay" style="display: none; color: red; text-align: center; padding: 20px;"></div>
+        <!-- Company Name -->
+        <div class="divLight">
+            <p id="companyName">PearCare.Inc</p>
+            <div id="line" style="margin: auto;"></div>
+        </div>
+
         <script>
             window.onerror = function(msg, url, line, col, error) {
                 const errorDisplay = document.getElementById('errorDisplay');

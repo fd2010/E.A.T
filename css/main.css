@@ -134,3 +134,22 @@
     height: 20px;
 }
 
+/* might add in later:
+
+/ * Company Footer * /
+.company-footer {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: transparent;
+}
+HTML CODE:
+    <!-- Company Name -->
+    <div class="divLight company-footer">
+        <p id="companyName">PearCare.Inc</p>
+        <div id="line" style="margin: auto;"></div>
+    </div>
+
+*/

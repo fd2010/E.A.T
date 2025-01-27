@@ -1,0 +1,391 @@
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Top Section */
+.top-section {
+    margin-bottom: 30px;
+}
+
+/* Greeting Section */
+.greeting-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.greeting-bubble {
+    background-color: #EBEC80;
+    padding: 15px 25px;
+    border-radius: 20px;
+    font-size: 1.5rem; /* Use relative units */
+    font-weight: 500;
+    display: flex;
+    flex-direction: column; /* Stack name and badge vertically */
+    align-items: flex-start;
+    gap: 8px; /* Space between elements inside the bubble */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: "Kay Pho Du", sans-serif;
+    color: #333; /* Ensure text is legible on yellow background */
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Profile Icon */
+.profile-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #FFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-icon img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    border-radius: 50%; 
+}
+
+
+
+/* Role Badge */
+.role-badge {
+    font-size: 75%;
+    color: #666;
+    padding: 4px 8px;
+    display: inline-block;
+}
+
+
+
+/* Info Cards */
+.info-cards {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.info-card {
+    flex: 1;
+    max-width: 175px;
+    padding: 20px;
+    border-radius: 65px;
+    background: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Kay Pho Du", sans-serif;
+    transition: transform 0.2s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-icon img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+/* Weather & Energy Cards */
+.weather {
+    filter: drop-shadow(0 28px 36px #60d1ea66);
+}
+
+.energy {
+    background: #FFDC52;
+    filter: drop-shadow(0 28px 36px #FFDC52);
+}
+
+.temperature, .energy-value {
+    font-size: 175%;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.temperature {
+    color: #000;
+}
+
+.energy-value {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.energy-details, .info-label {
+    text-align: center;
+}
+
+.info-label {
+    font-size: 100%;
+    color: #666;
+}
+
+
+
+/* Room Navigation */
+.room-navigation {
+    margin: 30px 0;
+    overflow-x: auto;
+    padding: 15px;
+    border-radius: 20px;
+}
+
+.room-tabs {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 10px;
+}
+
+.room-tab {
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: "Kay Pho Du", sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.room-tab.active {
+    background-color: #9BA87C;
+    color: white;
+}
+
+
+
+/* Devices Grid */
+.devices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 60px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+
+
+/* Device Cards */
+.device-card {
+    background-color: #292D32;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.device-card:hover {
+    transform: translateY(-2px);
+}
+
+.device-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.device-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display:block;
+}
+
+.device-details {
+    font-family: "Kay Pho Du", sans-serif;
+}
+
+.device-name {
+    color: #FFFFFF;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.device-type {
+    color: #F0F0FF;
+    font-size: 12px;
+}
+
+
+
+/* Toggle Switch */
+.device-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.device-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #666;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: #FFF;
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(100%);
+}
+
+
+
+/* Logout Button */
+.logout-button {
+    background-color: #C1E6E3;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: "Kay Pho Du", serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #9fd3cf;
+}
+
+
+
+
+/* Loading and Error States */
+#loadingState, #errorDisplay {
+    text-align: center;
+    padding: 20px;
+    font-family: "Kay Pho Du", sans-serif;
+}
+
+#errorDisplay {
+    color: #c62828;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .info-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .info-card {
+        max-width: 280px;
+        width: 100%;
+    }
+    
+    .devices-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        padding: 15px;
+    }
+
+    .greeting-bubble {
+        font-size: 20px;
+        padding: 12px 20px;
+    }
+
+    .logout-button {
+        position: absolute;
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 10px;
+    }
+
+    .devices-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .room-tab {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .greeting-bubble {
+        font-size: 18px;
+        padding: 10px 15px;
+    }
+
+    .info-card {
+        padding: 20px;
+    }
+}
+
+
+
+/* Scrollbar Styling */
+.room-navigation::-webkit-scrollbar {
+    height: 6px;
+}
+
+.room-navigation::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.room-navigation::-webkit-scrollbar-thumb {
+    background: #9BA87C;
+    border-radius: 3px;
+}
+
+.room-navigation::-webkit-scrollbar-thumb:hover {
+    background: #7a8763;
+}
