@@ -6,6 +6,23 @@ const deviceTypes = {
     'Projector': './images/icons/Projector-inverted.png'
 };
 
+const deviceTypesNotInveted = {
+    'Lights': './images/icons/Lights.png',
+    'A/C': './images/icons/AC(MIT).png',
+    'Speaker': './images/icons/Speaker(MIT).png',
+    'Projector': './images/icons/Projector.png'
+};
+
+function searchDevicePath(device) {
+    // Check if device.type exists in the deviceTypes object
+    if (deviceTypes[device.type]) {
+        return deviceTypes[device.type];
+    } else {
+        return './images/icons/pear icon inverted.png'; 
+    }
+}
+
+
 // Function to create device card
 function createDeviceCard(device, roomName) {
     const card = document.createElement('div');
@@ -13,7 +30,7 @@ function createDeviceCard(device, roomName) {
     
     // Determine the correct icon path based on device type
     const deviceType = device.type.charAt(0).toUpperCase() + device.type.slice(1); // Capitalise first letter
-    const iconPath = deviceTypes[deviceType] || './images/icons/pear icon inverted.png';
+    const iconPath = searchDevicePath(device);
     
     card.innerHTML = `
         <div class="device-info">
@@ -21,8 +38,8 @@ function createDeviceCard(device, roomName) {
 
             <div class="device-details">
 
-                <div class="device-name">${device.name}</div>
-                <div class="device-type">${device.type}</div>
+                <div class="device-name">Dev name: ${device.name}</div>
+                <div class="device-type">Dev type: ${device.type}</div>
 
             </div>
         </div>

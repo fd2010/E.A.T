@@ -31,6 +31,24 @@ async function saveUserData(userId, userData) {
     }
 }
 
+function processDeviceType(input) {
+    // Trim any extra spaces
+    const cleanType = input.trim();
+
+    // Find the matching device type from the keys in deviceTypes
+    const matchingType = Object.keys(deviceTypes).find(type => cleanType.endsWith(` ${type}`));
+
+    if (matchingType) {
+        // Extract the part before the matching type
+        const cleansedName = cleanType.substring(0, cleanType.lastIndexOf(` ${matchingType}`)).trim();
+        const cleansedType = matchingType;
+
+        return { cleansedName, cleansedType };
+    } else {
+        throw new Error('Invalid device type or format');
+    }
+}
+
 function getRoomData() {
     const roomsContainer = document.getElementById('roomsContainer');
     const rooms = {};
@@ -41,9 +59,20 @@ function getRoomData() {
         const devices = [];
         
         roomDiv.querySelectorAll('#deviceDisplay').forEach(deviceDiv => {
-            const deviceName = deviceDiv.querySelector('div > div > div').textContent;
+            //const deviceName = deviceDiv.querySelector('div > div > div').textContent;
             const deviceType = deviceDiv.querySelector('div > div > div:nth-child(2)').textContent;
-            devices.push({ name: deviceName, type: deviceType });
+            
+            // Clean up the text content by removing the extra text
+            //const cleanName = deviceName.replace('Remove', '').replace(deviceType, '').trim();
+            const cleanType = deviceType.trim();
+
+            const { cleansedName, cleansedType } = processDeviceType(cleanType); 
+            
+            devices.push({ 
+                name: cleansedName,
+                type: cleansedType,
+                status: 'Off'
+            });
         });
         
         rooms[roomName] = devices;
