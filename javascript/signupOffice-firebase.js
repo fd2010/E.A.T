@@ -1,8 +1,7 @@
 import { auth, database } from '../database/firebase-config.js';
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { ref, set } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { ref, set, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
-// Generate unique office ID
 function generateOfficeID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let id = '';
@@ -12,7 +11,6 @@ function generateOfficeID() {
     return id;
 }
 
-// Save office data to database
 async function saveOfficeData(officeID, officeData) {
     try {
         await set(ref(database, 'offices/' + officeID), officeData);
@@ -23,7 +21,6 @@ async function saveOfficeData(officeID, officeData) {
     }
 }
 
-// Save admin user data
 async function saveUserData(userId, userData) {
     try {
         await set(ref(database, 'users/' + userId), userData);
@@ -34,7 +31,6 @@ async function saveUserData(userId, userData) {
     }
 }
 
-// Get room data from the form
 function getRoomData() {
     const roomsContainer = document.getElementById('roomsContainer');
     const rooms = {};
@@ -56,19 +52,16 @@ function getRoomData() {
     return rooms;
 }
 
-// Setup status display
 const statusDiv = document.createElement('div');
 statusDiv.style.margin = '10px 0';
 statusDiv.style.padding = '10px';
 statusDiv.style.borderRadius = '4px';
 document.querySelector('.container').appendChild(statusDiv);
 
-// Handle form submission
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
     event.preventDefault();
     
     try {
-        // Get form values
         const orgName = document.getElementById('organisationName').value;
         const buildingNum = document.getElementById('buildingNameNumber').value;
         const street = document.getElementById('Street').value;
@@ -84,9 +77,22 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             throw new Error('Passwords do not match!');
         }
 
-        statusDiv.textContent = 'Creating office and admin account...';
+        statusDiv.textContent = 'Checking email availability...';
         statusDiv.style.backgroundColor = '#e3f2fd';
         statusDiv.style.color = '#1976d2';
+
+        // Check if admin email exists
+        const usersRef = ref(database, 'users');
+        const usersSnapshot = await get(usersRef);
+        
+        if (usersSnapshot.exists()) {
+            const emailExists = Object.values(usersSnapshot.val()).some(user => user.email === email);
+            if (emailExists) {
+                throw new Error('This email is already registered');
+            }
+        }
+
+        statusDiv.textContent = 'Creating office and admin account...';
 
         // Generate office ID
         const officeID = generateOfficeID();
