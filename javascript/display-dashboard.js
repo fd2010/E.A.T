@@ -18,7 +18,7 @@ function searchDevicePath(device) {
     if (deviceTypes[device.type]) {
         return deviceTypes[device.type];
     } else {
-        return './images/icons/pear icon inverted.png'; 
+        return './images/icons/error icon inverted.png'; 
     }
 }
 
@@ -38,8 +38,8 @@ function createDeviceCard(device, roomName) {
 
             <div class="device-details">
 
-                <div class="device-name">Dev name: ${device.name}</div>
-                <div class="device-type">Dev type: ${device.type}</div>
+                <div class="device-name">${device.name}</div>
+                <div class="device-type">${device.type}</div>
 
             </div>
         </div>
