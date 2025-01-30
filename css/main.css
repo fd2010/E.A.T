@@ -1,159 +1,118 @@
+/* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
-.h1Light {
-    color: #000;
-    text-align: center;
-    align-items: center;
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 60px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    backdrop-filter: blur(2px);
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.h2Light {
-    color: #000;
-    text-align: center;
-    align-items: center;
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    backdrop-filter: blur(2px);
-}
-
-.pLight {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    text-align: center;
-    font-size: 18px;
-}
-
-#pHeader {
-    font-size: 25px;
-}
-
-
+/* Body Styling */
 .bodyLight {
-    background-color: #FBF6D0;
+    background-color: #FBF6D0; /* Light yellowish */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; 
+    min-height: 100vh;
+    font-family: "Montserrat", sans-serif;
 }
 
+/* Main Heading */
+.h1Light {
+    color: #2C3E50;
+    text-align: center;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 55px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Subheading */
+.subHeading {
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    color: #5C6B73;
+}
+
+/* Call to Action Button */
 .buttonHome {
+    display: inline-block;
     font-family: "Kay Pho Du", serif;
     font-size: 22px;  
     font-weight: 600; 
     border-radius: 50px;  
-    border: 2px solid #000; /* Adds a border for better contrast */
-    padding: 12px 25px;
-    width: 260px;
-    height: 75px;
-    margin: 15px auto;
-    background: #4CAF50; /* More vibrant green */
-    color: white; /* Better contrast */
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+    border: 2px solid #2C3E50; /* Subtle outline */
+    padding: 15px 30px;
+    width: 250px;
     text-align: center;
+    background: #b2d98a; /* Soft green */
+    color: #2C3E50; /* Dark text for contrast */
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
 }
 
+/* Button Hover Effect */
 .buttonHome:hover {
-    background: #367c39; /* Darker green on hover */
-    transform: scale(1.05); /* Slight pop effect */
+    background: #9ac66a; /* Darker green on hover */
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-#companyName {
-    color: #000;
-    text-align: center;
-    font-family: "Inria Serif";
-    font-size: 16px;
-}
-
-#line {
-    width: 110px;
-    height: 1px;
-    margin: 0;
-    background: #000;
-}
-
-
+/* Container */
 .container {
-    border-radius: 65px;
-    width: 95%;
-    background: #F4E99E;
+    width: 70%;
+    background: #F4E99E; /* Soft yellow */
+    border-radius: 25px;
     padding: 40px;
-    margin: 5%;
-}
-
-/* .boxChoice {
-    display: flex; 
-    justify-content: center; 
-    width: 100%; 
     margin-top: 20px;
-    gap: 5px;
-}
-    */
-
-
-
-.boxChoice {
-    display: flex; 
-    justify-content: center; 
-    width: 100%; 
-    margin-top: 20px;
-    gap: 40px; 
-    position: relative; 
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); /* Adds subtle depth */
+    text-align: center;
 }
 
-.boxChoice div a {
-    background-color: #292D32; 
-    text-decoration: none; 
-    outline: none; 
-    color: #000; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-} 
-
-.boxChoice::after { 
-    content: '';
-    position: absolute;
-    left: 50%;
-    height: 100%;
-    width: 2px;
-    background-color: black;
-    transform: translateX(-50%);
+/* Paragraph Styling */
+.pLight {
+    font-size: 18px;
+    font-weight: 500;
+    color: #2C3E50;
+    line-height: 1.6;
+    margin-bottom: 10px;
 }
 
-.back-icon{
-    position: relative;
-    left: 20px;
-    top: 20px;   
-    width: 20px;
-    height: 20px;
-}
-
-/* might add in later:
-
-/ * Company Footer * /
+/* Footer */
 .company-footer {
     position: fixed;
-    bottom: 20px;
+    bottom: 0;
     left: 0;
     right: 0;
+    background-color: #2C3E50; /* Dark blue */
+    color: white;
     text-align: center;
-    background-color: transparent;
+    padding: 12px 0;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
 }
-HTML CODE:
-    <!-- Company Name -->
-    <div class="divLight company-footer">
-        <p id="companyName">PearCare.Inc</p>
-        <div id="line" style="margin: auto;"></div>
-    </div>
 
-*/
+/* Responsive Design */
+@media (max-width: 768px) {
+    .h1Light {
+        font-size: 42px;
+    }
+
+    .subHeading {
+        font-size: 18px;
+    }
+
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .buttonHome {
+        width: 90%;
+        font-size: 18px;
+    }
+}
