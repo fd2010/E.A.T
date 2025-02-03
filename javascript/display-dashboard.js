@@ -32,13 +32,16 @@ function createDeviceCard(device, roomName, deviceKey) {
     const iconPath = device.type ? searchDevicePath(device) : './images/icons/error icon inverted.png';
     
     card.innerHTML = `
-        <div class="device-info">
+        <div class="device-icon-container">
             <img src="${iconPath}" alt="${deviceType}" class="device-icon">
-            <div class="device-details">
-                <div class="device-name">${device.name || 'Unknown Device'}</div>
-                <div class="device-type">${deviceType}</div>
-            </div>
         </div>
+        <div class="device-details">
+            <div class="device-name">${device.name || 'Unknown Device'}</div>
+            <div class="device-type">${deviceType}</div>
+        </div>
+
+        <br>
+        
         <label class="device-toggle">
             <input type="checkbox" ${device.status === 'On' ? 'checked' : ''}>
             <span class="toggle-slider"></span>
