@@ -55,16 +55,45 @@ function createDeviceCard(device, roomName) {
     // Add event listener for toggle
     const toggle = card.querySelector('input[type="checkbox"]');
     toggle.addEventListener('change', (e) => {
-        handleDeviceToggle(device, roomName, e.target.checked);
+        deviceToggle(device, roomName, e.target.checked);
     });
 
     return card;
 }
 
 // Function to handle device toggle
-function handleDeviceToggle(device, roomName, isOn) {
-    console.log(`${device.name} in ${roomName} turned ${isOn ? 'on' : 'off'}`);
-    // Here you can add the logic to update the device status in your database
+async function deviceToggle(device, roomName, isOn) {
+    try {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        const officeID = userData.officeID;
+        
+        const devicePath = `offices/${officeID}/rooms/${roomName}`;
+        
+        const roomRef = ref(database, devicePath);
+        const updates = {};
+        
+        updates[`${devicePath}/${device.name}/status`] = isOn ? 'On' : 'Off';
+        
+        await update(ref(database), updates);
+        
+        const deviceCard = document.querySelector(`.device-card:has(> .device-info > .device-details > .device-name:contains('${device.name}'))`);
+        if (deviceCard) {
+            // Toggle active class
+            deviceCard.classList.toggle('device-card-active', isOn);
+            
+            // Update image
+            const deviceIcon = deviceCard.querySelector('.device-icon');
+            const currentPath = deviceIcon.src;
+            const newPath = isOn ? 
+                deviceTypesNotInveted[device.type] :
+                deviceTypes[device.type];
+            
+            deviceIcon.src = newPath;
+        }
+    } catch (error) {
+        console.error('Error toggling device:', error);
+        alert('Failed to update device status. Please try again.');
+    }
 }
 
 // Function to update room tabs
@@ -77,11 +106,8 @@ function updateRoomTabs(rooms) {
         tab.className = `room-tab ${index === 0 ? 'active' : ''}`;
         tab.textContent = roomName;
         tab.onclick = () => {
-            // Remove active class from all tabs
             document.querySelectorAll('.room-tab').forEach(t => t.classList.remove('active'));
-            // Add active class to clicked tab
             tab.classList.add('active');
-            // Update devices grid
             updateDevicesGrid(rooms[roomName], roomName);
         };
         roomTabs.appendChild(tab);

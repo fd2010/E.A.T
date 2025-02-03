@@ -48,7 +48,7 @@ function handleError(error) {
 }
 
 // Initialize dashboard
-async function initializeDashboard() {
+async function initialiseDashboard() {
     console.log('Starting dashboard initialization');
     try {
         // Show loading state
@@ -118,4 +118,4 @@ async function initializeDashboard() {
 
 // Start initialization when the page loads
 console.log('Setting up DOMContentLoaded listener');
-document.addEventListener('DOMContentLoaded', initializeDashboard);
+document.addEventListener('DOMContentLoaded', initialiseDashboard);

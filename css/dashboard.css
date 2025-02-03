@@ -202,6 +202,17 @@
     transition: transform 0.2s ease;
 }
 
+.device-card-active {
+    background-color: #DBC99F;
+    color: black;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
 .device-card:hover {
     transform: translateY(-2px);
 }
@@ -234,6 +245,10 @@
     font-size: 12px;
 }
 
+.device-card-active .device-name,
+.device-card-active .device-type {
+    color: #333;
+}
 
 
 /* Toggle Switch */
