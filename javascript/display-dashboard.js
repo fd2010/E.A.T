@@ -1,4 +1,6 @@
-// Device icons mapping with actual image paths
+import { ref, update } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { database } from '../database/firebase-config.js';
+
 const deviceTypes = {
     'Lights': './images/icons/Lights-inverted.png',
     'A/C': './images/icons/AC(MIT)-inverted.png',
@@ -14,124 +16,117 @@ const deviceTypesNotInveted = {
 };
 
 function searchDevicePath(device) {
-    // Check if device.type exists in the deviceTypes object
-    if (deviceTypes[device.type]) {
-        return deviceTypes[device.type];
-    } else {
-        return './images/icons/error icon inverted.png'; 
-    }
+    return deviceTypes[device.type] || './images/icons/error icon inverted.png';
 }
 
+function createDeviceCard(device, roomName, deviceKey) {
+    if (!device || typeof device !== 'object') {
+        console.error('Invalid device data:', device);
+        return document.createElement('div');
+    }
 
-// Function to create device card
-function createDeviceCard(device, roomName) {
     const card = document.createElement('div');
-    card.className = 'device-card';
+    card.className = `device-card ${device.status === 'On' ? 'device-card-active' : ''}`;
     
-    // Determine the correct icon path based on device type
-    const deviceType = device.type.charAt(0).toUpperCase() + device.type.slice(1); // Capitalise first letter
-    const iconPath = searchDevicePath(device);
+    const deviceType = device.type ? device.type.charAt(0).toUpperCase() + device.type.slice(1) : 'Unknown';
+    const iconPath = device.type ? searchDevicePath(device) : './images/icons/error icon inverted.png';
     
     card.innerHTML = `
         <div class="device-info">
-            <img src="${iconPath}" alt="${device.type}" class="device-icon">
-
+            <img src="${iconPath}" alt="${deviceType}" class="device-icon">
             <div class="device-details">
-
-                <div class="device-name">${device.name}</div>
-                <div class="device-type">${device.type}</div>
-
+                <div class="device-name">${device.name || 'Unknown Device'}</div>
+                <div class="device-type">${deviceType}</div>
             </div>
         </div>
-
         <label class="device-toggle">
-
             <input type="checkbox" ${device.status === 'On' ? 'checked' : ''}>
             <span class="toggle-slider"></span>
-
         </label>
     `;
 
-    // Add event listener for toggle
     const toggle = card.querySelector('input[type="checkbox"]');
     toggle.addEventListener('change', (e) => {
-        deviceToggle(device, roomName, e.target.checked);
+        deviceToggle(device, roomName, e.target.checked, deviceKey);
     });
 
     return card;
 }
 
-// Function to handle device toggle
-async function deviceToggle(device, roomName, isOn) {
+async function deviceToggle(device, roomName, isOn, deviceKey) {
     try {
         const userData = JSON.parse(localStorage.getItem('userData'));
         const officeID = userData.officeID;
-        
-        const devicePath = `offices/${officeID}/rooms/${roomName}`;
-        
-        const roomRef = ref(database, devicePath);
+        const devicePath = `offices/${officeID}/rooms/${roomName}/${deviceKey}`;
         const updates = {};
         
-        updates[`${devicePath}/${device.name}/status`] = isOn ? 'On' : 'Off';
+        // Update the status in Firebase
+        updates[`${devicePath}/status`] = isOn ? 'On' : 'Off';
         
         await update(ref(database), updates);
         
-        const deviceCard = document.querySelector(`.device-card:has(> .device-info > .device-details > .device-name:contains('${device.name}'))`);
-        if (deviceCard) {
-            // Toggle active class
-            deviceCard.classList.toggle('device-card-active', isOn);
-            
-            // Update image
-            const deviceIcon = deviceCard.querySelector('.device-icon');
-            const currentPath = deviceIcon.src;
-            const newPath = isOn ? 
-                deviceTypesNotInveted[device.type] :
-                deviceTypes[device.type];
-            
-            deviceIcon.src = newPath;
-        }
+        // Find the device card and update its class and checkbox state
+        const deviceCards = document.querySelectorAll('.device-card');
+        deviceCards.forEach(card => {
+            const deviceNameElement = card.querySelector('.device-name');
+            if (deviceNameElement && deviceNameElement.textContent === device.name) {
+                card.classList.toggle('device-card-active', isOn);
+                const toggle = card.querySelector('input[type="checkbox"]');
+                if (toggle) {
+                    toggle.checked = isOn;
+                }
+            }
+        });
     } catch (error) {
         console.error('Error toggling device:', error);
         alert('Failed to update device status. Please try again.');
     }
 }
 
-// Function to update room tabs
 function updateRoomTabs(rooms) {
     const roomTabs = document.getElementById('roomTabs');
     roomTabs.innerHTML = '';
     
-    Object.keys(rooms).forEach((roomName, index) => {
+    // Handle both array and object room structures
+    const roomEntries = Array.isArray(rooms) 
+        ? rooms.map((room, index) => [`room ${index + 1}`, room])
+        : Object.entries(rooms);
+    
+    // Filter out null values
+    const validRooms = roomEntries.filter(([_, room]) => room !== null);
+    
+    validRooms.forEach(([roomName, roomData], index) => {
         const tab = document.createElement('div');
         tab.className = `room-tab ${index === 0 ? 'active' : ''}`;
         tab.textContent = roomName;
         tab.onclick = () => {
             document.querySelectorAll('.room-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            updateDevicesGrid(rooms[roomName], roomName);
+            updateDevicesGrid(roomData, roomName);
         };
         roomTabs.appendChild(tab);
     });
     
-    // Show devices for first room by default
-    if (Object.keys(rooms).length > 0) {
-        const firstRoom = Object.keys(rooms)[0];
-        updateDevicesGrid(rooms[firstRoom], firstRoom);
+    if (validRooms.length > 0) {
+        updateDevicesGrid(validRooms[0][1], validRooms[0][0]);
     }
 }
 
-// Function to update devices grid
-function updateDevicesGrid(devices, roomName) {
+function updateDevicesGrid(roomData, roomName) {
     const devicesGrid = document.getElementById('devicesGrid');
     devicesGrid.innerHTML = '';
     
+    // Handle both array and object room structures
+    const devices = Array.isArray(roomData) ? 
+        roomData.map((device, index) => ({ ...device, key: index })) : 
+        Object.entries(roomData).map(([key, device]) => ({ ...device, key }));
+    
     devices.forEach(device => {
-        const card = createDeviceCard(device, roomName);
+        const card = createDeviceCard(device, roomName, device.key);
         devicesGrid.appendChild(card);
     });
 }
 
-// Function to show/hide loading state
 function toggleLoadingState(show) {
     const loadingState = document.getElementById('loadingState');
     const dashboardContent = document.getElementById('dashboardContent');
@@ -140,14 +135,13 @@ function toggleLoadingState(show) {
     if (dashboardContent) dashboardContent.style.display = show ? 'none' : 'block';
 }
 
-// Function to update user display information
 function updateUserDisplay(userData) {
     document.getElementById('prefName').textContent = userData.prefName || 'User';
     document.getElementById('userRole').textContent = userData.role || 'User';
 }
 
-// Export functions to be used in dashboard.js
 export {
+    deviceToggle,
     updateRoomTabs,
     updateUserDisplay,
     toggleLoadingState
