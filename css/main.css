@@ -48,23 +48,24 @@
 
 .buttonHome {
     font-family: "Kay Pho Du", serif;
-    font-size: 22px;  
-    font-weight: 600; 
+    font-size: 20px;  
+    font-weight: 200; 
     border-radius: 50px;  
-    border: 2px solid #000; /* Adds a border for better contrast */
-    padding: 12px 25px;
-    width: 260px;
-    height: 75px;
-    margin: 15px auto;
-    background: #4CAF50; /* More vibrant green */
-    color: white; /* Better contrast */
+    border: none;
+    padding: 10px 20px;
+    width: 240px;
+    height: 70px;
+    margin: 10px auto;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 20%);
     transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;  
 }
 
 .buttonHome:hover {
-    background: #367c39; /* Darker green on hover */
-    transform: scale(1.05); /* Slight pop effect */
+    transform: scale(1.05); 
 }
 
 #companyName {
