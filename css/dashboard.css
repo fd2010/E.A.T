@@ -24,15 +24,15 @@
     background-color: #EBEC80;
     padding: 15px 25px;
     border-radius: 20px;
-    font-size: 1.5rem; /* Use relative units */
+    font-size: 1.5rem; 
     font-weight: 500;
     display: flex;
-    flex-direction: column; /* Stack name and badge vertically */
+    flex-direction: column; 
     align-items: flex-start;
-    gap: 8px; /* Space between elements inside the bubble */
+    gap: 8px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: "Kay Pho Du", sans-serif;
-    color: #333; /* Ensure text is legible on yellow background */
+    color: #333;
 }
 
 .profile-section {
@@ -169,6 +169,11 @@
     white-space: nowrap;
     font-family: "Kay Pho Du", sans-serif;
     transition: background-color 0.3s ease;
+    transition: transform 0.2s ease-in-out;
+}
+
+.room-tab:hover {
+    transform: scale(1.1);
 }
 
 .room-tab.active {
