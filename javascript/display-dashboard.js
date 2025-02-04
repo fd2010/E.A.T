@@ -1,14 +1,14 @@
-import { ref, update } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { ref, update, onValue } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
 
-const deviceTypes = {
+const deviceTypesNotInverted = {
     'Lights': './images/icons/Lights-inverted.png',
     'A/C': './images/icons/AC(MIT)-inverted.png',
     'Speaker': './images/icons/Speaker(MIT)-inverted.png',
     'Projector': './images/icons/Projector-inverted.png'
 };
 
-const deviceTypesNotInveted = {
+const deviceTypes = {
     'Lights': './images/icons/Lights.png',
     'A/C': './images/icons/AC(MIT).png',
     'Speaker': './images/icons/Speaker(MIT).png',
@@ -27,10 +27,13 @@ function createDeviceCard(device, roomName, deviceKey) {
 
     const card = document.createElement('div');
     card.className = `device-card ${device.status === 'On' ? 'device-card-active' : ''}`;
-    
+    card.dataset.deviceId = deviceKey;
+
     const deviceType = device.type ? device.type.charAt(0).toUpperCase() + device.type.slice(1) : 'Unknown';
-    const iconPath = device.type ? searchDevicePath(device) : './images/icons/error icon inverted.png';
     
+    // Select the appropriate image based on status
+    const iconPath = device.status === 'On' ? deviceTypesNotInverted[device.type] : deviceTypes[device.type];
+
     card.innerHTML = `
         <div class="device-icon-container">
             <img src="${iconPath}" alt="${deviceType}" class="device-icon">
@@ -56,6 +59,7 @@ function createDeviceCard(device, roomName, deviceKey) {
     return card;
 }
 
+
 async function deviceToggle(device, roomName, isOn, deviceKey) {
     try {
         const userData = JSON.parse(localStorage.getItem('userData'));
@@ -68,34 +72,61 @@ async function deviceToggle(device, roomName, isOn, deviceKey) {
         
         await update(ref(database), updates);
         
-        // Find the device card and update its class and checkbox state
-        const deviceCards = document.querySelectorAll('.device-card');
-        deviceCards.forEach(card => {
-            const deviceNameElement = card.querySelector('.device-name');
-            if (deviceNameElement && deviceNameElement.textContent === device.name) {
-                card.classList.toggle('device-card-active', isOn);
-                const toggle = card.querySelector('input[type="checkbox"]');
-                if (toggle) {
-                    toggle.checked = isOn;
-                }
+        // Update device state in local memory
+        device.status = isOn ? 'On' : 'Off';
+        
+        // Update the UI immediately
+        const deviceCard = document.querySelector(`[data-device-id="${deviceKey}"]`);
+        if (deviceCard) {
+            deviceCard.classList.toggle('device-card-active', isOn);
+            const toggle = deviceCard.querySelector('input[type="checkbox"]');
+            if (toggle) {
+                toggle.checked = isOn;
             }
-        });
+        }
     } catch (error) {
         console.error('Error toggling device:', error);
         alert('Failed to update device status. Please try again.');
     }
 }
 
+function setupRealtimeUpdates(officeID) {
+    const officeRef = ref(database, `offices/${officeID}/rooms`);
+    onValue(officeRef, (snapshot) => {
+        const rooms = snapshot.val();
+        if (rooms) {
+            // Store the latest room data
+            window._latestRoomData = rooms;
+            
+            // Update the currently displayed room if it exists
+            const activeTab = document.querySelector('.room-tab.active');
+            if (activeTab) {
+                const roomName = activeTab.textContent;
+                if (rooms[roomName]) {
+                    updateDevicesGrid(rooms[roomName], roomName);
+                }
+            }
+        }
+    });
+}
+
 function updateRoomTabs(rooms) {
     const roomTabs = document.getElementById('roomTabs');
     roomTabs.innerHTML = '';
     
-    // Handle both array and object room structures
+    // Store rooms data globally for reference
+    window._latestRoomData = rooms;
+    
+    // Get user data for office ID
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData && userData.officeID) {
+        setupRealtimeUpdates(userData.officeID);
+    }
+    
     const roomEntries = Array.isArray(rooms) 
         ? rooms.map((room, index) => [`room ${index + 1}`, room])
         : Object.entries(rooms);
     
-    // Filter out null values
     const validRooms = roomEntries.filter(([_, room]) => room !== null);
     
     validRooms.forEach(([roomName, roomData], index) => {
@@ -105,7 +136,9 @@ function updateRoomTabs(rooms) {
         tab.onclick = () => {
             document.querySelectorAll('.room-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            updateDevicesGrid(roomData, roomName);
+            // Use the latest room data when switching tabs
+            const currentRoomData = window._latestRoomData[roomName];
+            updateDevicesGrid(currentRoomData, roomName);
         };
         roomTabs.appendChild(tab);
     });
@@ -119,7 +152,6 @@ function updateDevicesGrid(roomData, roomName) {
     const devicesGrid = document.getElementById('devicesGrid');
     devicesGrid.innerHTML = '';
     
-    // Handle both array and object room structures
     const devices = Array.isArray(roomData) ? 
         roomData.map((device, index) => ({ ...device, key: index })) : 
         Object.entries(roomData).map(([key, device]) => ({ ...device, key }));

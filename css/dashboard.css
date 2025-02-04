@@ -215,6 +215,8 @@
 .device-card-active {
     background-color: #DBC99F;
     color: black;
+    filter: drop-shadow(0 28px 32px #FFDC52);
+    transition: filter 0.3s ease-in-out;
 }
 
 .device-icon-container {
