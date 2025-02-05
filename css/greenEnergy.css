@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* Reset & Box-Sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body & Global Styles */
+.bodyLight {
+  background: linear-gradient(135deg, #e0f7fa, #e8f5e9); /* soft cyan to light green */
+  font-family: 'Montserrat', sans-serif;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+/* Header Styles */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: rgba(39, 174, 96, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+}
+.h1Light {
+  font-family: 'Kay Pho Du', cursive;
+  font-size: 60px;
+  color: #27ae60;
+  margin-bottom: 10px;
+}
+.h2Light {
+  font-family: 'Kay Pho Du', cursive;
+  font-size: 32px;
+  color: #2c3e50;
+}
+
+/* Main Content Container */
+.main-content {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Info Panels */
+.info-panels {
+  margin-bottom: 40px;
+}
+.panel-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.panel {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  line-height: 1.6;
+}
+.recommendation-panel {
+  border-left: 8px solid #27ae60; /* Green accent for recommendations */
+}
+.goal-panel {
+  border-left: 8px solid #2980b9; /* Blue accent for goals */
+}
+
+/* Footer Styles */
+.footer {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 40px;
+}
+.company-info {
+  margin-top: 10px;
+}
+#companyName {
+  font-family: 'Inria Serif', serif;
+  font-size: 18px;
+  color: #2c3e50;
+}
+#line {
+  width: 150px;
+  height: 3px;
+  background-color: #2c3e50;
+  margin: 10px auto;
+}

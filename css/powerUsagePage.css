@@ -97,15 +97,6 @@
     text-align: center;
 }
 
-/* Recommendation Panel (Green border accent) */
-.recommendation-panel {
-    border-left: 5px solid #4CAF50;
-}
-
-/* Goal Panel (Blue border accent) */
-.goal-panel {
-    border-left: 5px solid #3498db;
-}
 
 /* Specific Panel Backgrounds */
 .power-panel {
@@ -174,21 +165,8 @@
     color: #2c3e50;
 }
 
-.green-energy-btn {
-    background-color: #27ae60; 
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
 
-.green-energy-btn:hover {
-    background-color: #1e874b; 
-}
+
 
 
 #line {
