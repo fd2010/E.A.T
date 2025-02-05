@@ -131,6 +131,22 @@
     color: #2c3e50;
 }
 
+.green-energy-btn {
+    background-color: #e0f7fa; /* A pleasant green */
+    color: #263938;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.green-energy-btn:hover {
+    background-color: #1e874b; /* A slightly darker shade on hover */
+}
+
 /* Footer Styles */
 .footer {
     width: 100%;
@@ -160,22 +176,6 @@
     color: #2c3e50;
 }
 
-.green-energy-btn {
-    background-color: #e0f7fa; /* A pleasant green */
-    color: #263938;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.green-energy-btn:hover {
-    background-color: #1e874b; /* A slightly darker shade on hover */
-}
-
 
 #line {
     width: 110px;
@@ -185,10 +185,3 @@
     margin-top: 5px;
 }
 
-.back-icon{
-    position: relative;
-    left: 20px;
-    top: 20px;   
-    width: 20px;
-    height: 20px;
-}
