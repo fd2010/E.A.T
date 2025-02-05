@@ -7,8 +7,7 @@
     <title>Welcome to E.A.T</title>
     <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/main.css">
-
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="bodyLight">
@@ -16,29 +15,16 @@
     <h1 class="h1Light"><b>Power Usage</b></h1>
     <h2 class="h2Light">Here is your location's energy consumption rate</h2>
 
-    <!-- Slideshow Panel -->
-    <div class="slideshow-container"
-        style="position: relative; width: 100%; height: 300px; background-color: #f0f0f0; margin: 20px 0; border-radius: 10px; text-align: center;">
-        <div class="slide" style="display: block;">
-            <h2>Daily </h2>
-        </div>
-        <div class="slide" style="display: none;">
-            <h2>Weekly </h2>
-        </div>
-        <div class="slide" style="display: none;">
-            <h2>Monthly </h2>
-        </div>
-        <button onclick="prevSlide()"
-            style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);">&#10094;</button>
-        <button onclick="nextSlide()"
-            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">&#10095;</button>
+    <!-- Graph Panel -->
+    <div class="graph-container" style="width: 100%; height: 300px; background-color: #f0f0f0; border-radius: 10px; padding: 20px; text-align: center;">
+        <canvas id="powerUsageChart"></canvas>
     </div>
 
     <!-- Buttons for Selecting Graph -->
     <div style="text-align: center; margin-bottom: 20px;">
-        <button onclick="setSlide(0)">Daily</button>
-        <button onclick="setSlide(1)">Weekly</button>
-        <button onclick="setSlide(2)">Monthly</button>
+        <button onclick="updateChart('daily')">Daily</button>
+        <button onclick="updateChart('weekly')">Weekly</button>
+        <button onclick="updateChart('monthly')">Monthly</button>
     </div>
 
     <!-- Power Usage and Expenses Panels -->
@@ -55,73 +41,46 @@
         </div>
     </div>
 
-        <!-- Device Usage Panel -->
-        <div class="panel" style="width: 100%; background-color: #E8E8E8; padding: 20px; margin-top: 20px; border-radius: 10px;">
-            <h2>Device Usage</h2>
-            <div class="device-panel" style="background-color: #ffffff; padding: 10px; margin: 10px 0; border-radius: 5px;">
-                <h3>Light</h3>
-                <p>1kWh, 2 hours 28 min today</p>
-            </div>
-            <div class="device-panel" style="background-color: #ffffff; padding: 10px; margin: 10px 0; border-radius: 5px;">
-                <h3>A/C</h3>
-                <p>2kWh, 1 hour 20 min today</p>
-            </div>
-            <div class="device-panel" style="background-color: #ffffff; padding: 10px; margin: 10px 0; border-radius: 5px;">
-                <h3>Projector</h3>
-                <p>1.5kWh, 1 hour today</p>
-            </div>
-            <div class="device-panel" style="background-color: #ffffff; padding: 10px; margin: 10px 0; border-radius: 5px;">
-                <h3>Speaker</h3>
-                <p>0.5kWh, 3 hours today</p>
-            </div>
-            <div class="device-panel" style="background-color: #ffffff; padding: 10px; margin: 10px 0; border-radius: 5px;">
-                <h3>Monitor</h3>
-                <p>0.8kWh, 4 hours today</p>
-            </div>
-            <div class="device-panel" style="background-color: #ffffff; padding: 10px; margin: 10px 0; border-radius: 5px;">
-                <h3>Whiteboard Display</h3>
-                <p>1kWh, 2 hours today</p>
-            </div>
-            <div class="device-panel" style="background-color: #ffffff; padding: 10px; margin: 10px 0; border-radius: 5px;">
-                <h3>Conference Phone</h3>
-                <p>0.3kWh, 5 hours today</p>
-            </div>
-        </div>
-
-    <!-- Back Button -->
-    <div style="width: 100%">
-        <a href="index.html">
-            <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
-        </a>
-    </div>
-
-    <br>
-
-    <!-- Company name -->
-    <div class="divLight">
-        <p id="companyName">PearCare.Inc</p>
-        <div id="line"></div>
-    </div>
-
-
-
     <script>
-        let currentSlide = 0;
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.slide');
-            if (index >= slides.length) currentSlide = 0;
-            else if (index < 0) currentSlide = slides.length - 1;
-            else currentSlide = index;
-            slides.forEach((slide, i) => {
-                slide.style.display = i === currentSlide ? 'block' : 'none';
-            });
-        }
-        function nextSlide() { showSlide(currentSlide + 1); }
-        function prevSlide() { showSlide(currentSlide - 1); }
-        function setSlide(index) { showSlide(index); }
-        window.onload = () => showSlide(currentSlide);
-    </script>
+        const ctx = document.getElementById('powerUsageChart').getContext('2d');
+        let powerUsageChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['00:00', '06:00', '12:00', '18:00', '24:00'],
+                datasets: [{
+                    label: 'Power Usage (kW)',
+                    data: [2, 3, 5, 4, 3],
+                    borderColor: 'blue',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
+        function updateChart(period) {
+            let newLabels, newData;
+            if (period === 'daily') {
+                newLabels = ['00:00', '06:00', '12:00', '18:00', '24:00'];
+                newData = [2, 3, 5, 4, 3];
+            } else if (period === 'weekly') {
+                newLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                newData = [30, 40, 35, 50, 45, 38, 42];
+            } else {
+                newLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+                newData = [200, 220, 210, 230];
+            }
+            powerUsageChart.data.labels = newLabels;
+            powerUsageChart.data.datasets[0].data = newData;
+            powerUsageChart.update();
+        }
+    </script>
 
 </body>
 
