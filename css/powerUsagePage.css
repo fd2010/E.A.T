@@ -160,7 +160,7 @@
     color: #2c3e50;
 }
 
-.green-energy-btn button {
+.green-energy-btn {
     background-color: #e0f7fa; /* A pleasant green */
     color: #263938;
     border: none;
@@ -172,7 +172,7 @@
     transition: background-color 0.3s ease;
 }
 
-.green-energy-btn button:hover {
+.green-energy-btn:hover {
     background-color: #1e874b; /* A slightly darker shade on hover */
 }
 
