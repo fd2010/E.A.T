@@ -10,36 +10,33 @@
 
 /* Body & Global Styles */
 .bodyLight {
-  background: linear-gradient(135deg, #e0f7fa, #e8f5e9); /* soft cyan to light green */
-  font-family: 'Montserrat', sans-serif;
-  color: #2c3e50;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
+    background: linear-gradient(135deg, #f7f9fc, #e9eff5);
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
 }
 
 /* Header Styles */
+/* Header Styles */
 .header {
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 20px;
-  background: rgba(39, 174, 96, 0.2);
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 800px;
+    text-align: center;
+    margin-bottom: 20px;
 }
+
 .h1Light {
-  font-family: 'Kay Pho Du', cursive;
-  font-size: 60px;
-  color: #27ae60;
-  margin-bottom: 10px;
+    font-family: 'Kay Pho Du', cursive;
+    font-size: 60px;
+    color: #2c3e50;
+    margin-bottom: 10px;
 }
+
 .h2Light {
-  font-family: 'Kay Pho Du', cursive;
-  font-size: 32px;
-  color: #2c3e50;
+    font-family: 'Kay Pho Du', cursive;
+    font-size: 32px;
+    color: #34495e;
 }
 
 /* Main Content Container */
