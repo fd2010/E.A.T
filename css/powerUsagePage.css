@@ -165,8 +165,21 @@
     color: #2c3e50;
 }
 
+.green-energy-btn button {
+    background-color: #e0f7fa; /* A pleasant green */
+    color: #263938;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-
+.green-energy-btn button:hover {
+    background-color: #1e874b; /* A slightly darker shade on hover */
+}
 
 
 #line {
@@ -175,4 +188,12 @@
     background-color: #2c3e50;
     margin: 0 auto;
     margin-top: 5px;
+}
+
+.back-icon{
+    position: relative;
+    left: 20px;
+    top: 20px;   
+    width: 20px;
+    height: 20px;
 }
