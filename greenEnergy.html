@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Energy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/powerUsagePage.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bodyLight">
+  
+  <!-- Header Section -->
+  <header class="header">
+    <h1 class="h1Light">Green Energy</h1>
+    <h2 class="h2Light">Make smarter energy choices</h2>
+  </header>
+
+  <main class="main-content">
+    
+    <!-- Energy-Saving Recommendations -->
+    <section class="recommendations">
+      <h2>Energy-Saving Recommendations</h2>
+      <p>Lights have used the most energy this week (50kWh). Consider switching to LED bulbs or using natural light more.</p>
+      <p>Air conditioning usage is high. Try setting the thermostat 2 degrees higher to save power.</p>
+      <p>Turn off unused electronics and use power-saving modes when possible.</p>
+    </section>
+
+    <!-- Set Energy Saving Goals -->
+    <section class="goal-setting">
+      <h2>Set Energy-Saving Goals</h2>
+      <form>
+        <label for="energy-goal">Monthly Energy Reduction Goal (kWh):</label>
+        <input type="number" id="energy-goal" name="energy-goal" min="1">
+        <button type="submit">Set Goal</button>
+      </form>
+    </section>
+
+    <!-- Renewable Energy Tips -->
+    <section class="renewable-energy">
+      <h2>Renewable Energy Tips</h2>
+      <p>Consider installing solar panels for sustainable energy.</p>
+      <p>Use energy-efficient appliances with high Energy Star ratings.</p>
+      <p>Reduce dependency on fossil fuels by choosing green energy plans from your provider.</p>
+    </section>
+  </main>
+
+    <!-- Back Button -->
+    <div style="width: 100%">
+        <a href="index.html">
+            <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
+        </a>
+    </div>
+
+    <br>
+
+    <!-- Company name -->
+    <div class="divLight">
+        <p id="companyName">PearCare.Inc</p>
+        <div id="line"></div>
+    </div>
+
+    <script src="./javascript/powerUsage.js"></script>
+</body>
+
+
+
+</html>
