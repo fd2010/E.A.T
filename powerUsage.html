@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to E.A.T</title>
     <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/powerUsagePage.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./javascript/powerUsage.js"></script>
 </head>
 
 <body class="bodyLight">
@@ -16,7 +17,8 @@
     <h2 class="h2Light">Here is your location's energy consumption rate</h2>
 
     <!-- Graph Panel -->
-    <div class="graph-container" style="width: 100%; height: 300px; background-color: #f0f0f0; border-radius: 10px; padding: 20px; text-align: center;">
+    <div class="graph-container"
+        style="width: 100%; height: 300px; background-color: #f0f0f0; border-radius: 10px; padding: 20px; text-align: center;">
         <canvas id="powerUsageChart"></canvas>
     </div>
 
@@ -28,60 +30,72 @@
     </div>
 
     <!-- Power Usage and Expenses Panels -->
-    <div style="display: flex; gap: 20px; justify-content: space-between;">
-        <div class="panel" style="flex: 1; background-color: #D9D9D9; padding: 20px; border-radius: 10px;">
+    <div class="panel-wrapper">
+        <div class="panel" style="flex: 1; background-color: #D9D9D9;">
             <h2>Power Usage</h2>
             <p>Total usage for this month: 70kW</p>
             <p>Today's usage: 5kW</p>
         </div>
-        <div class="panel" style="flex: 1; background-color: #7EA8F4; padding: 20px; border-radius: 10px;">
+        <div class="panel" style="flex: 1; background-color: #7EA8F4;">
             <h2>Expenses</h2>
             <p>Total usage for this month: £270.46</p>
             <p>Today's usage: £29.38</p>
         </div>
     </div>
 
-    <script>
-        const ctx = document.getElementById('powerUsageChart').getContext('2d');
-        let powerUsageChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['00:00', '06:00', '12:00', '18:00', '24:00'],
-                datasets: [{
-                    label: 'Power Usage (kW)',
-                    data: [2, 3, 5, 4, 3],
-                    borderColor: 'blue',
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+    <!-- Device Usage Panel -->
+    <div class="panel"
+        style="width: 100%; background-color: #E8E8E8; padding: 20px; margin-top: 20px; border-radius: 10px;">
+        <h2>Device Usage</h2>
+        <div class="device-panel">
+            <h3>Light</h3>
+            <p>1kWh, 2 hours 28 min today</p>
+        </div>
+        <div class="device-panel">
+            <h3>A/C</h3>
+            <p>2kWh, 1 hour 20 min today</p>
+        </div>
+        <div class="device-panel">
+            <h3>Projector</h3>
+            <p>1.5kWh, 1 hour today</p>
+        </div>
+        <div class="device-panel">
+            <h3>Speaker</h3>
+            <p>0.5kWh, 3 hours today</p>
+        </div>
+        <div class="device-panel">
+            <h3>Monitor</h3>
+            <p>0.8kWh, 4 hours today</p>
+        </div>
+        <div class="device-panel">
+            <h3>Whiteboard Display</h3>
+            <p>1kWh, 2 hours today</p>
+        </div>
+        <div class="device-panel">
+            <h3>Conference Phone</h3>
+            <p>0.3kWh, 5 hours today</p>
+        </div>
+    </div>
 
-        function updateChart(period) {
-            let newLabels, newData;
-            if (period === 'daily') {
-                newLabels = ['00:00', '06:00', '12:00', '18:00', '24:00'];
-                newData = [2, 3, 5, 4, 3];
-            } else if (period === 'weekly') {
-                newLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                newData = [30, 40, 35, 50, 45, 38, 42];
-            } else {
-                newLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-                newData = [200, 220, 210, 230];
-            }
-            powerUsageChart.data.labels = newLabels;
-            powerUsageChart.data.datasets[0].data = newData;
-            powerUsageChart.update();
-        }
-    </script>
+    </div>
+
+    <!-- Back Button -->
+    <div style="width: 100%">
+        <a href="index.html">
+            <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
+        </a>
+    </div>
+
+    <br>
+
+    <!-- Company name -->
+    <div class="divLight">
+        <p id="companyName">PearCare.Inc</p>
+        <div id="line"></div>
+    </div>
 
 </body>
+
+
 
 </html>
