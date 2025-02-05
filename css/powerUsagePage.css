@@ -1,172 +1,174 @@
 @import url('https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
-.h1Light {
-    color: #000;
-    text-align: center;
-    align-items: center;
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 60px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    backdrop-filter: blur(2px);
-}
-
-.h2Light {
-    color: #000;
-    text-align: center;
-    align-items: center;
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    backdrop-filter: blur(2px);
-}
-
-.pLight {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    text-align: center;
-    font-size: 18px;
-}
-
-#pHeader {
-    font-size: 25px;
-}
-
-
-.bodyLight {
-    background-color: #FBF6D0;
+/* Reset & box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body & Global Styles */
+  .bodyLight {
+    background: linear-gradient(135deg, #f7f9fc, #e9eff5);
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh; 
-}
-
-.buttonHome {
-    font-family: "Kay Pho Du", serif;
-    font-size: 20px;  
-    font-weight: 200; 
-    border-radius: 50px;  
-    border: none;
-    padding: 10px 20px;
-    width: 240px;
-    height: 70px;
-    margin: 10px auto;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 20%);
-    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1.2;  
-}
-
-.buttonHome:hover {
-    transform: scale(1.05); 
-}
-
-#companyName {
-    color: #000;
-    text-align: center;
-    font-family: "Inria Serif";
-    font-size: 16px;
-}
-
-#line {
-    width: 110px;
-    height: 1px;
-    margin: 0;
-    background: #000;
-}
-
-
-.container {
-    border-radius: 65px;
-    width: 95%;
-    background: #F4E99E;
-    padding: 40px;
-    margin: 5%;
-}
-
-/* .boxChoice {
-    display: flex; 
-    justify-content: center; 
-    width: 100%; 
-    margin-top: 20px;
-    gap: 5px;
-}
-    */
-
-
-
-.boxChoice {
-    display: flex; 
-    justify-content: center; 
-    width: 100%; 
-    margin-top: 20px;
-    gap: 40px; 
-    position: relative; 
-}
-
-.boxChoice div a {
-    background-color: #292D32; 
-    text-decoration: none; 
-    outline: none; 
-    color: #000; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-} 
-
-.boxChoice::after { 
-    content: '';
-    position: absolute;
-    left: 50%;
-    height: 100%;
-    width: 2px;
-    background-color: black;
-    transform: translateX(-50%);
-}
-
-.back-icon{
-    position: relative;
-    left: 20px;
-    top: 20px;   
-    width: 20px;
-    height: 20px;
-}
-
-.device-panel {
-    background-color: #ffffff;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-}
-
-.panel {
-    background-color: #E8E8E8;
     padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-}
-
-.graph-container {
+  }
+  
+  /* Header Styles */
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .h1Light {
+    font-family: 'Kay Pho Du', cursive;
+    font-size: 60px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  .h2Light {
+    font-family: 'Kay Pho Du', cursive;
+    font-size: 32px;
+    color: #34495e;
+  }
+  
+  /* Graph Section */
+  .graph-section {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 30px;
+  }
+  
+  .graph-container {
     width: 100%;
     height: 300px;
-    background-color: #f0f0f0;
-    border-radius: 10px;
+    background-color: #fff;
+    border: 2px solid #dcdcdc;
+    border-radius: 15px;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-
-.panel-wrapper {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+  
+  .graph-buttons {
+    text-align: center;
+  }
+  
+  .graph-buttons button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .graph-buttons button:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Info Panels */
+  .panel-wrapper {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
-    justify-content: space-between;
-}
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .panel {
+    flex: 1 1 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  
+  /* Specific Panel Backgrounds */
+  .power-panel {
+    background-color: #D9D9D9;
+  }
+  
+  .expense-panel {
+    background-color: #7EA8F4;
+  }
+  
+  /* Device Section */
+  .device-panel-container {
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .device-panel {
+    background-color: #ecf0f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+  
+  .device-panel:hover {
+    transform: scale(1.02);
+    background-color: #dfe6e9;
+  }
+  
+  .device-panel h3 {
+    margin-bottom: 5px;
+    color: #2c3e50;
+  }
+  
+  /* Footer Styles */
+  .footer {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .back-button {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .back-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  
+  .company-info {
+    margin-top: 10px;
+  }
+  
+  #companyName {
+    font-family: 'Inria Serif', serif;
+    font-size: 16px;
+    color: #2c3e50;
+  }
+  
+  #line {
+    width: 110px;
+    height: 2px;
+    background-color: #2c3e50;
+    margin: 0 auto;
+    margin-top: 5px;
+  }
+  

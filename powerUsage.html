@@ -11,73 +11,78 @@
 </head>
 
 <body class="bodyLight">
+    
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="h1Light">Power Usage</h1>
+        <h2 class="h2Light">Here is your location's energy consumption rate</h2>
+    </header>
 
-    <h1 class="h1Light"><b>Power Usage</b></h1>
-    <h2 class="h2Light">Here is your location's energy consumption rate</h2>
+    <main class="main-content">
 
-    <!-- Graph Panel -->
-    <!-- Graph Panel -->
-    <div class="graph-container">
-        <canvas id="powerUsageChart"></canvas>
-    </div>
+        <!-- Graph Section -->
+        <section class="graph-section">
+            <div class="graph-container">
+                <canvas id="powerUsageChart"></canvas>
+            </div>
+            <div class="graph-buttons">
+                <button onclick="updateChart('daily')">Daily</button>
+                <button onclick="updateChart('weekly')">Weekly</button>
+                <button onclick="updateChart('monthly')">Monthly</button>
+            </div>
+        </section>
 
+        <!-- Power Usage & Expenses Panels -->
+        <section class="info-panels">
+            <div class="panel-wrapper">
+                <div class="panel power-panel">
+                    <h2>Power Usage</h2>
+                    <p>Total usage for this month: 70kW</p>
+                    <p>Today's usage: 5kW</p>
+                </div>
+                <div class="panel expense-panel">
+                    <h2>Expenses</h2>
+                    <p>Total usage for this month: £270.46</p>
+                    <p>Today's usage: £29.38</p>
+                </div>
+            </div>
+        </section>
 
-    <!-- Buttons for Selecting Graph -->
-    <div style="text-align: center; margin-bottom: 20px;">
-        <button onclick="updateChart('daily')">Daily</button>
-        <button onclick="updateChart('weekly')">Weekly</button>
-        <button onclick="updateChart('monthly')">Monthly</button>
-    </div>
-
-    <!-- Power Usage and Expenses Panels -->
-    <div class="panel-wrapper">
-        <div class="panel" style="flex: 1; background-color: #D9D9D9;">
-            <h2>Power Usage</h2>
-            <p>Total usage for this month: 70kW</p>
-            <p>Today's usage: 5kW</p>
-        </div>
-        <div class="panel" style="flex: 1; background-color: #7EA8F4;">
-            <h2>Expenses</h2>
-            <p>Total usage for this month: £270.46</p>
-            <p>Today's usage: £29.38</p>
-        </div>
-    </div>
-
-    <!-- Device Usage Panel -->
-    <div class="panel"
-        style="width: 100%; background-color: #E8E8E8; padding: 20px; margin-top: 20px; border-radius: 10px;">
-        <h2>Device Usage</h2>
-        <div class="device-panel">
-            <h3>Light</h3>
-            <p>1kWh, 2 hours 28 min today</p>
-        </div>
-        <div class="device-panel">
-            <h3>A/C</h3>
-            <p>2kWh, 1 hour 20 min today</p>
-        </div>
-        <div class="device-panel">
-            <h3>Projector</h3>
-            <p>1.5kWh, 1 hour today</p>
-        </div>
-        <div class="device-panel">
-            <h3>Speaker</h3>
-            <p>0.5kWh, 3 hours today</p>
-        </div>
-        <div class="device-panel">
-            <h3>Monitor</h3>
-            <p>0.8kWh, 4 hours today</p>
-        </div>
-        <div class="device-panel">
-            <h3>Whiteboard Display</h3>
-            <p>1kWh, 2 hours today</p>
-        </div>
-        <div class="device-panel">
-            <h3>Conference Phone</h3>
-            <p>0.3kWh, 5 hours today</p>
-        </div>
-    </div>
-
-    </div>
+        <!-- Device Usage Panel -->
+        <section class="device-section">
+            <div class="panel device-panel-container">
+                <h2>Device Usage</h2>
+                <div class="device-panel">
+                    <h3>Light</h3>
+                    <p>1kWh, 2 hours 28 min today</p>
+                </div>
+                <div class="device-panel">
+                    <h3>A/C</h3>
+                    <p>2kWh, 1 hour 20 min today</p>
+                </div>
+                <div class="device-panel">
+                    <h3>Projector</h3>
+                    <p>1.5kWh, 1 hour today</p>
+                </div>
+                <div class="device-panel">
+                    <h3>Speaker</h3>
+                    <p>0.5kWh, 3 hours today</p>
+                </div>
+                <div class="device-panel">
+                    <h3>Monitor</h3>
+                    <p>0.8kWh, 4 hours today</p>
+                </div>
+                <div class="device-panel">
+                    <h3>Whiteboard Display</h3>
+                    <p>1kWh, 2 hours today</p>
+                </div>
+                <div class="device-panel">
+                    <h3>Conference Phone</h3>
+                    <p>0.3kWh, 5 hours today</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Back Button -->
     <div style="width: 100%">
