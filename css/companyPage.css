@@ -36,6 +36,12 @@
     text-align: center;
 
 }
+
+.navBarDiv a:hover {
+    background-color: white;
+    color: #002035;
+}
+
 /* For the nav bar link that the user is currently on */
 #activeLink {
     color: #e7ec5a;
