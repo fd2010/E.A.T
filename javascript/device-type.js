@@ -1,4 +1,5 @@
 // All types of devices in system
+
 // Lights
 // A/C
 // Speaker

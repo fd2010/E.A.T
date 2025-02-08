@@ -15,7 +15,7 @@ class SmartMeterSimulator:
             'Coffee Machine': {'watts_range': (200, 1200)},
             'Monitor': {'watts_range': (20, 40)},
             'Server': {'watts_range': (200, 500)},
-            'Air Conditioner': {'watts_range': (500, 1500)}
+            'Air Conditioner': {'watts_range': (500, 1500)} # TODO rename to 'A/C'
             # TODO add Lights
             # TODO add Projector
             # TODO add Speakers
