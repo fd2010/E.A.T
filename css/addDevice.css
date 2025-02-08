@@ -52,10 +52,33 @@
     flex-direction: column;
     gap: 10px;
     margin: 20px 0;
+    max-height: 280px; /* Height for 4 rooms (4 * 60px room height + gaps) */
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Custom scrollbar for rooms list */
+.rooms-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.rooms-list::-webkit-scrollbar-track {
+    background: #948787;
+    border-radius: 3px;
+}
+
+.rooms-list::-webkit-scrollbar-thumb {
+    background: #cbe987;
+    border-radius: 3px;
+}
+
+.rooms-list::-webkit-scrollbar-thumb:hover {
+    background: #7a8763;
 }
 
 .room-button {
     width: 100%;
+    height: 60px; 
     padding: 15px;
     border: none;
     border-radius: 65px;
@@ -64,6 +87,7 @@
     font-family: "Kay Pho Du", sans-serif;
     font-size: 16px;
     transition: transform 0.2s;
+    margin-bottom: 5px;
 }
 
 .room-button:hover {

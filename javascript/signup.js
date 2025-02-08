@@ -1,11 +1,6 @@
-// Define device types with their icons 
-const deviceTypes = {
-    'Lights': './images/icons/Lights-inverted.png',
-    'A/C': './images/icons/AC(MIT)-inverted.png',
-    'Speaker': './images/icons/Speaker(MIT)-inverted.png',
-    'Projector': './images/icons/Projector-inverted.png'
- };
- 
+import { deviceTypes } from './device-type.js';
+
+
  // Initialise room counter
  let roomCounter = 0;
  

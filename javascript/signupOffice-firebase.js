@@ -1,6 +1,7 @@
 import { auth, database } from '../database/firebase-config.js';
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 import { ref, set, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { deviceTypes } from './device-type.js';
 
 function generateOfficeID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

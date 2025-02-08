@@ -1,12 +1,6 @@
 import { ref, update, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
-
-const deviceTypes = {
-    'Lights': './images/icons/Lights.png',
-    'A/C': './images/icons/AC(MIT).png',
-    'Speaker': './images/icons/Speaker(MIT).png',
-    'Projector': './images/icons/Projector.png'
-};
+import { deviceTypes } from './device-type.js';
 
 let currentStep = 1;
 let selectedRoom = null;
