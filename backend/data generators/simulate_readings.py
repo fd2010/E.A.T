@@ -16,6 +16,10 @@ class SmartMeterSimulator:
             'Monitor': {'watts_range': (20, 40)},
             'Server': {'watts_range': (200, 500)},
             'Air Conditioner': {'watts_range': (500, 1500)}
+            # TODO add Lights
+            # TODO add Projector
+            # TODO add Speakers
+
         }
     
     def check_database(self):
