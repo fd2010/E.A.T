@@ -78,11 +78,12 @@
     display: flex;
     gap: 20px;
     margin-top: 20px;
+    justify-content: center;
+    width: 100%;
 }
 
 .info-card {
-    flex: 1;
-    max-width: 175px;
+    flex: 0 1 175px;
     padding: 20px;
     border-radius: 65px;
     background: #FFF;
@@ -151,17 +152,47 @@
 /* Room Navigation */
 .room-navigation {
     margin: 30px 0;
-    overflow-x: auto;
     padding: 15px;
     border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    overflow: hidden;
 }
 
 .room-tabs {
     display: flex;
     gap: 15px;
     padding-bottom: 10px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding: 5px;
 }
 
+/* Width for each room tab to show exactly 4 */
+.room-tab {
+    min-width: 130px;
+    flex: 0 0 auto;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: "Kay Pho Du", sans-serif;
+    transition: background-color 0.3s ease;
+    transition: transform 0.2s ease-in-out;
+    text-align: center; /* Add this to center the text */
+    background-color: #e4dfa3; /* Darker version of #FBF6D0 */
+}
+
+.room-tab:hover {
+    transform: scale(1.1);
+}
+
+.room-tab.active {
+    background-color: #9BA87C;
+    color: white;
+}
 .room-tab {
     padding: 10px 20px;
     border-radius: 20px;
@@ -181,16 +212,45 @@
     color: white;
 }
 
+/* Scrollbar Styling */
+.room-tabs::-webkit-scrollbar {
+    height: 6px;
+}
+
+.room-tabs::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.room-tabs::-webkit-scrollbar-thumb {
+    background: #9BA87C;
+    border-radius: 3px;
+}
+
+.room-tabs::-webkit-scrollbar-thumb:hover {
+    background: #7a8763;
+}
+
+/* Firefox scrollbar styling */
+.room-tabs {
+    scrollbar-width: thin;
+    scrollbar-color: #9BA87C #f1f1f1;
+}
+
+
 /* Devices Grid */
 .devices-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center; /* Change from space-between to center */
     gap: 20px;
     margin-bottom: 60px;
     padding: 20px;
     border-radius: 20px;
-    width: 450px;
+    width: 100%; /* Change from fixed 450px to 100% */
+    max-width: 600px; /* Add max-width to control the container size */
+    margin-left: auto; 
+    margin-right: auto;
 }
 
 
