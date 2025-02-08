@@ -16,7 +16,11 @@ export const deviceTypesNotInverted = {
     'A/C': './images/icons/AC(MIT)-inverted.png',
     'Speaker': './images/icons/Speaker(MIT)-inverted.png',
     'Projector': './images/icons/Projector-inverted.png',
-    'Laptop': './images/icons/laptop-inverted.png'
+    'Laptop': './images/icons/laptop icon(MIT)-inverted.png',
+    'Printer': './images/icons/printer icon(MIT)-inverted.png',
+    'Coffee Machine': './images/icons/cofee machine-inverted.png',
+    'Monitor': './images/icons/monitor icon(MIT)-inverted.png',
+    'Server': './images/icons/server icon-inverted.png'
 };
 
 // Device types with regular icons (for inactive/unselected state)
@@ -25,5 +29,9 @@ export const deviceTypes = {
     'A/C': './images/icons/AC(MIT).png',
     'Speaker': './images/icons/Speaker(MIT).png',
     'Projector': './images/icons/Projector.png',
-    'Laptop': './images/icons/laptop icon(MIT).png'
+    'Laptop': './images/icons/laptop icon(MIT).png',
+    'Printer': './images/icons/printer icon(MIT).png',
+    'Coffee Machine': './images/icons/cofee machine.png',
+    'Monitor': './images/icons/monitor icon(MIT).png',
+    'Server': './images/icons/server icon.png'
 };
