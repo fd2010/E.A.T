@@ -1,4 +1,3 @@
-
 /* Modal Base Styles */
 .modal {
     display: none;
@@ -124,15 +123,49 @@
     margin: 20px 0;
 }
 
+.form-group {
+    margin-bottom: 30px;
+    width: 80%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.input-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+}
+
 .form-group input {
     width: 100%;
-    padding: 12px;
+    padding: 12px 40px 12px 12px;
     border: none;
-    border-bottom: 2px solid #9BA87C;
+    border-bottom: 1px solid #000;
     background-color: transparent;
     font-family: "Kay Pho Du", sans-serif;
     font-size: 16px;
-    margin-bottom: 10px;
+    outline: none;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.input-container img {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    z-index: 1;
 }
 
 .form-group input:focus {

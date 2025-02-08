@@ -110,7 +110,8 @@ async function loadRooms() {
             Object.keys(snapshot.val()).forEach(roomName => {
                 const roomButton = document.createElement('button');
                 roomButton.className = 'room-button buttonHome';
-                roomButton.style.backgroundColor = '#C1E6E3';
+                roomButton.style.backgroundColor = '#9BA87C';
+                roomButton.style.color = '#FFFFFF';
                 roomButton.textContent = roomName;
                 roomButton.onclick = () => {
                     selectedRoom = roomName;
