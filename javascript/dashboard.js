@@ -1,7 +1,8 @@
 import { auth, database } from '../database/firebase-config.js';
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { ref, get, set } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { updateRoomTabs, updateUserDisplay, toggleLoadingState } from './display-dashboard.js';
+import { initialiseAddDeviceModal } from './add-device.js';
 
 // Function to update user interface with user data
 async function updateUserInterface(userData) {
@@ -116,6 +117,10 @@ async function initialiseDashboard() {
     }
 }
 
-// Start initialization when the page loads
+// Start initialisation when the page loads
 console.log('Setting up DOMContentLoaded listener');
-document.addEventListener('DOMContentLoaded', initialiseDashboard);
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded - Initialising dashboard and modal');
+    initialiseDashboard();
+    initialiseAddDeviceModal();
+});
