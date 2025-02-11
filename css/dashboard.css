@@ -168,6 +168,7 @@
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     padding: 5px;
+    border-radius: 23px;
 }
 
 /* Width for each room tab to show exactly 4 */
