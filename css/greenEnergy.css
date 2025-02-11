@@ -74,10 +74,10 @@
   line-height: 1.6;
 }
 .recommendation-panel {
-  border-left: 8px solid #78bc94; /* Green accent for recommendations */
+  border-left: 8px solid #596b21; /* Green accent for recommendations */
 }
 .goal-panel {
-  border-left: 8px solid #078546; /* Blue accent for goals */
+  border-left: 8px solid #8cb11d; /* Blue accent for goals */
 }
 
 /* Footer Styles */
