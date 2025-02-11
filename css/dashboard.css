@@ -242,13 +242,13 @@
 .devices-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Change from space-between to center */
+    justify-content: center; 
     gap: 20px;
     margin-bottom: 60px;
     padding: 20px;
     border-radius: 20px;
-    width: 100%; /* Change from fixed 450px to 100% */
-    max-width: 600px; /* Add max-width to control the container size */
+    width: 100%; 
+    max-width: 600px;
     margin-left: auto; 
     margin-right: auto;
 }
