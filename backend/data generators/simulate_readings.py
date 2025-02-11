@@ -67,7 +67,7 @@ class SmartMeterSimulator:
     def run(self, interval=10):
         # Check if th databse exists
         if not self.check_database():
-            print("Failed to initialize database. Exiting...")
+            print("Failed to initialise database. Exiting...")
             return
         
         print("\nSmart Meter Simulator Started")
