@@ -37,6 +37,7 @@
 
 }
 
+/* Adds the onmouseover effect */
 .navBarDiv a:hover {
     background-color: white;
     color: #002035;
@@ -46,6 +47,15 @@
 #activeLink {
     color: #e7ec5a;
     background-color: #4d4245;
+}
+
+p1 {
+    font-family: "Kay Pho Du", sans-serif;
+}
+
+h2 {
+    font-family: "Kay Pho Du", sans-serif ;
+    text-align: center;
 }
 
 h4 {
@@ -68,6 +78,10 @@ h12 {
     text-decoration: underline;
 }
 
+hTemp {
+    background-color: red;
+}
+
 /* Nav bar logo */
 #pClogo {
     width: 70px;
@@ -80,7 +94,7 @@ h12 {
     background-color: #faeb74;
 
     display: flex;
-    justify-content: space-around;
+    justify-content:center;
 
     margin: 4vw;
     padding: 2vw;
@@ -106,6 +120,18 @@ h12 {
     margin-right: 5vw;
     padding: 10px;
     border-radius: 50px;
+
+    background-color: #6D8EA0;
+}
+
+.centerContainer {
+    display: block;
+    float: right;
+
+    margin: 2vw;
+    margin-right: 5vw;
+    padding: 10px;
+    border-radius: 30px;
 
     background-color: #6D8EA0;
 }
