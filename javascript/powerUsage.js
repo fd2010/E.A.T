@@ -25,7 +25,7 @@ function updateChart(period) {
     let newLabels, newData;
     if (period === 'daily') {
         newLabels = ['00:00', '06:00', '12:00', '18:00', '24:00'];
-        newData = [2, 3, 5, 4, 3];
+        newData = [2, 3, 5, 4, 5];
     } else if (period === 'weekly') {
         newLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         newData = [30, 40, 35, 50, 45, 38, 42];

@@ -34,6 +34,7 @@
   font-weight: 400;
   line-height: normal;
   backdrop-filter: blur(2px);
+  margin-bottom: 10px;
 }
 
 
@@ -115,7 +116,7 @@
 }
 
 .expense-panel {
-    background-color: ¸;
+    background-color:#D9D9D9;
 }
 
 /* Device Section */
@@ -146,7 +147,7 @@
 .green-energy-btn {
     display: block;           /* Makes the button a block element */
     width: 100%;              /* Full width */
-    background-color: #04b280; /* Matching green accent from your header */
+    background-color: #b9cf8e; /* Matching green accent from your header */
     color: #fff;              /* White text for contrast */
     border: none;
     padding: 20px 0;          /* Increased vertical padding for better readability */
@@ -218,4 +219,3 @@
     margin: 0 auto;
     margin-top: 5px;
 }
-
