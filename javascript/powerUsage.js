@@ -6,7 +6,7 @@ let powerUsageChart = new Chart(ctx, {
         labels: ['00:00', '06:00', '12:00', '18:00', '24:00'],
         datasets: [{
             label: 'Power Usage (kW)',
-            data: [2, 3, 5, 4, 3],
+            data: [2, 3, 5, 4, 5],
             borderColor: 'blue',
             fill: false
         }]

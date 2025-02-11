@@ -10,32 +10,43 @@
 
 /* Body & Global Styles */
 .bodyLight {
-    background: linear-gradient(135deg, #f7f9fc, #e9eff5);
-    font-family: 'Montserrat', sans-serif;
-    color: #333;
+    background-color: #ECEFE7;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    justify-content: center;
+    min-height: 100vh; 
 }
 
 /* Header Styles */
 .header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .h1Light {
-    font-family: 'Kay Pho Du', cursive;
-    font-size: 60px;
-    color: #2c3e50;
-    margin-bottom: 10px;
+  color: #000;
+  text-align: center;
+  align-items: center;
+  font-family: "Kay Pho Du", sans-serif;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  backdrop-filter: blur(2px);
 }
 
+
 .h2Light {
-    font-family: 'Kay Pho Du', cursive;
-    font-size: 32px;
-    color: #34495e;
+  color: #34495e;
+  text-align: center;
+  align-items: center;
+  font-family: "Kay Pho Du", sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  backdrop-filter: blur(2px);
 }
 
 /* Graph Section */
@@ -64,7 +75,7 @@
 }
 
 .graph-buttons button {
-    background-color: #3498db;
+    background-color: #c69307;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -75,7 +86,7 @@
 }
 
 .graph-buttons button:hover {
-    background-color: #2980b9;
+    background-color: #ad8004;
 }
 
 /* Info Panels */
@@ -104,7 +115,7 @@
 }
 
 .expense-panel {
-    background-color: #7EA8F4;
+    background-color: ¸;
 }
 
 /* Device Section */
@@ -135,7 +146,7 @@
 .green-energy-btn {
     display: block;           /* Makes the button a block element */
     width: 100%;              /* Full width */
-    background-color: #6a8ee8; /* Matching green accent from your header */
+    background-color: #04b280; /* Matching green accent from your header */
     color: #fff;              /* White text for contrast */
     border: none;
     padding: 20px 0;          /* Increased vertical padding for better readability */
@@ -149,7 +160,7 @@
 }
 
 .green-energy-btn:hover {
-    background-color: #4570dc; /* A slightly darker shade on hover */
+    background-color: #048661; /* A slightly darker shade on hover */
 }
 
 .button-content {

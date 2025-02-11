@@ -10,32 +10,43 @@
 
 /* Body & Global Styles */
 .bodyLight {
-    background: linear-gradient(135deg, #f7f9fc, #e9eff5);
-    font-family: 'Montserrat', sans-serif;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+  background-color: #B3BB9C;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; 
 }
 
 /* Header Styles */
 .header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .h1Light {
-    font-family: 'Kay Pho Du', cursive;
-    font-size: 60px;
-    color: #2c3e50;
-    margin-bottom: 10px;
+  color: #000;
+  text-align: center;
+  align-items: center;
+  font-family: "Kay Pho Du", sans-serif;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  backdrop-filter: blur(2px);
 }
 
+
 .h2Light {
-    font-family: 'Kay Pho Du', cursive;
-    font-size: 32px;
-    color: #34495e;
+  color: #34495e;
+  text-align: center;
+  align-items: center;
+  font-family: "Kay Pho Du", sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  backdrop-filter: blur(2px);
 }
 
 /* Main Content Container */
@@ -63,10 +74,10 @@
   line-height: 1.6;
 }
 .recommendation-panel {
-  border-left: 8px solid #27ae60; /* Green accent for recommendations */
+  border-left: 8px solid #78bc94; /* Green accent for recommendations */
 }
 .goal-panel {
-  border-left: 8px solid #2980b9; /* Blue accent for goals */
+  border-left: 8px solid #078546; /* Blue accent for goals */
 }
 
 /* Footer Styles */
