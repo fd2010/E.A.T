@@ -93,9 +93,9 @@
 /* Info Panels */
 .panel-wrapper {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;         
     gap: 20px;
-    justify-content: center;
+    justify-content: space-between; 
     width: 100%;
     max-width: 800px;
 }
@@ -147,8 +147,8 @@
 .green-energy-btn {
     display: block;           /* Makes the button a block element */
     width: 100%;              /* Full width */
-    background-color: #b9cf8e; /* Matching green accent from your header */
-    color: #fff;              /* White text for contrast */
+    background-color: #c1cbb1; /* Matching green accent from your header */
+    color: #000000;              /* White text for contrast */
     border: none;
     padding: 20px 0;          /* Increased vertical padding for better readability */
     font-size: 16px;
@@ -161,7 +161,7 @@
 }
 
 .green-energy-btn:hover {
-    background-color: #048661; /* A slightly darker shade on hover */
+    background-color: #93ab6e; /* A slightly darker shade on hover */
 }
 
 .button-content {
