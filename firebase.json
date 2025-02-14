@@ -6,12 +6,6 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ],
     "headers": [
       {
         "source": "**/*.css",
@@ -21,6 +15,12 @@
             "value": "text/css"
           }
         ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "!**/*.{js,css,jpg,png,gif,svg,ico}",
+        "destination": "/index.html"
       }
     ]
   }
