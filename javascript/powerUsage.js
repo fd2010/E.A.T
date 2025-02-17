@@ -1,4 +1,4 @@
-// Chart elements
+// Chart Elements
 const energyCostCtx = document.getElementById('energyCostChart').getContext('2d');
 const energyUsageCtx = document.getElementById('energyUsageChart').getContext('2d');
 const areaPieCtx = document.getElementById('areaPieChart').getContext('2d');
@@ -6,13 +6,14 @@ const areaBarCtx = document.getElementById('areaBarChart').getContext('2d');
 const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
 const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
-// Sample Data
+// Time Labels
 const timeLabels = {
     daily: ['00:00', '06:00', '12:00', '18:00', '24:00'],
     weekly: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     monthly: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
 };
 
+// Energy Data
 const energyData = {
     daily: [2, 3, 5, 4, 5],
     weekly: [30, 40, 35, 50, 45, 38, 42],
@@ -25,15 +26,15 @@ const costData = {
     monthly: [400, 450, 420, 460]
 };
 
-// Data for Area-wise Usage (kWh)
+// Area-wise Energy Usage Data
 const areaData = {
     "Meeting Room": 30,
     "Workstations": 40,
     "Common Areas": 25,
-    "Special": 20,
+    "Special": 20
 };
 
-// Data for Device-wise Usage (kWh)
+// Device-wise Energy Usage Data
 const deviceData = {
     "Computers": 50,
     "Lights": 20,
@@ -66,21 +67,29 @@ const devicesByArea = {
     ]
 };
 
-// Initialize Time-wise Energy & Cost Graphs (Defaults to Daily)
-let energyChart = new Chart(energyUsageCtx, {
-    type: 'line',
-    data: { labels: timeLabels.daily, datasets: [{ label: 'Energy Usage (kW)', data: energyData.daily, borderColor: 'blue', fill: false }] },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
-});
+// Initialize Global Variables
+let selectedTime = "daily";
+let energyChart, costChart;
 
-let costChart = new Chart(energyCostCtx, {
-    type: 'line',
-    data: { labels: timeLabels.daily, datasets: [{ label: 'Energy Cost (£)', data: costData.daily, borderColor: 'red', fill: false }] },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
-});
+// Initialize Time-Based Graphs
+function createTimeGraphs() {
+    energyChart = new Chart(energyUsageCtx, {
+        type: 'line',
+        data: { labels: timeLabels[selectedTime], datasets: [{ label: 'Energy Usage (kW)', data: energyData[selectedTime], borderColor: 'blue', fill: false }] },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
 
-// Function to Update Time-wise Graphs
+    costChart = new Chart(energyCostCtx, {
+        type: 'line',
+        data: { labels: timeLabels[selectedTime], datasets: [{ label: 'Energy Cost (£)', data: costData[selectedTime], borderColor: 'red', fill: false }] },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+}
+
+// Function to Update Time-Based Graphs
 function updateTimeGraphs(period) {
+    selectedTime = period; // ✅ Ensure correct dataset is loaded
+
     energyChart.data.labels = timeLabels[period];
     energyChart.data.datasets[0].data = energyData[period];
     energyChart.update();
@@ -90,63 +99,43 @@ function updateTimeGraphs(period) {
     costChart.update();
 }
 
-// Pie Chart: Energy Usage by Area
+// Initialize Area-wise Usage Charts
 new Chart(areaPieCtx, {
     type: 'pie',
-    data: {
-        labels: Object.keys(areaData),
-        datasets: [{ data: Object.values(areaData), backgroundColor: ['red', 'blue', 'green', 'purple'] }]
-    }
+    data: { labels: Object.keys(areaData), datasets: [{ data: Object.values(areaData), backgroundColor: ['red', 'blue', 'green', 'purple'] }] }
 });
 
-// Bar Chart: Energy Usage by Area
 new Chart(areaBarCtx, {
     type: 'bar',
-    data: {
-        labels: Object.keys(areaData),
-        datasets: [{ label: 'Energy Usage (kW)', data: Object.values(areaData), backgroundColor: 'teal' }]
-    },
+    data: { labels: Object.keys(areaData), datasets: [{ label: 'Energy Usage (kW)', data: Object.values(areaData), backgroundColor: 'teal' }] },
     options: { responsive: true, scales: { y: { beginAtZero: true } } }
 });
 
-// Pie Chart: Energy Usage by Device Type
+// Initialize Device-wise Usage Charts
 new Chart(devicePieCtx, {
     type: 'pie',
-    data: {
-        labels: Object.keys(deviceData),
-        datasets: [{ data: Object.values(deviceData), backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal'] }]
-    }
+    data: { labels: Object.keys(deviceData), datasets: [{ data: Object.values(deviceData), backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal'] }] }
 });
 
-// Bar Chart: Energy Usage by Device Type
 new Chart(deviceBarCtx, {
     type: 'bar',
-    data: {
-        labels: Object.keys(deviceData),
-        datasets: [{ label: 'Energy Usage (kW)', data: Object.values(deviceData), backgroundColor: 'purple' }]
-    },
+    data: { labels: Object.keys(deviceData), datasets: [{ label: 'Energy Usage (kW)', data: Object.values(deviceData), backgroundColor: 'purple' }] },
     options: { responsive: true, scales: { y: { beginAtZero: true } } }
 });
 
 // Function to Calculate Sticky Footer Totals
 function calculateTotals() {
-    let totalEnergy = 0;
-    let totalCost = 0;
-    let minEnergy = Infinity;
-    let maxEnergy = -Infinity;
-    let minRoom = "";
-    let maxRoom = "";
-    let minDevice = "";
-    let maxDevice = "";
+    let totalEnergy = 0, totalCost = 0;
+    let minRoom = "", maxRoom = "", minDevice = "", maxDevice = "";
+    let minEnergy = Infinity, maxEnergy = -Infinity;
 
-    // Calculate total energy, total cost, min & max usage by room
     Object.entries(devicesByArea).forEach(([room, devices]) => {
-        let roomEnergy = 0;
+        let roomTotal = 0;
 
         devices.forEach(device => {
             totalEnergy += device.energy;
             totalCost += device.cost;
-            roomEnergy += device.energy;
+            roomTotal += device.energy;
 
             if (device.energy < minEnergy) {
                 minEnergy = device.energy;
@@ -158,24 +147,24 @@ function calculateTotals() {
             }
         });
 
-        if (roomEnergy < minEnergy) {
-            minEnergy = roomEnergy;
+        if (roomTotal < minEnergy) {
+            minEnergy = roomTotal;
             minRoom = room;
         }
-        if (roomEnergy > maxEnergy) {
-            maxEnergy = roomEnergy;
+        if (roomTotal > maxEnergy) {
+            maxEnergy = roomTotal;
             maxRoom = room;
         }
     });
 
-    // Update Sticky Footer
-    document.getElementById('totalEnergy').textContent = totalEnergy + " kWh";
-    document.getElementById('totalCost').textContent = "£" + totalCost.toFixed(2);
+    document.getElementById('totalEnergy').textContent = `${totalEnergy} kWh`;
+    document.getElementById('totalCost').textContent = `£${totalCost.toFixed(2)}`;
     document.getElementById('minUsage').textContent = `${minRoom} (${minDevice})`;
     document.getElementById('maxUsage').textContent = `${maxRoom} (${maxDevice})`;
 }
 
-// Run Total Calculation on Page Load
+// Run Scripts on Page Load
 document.addEventListener("DOMContentLoaded", function () {
+    createTimeGraphs();
     calculateTotals();
 });
