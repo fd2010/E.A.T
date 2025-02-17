@@ -66,6 +66,9 @@ document.getElementById('areaTypeDropdown').addEventListener('change', function 
 });
 
 function updateAreaData(area) {
+
+    selectedArea = area;
+    
     if (area === "all") {
         document.getElementById('deviceList').innerHTML = "<p>Select an area to see devices</p>";
         return;
@@ -151,7 +154,7 @@ function calculateTotals() {
 // Run Initialization on Page Load
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('areaTypeDropdown').value = "meeting";
-    updateAreaData("meeting");
     initializeComparisonCharts();
+    updateAreaData("meeting");
     calculateTotals();
 });
