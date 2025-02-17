@@ -29,7 +29,7 @@ const costData = {
 const areaData = {
     "Meeting Room": 30,
     "Workstations": 40,
-    "Common": 25,
+    "Common Areas": 25,
     "Special": 20,
 };
 
@@ -45,22 +45,22 @@ const deviceData = {
 
 // Device Types by Room
 const devicesByArea = {
-    "meeting": [
+    "Meeting Room": [
         { name: "Projector", energy: 5, cost: 2.5 },
         { name: "Speakers", energy: 2, cost: 1.2 },
         { name: "Lights", energy: 8, cost: 4 }
     ],
-    "work": [
+    "Workstations": [
         { name: "Computers", energy: 15, cost: 8 },
         { name: "Monitors", energy: 10, cost: 5 },
         { name: "Printers", energy: 6, cost: 3 }
     ],
-    "common": [
+    "Common Areas": [
         { name: "Lights", energy: 12, cost: 6 },
         { name: "Air Conditioning", energy: 20, cost: 10 },
         { name: "Vending Machine", energy: 8, cost: 4 }
     ],
-    "special": [
+    "Special": [
         { name: "Heating", energy: 25, cost: 12 },
         { name: "Speakers", energy: 10, cost: 5 }
     ]
