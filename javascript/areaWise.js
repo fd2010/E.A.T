@@ -33,6 +33,31 @@ let selectedTime = "daily";
 
 let energyChart, costChart, devicePieChart, deviceBarChart;
 
+// **Initialize Area Comparison Charts**
+let areaPieChart = new Chart(areaComparisonPieCtx, {
+    type: 'pie',
+    data: {
+        labels: ['Meeting Rooms', 'Common Areas', 'Workstations', 'Specialized Areas'],
+        datasets: [{
+            data: [150, 120, 200, 220], // Example Values
+            backgroundColor: ['red', 'blue', 'green', 'orange']
+        }]
+    }
+});
+
+let areaBarChart = new Chart(areaComparisonBarCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Meeting Rooms', 'Common Areas', 'Workstations', 'Specialized Areas'],
+        datasets: [{
+            label: 'Energy Usage (kW)',
+            data: [150, 120, 200, 220],
+            backgroundColor: 'teal'
+        }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+});
+
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
     if (energyChart) energyChart.destroy();
