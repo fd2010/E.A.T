@@ -115,29 +115,9 @@ function createTimeGraphs() {
 }
 
 // **Function to Update Time-Based Graphs**
-function updateTimeGraph(period) {
-    if (!timeLabels[period] || !energyData[selectedArea][period]) {
-        return;
-    }
-
-    selectedTime = period;
-
-    energyChart.data.labels = timeLabels[period];
-    energyChart.data.datasets[0].data = energyData[selectedArea][period];
-    energyChart.update();
-
-    costChart.data.labels = timeLabels[period];
-    costChart.data.datasets[0].data = energyData[selectedArea][period].map(x => x * 2);
-    costChart.update();
-}
-
-// **UPDATE AREA DATA ON SELECTION**
-document.getElementById('areaTypeDropdown').addEventListener('change', function () {
-    selectedArea = this.value;
-    updateAreaData(selectedArea);
-});
-
 function updateAreaData(area) {
+    selectedArea = area;  
+
     let deviceHTML = "";
     let deviceNames = [];
     let deviceEnergy = [];
@@ -154,6 +134,9 @@ function updateAreaData(area) {
 
     document.getElementById('deviceList').innerHTML = deviceHTML;
 
+    // **Update Time-Based Graphs when an area is selected**
+    updateTimeGraph(selectedTime); 
+
     // **Destroy old charts before creating new ones**
     if (devicePieChart && devicePieChart instanceof Chart) {
         devicePieChart.destroy();
@@ -163,7 +146,7 @@ function updateAreaData(area) {
         deviceBarChart.destroy();
     }
 
-    // **Update Device Charts**
+    //  **Update Device Charts**
     devicePieChart = new Chart(devicePieCtx, {
         type: 'pie',
         data: {
@@ -194,8 +177,21 @@ function updateAreaData(area) {
             }
         }
     });
+}
 
-    updateTimeGraph(selectedTime);
+function updateTimeGraph(period) {
+    if (!energyChart || !costChart) return; // ✅ Ensure charts exist before updating
+    if (!timeLabels[period] || !energyData[selectedArea][period]) return;
+
+    selectedTime = period;
+
+    energyChart.data.labels = timeLabels[period];
+    energyChart.data.datasets[0].data = energyData[selectedArea][period];
+    energyChart.update();
+
+    costChart.data.labels = timeLabels[period];
+    costChart.data.datasets[0].data = energyData[selectedArea][period].map(x => x * 2);
+    costChart.update();
 }
 
 // **INITIALIZATION ON PAGE LOAD**
