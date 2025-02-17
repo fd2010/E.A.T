@@ -23,6 +23,15 @@
         <!-- Section 1: Line Graphs for Total Energy & Cost -->
         <section class="graph-section">
             <h2 class="h2Light">Total Energy & Cost Over Time</h2>
+
+            <!-- Time Selection Buttons -->
+            <div class="graph-buttons">
+                <button onclick="updateTimeGraphs('daily')">Daily</button>
+                <button onclick="updateTimeGraphs('weekly')">Weekly</button>
+                <button onclick="updateTimeGraphs('monthly')">Monthly</button>
+            </div>
+
+            <!-- Graphs -->
             <div class="graph-container">
                 <canvas id="energyCostChart"></canvas>
             </div>
@@ -30,6 +39,7 @@
                 <canvas id="energyUsageChart"></canvas>
             </div>
         </section>
+
 
         <!-- Section 2: Area-Wise Energy Usage -->
         <section class="graph-section" onclick="location.href='areaWise.html'" style="cursor: pointer;">
