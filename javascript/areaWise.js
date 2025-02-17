@@ -64,126 +64,27 @@ const devicesByArea = {
 let selectedArea = "meeting";
 let selectedTime = "daily";
 
-let energyChart;
-let costChart;
-let devicePieChart;
-let deviceBarChart;
+// **Initialize Charts**
+let energyChart, costChart, devicePieChart, deviceBarChart;
 
 // **Initialize Time-Based Graphs (Meeting Room Default)**
 function createTimeGraphs() {
     energyChart = new Chart(areaTimeEnergyCtx, {
         type: 'line',
-        data: {
-            labels: timeLabels.daily,
-            datasets: [{
-                label: 'Energy (kW)',
-                data: energyData.meeting.daily,
-                borderColor: 'blue',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
+        data: { labels: timeLabels.daily, datasets: [{ label: 'Energy (kW)', data: energyData.meeting.daily, borderColor: 'blue', fill: false }] },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
     costChart = new Chart(areaTimeCostCtx, {
         type: 'line',
-        data: {
-            labels: timeLabels.daily,
-            datasets: [{
-                label: 'Cost (£)',
-                data: energyData.meeting.daily.map(x => x * 2),
-                borderColor: 'red',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
+        data: { labels: timeLabels.daily, datasets: [{ label: 'Cost (£)', data: energyData.meeting.daily.map(x => x * 2), borderColor: 'red', fill: false }] },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 }
 
 // **Function to Update Time-Based Graphs**
-function updateAreaData(area) {
-    selectedArea = area;  
-
-    let deviceHTML = "";
-    let deviceNames = [];
-    let deviceEnergy = [];
-
-    devicesByArea[area].forEach(device => {
-        deviceHTML += `<div class="device-panel">
-                          <h3>${device.name}</h3>
-                          <p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p>
-                      </div>`;
-
-        deviceNames.push(device.name);
-        deviceEnergy.push(device.energy);
-    });
-
-    document.getElementById('deviceList').innerHTML = deviceHTML;
-
-    // **Update Time-Based Graphs when an area is selected**
-    updateTimeGraph(selectedTime); 
-
-    // **Destroy old charts before creating new ones**
-    if (devicePieChart && devicePieChart instanceof Chart) {
-        devicePieChart.destroy();
-    }
-
-    if (deviceBarChart && deviceBarChart instanceof Chart) {
-        deviceBarChart.destroy();
-    }
-
-    //  **Update Device Charts**
-    devicePieChart = new Chart(devicePieCtx, {
-        type: 'pie',
-        data: {
-            labels: deviceNames,
-            datasets: [{
-                data: deviceEnergy,
-                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']
-            }]
-        }
-    });
-
-    deviceBarChart = new Chart(deviceBarCtx, {
-        type: 'bar',
-        data: {
-            labels: deviceNames,
-            datasets: [{
-                label: 'Energy Usage (kW)',
-                data: deviceEnergy,
-                backgroundColor: 'purple'
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
-
 function updateTimeGraph(period) {
-    if (!energyChart || !costChart) return; // ✅ Ensure charts exist before updating
-    if (!timeLabels[period] || !energyData[selectedArea][period]) return;
-
-    selectedTime = period;
+    selectedTime = period; // ✅ Ensure correct dataset is loaded
 
     energyChart.data.labels = timeLabels[period];
     energyChart.data.datasets[0].data = energyData[selectedArea][period];
@@ -194,18 +95,54 @@ function updateTimeGraph(period) {
     costChart.update();
 }
 
+// **UPDATE AREA DATA ON SELECTION**
+document.getElementById('areaTypeDropdown').addEventListener('change', function () {
+    selectedArea = this.value;
+    updateAreaData(selectedArea);
+});
+
+function updateAreaData(area) {
+    let deviceHTML = "";
+    let deviceNames = [];
+    let deviceEnergy = [];
+
+    devicesByArea[area].forEach(device => {
+        deviceHTML += `<div class="device-panel"><h3>${device.name}</h3><p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p></div>`;
+        deviceNames.push(device.name);
+        deviceEnergy.push(device.energy);
+    });
+
+    document.getElementById('deviceList').innerHTML = deviceHTML;
+
+    // ✅ **Destroy old charts before creating new ones**
+    if (devicePieChart) devicePieChart.destroy();
+    if (deviceBarChart) deviceBarChart.destroy();
+
+    // **Update Device Charts**
+    devicePieChart = new Chart(devicePieCtx, {
+        type: 'pie',
+        data: { labels: deviceNames, datasets: [{ data: deviceEnergy, backgroundColor: ['red', 'blue', 'green', 'orange', 'purple'] }] }
+    });
+
+    deviceBarChart = new Chart(deviceBarCtx, {
+        type: 'bar',
+        data: { labels: deviceNames, datasets: [{ label: 'Energy Usage (kW)', data: deviceEnergy, backgroundColor: 'purple' }] },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+
+    updateTimeGraph(selectedTime);
+}
+
 // **INITIALIZATION ON PAGE LOAD**
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('areaTypeDropdown').value = "meeting";
     createTimeGraphs();
     updateAreaData("meeting");
-    calculateTotals();
 });
 
 // **CALCULATE TOTALS FOR STICKY FOOTER**
 function calculateTotals() {
-    let totalEnergy = 0;
-    let totalCost = 0;
+    let totalEnergy = 0, totalCost = 0;
 
     Object.values(devicesByArea).forEach(areaDevices => {
         areaDevices.forEach(device => {
@@ -219,6 +156,4 @@ function calculateTotals() {
 }
 
 // **Run on Page Load**
-document.addEventListener("DOMContentLoaded", function () {
-    calculateTotals();
-});
+document.addEventListener("DOMContentLoaded", function () { calculateTotals(); });
