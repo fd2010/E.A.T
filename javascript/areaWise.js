@@ -26,21 +26,54 @@ const energyData = {
 
 // Device Types by Room
 const devicesByArea = {
-    meeting: [
+    "meeting": [
         { name: "Projector", energy: 5, cost: 2.5 },
         { name: "Speakers", energy: 2, cost: 1.2 },
         { name: "Lights", energy: 8, cost: 4 }
     ],
-    common: [
+    "work": [
+        { name: "Computers", energy: 15, cost: 8 },
+        { name: "Monitors", energy: 10, cost: 5 },
+        { name: "Printers", energy: 6, cost: 3 }
+    ],
+    "common": [
         { name: "Lights", energy: 12, cost: 6 },
         { name: "Air Conditioning", energy: 20, cost: 10 },
         { name: "Coffee Machine", energy: 8, cost: 4 }
+    ],
+    "cafeteria": [
+        { name: "Microwave", energy: 7, cost: 3.5 },
+        { name: "Fridge", energy: 18, cost: 9 },
+        { name: "Oven", energy: 25, cost: 12 }
+    ],
+    "reception": [
+        { name: "TV Screen", energy: 10, cost: 5 },
+        { name: "Decorative Lighting", energy: 8, cost: 4 }
     ]
 };
 
 // Initialize Default Selection
 let selectedArea = "meeting";
 let selectedTime = "daily";
+
+// Initialize Time-Based Graphs (Defaults to Meeting Room, Daily)
+let energyChart = new Chart(areaTimeEnergyCtx, {
+    type: 'line',
+    data: { 
+        labels: timeLabels.daily, 
+        datasets: [{ label: 'Energy (kW)', data: energyData.meeting.daily, borderColor: 'blue', fill: false }] 
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+});
+
+let costChart = new Chart(areaTimeCostCtx, {
+    type: 'line',
+    data: { 
+        labels: timeLabels.daily, 
+        datasets: [{ label: 'Cost (£)', data: energyData.meeting.daily.map(x => x * 2), borderColor: 'red', fill: false }] 
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+});
 
 // Function to Update Time-Based Graphs
 function updateTimeGraphs(period) {
@@ -51,22 +84,9 @@ function updateTimeGraphs(period) {
     energyChart.update();
 
     costChart.data.labels = timeLabels[period];
-    costChart.data.datasets[0].data = energyData[selectedArea][period].map(x => x * 2); // Cost = energy * price factor
+    costChart.data.datasets[0].data = energyData[selectedArea][period].map(x => x * 2);
     costChart.update();
 }
-
-// Initialize Time-Based Graphs (Defaults to Meeting Room, Daily)
-let energyChart = new Chart(areaTimeEnergyCtx, {
-    type: 'line',
-    data: { labels: timeLabels.daily, datasets: [{ label: 'Energy (kW)', data: energyData.meeting.daily, borderColor: 'blue', fill: false }] },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
-});
-
-let costChart = new Chart(areaTimeCostCtx, {
-    type: 'line',
-    data: { labels: timeLabels.daily, datasets: [{ label: 'Cost (£)', data: energyData.meeting.daily.map(x => x * 2), borderColor: 'red', fill: false }] },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
-});
 
 // Function to Update Area Data on Selection
 document.getElementById('areaTypeDropdown').addEventListener('change', function () {
@@ -94,19 +114,27 @@ function updateAreaData(area) {
     document.getElementById('deviceList').innerHTML = deviceHTML;
 
     // Update Device Type Charts (Pie & Bar)
+    updateDeviceCharts(deviceNames, deviceEnergy);
+
+    // Update the time-based graphs when a new area is selected
+    updateTimeGraphs(selectedTime);
+}
+
+// Function to Update Device Charts Without Recreating Them
+function updateDeviceCharts(labels, data) {
+    devicePieCtx.clearRect(0, 0, devicePieCtx.width, devicePieCtx.height);
+    deviceBarCtx.clearRect(0, 0, deviceBarCtx.width, deviceBarCtx.height);
+
     new Chart(devicePieCtx, {
         type: 'pie',
-        data: { labels: deviceNames, datasets: [{ data: deviceEnergy, backgroundColor: ['red', 'blue', 'green', 'orange', 'purple'] }] }
+        data: { labels: labels, datasets: [{ data: data, backgroundColor: ['red', 'blue', 'green', 'orange', 'purple'] }] }
     });
 
     new Chart(deviceBarCtx, {
         type: 'bar',
-        data: { labels: deviceNames, datasets: [{ label: 'Energy Usage (kW)', data: deviceEnergy, backgroundColor: 'purple' }] },
+        data: { labels: labels, datasets: [{ label: 'Energy Usage (kW)', data: data, backgroundColor: 'purple' }] },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
-
-    // Update the time-based graphs when a new area is selected
-    updateTimeGraphs(selectedTime);
 }
 
 // Run Default Selection on Page Load
@@ -114,3 +142,36 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('areaTypeDropdown').value = "meeting"; // Default to Meeting Room
     updateAreaData("meeting"); // Load initial data
 });
+
+// Function to Calculate Total Energy, Cost, Min & Max Energy Usage in sticky footer 
+function calculateTotals() {
+    let totalEnergy = 0;
+    let totalCost = 0;
+    let energyValues = [];
+
+    // Loop through all areas and calculate totals dynamically
+    Object.values(devicesByArea).forEach(areaDevices => {
+        areaDevices.forEach(device => {
+            totalEnergy += device.energy;
+            totalCost += device.cost;
+            energyValues.push(device.energy);
+        });
+    });
+
+    let minUsage = Math.min(...energyValues);
+    let maxUsage = Math.max(...energyValues);
+
+    // Update the Sticky Footer dynamically
+    document.getElementById('totalEnergy').textContent = totalEnergy;
+    document.getElementById('totalCost').textContent = totalCost.toFixed(2);
+    document.getElementById('minUsage').textContent = minUsage;
+    document.getElementById('maxUsage').textContent = maxUsage;
+}
+
+// Run Total Calculation on Page Load
+document.addEventListener("DOMContentLoaded", function () {
+    calculateTotals();
+});
+
+
+
