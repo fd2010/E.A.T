@@ -13,7 +13,6 @@ const timeLabels = {
     monthly: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
 };
 
-// **Energy Data Per Area**
 const energyData = {
     meeting: { daily: [5, 8, 10, 12, 6], weekly: [40, 50, 45, 60, 55, 48, 52], monthly: [150, 170, 160, 180] },
     common: { daily: [3, 5, 7, 6, 4], weekly: [30, 35, 40, 38, 36, 33, 31], monthly: [100, 120, 130, 110] },
@@ -21,7 +20,6 @@ const energyData = {
     special: { daily: [7, 10, 12, 15, 8], weekly: [50, 60, 55, 70, 65, 58, 62], monthly: [200, 220, 210, 230] }
 };
 
-// **Device Types by Area**
 const devicesByArea = {
     meeting: [{ name: "Projector", energy: 5, cost: 2.5 }, { name: "Speakers", energy: 2, cost: 1.2 }, { name: "Lights", energy: 8, cost: 4 }],
     work: [{ name: "Computers", energy: 15, cost: 8 }, { name: "Monitors", energy: 10, cost: 5 }, { name: "Printers", energy: 6, cost: 3 }],
@@ -37,60 +35,65 @@ let energyChart, costChart, devicePieChart, deviceBarChart;
 
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
+    if (energyChart) energyChart.destroy();
+    if (costChart) costChart.destroy();
+
     energyChart = new Chart(areaTimeEnergyCtx, {
         type: 'line',
-        data: { labels: timeLabels.daily, datasets: [{ label: 'Energy (kW)', data: energyData.meeting.daily, borderColor: 'blue', fill: false }] },
+        data: {
+            labels: timeLabels[selectedTime],
+            datasets: [{
+                label: 'Energy (kW)',
+                data: energyData[selectedArea][selectedTime],
+                borderColor: 'blue',
+                fill: false
+            }]
+        },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
     costChart = new Chart(areaTimeCostCtx, {
         type: 'line',
-        data: { labels: timeLabels.daily, datasets: [{ label: 'Cost (£)', data: energyData.meeting.daily.map(x => x * 2), borderColor: 'red', fill: false }] },
+        data: {
+            labels: timeLabels[selectedTime],
+            datasets: [{
+                label: 'Cost (£)',
+                data: energyData[selectedArea][selectedTime].map(x => x * 2),
+                borderColor: 'red',
+                fill: false
+            }]
+        },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 }
 
-// **Function to Update Time-Based Graphs**
+// **Update Time Graphs Based on Period Selection**
 function updateTimeGraph(period) {
-    if (!energyChart || !costChart) return;
-
     selectedTime = period;
-
-    energyChart.data.labels = timeLabels[period];
-    energyChart.data.datasets[0].data = energyData[selectedArea][period];
-    energyChart.update();
-
-    costChart.data.labels = timeLabels[period];
-    costChart.data.datasets[0].data = energyData[selectedArea][period].map(x => x * 2);
-    costChart.update();
+    createTimeGraphs();
 }
 
 // **Update Area Data on Selection**
 document.getElementById('areaTypeDropdown').addEventListener('change', function () {
     selectedArea = this.value;
-    updateAreaData(selectedArea);
+    updateAreaData();
 });
 
-function updateAreaData(area) {
-    selectedArea = area;
-
+function updateAreaData() {
     let deviceHTML = "";
     let deviceNames = [];
     let deviceEnergy = [];
 
-    devicesByArea[area].forEach(device => {
+    devicesByArea[selectedArea].forEach(device => {
         deviceHTML += `<div class="device-panel">
                           <h3>${device.name}</h3>
                           <p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p>
                       </div>`;
-
         deviceNames.push(device.name);
         deviceEnergy.push(device.energy);
     });
 
     document.getElementById('deviceList').innerHTML = deviceHTML;
-
-    updateTimeGraph(selectedTime); // ✅ Ensures time graphs update
 
     if (devicePieChart) devicePieChart.destroy();
     if (deviceBarChart) deviceBarChart.destroy();
@@ -105,13 +108,14 @@ function updateAreaData(area) {
         data: { labels: deviceNames, datasets: [{ label: 'Energy Usage (kW)', data: deviceEnergy, backgroundColor: 'purple' }] },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
+
+    createTimeGraphs();
 }
 
 // **Initialization on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('areaTypeDropdown').value = "meeting";
-    createTimeGraphs();
-    updateAreaData("meeting");
+    updateAreaData();
     calculateTotals();
 });
 
