@@ -50,6 +50,10 @@
   backdrop-filter: blur(2px);
 }
 
+.main-content {
+    padding-bottom: 80px;
+
+
 /* Graph Section */
 .graph-section {
     width: 100%;
@@ -84,6 +88,7 @@
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-bottom: 20px;
 }
 
 .graph-buttons button:hover {
@@ -141,27 +146,6 @@
 .device-panel h3 {
     margin-bottom: 5px;
     color: #2c3e50;
-}
-
-/* Green energy Section */
-.green-energy-btn {
-    display: block;           /* Makes the button a block element */
-    width: 100%;              /* Full width */
-    background-color: #c1cbb1; /* Matching green accent from your header */
-    color: #000000;              /* White text for contrast */
-    border: none;
-    padding: 20px 0;          /* Increased vertical padding for better readability */
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;       /* Slightly rounded corners */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;       /* Center the content */
-    margin: 20px 0;           /* Add some vertical spacing */
-}
-
-.green-energy-btn:hover {
-    background-color: #93ab6e; /* A slightly darker shade on hover */
 }
 
 .button-content {
@@ -256,4 +240,19 @@
     font-weight: 400;
     margin: 5px 0 0;
     color: #B0B0B0; /* Slightly lighter for description text */
+}
+
+#areaTypeDropdown {
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}
+
+#areaTypeDropdown:hover {
+    border-color: #c69307;
 }

@@ -46,17 +46,20 @@
         <!-- Section 2: Time-wise Usage for Selected Area -->
         <section class="graph-section">
             <h2 class="h2Light">Energy & Cost Usage Over Time</h2>
+
             <div class="graph-buttons">
                 <button onclick="updateTimeGraph('daily')">Daily</button>
                 <button onclick="updateTimeGraph('weekly')">Weekly</button>
                 <button onclick="updateTimeGraph('monthly')">Monthly</button>
             </div>
+            
             <div class="graph-container">
                 <canvas id="areaTimeCostChart"></canvas>
             </div>
             <div class="graph-container">
                 <canvas id="areaTimeEnergyChart"></canvas>
             </div>
+
         </section>
 
         <!-- Section 3: Comparing Device Types in Selected Area -->
@@ -105,7 +108,7 @@
 
     <!-- Back Button -->
     <div style="width: 100%">
-        <a href="dashboard.html">
+        <a href="energyUsage.html">
             <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
         </a>
     </div>
