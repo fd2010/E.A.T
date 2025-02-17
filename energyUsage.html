@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Usage Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/powerUsagePage.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bodyLight">
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="h1Light">Energy Usage Dashboard</h1>
+        <h2 class="h2Light">Track your energy consumption and costs</h2>
+    </header>
+
+    <main class="main-content">
+
+        <!-- Section 1: Line Graphs for Total Energy & Cost -->
+        <section class="graph-section">
+            <h2 class="h2Light">Total Energy & Cost Over Time</h2>
+            <div class="graph-container">
+                <canvas id="energyCostChart"></canvas>
+            </div>
+            <div class="graph-container">
+                <canvas id="energyUsageChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 2: Area-Wise Energy Usage -->
+        <section class="graph-section" onclick="location.href='areaWise.html'" style="cursor: pointer;">
+            <h2 class="h2Light">Energy Usage by Area</h2>
+            <div class="graph-container">
+                <canvas id="areaPieChart"></canvas>
+            </div>
+            <div class="graph-container">
+                <canvas id="areaBarChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 3: Device Type Energy Usage -->
+        <section class="graph-section" onclick="location.href='deviceType.html'" style="cursor: pointer;">
+            <h2 class="h2Light">Energy Usage by Device Type</h2>
+            <div class="graph-container">
+                <canvas id="devicePieChart"></canvas>
+            </div>
+            <div class="graph-container">
+                <canvas id="deviceBarChart"></canvas>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Back Button -->
+    <div style="width: 100%">
+        <a href="dashboard.html">
+            <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
+        </a>
+    </div>
+
+    <br>
+
+    <!-- Company name -->
+    <div class="divLight">
+        <p id="companyName">PearCare.Inc</p>
+        <div id="line"></div>
+    </div>
+
+    <script src="./javascript/powerUsage.js"></script>
+</body>
+
+
+</html>
