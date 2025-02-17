@@ -29,9 +29,8 @@ const costData = {
 const areaData = {
     "Meeting Room": 30,
     "Workstations": 40,
-    "Cafeteria": 25,
-    "Reception": 20,
-    "Conference Room": 35
+    "Common": 25,
+    "Special": 20,
 };
 
 // Data for Device-wise Usage (kWh)
@@ -40,7 +39,8 @@ const deviceData = {
     "Lights": 20,
     "Heating": 15,
     "Monitors": 25,
-    "Speakers": 10
+    "Speakers": 10,
+    "Vending Machine": 10
 };
 
 // Device Types by Room
@@ -58,16 +58,11 @@ const devicesByArea = {
     "common": [
         { name: "Lights", energy: 12, cost: 6 },
         { name: "Air Conditioning", energy: 20, cost: 10 },
-        { name: "Coffee Machine", energy: 8, cost: 4 }
+        { name: "Vending Machine", energy: 8, cost: 4 }
     ],
-    "cafeteria": [
-        { name: "Microwave", energy: 7, cost: 3.5 },
-        { name: "Fridge", energy: 18, cost: 9 },
-        { name: "Oven", energy: 25, cost: 12 }
-    ],
-    "reception": [
-        { name: "TV Screen", energy: 10, cost: 5 },
-        { name: "Decorative Lighting", energy: 8, cost: 4 }
+    "special": [
+        { name: "Heating", energy: 25, cost: 12 },
+        { name: "Speakers", energy: 10, cost: 5 }
     ]
 };
 
@@ -100,7 +95,7 @@ new Chart(areaPieCtx, {
     type: 'pie',
     data: {
         labels: Object.keys(areaData),
-        datasets: [{ data: Object.values(areaData), backgroundColor: ['red', 'blue', 'green', 'orange', 'purple'] }]
+        datasets: [{ data: Object.values(areaData), backgroundColor: ['red', 'blue', 'green', 'purple'] }]
     }
 });
 
@@ -119,7 +114,7 @@ new Chart(devicePieCtx, {
     type: 'pie',
     data: {
         labels: Object.keys(deviceData),
-        datasets: [{ data: Object.values(deviceData), backgroundColor: ['red', 'blue', 'green', 'orange', 'purple'] }]
+        datasets: [{ data: Object.values(deviceData), backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal'] }]
     }
 });
 

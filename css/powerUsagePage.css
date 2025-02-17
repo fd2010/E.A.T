@@ -51,7 +51,7 @@
 }
 
 .main-content {
-    padding-bottom: 80px;
+    padding-bottom: 120px;
 }
 
 
@@ -166,6 +166,7 @@
     position: relative;
     display: block;
     margin-top: 20px;
+    bottom: 80px;
 }
 
 .back-icon {
@@ -173,6 +174,14 @@
     left: 20px;
     width: 20px;
     height: 20px;
+}
+
+/* Company Branding */
+.divLight {
+    position: relative; /* Ensure it stacks correctly */
+    z-index: 1100; /* Higher than the footer */
+    margin-bottom: 100px; /* Add space so it's not covered */
+    text-align: center;
 }
 
 /* Footer Styles */
