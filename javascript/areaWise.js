@@ -130,7 +130,7 @@ function updateAreaData(area) {
     let deviceEnergy = [];
 
     devicesByArea[area].forEach(device => {
-        deviceHTML += <div class="device-panel"><h3>${device.name}</h3><p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p></div>;
+        deviceHTML += `<div class="device-panel"><h3>${device.name}</h3><p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p></div>`;
         deviceNames.push(device.name);
         deviceEnergy.push(device.energy);
     });
