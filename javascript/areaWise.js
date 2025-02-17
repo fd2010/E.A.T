@@ -1,4 +1,4 @@
-// Chart Elements
+
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
 const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
 const areaTimeCostCtx = document.getElementById('areaTimeCostChart').getContext('2d');
@@ -31,7 +31,6 @@ const devicesByArea = {
 let selectedArea = "meeting";
 let selectedTime = "daily";
 
-let energyChart, costChart, devicePieChart, deviceBarChart;
 
 // **Initialize Area Comparison Charts**
 let areaPieChart = new Chart(areaComparisonPieCtx, {
@@ -58,11 +57,10 @@ let areaBarChart = new Chart(areaComparisonBarCtx, {
     options: { responsive: true, scales: { y: { beginAtZero: true } } }
 });
 
+let energyChart, costChart, devicePieChart, deviceBarChart;
+
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
-    if (energyChart) energyChart.destroy();
-    if (costChart) costChart.destroy();
-
     energyChart = new Chart(areaTimeEnergyCtx, {
         type: 'line',
         data: {
@@ -92,10 +90,18 @@ function createTimeGraphs() {
     });
 }
 
-// **Update Time Graphs Based on Period Selection**
+// **Update Time Graphs Based on Period Selection (WITHOUT Recreating)**
 function updateTimeGraph(period) {
     selectedTime = period;
-    createTimeGraphs();
+
+    // **Update existing charts instead of creating new ones**
+    energyChart.data.labels = timeLabels[selectedTime];
+    energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime];
+    energyChart.update();
+
+    costChart.data.labels = timeLabels[selectedTime];
+    costChart.data.datasets[0].data = energyData[selectedArea][selectedTime].map(x => x * 2);
+    costChart.update();
 }
 
 // **Update Area Data on Selection**
@@ -120,6 +126,7 @@ function updateAreaData() {
 
     document.getElementById('deviceList').innerHTML = deviceHTML;
 
+    // **Destroy and recreate only the device charts when changing area**
     if (devicePieChart) devicePieChart.destroy();
     if (deviceBarChart) deviceBarChart.destroy();
 
@@ -134,12 +141,14 @@ function updateAreaData() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
-    createTimeGraphs();
+    // **Update time graphs instead of recreating them**
+    updateTimeGraph(selectedTime);
 }
 
 // **Initialization on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('areaTypeDropdown').value = "meeting";
+    createTimeGraphs();
     updateAreaData();
     calculateTotals();
 });
