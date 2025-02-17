@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power Usage</title>
+    <title>Energy Usage Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/powerUsagePage.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -14,110 +14,82 @@
 
     <!-- Header Section -->
     <header class="header">
-        <h1 class="h1Light">Power Usage</h1>
-        <h2 class="h2Light">Here is your overall energy consumption rate</h2>
+        <h1 class="h1Light">Energy Usage Dashboard</h1>
+        <h2 class="h2Light">Track your energy consumption and costs</h2>
     </header>
 
     <main class="main-content">
 
-        <!-- Graph Section -->
+        <!-- Section 1: Line Graphs for Total Energy & Cost -->
         <section class="graph-section">
-            <div class="graph-container">
-                <canvas id="powerUsageChart"></canvas>
-            </div>
+            <h2 class="h2Light">Total Energy & Cost Over Time</h2>
+
+            <!-- Time Selection Buttons -->
             <div class="graph-buttons">
-                <button onclick="updateChart('daily')">Daily</button>
-                <button onclick="updateChart('weekly')">Weekly</button>
-                <button onclick="updateChart('monthly')">Monthly</button>
+                <button onclick="updateTimeGraphs('daily')">Daily</button>
+                <button onclick="updateTimeGraphs('weekly')">Weekly</button>
+                <button onclick="updateTimeGraphs('monthly')">Monthly</button>
             </div>
-        </section>
 
-        <!-- Power Usage & Expenses Panels -->
-        <section class="info-panels">
-            <div class="panel-wrapper">
-                <div class="panel power-panel">
-                    <h2>Power Usage</h2>
-                    <p>Total usage for this month: 70kWh</p>
-                    <p>Today's usage: 5kWh</p>
-                </div>
-                <div class="panel expense-panel">
-                    <h2>Expenses</h2>
-                    <p>Total usage for this month: £270.46</p>
-                    <p>Today's usage: £29.38</p>
-                </div>
+            <!-- Graphs -->
+            <div class="graph-container">
+                <canvas id="energyCostChart"></canvas>
             </div>
-        </section>
+            <div class="graph-container">
+                <canvas id="energyUsageChart"></canvas>
+            </div>
 
-        <!-- Green Energy Button -->
-        <section class="info-panels">
-            <div class="panel-wrapper">
-                <button class="green-energy-btn" onclick="location.href='greenEnergy.html'">
-                    <h2>Green Energy</h2>
-                    <p>Explore sustainable energy tips & savings</p>
-                </button>
-            </div>
+
         </section>
 
 
-        <!-- Device Usage Panel -->
-        <section class="device-section">
-            <div class="panel device-panel-container">
-                <h2>Device Usage</h2>
-                <div class="device-panel">
-                    <h3>Light</h3>
-                    <p>1kWh, 2 hours 28 min today</p>
-                </div>
-                <div class="device-panel">
-                    <h3>A/C</h3>
-                    <p>2kWh, 1 hour 20 min today</p>
-                </div>
-                <div class="device-panel">
-                    <h3>Projector</h3>
-                    <p>1.5kWh, 1 hour today</p>
-                </div>
-                <div class="device-panel">
-                    <h3>Speaker</h3>
-                    <p>0.5kWh, 3 hours today</p>
-                </div>
-                <div class="device-panel">
-                    <h3>Monitor</h3>
-                    <p>0.8kWh, 4 hours today</p>
-                </div>
-                <div class="device-panel">
-                    <h3>Whiteboard Display</h3>
-                    <p>1kWh, 2 hours today</p>
-                </div>
-                <div class="device-panel">
-                    <h3>Conference Phone</h3>
-                    <p>0.3kWh, 5 hours today</p>
-                </div>
+        <!-- Section 2: Area-Wise Energy Usage -->
+        <section class="graph-section" onclick="location.href='areaWise.html'" style="cursor: pointer;">
+            <h2 class="h2Light">Energy Usage by Area</h2>
+            <div class="graph-container">
+                <canvas id="areaPieChart"></canvas>
+            </div>
+            <div class="graph-container">
+                <canvas id="areaBarChart"></canvas>
             </div>
         </section>
+
+        <!-- Section 3: Device Type Energy Usage -->
+        <section class="graph-section" onclick="location.href='deviceType.html'" style="cursor: pointer;">
+            <h2 class="h2Light">Energy Usage by Device Type</h2>
+            <div class="graph-container">
+                <canvas id="devicePieChart"></canvas>
+            </div>
+            <div class="graph-container">
+                <canvas id="deviceBarChart"></canvas>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Sticky Footer for Summary Data (Dynamically Updated) -->
-    <footer class="sticky-footer">
-        <div class="metric-box">
-            <h2><span id="totalEnergy">-</span></h2>
-            <p>Total Energy Used</p>
-        </div>
-        <div class="metric-box">
-            <h2><span id="totalCost">-</span></h2>
-            <p>Total Cost of Energy</p>
-        </div>
-        <div class="metric-box">
-            <h2><span id="minUsage">-</span></h2>
-            <p>Min Energy Used By</p>
-        </div>
-        <div class="metric-box">
-            <h2><span id="maxUsage">-</span></h2>
-            <p>Max Energy Used By</p>
-        </div>
-    </footer>
+        <!-- Sticky Footer for Summary Data -->
+        <footer class="sticky-footer">
+            <div class="metric-box">
+                <h2><span id="totalEnergy">500</span> kWh</h2>
+                <p>Total Energy Used</p>
+            </div>
+            <div class="metric-box">
+                <h2>£<span id="totalCost">1200</span></h2>
+                <p>Total Cost of Energy</p>
+            </div>
+            <div class="metric-box">
+                <h2><span id="minUsage">20</span> kWh</h2>
+                <p>Minimum Energy Usage</p>
+            </div>
+            <div class="metric-box">
+                <h2><span id="maxUsage">80</span> kWh</h2>
+                <p>Maximum Energy Usage</p>
+            </div>
+        </footer>
 
 
     <!-- Back Button -->
-    <div style="width: 100%">
+    <div style="width: 100%" class="back-link">
         <a href="dashboard.html">
             <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
         </a>
@@ -133,7 +105,6 @@
 
     <script src="./javascript/powerUsage.js"></script>
 </body>
-
 
 
 </html>
