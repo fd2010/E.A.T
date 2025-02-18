@@ -56,6 +56,7 @@
 
 
 /* Graph Section */
+
 .graph-section {
     display: flex;
     flex-direction: column;
@@ -63,6 +64,7 @@
     justify-content: center;
     margin: 20px 0;
     width: 100%;
+    margin-bottom: 30px;
 }
 
 .graph-container-wrapper {
@@ -75,9 +77,20 @@
 
 .graph-container {
     flex: 1;
-    min-width: 400px; /* Adjust as needed */
+    min-width: 400px; 
     max-width: 600px;
+    width: 100%;
     height: 300px;
+    background-color: #fff;
+    border: 2px solid #dcdcdc;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+
 }
 
 .graph-buttons {
