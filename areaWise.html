@@ -22,18 +22,12 @@
 
         <!-- Section 1: Comparing Areas (Initial View) -->
         <section class="graph-section">
-            <h2 class="h2Light">Energy Usage by Area</h2>
-
-            <div class="graph-container-wrapper">
-                <!-- Pie Chart -->
-                <div class="graph-container pie-chart-container">
-                    <canvas id="areaPieChart"></canvas>
-                </div>
-
-                <!-- Bar Chart -->
-                <div class="graph-container">
-                    <canvas id="areaBarChart"></canvas>
-                </div>
+            <h2 class="h2Light">Energy Usage Office Areas</h2>
+            <div class="graph-container">
+                <canvas id="areaComparisonPie"></canvas>
+            </div>
+            <div class="graph-container">
+                <canvas id="areaComparisonBar"></canvas>
             </div>
         </section>
 
@@ -57,40 +51,32 @@
                 <button onclick="updateTimeGraph('monthly')">Monthly</button>
             </div>
 
-            <div class="graph-container-wrapper">
-                <div class="graph-container">
-                    <canvas id="energyCostChart"></canvas>
-                </div>
-                <div class="graph-container">
-                    <canvas id="energyUsageChart"></canvas>
-                </div>
+            <div class="graph-container">
+                <canvas id="areaTimeCostChart"></canvas>
             </div>
+            <div class="graph-container">
+                <canvas id="areaTimeEnergyChart"></canvas>
+            </div>
+
         </section>
 
         <!-- Section 3: Comparing Device Types in Selected Area -->
         <section class="graph-section">
-            <h2 class="h2Light">Energy Usage by Area</h2>
-
-            <div class="graph-container-wrapper">
-                <div class="graph-container pie-chart-container">
-                    <canvas id="areaPieChart"></canvas>
-                </div>
-                <div class="graph-container">
-                    <canvas id="areaBarChart"></canvas>
-                </div>
+            <h2 class="h2Light">Energy Usage in Selected Area</h2>
+            <div class="graph-container">
+                <canvas id="devicePieChart"></canvas>
+            </div>
+            <div class="graph-container">
+                <canvas id="deviceBarChart"></canvas>
             </div>
         </section>
 
         <!-- Section 4: List of Devices in Selected Area -->
-        <section class="graph-section">
-            <h2 class="h2Light">Energy Usage by Device Type</h2>
-
-            <div class="graph-container-wrapper">
-                <div class="graph-container pie-chart-container">
-                    <canvas id="devicePieChart"></canvas>
-                </div>
-                <div class="graph-container">
-                    <canvas id="deviceBarChart"></canvas>
+        <section class="device-section">
+            <div class="panel device-panel-container">
+                <h2>Device List in Selected Area</h2>
+                <div id="deviceList">
+                    <!-- Device details will be dynamically inserted here -->
                 </div>
             </div>
         </section>
@@ -119,7 +105,7 @@
 
 
     <!-- Back Button -->
-    <div style="width: 100%">
+    <div style="width: 100%" >
         <a href="powerUsage.html" class="back-link">
             <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
         </a>
