@@ -1,4 +1,3 @@
-
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
 const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
 const areaTimeCostCtx = document.getElementById('areaTimeCostChart').getContext('2d');
@@ -21,16 +20,30 @@ const energyData = {
 };
 
 const devicesByArea = {
-    meeting: [{ name: "Projector", energy: 5, cost: 2.5 }, { name: "Speakers", energy: 2, cost: 1.2 }, { name: "Lights", energy: 8, cost: 4 }],
-    work: [{ name: "Computers", energy: 15, cost: 8 }, { name: "Monitors", energy: 10, cost: 5 }, { name: "Printers", energy: 6, cost: 3 }],
-    common: [{ name: "Lights", energy: 12, cost: 6 }, { name: "Air Conditioning", energy: 20, cost: 10 }, { name: "Vending Machine", energy: 8, cost: 4 }],
-    special: [{ name: "Heating", energy: 25, cost: 12 }, { name: "Speakers", energy: 10, cost: 5 }]
+    meeting: [
+        { name: "Projector", energy: 5, cost: 2.5 },
+        { name: "Speakers", energy: 2, cost: 1.2 },
+        { name: "Lights", energy: 8, cost: 4 }
+    ],
+    work: [
+        { name: "Computers", energy: 15, cost: 8 },
+        { name: "Monitors", energy: 10, cost: 5 },
+        { name: "Printers", energy: 6, cost: 3 }
+    ],
+    common: [
+        { name: "Lights", energy: 12, cost: 6 },
+        { name: "Air Conditioning", energy: 20, cost: 10 },
+        { name: "Vending Machine", energy: 8, cost: 4 }
+    ],
+    special: [
+        { name: "Heating", energy: 25, cost: 12 },
+        { name: "Speakers", energy: 10, cost: 5 }
+    ]
 };
 
 // **DEFAULT SELECTION**
 let selectedArea = "meeting";
 let selectedTime = "daily";
-
 
 // **Initialize Area Comparison Charts**
 let areaPieChart = new Chart(areaComparisonPieCtx, {
@@ -54,7 +67,12 @@ let areaBarChart = new Chart(areaComparisonBarCtx, {
             backgroundColor: 'teal'
         }]
     },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    options: {
+        responsive: true,
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
 });
 
 let energyChart, costChart, devicePieChart, deviceBarChart;
@@ -72,7 +90,10 @@ function createTimeGraphs() {
                 fill: false
             }]
         },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
     });
 
     costChart = new Chart(areaTimeCostCtx, {
@@ -86,7 +107,10 @@ function createTimeGraphs() {
                 fill: false
             }]
         },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
     });
 }
 
@@ -102,6 +126,10 @@ function updateTimeGraph(period) {
     costChart.data.labels = timeLabels[selectedTime];
     costChart.data.datasets[0].data = energyData[selectedArea][selectedTime].map(x => x * 2);
     costChart.update();
+
+    // Highlight active button
+    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+    document.getElementById(period).classList.add("active-button");
 }
 
 // **Update Area Data on Selection**
@@ -116,10 +144,11 @@ function updateAreaData() {
     let deviceEnergy = [];
 
     devicesByArea[selectedArea].forEach(device => {
-        deviceHTML += `<div class="device-panel">
-                          <h3>${device.name}</h3>
-                          <p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p>
-                      </div>`;
+        deviceHTML += `
+            <div class="device-panel">
+                <h3>${device.name}</h3>
+                <p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p>
+            </div>`;
         deviceNames.push(device.name);
         deviceEnergy.push(device.energy);
     });
@@ -132,13 +161,29 @@ function updateAreaData() {
 
     devicePieChart = new Chart(devicePieCtx, {
         type: 'pie',
-        data: { labels: deviceNames, datasets: [{ data: deviceEnergy, backgroundColor: ['red', 'blue', 'green', 'orange', 'purple'] }] }
+        data: {
+            labels: deviceNames,
+            datasets: [{
+                data: deviceEnergy,
+                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']
+            }]
+        }
     });
 
     deviceBarChart = new Chart(deviceBarCtx, {
         type: 'bar',
-        data: { labels: deviceNames, datasets: [{ label: 'Energy Usage (kW)', data: deviceEnergy, backgroundColor: 'purple' }] },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        data: {
+            labels: deviceNames,
+            datasets: [{
+                label: 'Energy Usage (kW)',
+                data: deviceEnergy,
+                backgroundColor: 'purple'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
     });
 
     // **Update time graphs instead of recreating them**
@@ -165,8 +210,8 @@ function calculateTotals() {
         });
     });
 
-    document.getElementById('totalEnergy').textContent = totalEnergy + " kWh";
-    document.getElementById('totalCost').textContent = "£" + totalCost.toFixed(2);
+    document.getElementById('totalEnergy').textContent = totalEnergy;
+    document.getElementById('totalCost').textContent = totalCost.toFixed(2);
 }
 
 // **Run on Page Load**

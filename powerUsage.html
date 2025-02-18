@@ -32,13 +32,14 @@
             </div>
 
             <!-- Graphs -->
-            <div class="graph-container">
-                <canvas id="energyCostChart"></canvas>
+            <div class="graph-container-wrapper">
+                <div class="graph-container">
+                    <canvas id="energyCostChart"></canvas>
+                </div>
+                <div class="graph-container">
+                    <canvas id="energyUsageChart"></canvas>
+                </div>
             </div>
-            <div class="graph-container">
-                <canvas id="energyUsageChart"></canvas>
-            </div>
-
 
         </section>
 
@@ -46,50 +47,54 @@
         <!-- Section 2: Area-Wise Energy Usage -->
         <section class="graph-section" onclick="location.href='areaWise.html'" style="cursor: pointer;">
             <h2 class="h2Light">Energy Usage by Area</h2>
-            <div class="graph-container">
-                <canvas id="areaPieChart"></canvas>
-            </div>
-            <div class="graph-container">
-                <canvas id="areaBarChart"></canvas>
+            <div class="graph-container-wrapper">
+                <div class="graph-container">
+                    <canvas id="areaPieChart"></canvas>
+                </div>
+                <div class="graph-container">
+                    <canvas id="areaBarChart"></canvas>
+                </div>
             </div>
         </section>
 
         <!-- Section 3: Device Type Energy Usage -->
         <section class="graph-section" onclick="location.href='deviceType.html'" style="cursor: pointer;">
             <h2 class="h2Light">Energy Usage by Device Type</h2>
-            <div class="graph-container">
-                <canvas id="devicePieChart"></canvas>
-            </div>
-            <div class="graph-container">
-                <canvas id="deviceBarChart"></canvas>
+            <div class="graph-container-wrapper">
+                <div class="graph-container">
+                    <canvas id="devicePieChart"></canvas>
+                </div>
+                <div class="graph-container">
+                    <canvas id="deviceBarChart"></canvas>
+                </div>
             </div>
         </section>
 
     </main>
 
-        <!-- Sticky Footer for Summary Data -->
-        <footer class="sticky-footer">
-            <div class="metric-box">
-                <h2><span id="totalEnergy">500</span> kWh</h2>
-                <p>Total Energy Used</p>
-            </div>
-            <div class="metric-box">
-                <h2>£<span id="totalCost">1200</span></h2>
-                <p>Total Cost of Energy</p>
-            </div>
-            <div class="metric-box">
-                <h2><span id="minUsage">20</span> kWh</h2>
-                <p>Minimum Energy Usage</p>
-            </div>
-            <div class="metric-box">
-                <h2><span id="maxUsage">80</span> kWh</h2>
-                <p>Maximum Energy Usage</p>
-            </div>
-        </footer>
+    <!-- Sticky Footer for Summary Data -->
+    <footer class="sticky-footer">
+        <div class="metric-box">
+            <h2><span id="totalEnergy"></span> kWh</h2>
+            <p>Total Energy Used</p>
+        </div>
+        <div class="metric-box">
+            <h2>£<span id="totalCost"></span></h2>
+            <p>Total Cost of Energy</p>
+        </div>
+        <div class="metric-box">
+            <h2><span id="minUsage"></span> kWh</h2>
+            <p>Minimum Energy Usage by Room</p>
+        </div>
+        <div class="metric-box">
+            <h2><span id="maxUsage"></span> kWh</h2>
+            <p>Maximum Energy Usage by Room</p>
+        </div>
+    </footer>
 
 
     <!-- Back Button -->
-    <div style="width: 100%" >
+    <div style="width: 100%">
         <a href="dashboard.html" class="back-link">
             <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
         </a>

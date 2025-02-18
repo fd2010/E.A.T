@@ -75,20 +75,36 @@ let energyChart, costChart;
 function createTimeGraphs() {
     energyChart = new Chart(energyUsageCtx, {
         type: 'line',
-        data: { labels: timeLabels[selectedTime], datasets: [{ label: 'Energy Usage (kW)', data: energyData[selectedTime], borderColor: 'blue', fill: false }] },
+        data: {
+            labels: timeLabels[selectedTime],
+            datasets: [{
+                label: 'Energy Usage (kW)',
+                data: energyData[selectedTime],
+                borderColor: 'blue',
+                fill: false
+            }]
+        },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
     costChart = new Chart(energyCostCtx, {
         type: 'line',
-        data: { labels: timeLabels[selectedTime], datasets: [{ label: 'Energy Cost (£)', data: costData[selectedTime], borderColor: 'red', fill: false }] },
+        data: {
+            labels: timeLabels[selectedTime],
+            datasets: [{
+                label: 'Energy Cost (£)',
+                data: costData[selectedTime],
+                borderColor: 'red',
+                fill: false
+            }]
+        },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 }
 
 // Function to Update Time-Based Graphs
 function updateTimeGraphs(period) {
-    selectedTime = period; // ✅ Ensure correct dataset is loaded
+    selectedTime = period;
 
     energyChart.data.labels = timeLabels[period];
     energyChart.data.datasets[0].data = energyData[period];
@@ -97,29 +113,59 @@ function updateTimeGraphs(period) {
     costChart.data.labels = timeLabels[period];
     costChart.data.datasets[0].data = costData[period];
     costChart.update();
+
+    // Highlight active button
+    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+    document.getElementById(period).classList.add("active-button");
 }
 
 // Initialize Area-wise Usage Charts
 new Chart(areaPieCtx, {
     type: 'pie',
-    data: { labels: Object.keys(areaData), datasets: [{ data: Object.values(areaData), backgroundColor: ['red', 'blue', 'green', 'purple'] }] }
+    data: {
+        labels: Object.keys(areaData),
+        datasets: [{
+            data: Object.values(areaData),
+            backgroundColor: ['red', 'blue', 'green', 'purple']
+        }]
+    }
 });
 
 new Chart(areaBarCtx, {
     type: 'bar',
-    data: { labels: Object.keys(areaData), datasets: [{ label: 'Energy Usage (kW)', data: Object.values(areaData), backgroundColor: 'teal' }] },
+    data: {
+        labels: Object.keys(areaData),
+        datasets: [{
+            label: 'Energy Usage (kW)',
+            data: Object.values(areaData),
+            backgroundColor: 'teal'
+        }]
+    },
     options: { responsive: true, scales: { y: { beginAtZero: true } } }
 });
 
 // Initialize Device-wise Usage Charts
 new Chart(devicePieCtx, {
     type: 'pie',
-    data: { labels: Object.keys(deviceData), datasets: [{ data: Object.values(deviceData), backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal'] }] }
+    data: {
+        labels: Object.keys(deviceData),
+        datasets: [{
+            data: Object.values(deviceData),
+            backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
+        }]
+    }
 });
 
 new Chart(deviceBarCtx, {
     type: 'bar',
-    data: { labels: Object.keys(deviceData), datasets: [{ label: 'Energy Usage (kW)', data: Object.values(deviceData), backgroundColor: 'purple' }] },
+    data: {
+        labels: Object.keys(deviceData),
+        datasets: [{
+            label: 'Energy Usage (kW)',
+            data: Object.values(deviceData),
+            backgroundColor: 'purple'
+        }]
+    },
     options: { responsive: true, scales: { y: { beginAtZero: true } } }
 });
 
@@ -157,8 +203,8 @@ function calculateTotals() {
         }
     });
 
-    document.getElementById('totalEnergy').textContent = `${totalEnergy} kWh`;
-    document.getElementById('totalCost').textContent = `£${totalCost.toFixed(2)}`;
+    document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
+    document.getElementById('totalCost').textContent = `${totalCost.toFixed(2)}`;
     document.getElementById('minUsage').textContent = `${minRoom} (${minDevice})`;
     document.getElementById('maxUsage').textContent = `${maxRoom} (${maxDevice})`;
 }

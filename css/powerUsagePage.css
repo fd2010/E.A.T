@@ -57,24 +57,27 @@
 
 /* Graph Section */
 .graph-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
     width: 100%;
-    max-width: 800px;
-    margin-bottom: 30px;
+}
+
+.graph-container-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
 }
 
 .graph-container {
-    width: 100%;
+    flex: 1;
+    min-width: 400px; /* Adjust as needed */
+    max-width: 600px;
     height: 300px;
-    background-color: #fff;
-    border: 2px solid #dcdcdc;
-    border-radius: 15px;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-
 }
 
 .graph-buttons {
@@ -96,6 +99,10 @@
 
 .graph-buttons button:hover {
     background-color: #ad8004;
+}
+
+.active-button {
+    background-color: #ad8004; 
 }
 
 /* Info Panels */
