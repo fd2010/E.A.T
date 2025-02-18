@@ -93,6 +93,12 @@
 
 }
 
+.pie-chart-container {
+    width: 300px; /* Adjust width */
+    height: 300px; /* Adjust height */
+}
+
+
 .graph-buttons {
     text-align: center;
 }
