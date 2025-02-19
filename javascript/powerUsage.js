@@ -1,5 +1,5 @@
 // Import all shared data from energyData.js
-import { timeLabels, energyData, costData, areaData, deviceData, devicesByArea } from './energyData.js';
+import { timeLabels, totalEnergyData, totalCostData, areaData, deviceData, devicesByArea } from './energyData.js';
 
 // Chart Elements
 const energyCostCtx = document.getElementById('energyCostChart').getContext('2d');
@@ -21,7 +21,7 @@ function createTimeGraphs() {
             labels: timeLabels[selectedTime],
             datasets: [{
                 label: 'Energy Usage (kW)',
-                data: energyData[selectedTime],
+                data: totalEnergyData[selectedTime],
                 borderColor: 'blue',
                 fill: false
             }]
@@ -35,7 +35,7 @@ function createTimeGraphs() {
             labels: timeLabels[selectedTime],
             datasets: [{
                 label: 'Energy Cost (£)',
-                data: costData[selectedTime],
+                data: totalCostData[selectedTime],
                 borderColor: 'red',
                 fill: false
             }]
@@ -49,11 +49,11 @@ function updateTimeGraphs(period) {
     selectedTime = period;
 
     energyChart.data.labels = timeLabels[period];
-    energyChart.data.datasets[0].data = energyData[period];
+    energyChart.data.datasets[0].data = totalEnergyData[period];
     energyChart.update();
 
     costChart.data.labels = timeLabels[period];
-    costChart.data.datasets[0].data = costData[period];
+    costChart.data.datasets[0].data = totalCostData[period];
     costChart.update();
 
     // Highlight the active button
