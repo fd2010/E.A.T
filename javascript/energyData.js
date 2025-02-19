@@ -4,6 +4,20 @@ export const timeLabels = {
     monthly: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
 };
 
+export const totalEnergyData = {
+    daily: [5, 8, 10, 12, 6],
+    weekly: [40, 50, 45, 60, 55, 48, 52],
+    monthly: [150, 170, 160, 180]
+};
+
+export const totalCostData = {
+    daily: [2, 3, 5, 4, 6],
+    weekly: [20, 25, 22, 30, 28, 24, 26],
+    monthly: [90, 100, 95, 105]
+};
+
+
+
 export const energyData = {
     "Meeting Room": {
         daily: [5, 8, 10, 12, 6],
