@@ -49,13 +49,19 @@ function createAreaCharts() {
 
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
+    if (!areaTimeEnergyCtx || !areaTimeCostCtx) {
+        console.error("❌ Canvas elements for energy or cost charts not found.");
+        return;
+    }
+
+    console.log("🔍 Creating Energy Chart...");
     energyChart = new Chart(areaTimeEnergyCtx, {
         type: 'line',
         data: {
-            labels: timeLabels[selectedTime],  // ✅ Correct
+            labels: timeLabels[selectedTime],  
             datasets: [{
                 label: 'Energy (kW)',
-                data: energyData[selectedTime], // ✅ Use only selectedTime
+                data: energyData[selectedTime], 
                 borderColor: 'blue',
                 fill: false
             }]
@@ -63,13 +69,14 @@ function createTimeGraphs() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
+    console.log("🔍 Creating Cost Chart...");
     costChart = new Chart(areaTimeCostCtx, {
         type: 'line',
         data: {
             labels: timeLabels[selectedTime],
             datasets: [{
                 label: 'Cost (£)',
-                data: costData[selectedTime],  // ✅ Use only selectedTime
+                data: costData[selectedTime],  
                 borderColor: 'red',
                 fill: false
             }]
@@ -77,6 +84,7 @@ function createTimeGraphs() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 }
+
 
 
 // **Update Time Graphs Based on Period Selection**
