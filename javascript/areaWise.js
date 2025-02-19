@@ -61,8 +61,8 @@ function createAreaCharts() {
 function createTimeGraphs() {
     console.log("🔍 Initializing Time Graphs...");
 
-    if (!costData) {
-        console.error("❌ costData is missing!");
+    if (!energyData[selectedArea] || !costData[selectedArea]) {
+        console.error(`❌ No energy or cost data found for '${selectedArea}'`);
         return;
     }
 
@@ -72,7 +72,7 @@ function createTimeGraphs() {
             labels: timeLabels[selectedTime],
             datasets: [{
                 label: 'Energy (kW)',
-                data: energyData[selectedTime],
+                data: energyData[selectedArea][selectedTime],
                 borderColor: 'blue',
                 fill: false
             }]
@@ -86,7 +86,7 @@ function createTimeGraphs() {
             labels: timeLabels[selectedTime],
             datasets: [{
                 label: 'Cost (£)',
-                data: costData[selectedTime],
+                data: costData[selectedArea][selectedTime],
                 borderColor: 'red',
                 fill: false
             }]
@@ -100,17 +100,19 @@ window.updateTimeGraphs = function (period) {
     selectedTime = period;
     console.log(`⏳ Updating Time Graphs for ${selectedArea} (${period})`);
 
-    if (!energyData[selectedArea] || !costData[selectedArea]) {
-        console.error(`❌ No energy or cost data found for '${selectedArea}'`);
+    const normalizedArea = normalizeArea(selectedArea);
+
+    if (!energyData[normalizedArea] || !costData[normalizedArea]) {
+        console.error(`❌ No energy or cost data found for '${normalizedArea}'`);
         return;
     }
 
     energyChart.data.labels = timeLabels[selectedTime];
-    energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime]; // ✅ Use selected area
+    energyChart.data.datasets[0].data = energyData[normalizedArea][selectedTime]; // ✅ Use normalized area
     energyChart.update();
 
     costChart.data.labels = timeLabels[selectedTime];
-    costChart.data.datasets[0].data = costData[selectedArea][selectedTime]; // ✅ Use selected area
+    costChart.data.datasets[0].data = costData[normalizedArea][selectedTime]; // ✅ Use normalized area
     costChart.update();
 
     // Highlight the active button
@@ -120,11 +122,11 @@ window.updateTimeGraphs = function (period) {
 
 // **Update Device & Time Graphs When Changing Area**
 function updateAreaData() {
-    selectedArea = normalizeArea(selectedArea);
-    console.log("🔍 Selected Area:", selectedArea);
+    const normalizedArea = normalizeArea(selectedArea);
+    console.log("🔍 Selected Area:", normalizedArea);
 
-    if (!devicesByArea[selectedArea]) {
-        console.error(`❌ No data found for selected area: '${selectedArea}'`);
+    if (!devicesByArea[normalizedArea]) {
+        console.error(`❌ No data found for selected area: '${normalizedArea}'`);
         return;
     }
 
@@ -132,7 +134,7 @@ function updateAreaData() {
     let deviceNames = [];
     let deviceEnergy = [];
 
-    devicesByArea[selectedArea].forEach(device => {
+    devicesByArea[normalizedArea].forEach(device => {
         deviceHTML += `
             <div class="device-panel">
                 <h3>${device.name}</h3>
@@ -175,9 +177,6 @@ function updateAreaData() {
     updateTimeGraphs(selectedTime);
 }
 
-
-
-
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
     let totalEnergy = 0;
@@ -196,7 +195,7 @@ function calculateTotals() {
 
 // **Dropdown Event Listener**
 document.getElementById('areaTypeDropdown').addEventListener('change', function () {
-    selectedArea = normalizeArea(this.value);
+    selectedArea = this.value; // Store the dropdown value
     console.log("🔄 Updating area:", selectedArea);
     updateAreaData();
 });
