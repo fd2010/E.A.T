@@ -1,5 +1,5 @@
 // Import shared data from energyData.js
-import { timeLabels, energyData, devicesByArea } from './energyData.js';
+import { timeLabels, energyData, devicesByArea, deviceData, areaData, deviceData } from './energyData.js';
 
 // Chart Elements
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
@@ -72,7 +72,7 @@ function createTimeGraphs() {
 }
 
 // **Update Time Graphs Based on Period Selection**
-function updateTimeGraph(period) {
+function updateTimeGraphs(period) {
     selectedTime = period;
 
     energyChart.data.labels = timeLabels[selectedTime];
@@ -170,6 +170,11 @@ function calculateTotals() {
 // **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('areaTypeDropdown').value = "meeting";
+
+    document.getElementById("daily").addEventListener("click", () => updateTimeGraphs('daily'));
+    document.getElementById("weekly").addEventListener("click", () => updateTimeGraphs('weekly'));
+    document.getElementById("monthly").addEventListener("click", () => updateTimeGraphs('monthly'));
+    
     createAreaCharts();
     createTimeGraphs();
     updateAreaData();

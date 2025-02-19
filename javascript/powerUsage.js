@@ -44,6 +44,31 @@ function createTimeGraphs() {
     });
 }
 
+// **Update Time Graphs Based on Period Selection**
+function updateTimeGraphs(period) {
+    selectedTime = period;
+
+    energyChart.data.labels = timeLabels[period];
+    energyChart.data.datasets[0].data = energyData[period];
+    energyChart.update();
+
+    costChart.data.labels = timeLabels[period];
+    costChart.data.datasets[0].data = costData[period];
+    costChart.update();
+
+    // Highlight active button
+    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+    document.getElementById(period).classList.add("active-button");
+
+    const activeButton = document.getElementById(period);
+    if (activeButton) {
+        activeButton.classList.add("active-button");
+    } else {
+        console.error(`Error: Button ID '${period}' not found!`);
+    }
+}
+
+
 // **Initialize Area-wise Usage Charts**
 function createAreaCharts() {
     areaPieChart = new Chart(areaPieCtx, {
@@ -98,29 +123,6 @@ function createDeviceCharts() {
     });
 }
 
-// **Update Time Graphs Based on Period Selection**
-function updateTimeGraphs(period) {
-    selectedTime = period;
-
-    energyChart.data.labels = timeLabels[period];
-    energyChart.data.datasets[0].data = energyData[period];
-    energyChart.update();
-
-    costChart.data.labels = timeLabels[period];
-    costChart.data.datasets[0].data = costData[period];
-    costChart.update();
-
-    // Highlight active button
-    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
-    document.getElementById(period).classList.add("active-button");
-
-    const activeButton = document.getElementById(period);
-    if (activeButton) {
-        activeButton.classList.add("active-button");
-    } else {
-        console.error(`Error: Button ID '${period}' not found!`);
-    }
-}
 
 // **Calculate Totals for Footer**
 function calculateTotals() {
@@ -158,8 +160,8 @@ function calculateTotals() {
 
     document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
     document.getElementById('totalCost').textContent = `${totalCost.toFixed(2)}`;
-    document.getElementById('minUsage').textContent = `${minRoom} (${minDevice})`;
-    document.getElementById('maxUsage').textContent = `${maxRoom} (${maxDevice})`;
+    document.getElementById('minUsage').textContent = `Room: ${minRoom} Device: ${minDevice}`;
+    document.getElementById('maxUsage').textContent = `Room:${maxRoom} Device:${maxDevice}`;
 }
 
 // **Run Scripts on Page Load**
