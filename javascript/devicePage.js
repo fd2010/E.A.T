@@ -7,46 +7,53 @@ console.log("🔎 deviceEnergyData:", deviceEnergyData);
 console.log("🔎 deviceCostData:", deviceCostData);
 console.log("🔎 devicesByArea:", devicesByArea);
 
+
 // **Chart Elements**
 let deviceComparisonPieCtx, deviceComparisonBarCtx, deviceTimeCostCtx, deviceTimeEnergyCtx, deviceAreaPieCtx, deviceAreaBarCtx;
 let selectedDevice = "Computers";
 let selectedTime = "daily";
 let devicePieChart, deviceBarChart, deviceEnergyChart, deviceCostChart, deviceAreaPieChart, deviceAreaBarChart;
 
-// **Ensure Graph Elements Are Loaded Before Use**
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("✅ Page Loaded. Initializing graphs...");
 
-    // **Assign chart elements after DOM loads**
-    deviceComparisonPieCtx = document.getElementById('deviceComparisonPie').getContext('2d');
-    deviceComparisonBarCtx = document.getElementById('deviceComparisonBar').getContext('2d');
-    deviceTimeCostCtx = document.getElementById('deviceTimeCostChart').getContext('2d');
-    deviceTimeEnergyCtx = document.getElementById('deviceTimeEnergyChart').getContext('2d');
-    deviceAreaPieCtx = document.getElementById('deviceAreaPieChart').getContext('2d');
-    deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContext('2d');
+// **Function to Create Device Comparison Graphs**
+function createDeviceComparisonGraphs() {
+    console.log("📊 Creating Device Comparison Graphs...");
 
-    // **Create Initial Graphs**
-    createDeviceTimeGraphs();
-    createDeviceAreaGraphs();
-    calculateTotals();
+    if (devicePieChart) devicePieChart.destroy();
+    if (deviceBarChart) deviceBarChart.destroy();
 
-    // **Dropdown Change Event**
-    document.getElementById("deviceTypeDropdown").addEventListener("change", function () {
-        selectedDevice = this.value;  // Update selected device
-        selectedTime = "daily";       // Reset time selection
+    const deviceLabels = Object.keys(deviceData);
+    const deviceUsage = Object.values(deviceData);
 
-        updateDeviceData(); // Update all graphs
-
-        // **Ensure the "daily" button is highlighted**
-        document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
-        document.getElementById("daily").classList.add("active-button");
+    // **Create Pie Chart for Device Comparison**
+    devicePieChart = new Chart(deviceComparisonPieCtx, {
+        type: 'pie',
+        data: {
+            labels: deviceLabels,
+            datasets: [{
+                data: deviceUsage,
+                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
+            }]
+        },
+        options: { responsive: true }
     });
 
-    // **Time Selection Buttons**
-    document.getElementById("daily").addEventListener("click", () => updateDeviceTimeGraphs('daily'));
-    document.getElementById("weekly").addEventListener("click", () => updateDeviceTimeGraphs('weekly'));
-    document.getElementById("monthly").addEventListener("click", () => updateDeviceTimeGraphs('monthly'));
-});
+    // **Create Bar Chart for Device Comparison**
+    deviceBarChart = new Chart(deviceComparisonBarCtx, {
+        type: 'bar',
+        data: {
+            labels: deviceLabels,
+            datasets: [{
+                label: 'Energy Usage (kW)',
+                data: deviceUsage,
+                backgroundColor: 'purple'
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+
+    console.log("✅ Device Comparison Graphs Created!");
+}
 
 // **Get Device Energy Usage Across Areas**
 function getDeviceEnergyAcrossAreas(device) {
@@ -159,7 +166,6 @@ window.updateDeviceTimeGraphs = function (period) {
     deviceCostChart.data.datasets[0].data = getDeviceCostData(selectedDevice, selectedTime);
     deviceCostChart.update();
 
-    // Highlight the active button
     document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
 };
@@ -198,3 +204,39 @@ function calculateTotals() {
     document.getElementById('minUsageDevice').textContent = `${minDevice}`;
     document.getElementById('maxUsageDevice').textContent = `${maxDevice}`;
 }
+
+// **Ensure Graph Elements Are Loaded Before Use**
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ Page Loaded. Initializing graphs...");
+
+    // **Assign chart elements after DOM loads**
+    deviceComparisonPieCtx = document.getElementById('deviceComparisonPie').getContext('2d');
+    deviceComparisonBarCtx = document.getElementById('deviceComparisonBar').getContext('2d');
+    deviceTimeCostCtx = document.getElementById('deviceTimeCostChart').getContext('2d');
+    deviceTimeEnergyCtx = document.getElementById('deviceTimeEnergyChart').getContext('2d');
+    deviceAreaPieCtx = document.getElementById('deviceAreaPieChart').getContext('2d');
+    deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContext('2d');
+
+    // **Create Initial Graphs**
+    createDeviceComparisonGraphs();
+    createDeviceTimeGraphs();
+    createDeviceAreaGraphs();
+    calculateTotals();
+
+    // **Dropdown Change Event**
+    document.getElementById("deviceTypeDropdown").addEventListener("change", function () {
+        selectedDevice = this.value;  // Update selected device
+        selectedTime = "daily";       // Reset time selection
+
+        updateDeviceData(); // Update all graphs
+
+        // **Ensure the "daily" button is highlighted**
+        document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+        document.getElementById("daily").classList.add("active-button");
+    });
+
+    // **Time Selection Buttons**
+    document.getElementById("daily").addEventListener("click", () => updateDeviceTimeGraphs('daily'));
+    document.getElementById("weekly").addEventListener("click", () => updateDeviceTimeGraphs('weekly'));
+    document.getElementById("monthly").addEventListener("click", () => updateDeviceTimeGraphs('monthly'));
+});
