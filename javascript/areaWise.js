@@ -119,9 +119,12 @@ document.getElementById('areaTypeDropdown').addEventListener('change', function 
 
 // **Update Device Charts Based on Selected Area**
 function updateAreaData() {
+    console.log("🔍 Selected Area:", selectedArea);
+    console.log("🔍 devicesByArea Data:", devicesByArea);
+
     if (!devicesByArea[selectedArea]) {
         console.error(`❌ No data found for selected area: '${selectedArea}'`);
-        return;  // Prevents further errors
+        return;
     }
 
     let deviceHTML = "";
@@ -169,7 +172,7 @@ function updateAreaData() {
     });
 
     // **Update time graphs instead of recreating them**
-    updateTimeGraph(selectedTime);
+    updateTimeGraphs(selectedTime);
 }
 
 // **Calculate Totals for Sticky Footer**
