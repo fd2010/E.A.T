@@ -179,18 +179,48 @@ function updateAreaData() {
 
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
-    let totalEnergy = 0;
-    let totalCost = 0;
+    let totalEnergy = 0, totalCost = 0;
+    let minRoom = "", maxRoom = "", minDevice = "", maxDevice = "";
+    let minEnergy = Infinity, maxEnergy = -Infinity;
+    let minRoomEnergy = Infinity, maxRoomEnergy = -Infinity; // Separate tracking for room totals
 
-    Object.values(devicesByArea).forEach(areaDevices => {
-        areaDevices.forEach(device => {
+    Object.entries(devicesByArea).forEach(([room, devices]) => {
+        let roomTotal = 0;
+
+        devices.forEach(device => {
             totalEnergy += device.energy;
             totalCost += device.cost;
+            roomTotal += device.energy;
+
+            // Track minimum and maximum energy usage **for devices**
+            if (device.energy < minEnergy) {
+                minEnergy = device.energy;
+                minDevice = device.name;
+            }
+            if (device.energy > maxEnergy) {
+                maxEnergy = device.energy;
+                maxDevice = device.name;
+            }
         });
+
+        // Track **minimum and maximum energy usage for rooms**
+        if (roomTotal < minRoomEnergy) {
+            minRoomEnergy = roomTotal;
+            minRoom = room;
+        }
+        if (roomTotal > maxRoomEnergy) {
+            maxRoomEnergy = roomTotal;
+            maxRoom = room;
+        }
     });
 
-    document.getElementById('totalEnergy').textContent = totalEnergy;
-    document.getElementById('totalCost').textContent = totalCost.toFixed(2);
+    // Assign values to the footer
+    document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
+    document.getElementById('totalCost').textContent = `${totalCost.toFixed(2)}`;
+    document.getElementById('minUsageRoom').textContent = ` ${minRoom}`;
+    document.getElementById('maxUsageRoom').textContent = `: ${maxRoom}`;
+    document.getElementById('minUsageDevice').textContent = ` ${minDevice}`;
+    document.getElementById('maxUsageDevice').textContent = ` ${maxDevice}`;
 }
 
 // **Dropdown Event Listener**
