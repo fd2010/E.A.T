@@ -18,7 +18,58 @@ let selectedDevice = "Computers";
 let selectedTime = "daily";
 let devicePieChart, deviceBarChart, deviceEnergyChart, deviceCostChart, deviceAreaPieChart, deviceAreaBarChart;
 
-// **Aggregate Energy Data for Each Device Across All Areas**
+// **Get Device Energy Usage Across Areas**
+function getDeviceEnergyAcrossAreas(device) {
+    let areaLabels = [];
+    let areaEnergyUsage = [];
+
+    Object.entries(devicesByArea).forEach(([area, devices]) => {
+        let totalEnergy = 0;
+        devices.forEach(d => {
+            if (d.name === device) {
+                totalEnergy += d.energy;
+            }
+        });
+
+        if (totalEnergy > 0) {
+            areaLabels.push(area);
+            areaEnergyUsage.push(totalEnergy);
+        }
+    });
+
+    return { labels: areaLabels, data: areaEnergyUsage };
+}
+
+// **Initialize Device Usage Across Areas Graphs**
+function createDeviceAreaGraphs() {
+    let { labels, data } = getDeviceEnergyAcrossAreas(selectedDevice);
+
+    deviceAreaPieChart = new Chart(deviceAreaPieCtx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
+            }]
+        }
+    });
+
+    deviceAreaBarChart = new Chart(deviceAreaBarCtx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `Energy Usage (kW) - ${selectedDevice}`,
+                data: data,
+                backgroundColor: 'purple'
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+}
+
+// **Get Time-Based Energy Data for Selected Device**
 function getDeviceEnergyData(device, time) {
     let data = Array(timeLabels[time].length).fill(0);
 
@@ -33,7 +84,7 @@ function getDeviceEnergyData(device, time) {
     return data;
 }
 
-// **Aggregate Cost Data for Each Device Across All Areas**
+// **Get Time-Based Cost Data for Selected Device**
 function getDeviceCostData(device, time) {
     let data = Array(timeLabels[time].length).fill(0);
 
@@ -46,33 +97,6 @@ function getDeviceCostData(device, time) {
     });
 
     return data;
-}
-
-// **Initialize Device Comparison Charts**
-function createDeviceCharts() {
-    devicePieChart = new Chart(deviceComparisonPieCtx, {
-        type: 'pie',
-        data: {
-            labels: Object.keys(deviceData),
-            datasets: [{
-                data: Object.values(deviceData),
-                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
-            }]
-        }
-    });
-
-    deviceBarChart = new Chart(deviceComparisonBarCtx, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(deviceData),
-            datasets: [{
-                label: 'Energy Usage (kW)',
-                data: Object.values(deviceData),
-                backgroundColor: 'blue'
-            }]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
-    });
 }
 
 // **Initialize Time-Based Graphs**
@@ -124,6 +148,27 @@ window.updateDeviceTimeGraphs = function (period) {
     document.getElementById(period).classList.add("active-button");
 };
 
+// **Update Device Usage Across Areas Graphs**
+function updateDeviceAreaGraphs() {
+    let { labels, data } = getDeviceEnergyAcrossAreas(selectedDevice);
+
+    deviceAreaPieChart.data.labels = labels;
+    deviceAreaPieChart.data.datasets[0].data = data;
+    deviceAreaPieChart.update();
+
+    deviceAreaBarChart.data.labels = labels;
+    deviceAreaBarChart.data.datasets[0].data = data;
+    deviceAreaBarChart.update();
+}
+
+// **Update All Graphs When Changing Device Type**
+function updateDeviceData() {
+    console.log(`🔄 Updating data for: ${selectedDevice}`);
+
+    updateDeviceTimeGraphs(selectedTime);
+    updateDeviceAreaGraphs();
+}
+
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
     let totalEnergy = 0, totalCost = 0;
@@ -154,8 +199,7 @@ function calculateTotals() {
 // **Dropdown Event Listener for Device Selection**
 document.getElementById('deviceTypeDropdown').addEventListener('change', function () {
     selectedDevice = this.value;
-    console.log(`🔄 Updating data for: ${selectedDevice}`);
-    updateDeviceTimeGraphs(selectedTime);
+    updateDeviceData();
 });
 
 // **Run on Page Load**
