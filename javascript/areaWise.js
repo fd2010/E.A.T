@@ -1,11 +1,6 @@
 // Import shared data from energyData.js
 import { timeLabels, energyData, costData, devicesByArea, areaData, deviceData } from './energyData.js';
 
-console.log(" energyData.js imported successfully!");
-console.log(" timeLabels:", timeLabels);
-console.log(" energyData:", energyData);
-console.log(" devicesByArea:", devicesByArea);
-
 // **Chart Elements**
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
 const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
@@ -232,12 +227,6 @@ document.getElementById('areaTypeDropdown').addEventListener('change', function 
 
 // **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
-    const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
-    const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
-    const areaTimeCostCtx = document.getElementById('areaTimeCostChart').getContext('2d');
-    const areaTimeEnergyCtx = document.getElementById('areaTimeEnergyChart').getContext('2d');
-    const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
-    const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
     console.log(" Canvas elements loaded correctly!");
     selectedArea = normalizeArea(document.getElementById('areaTypeDropdown').value);
@@ -247,4 +236,5 @@ document.addEventListener("DOMContentLoaded", function () {
     createTimeGraphs();
     updateAreaData();
     calculateTotals();
+
 });

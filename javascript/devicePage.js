@@ -1,12 +1,14 @@
 // Import shared data from energyData.js
 import { timeLabels, deviceEnergyData, deviceCostData, devicesByArea, deviceData } from './energyData.js';
 
-console.log("✅ energyData.js imported successfully!");
-console.log("🔎 timeLabels:", timeLabels);
-console.log("🔎 deviceEnergyData:", deviceEnergyData);
-console.log("🔎 deviceCostData:", deviceCostData);
-console.log("🔎 devicesByArea:", devicesByArea);
 
+// **Assign chart elements after DOM loads**
+const deviceComparisonPieCtx = document.getElementById('deviceComparisonPie').getContext('2d');
+const deviceComparisonBarCtx = document.getElementById('deviceComparisonBar').getContext('2d');
+const deviceTimeCostCtx = document.getElementById('deviceTimeCostChart').getContext('2d');
+const deviceTimeEnergyCtx = document.getElementById('deviceTimeEnergyChart').getContext('2d');
+const deviceAreaPieCtx = document.getElementById('deviceAreaPieChart').getContext('2d');
+const deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContext('2d');
 
 // **Chart Elements**
 let deviceComparisonPieCtx, deviceComparisonBarCtx, deviceTimeCostCtx, deviceTimeEnergyCtx, deviceAreaPieCtx, deviceAreaBarCtx;
@@ -167,9 +169,8 @@ window.updateDeviceTimeGraphs = function (period) {
     deviceCostChart.update();
 
     // **Ensure Active Button is Highlighted**
-    document.querySelectorAll(".graph-buttons button").forEach(btn => {
-        btn.classList.remove("active-button");
-    });
+    // Highlight the active button
+    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
 };
 
@@ -208,35 +209,27 @@ function calculateTotals() {
     document.getElementById('maxUsageDevice').textContent = `${maxDevice}`;
 }
 
+// **Dropdown Change Event**
+document.getElementById("deviceTypeDropdown").addEventListener("change", function () {
+    selectedDevice = this.value;  // Update selected device
+    selectedTime = "daily";       // Reset time selection
+
+    updateDeviceData(); // Update all graphs
+
+    // **Ensure the "daily" button is highlighted**
+    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+    document.getElementById("daily").classList.add("active-button");
+});
+
 // **Ensure Graph Elements Are Loaded Before Use**
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ Page Loaded. Initializing graphs...");
-
-    // **Assign chart elements after DOM loads**
-    deviceComparisonPieCtx = document.getElementById('deviceComparisonPie').getContext('2d');
-    deviceComparisonBarCtx = document.getElementById('deviceComparisonBar').getContext('2d');
-    deviceTimeCostCtx = document.getElementById('deviceTimeCostChart').getContext('2d');
-    deviceTimeEnergyCtx = document.getElementById('deviceTimeEnergyChart').getContext('2d');
-    deviceAreaPieCtx = document.getElementById('deviceAreaPieChart').getContext('2d');
-    deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContext('2d');
 
     // **Create Initial Graphs**
     createDeviceComparisonGraphs();
     createDeviceTimeGraphs();
     createDeviceAreaGraphs();
     calculateTotals();
-
-    // **Dropdown Change Event**
-    document.getElementById("deviceTypeDropdown").addEventListener("change", function () {
-        selectedDevice = this.value;  // Update selected device
-        selectedTime = "daily";       // Reset time selection
-
-        updateDeviceData(); // Update all graphs
-
-        // **Ensure the "daily" button is highlighted**
-        document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
-        document.getElementById("daily").classList.add("active-button");
-    });
 
     // **Time Selection Buttons**
     document.getElementById("daily").addEventListener("click", () => updateDeviceTimeGraphs('daily'));

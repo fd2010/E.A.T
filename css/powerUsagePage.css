@@ -110,7 +110,7 @@
 
 /* Redirect Button Styling */
 .redirect-button {
-    background-color: #c69307;
+    background-color: #ADA8A9 ;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -122,12 +122,12 @@
 }
 
 .redirect-button:hover {
-    background-color: #ad8004;
+    background-color: #898082;
     transform: scale(1.05);
 }
 
 .redirect-button:active {
-    background-color: #946c03;
+    background-color: #898082;
     transform: scale(1);
 }
 
@@ -137,7 +137,7 @@
 }
 
 .graph-buttons button {
-    background-color: #c69307; /* Default button color */
+    background-color: #ADA8A9; /* Default button color */
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -150,11 +150,11 @@
 }
 
 .graph-buttons button:hover {
-    background-color: #ad8004;
+    background-color: #898082;
 }
 
 .active-button {
-    background-color: #ad8004 !important;
+    background-color: #898082 !important;
     color: #fff;
 }
 
@@ -310,7 +310,6 @@
     font-weight: 400;
     margin: 5px 0 0;
     color: #B0B0B0;
-    /* Slightly lighter for description text */
 }
 
 /* Drop down */
@@ -326,7 +325,7 @@
 }
 
 #areaTypeDropdown:hover {
-    border-color: #c69307;
+    border-color:  #ADA8A9;
 }
 
 #deviceTypeDropdown {
@@ -341,5 +340,5 @@
 }
 
 #deviceTypeDropdown:hover {
-    border-color: #c69307;
+    border-color: #898082;
 }
