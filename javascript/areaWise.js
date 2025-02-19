@@ -24,9 +24,9 @@ function createAreaCharts() {
     areaPieChart = new Chart(areaComparisonPieCtx, {
         type: 'pie',
         data: {
-            labels: Object.keys(areaData),  
+            labels: Object.keys(areaData),
             datasets: [{
-                data: Object.values(areaData), 
+                data: Object.values(areaData),
                 backgroundColor: ['red', 'blue', 'green', 'orange']
             }]
         }
@@ -52,10 +52,10 @@ function createTimeGraphs() {
     energyChart = new Chart(areaTimeEnergyCtx, {
         type: 'line',
         data: {
-            labels: timeLabels[selectedTime],
+            labels: timeLabels[selectedTime],  // ✅ Correct
             datasets: [{
                 label: 'Energy (kW)',
-                data: energyData[selectedArea][selectedTime],
+                data: energyData[selectedTime], // ✅ Use only selectedTime
                 borderColor: 'blue',
                 fill: false
             }]
@@ -69,7 +69,7 @@ function createTimeGraphs() {
             labels: timeLabels[selectedTime],
             datasets: [{
                 label: 'Cost (£)',
-                data: energyData[selectedArea][selectedTime].map(x => x * 2),
+                data: costData[selectedTime],  // ✅ Use only selectedTime
                 borderColor: 'red',
                 fill: false
             }]
@@ -78,27 +78,28 @@ function createTimeGraphs() {
     });
 }
 
+
 // **Update Time Graphs Based on Period Selection**
+
 function updateTimeGraphs(period) {
-    function updateTimeGraphs(period) {
-        selectedTime = period;
-    
-        console.log("Energy Data for Selected Time:", energyData[selectedTime]); // Debugging
-    
-        energyChart.data.labels = timeLabels[selectedTime];
-        energyChart.data.datasets[0].data = energyData[selectedTime]; // Use energyData[selectedTime] directly
-        energyChart.update();
-    
-        costChart.data.labels = timeLabels[selectedTime];
-        costChart.data.datasets[0].data = costData[selectedTime]; // Use costData[selectedTime]
-        costChart.update();
-    
-        // Highlight active button
-        document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
-        document.getElementById(period).classList.add("active-button");
-    }
-    
+    selectedTime = period;
+
+    console.log("Energy Data for Selected Time:", energyData[selectedTime]); // Debugging
+
+    energyChart.data.labels = timeLabels[selectedTime];
+    energyChart.data.datasets[0].data = energyData[selectedTime]; // Use energyData[selectedTime] directly
+    energyChart.update();
+
+    costChart.data.labels = timeLabels[selectedTime];
+    costChart.data.datasets[0].data = costData[selectedTime]; // Use costData[selectedTime]
+    costChart.update();
+
+    // Highlight active button
+    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+    document.getElementById(period).classList.add("active-button");
 }
+
+
 
 // **Update Area Data on Selection**
 document.getElementById('areaTypeDropdown').addEventListener('change', function () {
@@ -182,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
     console.log("✅ Canvas elements loaded correctly!");
-    
+
     // Call functions AFTER elements exist
     createAreaCharts();
     createTimeGraphs();
