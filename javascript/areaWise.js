@@ -1,5 +1,6 @@
 // Import shared data from energyData.js
-import { timeLabels, energyData, devicesByArea, deviceData, areaData, deviceData } from './energyData.js';
+import { timeLabels, energyData, devicesByArea, areaData, deviceData } from './energyData.js';
+
 
 // Chart Elements
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
