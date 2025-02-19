@@ -2,7 +2,6 @@
 // Import shared data from energyData.js
 import { timeLabels, energyData, costData, devicesByArea, areaData, deviceData } from './energyData.js';
 
-
 console.log("✅ energyData.js imported successfully!");
 console.log("🔎 timeLabels:", timeLabels);
 console.log("🔎 energyData:", energyData);
@@ -19,6 +18,17 @@ const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 let selectedArea = "meeting";
 let selectedTime = "daily";
 let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
+
+function normalizeArea(area) {
+    const mapping = {
+        "meeting": "Meeting Room",
+        "work": "Workstations",
+        "common": "Common Areas",
+        "special": "Special"
+    };
+    return mapping[area] || area;  // Return mapped value or original if no match
+}
+selectedArea = normalizeArea(selectedArea);
 
 // **Initialize Area Comparison Charts*
 function createAreaCharts() {
@@ -92,6 +102,7 @@ function createTimeGraphs() {
 // **Update Time Graphs Based on Period Selection**
 
 function updateTimeGraphs(period) {
+   
     selectedTime = period;
 
     console.log("Energy Data for Selected Time:", energyData[selectedTime]); // Debugging
@@ -113,15 +124,17 @@ function updateTimeGraphs(period) {
 
 // **Update Area Data on Selection**
 document.getElementById('areaTypeDropdown').addEventListener('change', function () {
-    selectedArea = this.value;
-    updateAreaData();
+    selectedArea = normalizeArea(this.value);  // Normalize selection
+    console.log("🔄 Updating area:", selectedArea);
+    updateAreaData();  // Refresh charts & device list
 });
+
 
 // **Update Device Charts Based on Selected Area**
 function updateAreaData() {
+    selectedArea = normalizeArea(selectedArea);  // Fix area names
     console.log("🔍 Selected Area:", selectedArea);
-    console.log("🔍 devicesByArea Data:", devicesByArea);
-
+    
     if (!devicesByArea[selectedArea]) {
         console.error(`❌ No data found for selected area: '${selectedArea}'`);
         return;
@@ -143,7 +156,6 @@ function updateAreaData() {
 
     document.getElementById('deviceList').innerHTML = deviceHTML;
 
-    // **Destroy and recreate only the device charts when changing area**
     if (devicePieChart) devicePieChart.destroy();
     if (deviceBarChart) deviceBarChart.destroy();
 
@@ -171,9 +183,9 @@ function updateAreaData() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
-    // **Update time graphs instead of recreating them**
-    updateTimeGraphs(selectedTime);
+    updateTimeGraphs(selectedTime);  // Ensure graphs update too
 }
+
 
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
