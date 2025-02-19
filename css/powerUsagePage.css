@@ -98,6 +98,30 @@
 }
 
 
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+}
+
+.redirect-button {
+    background-color: #c69307;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.redirect-button:hover {
+    background-color: #ad8004;
+}
+
+
 .graph-buttons {
     text-align: center;
 }

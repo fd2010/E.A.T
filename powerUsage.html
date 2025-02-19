@@ -30,7 +30,7 @@
                     <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
                     <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
                     <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
-                </div>                
+                </div>
             </div>
 
             <!-- Graphs -->
@@ -47,8 +47,14 @@
 
 
         <!-- Section 2: Area-Wise Energy Usage -->
-        <section class="graph-section" onclick="location.href='areaWise.html'" style="cursor: pointer;">
-            <h2 class="h2Light">Energy Usage by Area</h2>
+
+        <!-- Section 2: Area-Wise Energy Usage -->
+        <section class="graph-section">
+            <div class="section-header">
+                <h2 class="h2Light">Energy Usage by Area</h2>
+                <button class="redirect-button" onclick="location.href='areaWise.html'">View Detailed Report</button>
+            </div>
+
             <div class="graph-container-wrapper">
                 <div class="graph-container">
                     <canvas id="areaPieChart"></canvas>
@@ -56,8 +62,9 @@
                 <div class="graph-container">
                     <canvas id="areaBarChart"></canvas>
                 </div>
-            </div>            
+            </div>
         </section>
+
 
         <!-- Section 3: Device Type Energy Usage -->
         <section class="graph-section" onclick="location.href='deviceType.html'" style="cursor: pointer;">
@@ -70,7 +77,7 @@
                     <canvas id="deviceBarChart"></canvas>
                 </div>
             </div>
-            
+
         </section>
 
     </main>
