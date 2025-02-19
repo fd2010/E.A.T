@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("weekly").addEventListener("click", () => updateTimeGraphs('weekly'));
     document.getElementById("monthly").addEventListener("click", () => updateTimeGraphs('monthly'));
 
-    console.log("✅ Page Loaded. Initializing graphs...");
+    console.log(" Page Loaded. Initializing graphs...");
     createDeviceCharts();
     createDeviceTimeGraphs();
     calculateTotals();
