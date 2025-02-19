@@ -38,7 +38,7 @@ function createAreaCharts() {
             labels: Object.keys(areaData),
             datasets: [{
                 data: Object.values(areaData),
-                backgroundColor: ['red', 'blue', 'green', 'orange']
+                backgroundColor: ['red', 'blue', 'green', 'teal']
             }]
         }
     });
