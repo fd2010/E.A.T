@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Usage by Device Type</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/powerUsagePage.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bodyLight">
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="h1Light">Energy Usage by Device Type</h1>
+        <h2 class="h2Light">Compare energy and cost usage of different devices in the office</h2>
+    </header>
+
+    <main class="main-content">
+
+        <!-- Section 1: Comparing Device Types (Initial View) -->
+        <section class="graph-section">
+            <h2 class="h2Light">Energy Usage of Device Types</h2>
+            <div class="graph-container-wrapper">
+                <div class="graph-container">
+                    <canvas id="deviceComparisonPie"></canvas>
+                </div>
+                <div class="graph-container">
+                    <canvas id="deviceComparisonBar"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Time-wise Usage for Selected Device -->
+        <section class="graph-section">
+            <h2 class="h2Light">Energy & Cost Usage Over Time</h2>
+
+            <!-- Sidebar for Selecting Device Type -->
+            <aside class="sidebar">
+                <select id="deviceTypeDropdown">
+                    <option value="Computers">Computers</option>
+                    <option value="Lights">Lights</option>
+                    <option value="Heating">Heating</option>
+                    <option value="Monitors">Monitors</option>
+                    <option value="Speakers">Speakers</option>
+                    <option value="Vending Machine">Vending Machine</option>
+                </select>
+            </aside>
+
+            <div class="graph-buttons">
+                <button id="daily" onclick="updateDeviceTimeGraphs('daily')">Daily</button>
+                <button id="weekly" onclick="updateDeviceTimeGraphs('weekly')">Weekly</button>
+                <button id="monthly" onclick="updateDeviceTimeGraphs('monthly')">Monthly</button>
+            </div>
+
+            <div class="graph-container-wrapper">
+                <div class="graph-container">
+                    <canvas id="deviceTimeCostChart"></canvas>
+                </div>
+                <div class="graph-container">
+                    <canvas id="deviceTimeEnergyChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Comparing Device Usage Across Areas -->
+        <section class="graph-section">
+            <h2 class="h2Light">Device Usage Across Office Areas</h2>
+            <div class="graph-container-wrapper">
+                <div class="graph-container">
+                    <canvas id="deviceAreaPieChart"></canvas>
+                </div>
+                <div class="graph-container">
+                    <canvas id="deviceAreaBarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Sticky Footer for Summary Data -->
+    <footer class="sticky-footer">
+        <div class="metric-box">
+            <h2><span id="totalEnergy"></span> kWh</h2>
+            <p>Total Energy Used</p>
+        </div>
+        <div class="metric-box">
+            <h2>£<span id="totalCost"></span></h2>
+            <p>Total Cost of Energy</p>
+        </div>
+        <div class="metric-box">
+            <h2><span id="minUsageDevice"></span> </h2>
+            <p>Minimum Energy Usage</p>
+        </div>
+        <div class="metric-box">
+            <h2><span id="maxUsageDevice"></span> </h2>
+            <p>Maximum Energy Usage</p>
+        </div>
+    </footer>
+
+    <!-- Back Button -->
+    <div style="width: 100%">
+        <a href="powerUsage.html" class="back-link">
+            <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
+        </a>
+    </div>
+
+    <br>
+
+    <!-- Company name -->
+    <div class="divLight">
+        <p id="companyName">PearCare.Inc</p>
+        <div id="line"></div>
+    </div>
+
+    <script type="module" src="./javascript/deviceWise.js"></script>
+
+</body>
+</html>
