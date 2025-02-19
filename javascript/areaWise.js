@@ -9,19 +9,8 @@ const areaTimeEnergyCtx = document.getElementById('areaTimeEnergyChart').getCont
 const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
 const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
-// **Normalize Area Names**
-function normalizeArea(area) {
-    const mapping = {
-        "meeting": "Meeting Room",
-        "work": "Workstations",
-        "common": "Common Areas",
-        "special": "Special"
-    };
-    return mapping[area] || area;
-}
-
 // **Set Default Values**
-let selectedArea = normalizeArea("meeting");
+let selectedArea = "Meeting Room"; // No normalization needed
 let selectedTime = "daily";
 let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
 
@@ -93,35 +82,31 @@ function createTimeGraphs() {
 // **Update Time Graphs Based on Period Selection**
 window.updateTimeGraphs = function (period) {
     selectedTime = period;
-    console.log(` Updating Time Graphs for ${selectedArea} (${period})`);
+    console.log(`Updating Time Graphs for ${selectedArea} (${period})`);
 
-    const normalizedArea = normalizeArea(selectedArea);
-
-    if (!energyData[normalizedArea] || !costData[normalizedArea]) {
-        console.error(` No energy or cost data found for '${normalizedArea}'`);
+    if (!energyData[selectedArea] || !costData[selectedArea]) {
+        console.error(`No energy or cost data found for '${selectedArea}'`);
         return;
     }
 
     energyChart.data.labels = timeLabels[selectedTime];
-    energyChart.data.datasets[0].data = energyData[normalizedArea][selectedTime]; //  Use normalized area
+    energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime];
     energyChart.update();
 
     costChart.data.labels = timeLabels[selectedTime];
-    costChart.data.datasets[0].data = costData[normalizedArea][selectedTime]; //  Use normalized area
+    costChart.data.datasets[0].data = costData[selectedArea][selectedTime];
     costChart.update();
 
-    // Highlight the active button
     document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
 };
 
 // **Update Device & Time Graphs When Changing Area**
 function updateAreaData() {
-    const normalizedArea = normalizeArea(selectedArea);
-    console.log(" Selected Area:", normalizedArea);
+    console.log("Selected Area:", selectedArea);
 
-    if (!devicesByArea[normalizedArea]) {
-        console.error(` No data found for selected area: '${normalizedArea}'`);
+    if (!devicesByArea[selectedArea]) {
+        console.error(`No data found for selected area: '${selectedArea}'`);
         return;
     }
 
@@ -129,7 +114,7 @@ function updateAreaData() {
     let deviceNames = [];
     let deviceEnergy = [];
 
-    devicesByArea[normalizedArea].forEach(device => {
+    devicesByArea[selectedArea].forEach(device => {
         deviceHTML += `
             <div class="device-panel">
                 <h3>${device.name}</h3>
@@ -168,7 +153,6 @@ function updateAreaData() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
-    //  Update time graphs when area changes
     updateTimeGraphs(selectedTime);
 }
 
