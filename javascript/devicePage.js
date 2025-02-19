@@ -231,6 +231,14 @@ document.addEventListener("DOMContentLoaded", function () {
     createDeviceAreaGraphs();
     calculateTotals();
 
+    // **Assign chart elements after DOM loads**
+const deviceComparisonPieCtx = document.getElementById('deviceComparisonPie').getContext('2d');
+const deviceComparisonBarCtx = document.getElementById('deviceComparisonBar').getContext('2d');
+const deviceTimeCostCtx = document.getElementById('deviceTimeCostChart').getContext('2d');
+const deviceTimeEnergyCtx = document.getElementById('deviceTimeEnergyChart').getContext('2d');
+const deviceAreaPieCtx = document.getElementById('deviceAreaPieChart').getContext('2d');
+const deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContext('2d');
+
     // **Time Selection Buttons**
     document.getElementById("daily").addEventListener("click", () => updateDeviceTimeGraphs('daily'));
     document.getElementById("weekly").addEventListener("click", () => updateDeviceTimeGraphs('weekly'));
