@@ -15,7 +15,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; 
+    min-height: 100vh;
 }
 
 /* Header Styles */
@@ -25,29 +25,29 @@
 }
 
 .h1Light {
-  color: #000;
-  text-align: center;
-  align-items: center;
-  font-family: "Kay Pho Du", sans-serif;
-  font-size: 60px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  backdrop-filter: blur(2px);
-  margin-bottom: 10px;
+    color: #000;
+    text-align: center;
+    align-items: center;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    backdrop-filter: blur(2px);
+    margin-bottom: 10px;
 }
 
 
 .h2Light {
-  color: #34495e;
-  text-align: center;
-  align-items: center;
-  font-family: "Kay Pho Du", sans-serif;
-  font-size: 30px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  backdrop-filter: blur(2px);
+    color: #34495e;
+    text-align: center;
+    align-items: center;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    backdrop-filter: blur(2px);
 }
 
 .main-content {
@@ -68,7 +68,7 @@
 }
 
 .graph-section h2 {
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
 }
 
 .graph-container-wrapper {
@@ -82,11 +82,11 @@
 /* General Graph Container Styling */
 .graph-container {
     flex: 1;
-    min-width: 400px; 
+    min-width: 400px;
     max-width: 600px;
     width: 100%;
     height: 300px;
-    background-color: #fff; 
+    background-color: #fff;
     border: 2px solid #dcdcdc;
     border-radius: 15px;
     padding: 20px;
@@ -94,31 +94,41 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
+/* Section Header Styling */
 .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     max-width: 800px;
+    margin-bottom: 10px;
+    /* Adds spacing between the header and graphs */
 }
 
+/* Redirect Button Styling */
 .redirect-button {
     background-color: #c69307;
     color: white;
     border: none;
-    padding: 8px 15px;
+    padding: 10px 15px;
     font-size: 14px;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
 }
 
 .redirect-button:hover {
     background-color: #ad8004;
+    transform: scale(1.05);
+}
+
+.redirect-button:active {
+    background-color: #946c03;
+    transform: scale(1);
 }
 
 
@@ -135,7 +145,7 @@
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 20px;   
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -144,15 +154,15 @@
 }
 
 .active-button {
-    background-color: #ad8004; 
+    background-color: #ad8004;
 }
 
 /* Info Panels */
 .panel-wrapper {
     display: flex;
-    flex-wrap: nowrap;         
+    flex-wrap: nowrap;
     gap: 20px;
-    justify-content: space-between; 
+    justify-content: space-between;
     width: 100%;
     max-width: 800px;
 }
@@ -166,7 +176,8 @@
     text-align: center;
 }
 
-.power-panel, .expense-panel {
+.power-panel,
+.expense-panel {
     background-color: #D9D9D9;
 }
 
@@ -227,9 +238,12 @@
 
 /* Company Branding */
 .divLight {
-    position: relative; /* Ensure it stacks correctly */
-    z-index: 1100; /* Higher than the footer */
-    margin-bottom: 100px; /* Add space so it's not covered */
+    position: relative;
+    /* Ensure it stacks correctly */
+    z-index: 1100;
+    /* Higher than the footer */
+    margin-bottom: 100px;
+    /* Add space so it's not covered */
     text-align: center;
 }
 
@@ -265,7 +279,8 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #2C2C2C; /* Dark background like the reference */
+    background-color: #2C2C2C;
+    /* Dark background like the reference */
     color: white;
     text-align: center;
     padding: 15px 0;
@@ -292,7 +307,8 @@
     font-size: 14px;
     font-weight: 400;
     margin: 5px 0 0;
-    color: #B0B0B0; /* Slightly lighter for description text */
+    color: #B0B0B0;
+    /* Slightly lighter for description text */
 }
 
 /* Drop down */
