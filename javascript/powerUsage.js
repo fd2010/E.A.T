@@ -164,6 +164,10 @@ function calculateTotals() {
 
 // **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("daily").addEventListener("click", () => updateTimeGraphs('daily'));
+    document.getElementById("weekly").addEventListener("click", () => updateTimeGraphs('weekly'));
+    document.getElementById("monthly").addEventListener("click", () => updateTimeGraphs('monthly'));
+
     createTimeGraphs();
     createAreaCharts();
     createDeviceCharts();
