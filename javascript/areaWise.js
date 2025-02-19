@@ -1,3 +1,7 @@
+// Import shared data from energyData.js
+import { timeLabels, energyData, devicesByArea } from './energyData.js';
+
+// Chart Elements
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
 const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
 const areaTimeCostCtx = document.getElementById('areaTimeCostChart').getContext('2d');
@@ -5,77 +9,36 @@ const areaTimeEnergyCtx = document.getElementById('areaTimeEnergyChart').getCont
 const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
 const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
-// **DATA STORAGE**
-const timeLabels = {
-    daily: ['00:00', '06:00', '12:00', '18:00', '24:00'],
-    weekly: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    monthly: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
-};
-
-const energyData = {
-    meeting: { daily: [5, 8, 10, 12, 6], weekly: [40, 50, 45, 60, 55, 48, 52], monthly: [150, 170, 160, 180] },
-    common: { daily: [3, 5, 7, 6, 4], weekly: [30, 35, 40, 38, 36, 33, 31], monthly: [100, 120, 130, 110] },
-    work: { daily: [6, 9, 11, 14, 7], weekly: [45, 55, 50, 65, 60, 52, 57], monthly: [180, 200, 190, 210] },
-    special: { daily: [7, 10, 12, 15, 8], weekly: [50, 60, 55, 70, 65, 58, 62], monthly: [200, 220, 210, 230] }
-};
-
-const devicesByArea = {
-    meeting: [
-        { name: "Projector", energy: 5, cost: 2.5 },
-        { name: "Speakers", energy: 2, cost: 1.2 },
-        { name: "Lights", energy: 8, cost: 4 }
-    ],
-    work: [
-        { name: "Computers", energy: 15, cost: 8 },
-        { name: "Monitors", energy: 10, cost: 5 },
-        { name: "Printers", energy: 6, cost: 3 }
-    ],
-    common: [
-        { name: "Lights", energy: 12, cost: 6 },
-        { name: "Air Conditioning", energy: 20, cost: 10 },
-        { name: "Vending Machine", energy: 8, cost: 4 }
-    ],
-    special: [
-        { name: "Heating", energy: 25, cost: 12 },
-        { name: "Speakers", energy: 10, cost: 5 }
-    ]
-};
-
-// **DEFAULT SELECTION**
 let selectedArea = "meeting";
 let selectedTime = "daily";
+let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
 
 // **Initialize Area Comparison Charts**
-let areaPieChart = new Chart(areaComparisonPieCtx, {
-    type: 'pie',
-    data: {
-        labels: ['Meeting Rooms', 'Common Areas', 'Workstations', 'Specialized Areas'],
-        datasets: [{
-            data: [150, 120, 200, 220], // Example Values
-            backgroundColor: ['red', 'blue', 'green', 'orange']
-        }]
-    }
-});
-
-let areaBarChart = new Chart(areaComparisonBarCtx, {
-    type: 'bar',
-    data: {
-        labels: ['Meeting Rooms', 'Common Areas', 'Workstations', 'Specialized Areas'],
-        datasets: [{
-            label: 'Energy Usage (kW)',
-            data: [150, 120, 200, 220],
-            backgroundColor: 'teal'
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: { beginAtZero: true }
+function createAreaCharts() {
+    areaPieChart = new Chart(areaComparisonPieCtx, {
+        type: 'pie',
+        data: {
+            labels: Object.keys(energyData),
+            datasets: [{
+                data: Object.values(energyData).map(area => area[selectedTime].reduce((a, b) => a + b, 0)),
+                backgroundColor: ['red', 'blue', 'green', 'orange']
+            }]
         }
-    }
-});
+    });
 
-let energyChart, costChart, devicePieChart, deviceBarChart;
+    areaBarChart = new Chart(areaComparisonBarCtx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(energyData),
+            datasets: [{
+                label: 'Energy Usage (kW)',
+                data: Object.values(energyData).map(area => area[selectedTime].reduce((a, b) => a + b, 0)),
+                backgroundColor: 'teal'
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+}
 
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
@@ -90,10 +53,7 @@ function createTimeGraphs() {
                 fill: false
             }]
         },
-        options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true } }
-        }
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
     costChart = new Chart(areaTimeCostCtx, {
@@ -107,18 +67,14 @@ function createTimeGraphs() {
                 fill: false
             }]
         },
-        options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true } }
-        }
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 }
 
-// **Update Time Graphs Based on Period Selection (WITHOUT Recreating)**
+// **Update Time Graphs Based on Period Selection**
 function updateTimeGraph(period) {
     selectedTime = period;
 
-    // **Update existing charts instead of creating new ones**
     energyChart.data.labels = timeLabels[selectedTime];
     energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime];
     energyChart.update();
@@ -138,6 +94,7 @@ document.getElementById('areaTypeDropdown').addEventListener('change', function 
     updateAreaData();
 });
 
+// **Update Device Charts Based on Selected Area**
 function updateAreaData() {
     let deviceHTML = "";
     let deviceNames = [];
@@ -180,23 +137,12 @@ function updateAreaData() {
                 backgroundColor: 'purple'
             }]
         },
-        options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true } }
-        }
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
     // **Update time graphs instead of recreating them**
     updateTimeGraph(selectedTime);
 }
-
-// **Initialization on Page Load**
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById('areaTypeDropdown').value = "meeting";
-    createTimeGraphs();
-    updateAreaData();
-    calculateTotals();
-});
 
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
@@ -214,7 +160,11 @@ function calculateTotals() {
     document.getElementById('totalCost').textContent = totalCost.toFixed(2);
 }
 
-// **Run on Page Load**
+// **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('areaTypeDropdown').value = "meeting";
+    createAreaCharts();
+    createTimeGraphs();
+    updateAreaData();
     calculateTotals();
 });

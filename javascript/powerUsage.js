@@ -1,3 +1,6 @@
+// Import all shared data from energyData.js
+import { timeLabels, energyData, costData, areaData, deviceData, devicesByArea } from './energyData.js';
+
 // Chart Elements
 const energyCostCtx = document.getElementById('energyCostChart').getContext('2d');
 const energyUsageCtx = document.getElementById('energyUsageChart').getContext('2d');
@@ -6,72 +9,11 @@ const areaBarCtx = document.getElementById('areaBarChart').getContext('2d');
 const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
 const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
-// Time Labels
-const timeLabels = {
-    daily: ['00:00', '06:00', '12:00', '18:00', '24:00'],
-    weekly: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    monthly: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
-};
-
-// Energy Data
-const energyData = {
-    daily: [2, 3, 5, 4, 5],
-    weekly: [30, 40, 35, 50, 45, 38, 42],
-    monthly: [200, 220, 210, 230]
-};
-
-const costData = {
-    daily: [10, 15, 20, 18, 22],
-    weekly: [100, 120, 110, 140, 130, 125, 135],
-    monthly: [400, 450, 420, 460]
-};
-
-// Area-wise Energy Usage Data
-const areaData = {
-    "Meeting Room": 30,
-    "Workstations": 40,
-    "Common Areas": 25,
-    "Special": 20
-};
-
-// Device-wise Energy Usage Data
-const deviceData = {
-    "Computers": 50,
-    "Lights": 20,
-    "Heating": 15,
-    "Monitors": 25,
-    "Speakers": 10,
-    "Vending Machine": 10
-};
-
-// Device Types by Room
-const devicesByArea = {
-    "Meeting Room": [
-        { name: "Projector", energy: 5, cost: 2.5 },
-        { name: "Speakers", energy: 2, cost: 1.2 },
-        { name: "Lights", energy: 8, cost: 4 }
-    ],
-    "Workstations": [
-        { name: "Computers", energy: 15, cost: 8 },
-        { name: "Monitors", energy: 10, cost: 5 },
-        { name: "Printers", energy: 6, cost: 3 }
-    ],
-    "Common Areas": [
-        { name: "Lights", energy: 12, cost: 6 },
-        { name: "Air Conditioning", energy: 20, cost: 10 },
-        { name: "Vending Machine", energy: 8, cost: 4 }
-    ],
-    "Special": [
-        { name: "Heating", energy: 25, cost: 12 },
-        { name: "Speakers", energy: 10, cost: 5 }
-    ]
-};
-
-// Initialize Global Variables
+// **DEFAULT SELECTION**
 let selectedTime = "daily";
-let energyChart, costChart;
+let energyChart, costChart, areaPieChart, areaBarChart, devicePieChart, deviceBarChart;
 
-// Initialize Time-Based Graphs
+// **Initialize Time-Based Graphs**
 function createTimeGraphs() {
     energyChart = new Chart(energyUsageCtx, {
         type: 'line',
@@ -102,7 +44,61 @@ function createTimeGraphs() {
     });
 }
 
-// Function to Update Time-Based Graphs
+// **Initialize Area-wise Usage Charts**
+function createAreaCharts() {
+    areaPieChart = new Chart(areaPieCtx, {
+        type: 'pie',
+        data: {
+            labels: Object.keys(areaData),
+            datasets: [{
+                data: Object.values(areaData),
+                backgroundColor: ['red', 'blue', 'green', 'purple']
+            }]
+        }
+    });
+
+    areaBarChart = new Chart(areaBarCtx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(areaData),
+            datasets: [{
+                label: 'Energy Usage (kW)',
+                data: Object.values(areaData),
+                backgroundColor: 'teal'
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+}
+
+// **Initialize Device-wise Usage Charts**
+function createDeviceCharts() {
+    devicePieChart = new Chart(devicePieCtx, {
+        type: 'pie',
+        data: {
+            labels: Object.keys(deviceData),
+            datasets: [{
+                data: Object.values(deviceData),
+                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
+            }]
+        }
+    });
+
+    deviceBarChart = new Chart(deviceBarCtx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(deviceData),
+            datasets: [{
+                label: 'Energy Usage (kW)',
+                data: Object.values(deviceData),
+                backgroundColor: 'purple'
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+}
+
+// **Update Time Graphs Based on Period Selection**
 function updateTimeGraphs(period) {
     selectedTime = period;
 
@@ -119,57 +115,7 @@ function updateTimeGraphs(period) {
     document.getElementById(period).classList.add("active-button");
 }
 
-// Initialize Area-wise Usage Charts
-new Chart(areaPieCtx, {
-    type: 'pie',
-    data: {
-        labels: Object.keys(areaData),
-        datasets: [{
-            data: Object.values(areaData),
-            backgroundColor: ['red', 'blue', 'green', 'purple']
-        }]
-    }
-});
-
-new Chart(areaBarCtx, {
-    type: 'bar',
-    data: {
-        labels: Object.keys(areaData),
-        datasets: [{
-            label: 'Energy Usage (kW)',
-            data: Object.values(areaData),
-            backgroundColor: 'teal'
-        }]
-    },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
-});
-
-// Initialize Device-wise Usage Charts
-new Chart(devicePieCtx, {
-    type: 'pie',
-    data: {
-        labels: Object.keys(deviceData),
-        datasets: [{
-            data: Object.values(deviceData),
-            backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
-        }]
-    }
-});
-
-new Chart(deviceBarCtx, {
-    type: 'bar',
-    data: {
-        labels: Object.keys(deviceData),
-        datasets: [{
-            label: 'Energy Usage (kW)',
-            data: Object.values(deviceData),
-            backgroundColor: 'purple'
-        }]
-    },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
-});
-
-// Function to Calculate Sticky Footer Totals
+// **Calculate Totals for Footer**
 function calculateTotals() {
     let totalEnergy = 0, totalCost = 0;
     let minRoom = "", maxRoom = "", minDevice = "", maxDevice = "";
@@ -209,8 +155,10 @@ function calculateTotals() {
     document.getElementById('maxUsage').textContent = `${maxRoom} (${maxDevice})`;
 }
 
-// Run Scripts on Page Load
+// **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
     createTimeGraphs();
+    createAreaCharts();
+    createDeviceCharts();
     calculateTotals();
 });
