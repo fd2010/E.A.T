@@ -1,55 +1,73 @@
 // Import shared data from energyData.js
-import { timeLabels, energyData, costData, devicesByArea, areaData, deviceData } from './energyData.js';
+import { timeLabels, energyData, costData, devicesByArea, deviceData } from './energyData.js';
 
-console.log(" energyData.js imported successfully!");
-console.log(" timeLabels:", timeLabels);
-console.log(" energyData:", energyData);
-console.log(" devicesByArea:", devicesByArea);
+console.log("✅ energyData.js imported successfully!");
+console.log("🔎 timeLabels:", timeLabels);
+console.log("🔎 energyData:", energyData);
+console.log("🔎 devicesByArea:", devicesByArea);
 
 // **Chart Elements**
-const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
-const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
-const areaTimeCostCtx = document.getElementById('areaTimeCostChart').getContext('2d');
-const areaTimeEnergyCtx = document.getElementById('areaTimeEnergyChart').getContext('2d');
-const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
-const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
+const deviceComparisonPieCtx = document.getElementById('deviceComparisonPie').getContext('2d');
+const deviceComparisonBarCtx = document.getElementById('deviceComparisonBar').getContext('2d');
+const deviceTimeCostCtx = document.getElementById('deviceTimeCostChart').getContext('2d');
+const deviceTimeEnergyCtx = document.getElementById('deviceTimeEnergyChart').getContext('2d');
+const deviceAreaPieCtx = document.getElementById('deviceAreaPieChart').getContext('2d');
+const deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContext('2d');
 
-// **Normalize Area Names**
-function normalizeArea(area) {
-    const mapping = {
-        "meeting": "Meeting Room",
-        "work": "Workstations",
-        "common": "Common Areas",
-        "special": "Special"
-    };
-    return mapping[area] || area;
+let selectedDevice = "Computers";
+let selectedTime = "daily";
+let devicePieChart, deviceBarChart, deviceEnergyChart, deviceCostChart, deviceAreaPieChart, deviceAreaBarChart;
+
+// **Aggregate Energy Data for Each Device Across All Areas**
+function getDeviceEnergyData(device, time) {
+    let data = Array(timeLabels[time].length).fill(0);
+
+    Object.entries(devicesByArea).forEach(([area, devices]) => {
+        devices.forEach(d => {
+            if (d.name === device) {
+                data = data.map((val, index) => val + (energyData[area] ? energyData[area][time][index] || 0 : 0));
+            }
+        });
+    });
+
+    return data;
 }
 
-// **Set Default Values**
-let selectedArea = normalizeArea("meeting");
-let selectedTime = "daily";
-let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
+// **Aggregate Cost Data for Each Device Across All Areas**
+function getDeviceCostData(device, time) {
+    let data = Array(timeLabels[time].length).fill(0);
 
-// **Initialize Area Comparison Charts**
-function createAreaCharts() {
-    areaPieChart = new Chart(areaComparisonPieCtx, {
+    Object.entries(devicesByArea).forEach(([area, devices]) => {
+        devices.forEach(d => {
+            if (d.name === device) {
+                data = data.map((val, index) => val + (costData[area] ? costData[area][time][index] || 0 : 0));
+            }
+        });
+    });
+
+    return data;
+}
+
+// **Initialize Device Comparison Charts**
+function createDeviceCharts() {
+    devicePieChart = new Chart(deviceComparisonPieCtx, {
         type: 'pie',
         data: {
-            labels: Object.keys(areaData),
+            labels: Object.keys(deviceData),
             datasets: [{
-                data: Object.values(areaData),
-                backgroundColor: ['red', 'blue', 'green', 'teal']
+                data: Object.values(deviceData),
+                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
             }]
         }
     });
 
-    areaBarChart = new Chart(areaComparisonBarCtx, {
+    deviceBarChart = new Chart(deviceComparisonBarCtx, {
         type: 'bar',
         data: {
-            labels: Object.keys(areaData),
+            labels: Object.keys(deviceData),
             datasets: [{
                 label: 'Energy Usage (kW)',
-                data: Object.values(areaData),
+                data: Object.values(deviceData),
                 backgroundColor: 'teal'
             }]
         },
@@ -58,194 +76,92 @@ function createAreaCharts() {
 }
 
 // **Initialize Time-Based Graphs**
-function createTimeGraphs() {
-    console.log("Initializing Time Graphs...");
+function createDeviceTimeGraphs() {
+    console.log(`🔍 Initializing Time Graphs for '${selectedDevice}' (${selectedTime})`);
 
-    if (!energyData[selectedArea] || !costData[selectedArea]) {
-        console.error(`No energy or cost data found for '${selectedArea}'`);
-        return;
-    }
-
-    energyChart = new Chart(areaTimeEnergyCtx, {
+    deviceEnergyChart = new Chart(deviceTimeEnergyCtx, {
         type: 'line',
         data: {
             labels: timeLabels[selectedTime],
             datasets: [{
-                label: 'Energy (kW)',
-                data: energyData[selectedArea][selectedTime],
+                label: `Energy (kW) - ${selectedDevice}`,
+                data: getDeviceEnergyData(selectedDevice, selectedTime),
                 borderColor: 'blue',
                 fill: false
             }]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        }
     });
 
-    costChart = new Chart(areaTimeCostCtx, {
+    deviceCostChart = new Chart(deviceTimeCostCtx, {
         type: 'line',
         data: {
             labels: timeLabels[selectedTime],
             datasets: [{
-                label: 'Cost (£)',
-                data: costData[selectedArea][selectedTime],
+                label: `Cost (£) - ${selectedDevice}`,
+                data: getDeviceCostData(selectedDevice, selectedTime),
                 borderColor: 'red',
                 fill: false
             }]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        }
     });
 }
 
 // **Update Time Graphs Based on Period Selection**
-window.updateTimeGraphs = function (period) {
+window.updateDeviceTimeGraphs = function (period) {
     selectedTime = period;
-    console.log(` Updating Time Graphs for ${selectedArea} (${period})`);
+    console.log(`🔄 Updating Time Graphs for ${selectedDevice} (${period})`);
 
-    const normalizedArea = normalizeArea(selectedArea);
+    deviceEnergyChart.data.labels = timeLabels[selectedTime];
+    deviceEnergyChart.data.datasets[0].data = getDeviceEnergyData(selectedDevice, selectedTime);
+    deviceEnergyChart.update();
 
-    if (!energyData[normalizedArea] || !costData[normalizedArea]) {
-        console.error(` No energy or cost data found for '${normalizedArea}'`);
-        return;
-    }
-
-    energyChart.data.labels = timeLabels[selectedTime];
-    energyChart.data.datasets[0].data = energyData[normalizedArea][selectedTime]; //  Use normalized area
-    energyChart.update();
-
-    costChart.data.labels = timeLabels[selectedTime];
-    costChart.data.datasets[0].data = costData[normalizedArea][selectedTime]; //  Use normalized area
-    costChart.update();
+    deviceCostChart.data.labels = timeLabels[selectedTime];
+    deviceCostChart.data.datasets[0].data = getDeviceCostData(selectedDevice, selectedTime);
+    deviceCostChart.update();
 
     // Highlight the active button
     document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
 };
 
-// **Update Device & Time Graphs When Changing Area**
-function updateAreaData() {
-    const normalizedArea = normalizeArea(selectedArea);
-    console.log(" Selected Area:", normalizedArea);
-
-    if (!devicesByArea[normalizedArea]) {
-        console.error(` No data found for selected area: '${normalizedArea}'`);
-        return;
-    }
-
-    let deviceHTML = "";
-    let deviceNames = [];
-    let deviceEnergy = [];
-
-    devicesByArea[normalizedArea].forEach(device => {
-        deviceHTML += `
-            <div class="device-panel">
-                <h3>${device.name}</h3>
-                <p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p>
-            </div>`;
-        deviceNames.push(device.name);
-        deviceEnergy.push(device.energy);
-    });
-
-    document.getElementById('deviceList').innerHTML = deviceHTML;
-
-    if (devicePieChart) devicePieChart.destroy();
-    if (deviceBarChart) deviceBarChart.destroy();
-
-    devicePieChart = new Chart(devicePieCtx, {
-        type: 'pie',
-        data: {
-            labels: deviceNames,
-            datasets: [{
-                data: deviceEnergy,
-                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']
-            }]
-        }
-    });
-
-    deviceBarChart = new Chart(deviceBarCtx, {
-        type: 'bar',
-        data: {
-            labels: deviceNames,
-            datasets: [{
-                label: 'Energy Usage (kW)',
-                data: deviceEnergy,
-                backgroundColor: 'purple'
-            }]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
-    });
-
-    //  Update time graphs when area changes
-    updateTimeGraphs(selectedTime);
-}
-
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
     let totalEnergy = 0, totalCost = 0;
-    let minRoom = "", maxRoom = "", minDevice = "", maxDevice = "";
-    let minEnergy = Infinity, maxEnergy = -Infinity;
-    let minRoomEnergy = Infinity, maxRoomEnergy = -Infinity; // Separate tracking for room totals
+    let minUsage = Infinity, maxUsage = -Infinity;
+    let minDevice = "", maxDevice = "";
 
-    Object.entries(devicesByArea).forEach(([room, devices]) => {
-        let roomTotal = 0;
+    Object.entries(deviceData).forEach(([device, usage]) => {
+        totalEnergy += usage;
+        totalCost += usage * 2; // Assume cost is proportional to energy usage
 
-        devices.forEach(device => {
-            totalEnergy += device.energy;
-            totalCost += device.cost;
-            roomTotal += device.energy;
-
-            // Track minimum and maximum energy usage **for devices**
-            if (device.energy < minEnergy) {
-                minEnergy = device.energy;
-                minDevice = device.name;
-            }
-            if (device.energy > maxEnergy) {
-                maxEnergy = device.energy;
-                maxDevice = device.name;
-            }
-        });
-
-        // Track **minimum and maximum energy usage for rooms**
-        if (roomTotal < minRoomEnergy) {
-            minRoomEnergy = roomTotal;
-            minRoom = room;
+        if (usage < minUsage) {
+            minUsage = usage;
+            minDevice = device;
         }
-        if (roomTotal > maxRoomEnergy) {
-            maxRoomEnergy = roomTotal;
-            maxRoom = room;
+        if (usage > maxUsage) {
+            maxUsage = usage;
+            maxDevice = device;
         }
     });
 
     // Assign values to the footer
     document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
     document.getElementById('totalCost').textContent = `${totalCost.toFixed(2)}`;
-    document.getElementById('minUsageRoom').textContent = ` ${minRoom}`;
-    document.getElementById('maxUsageRoom').textContent = ` ${maxRoom}`;
-    document.getElementById('minUsageDevice').textContent = ` ${minDevice}`;
-    document.getElementById('maxUsageDevice').textContent = ` ${maxDevice}`;
+    document.getElementById('minUsageDevice').textContent = `${minDevice}`;
+    document.getElementById('maxUsageDevice').textContent = `${maxDevice}`;
 }
 
-// **Dropdown Event Listener**
-document.getElementById('areaTypeDropdown').addEventListener('change', function () {
-    selectedArea = this.value; // Store the dropdown value
-    console.log(" Updating area:", selectedArea);
-    updateAreaData();
+// **Dropdown Event Listener for Device Selection**
+document.getElementById('deviceTypeDropdown').addEventListener('change', function () {
+    selectedDevice = this.value;
+    console.log(`🔄 Updating data for: ${selectedDevice}`);
+    updateDeviceTimeGraphs(selectedTime);
 });
 
-// **Run Scripts on Page Load**
+// **Run on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
-    const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
-    const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
-    const areaTimeCostCtx = document.getElementById('areaTimeCostChart').getContext('2d');
-    const areaTimeEnergyCtx = document.getElementById('areaTimeEnergyChart').getContext('2d');
-    const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
-    const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
-
-    console.log(" Canvas elements loaded correctly!");
-    selectedArea = normalizeArea(document.getElementById('areaTypeDropdown').value);
-
-    // Call functions AFTER elements exist
-    createAreaCharts();
-    createTimeGraphs();
-    updateAreaData();
+    console.log("✅ Page Loaded. Initializing graphs...");
+    createDeviceCharts();
+    createDeviceTimeGraphs();
     calculateTotals();
 });
-
