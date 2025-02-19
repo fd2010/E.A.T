@@ -160,8 +160,8 @@ function calculateTotals() {
 
     document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
     document.getElementById('totalCost').textContent = `${totalCost.toFixed(2)}`;
-    document.getElementById('minUsage').textContent = `Room: ${minRoom} Device: ${minDevice}`;
-    document.getElementById('maxUsage').textContent = `Room:${maxRoom} Device:${maxDevice}`;
+    document.getElementById('minUsage').textContent = `Room: ${minRoom}, Device: ${minDevice}`;
+    document.getElementById('maxUsage').textContent = `Room: ${maxRoom}, Device: ${maxDevice}`;    
 }
 
 // **Run Scripts on Page Load**
