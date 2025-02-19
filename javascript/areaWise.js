@@ -98,20 +98,26 @@ function createTimeGraphs() {
 // **Update Time Graphs Based on Period Selection**
 window.updateTimeGraphs = function (period) {
     selectedTime = period;
-    console.log(`⏳ Updating Time Graphs for ${period}`);
+    console.log(`⏳ Updating Time Graphs for ${selectedArea} (${period})`);
+
+    if (!energyData[selectedArea] || !costData[selectedArea]) {
+        console.error(`❌ No energy or cost data found for '${selectedArea}'`);
+        return;
+    }
 
     energyChart.data.labels = timeLabels[selectedTime];
-    energyChart.data.datasets[0].data = energyData[selectedTime];
+    energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime]; // ✅ Filter for selected area
     energyChart.update();
 
     costChart.data.labels = timeLabels[selectedTime];
-    costChart.data.datasets[0].data = costData[selectedTime];
+    costChart.data.datasets[0].data = costData[selectedArea][selectedTime]; // ✅ Filter for selected area
     costChart.update();
 
-    // Highlight active button
+    // Highlight the active button
     document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
 };
+
 
 // **Update Device Charts Based on Selected Area**
 function updateAreaData() {
@@ -166,9 +172,10 @@ function updateAreaData() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
-    // ✅ Update Time Graphs when the area is changed
+    // ✅ Ensure time graphs update when area is changed
     updateTimeGraphs(selectedTime);
 }
+
 
 
 // **Calculate Totals for Sticky Footer**
