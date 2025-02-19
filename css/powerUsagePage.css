@@ -326,3 +326,18 @@
 #areaTypeDropdown:hover {
     border-color: #c69307;
 }
+
+#deviceTypeDropdown {
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}
+
+#deviceTypeDropdown:hover {
+    border-color: #c69307;
+}

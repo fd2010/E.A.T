@@ -7,13 +7,7 @@ console.log("🔎 energyData:", energyData);
 console.log("🔎 devicesByArea:", devicesByArea);
 
 // **Chart Elements**
-const deviceComparisonPieCtx = document.getElementById('deviceComparisonPie').getContext('2d');
-const deviceComparisonBarCtx = document.getElementById('deviceComparisonBar').getContext('2d');
-const deviceTimeCostCtx = document.getElementById('deviceTimeCostChart').getContext('2d');
-const deviceTimeEnergyCtx = document.getElementById('deviceTimeEnergyChart').getContext('2d');
-const deviceAreaPieCtx = document.getElementById('deviceAreaPieChart').getContext('2d');
-const deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContext('2d');
-
+let deviceComparisonPieCtx, deviceComparisonBarCtx, deviceTimeCostCtx, deviceTimeEnergyCtx, deviceAreaPieCtx, deviceAreaBarCtx;
 let selectedDevice = "Computers";
 let selectedTime = "daily";
 let devicePieChart, deviceBarChart, deviceEnergyChart, deviceCostChart, deviceAreaPieChart, deviceAreaBarChart;
@@ -143,23 +137,9 @@ window.updateDeviceTimeGraphs = function (period) {
     deviceCostChart.data.datasets[0].data = getDeviceCostData(selectedDevice, selectedTime);
     deviceCostChart.update();
 
-    // Highlight the active button
     document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
 };
-
-// **Update Device Usage Across Areas Graphs**
-function updateDeviceAreaGraphs() {
-    let { labels, data } = getDeviceEnergyAcrossAreas(selectedDevice);
-
-    deviceAreaPieChart.data.labels = labels;
-    deviceAreaPieChart.data.datasets[0].data = data;
-    deviceAreaPieChart.update();
-
-    deviceAreaBarChart.data.labels = labels;
-    deviceAreaBarChart.data.datasets[0].data = data;
-    deviceAreaBarChart.update();
-}
 
 // **Update All Graphs When Changing Device Type**
 function updateDeviceData() {
@@ -189,28 +169,36 @@ function calculateTotals() {
         }
     });
 
-    // Assign values to the footer
     document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
     document.getElementById('totalCost').textContent = `${totalCost.toFixed(2)}`;
     document.getElementById('minUsageDevice').textContent = `${minDevice}`;
     document.getElementById('maxUsageDevice').textContent = `${maxDevice}`;
 }
 
-// **Dropdown Event Listener for Device Selection**
-document.getElementById('deviceTypeDropdown').addEventListener('change', function () {
-    selectedDevice = this.value;
-    updateDeviceData();
-});
-
 // **Run on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
+    // Assign chart elements after DOM is fully loaded
+    deviceComparisonPieCtx = document.getElementById('deviceComparisonPie').getContext('2d');
+    deviceComparisonBarCtx = document.getElementById('deviceComparisonBar').getContext('2d');
+    deviceTimeCostCtx = document.getElementById('deviceTimeCostChart').getContext('2d');
+    deviceTimeEnergyCtx = document.getElementById('deviceTimeEnergyChart').getContext('2d');
+    deviceAreaPieCtx = document.getElementById('deviceAreaPieChart').getContext('2d');
+    deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContext('2d');
+
+    document.getElementById("deviceTypeDropdown").addEventListener("change", function () {
+        selectedDevice = this.value;
+        updateDeviceData();
+    });
+
     document.getElementById("daily").addEventListener("click", () => updateTimeGraphs('daily'));
     document.getElementById("weekly").addEventListener("click", () => updateTimeGraphs('weekly'));
     document.getElementById("monthly").addEventListener("click", () => updateTimeGraphs('monthly'));
 
-    console.log(" Page Loaded. Initializing graphs...");
-    createDeviceCharts();
+
+    console.log("✅ Page Loaded. Initializing graphs...");
     createDeviceTimeGraphs();
+    createDeviceAreaGraphs();
     calculateTotals();
 });
+
 
