@@ -18,7 +18,7 @@ let selectedDevice = "Computers";
 let selectedTime = "daily";
 let devicePieChart, deviceBarChart, deviceEnergyChart, deviceCostChart, deviceAreaPieChart, deviceAreaBarChart;
 
-// **Helper Function: Get Energy Data for Device**
+// **Aggregate Energy Data for Each Device Across All Areas**
 function getDeviceEnergyData(device, time) {
     let data = Array(timeLabels[time].length).fill(0);
 
@@ -33,7 +33,7 @@ function getDeviceEnergyData(device, time) {
     return data;
 }
 
-// **Helper Function: Get Cost Data for Device**
+// **Aggregate Cost Data for Each Device Across All Areas**
 function getDeviceCostData(device, time) {
     let data = Array(timeLabels[time].length).fill(0);
 
@@ -151,8 +151,20 @@ function calculateTotals() {
     document.getElementById('maxUsageDevice').textContent = `${maxDevice}`;
 }
 
+// **Dropdown Event Listener for Device Selection**
+document.getElementById('deviceTypeDropdown').addEventListener('change', function () {
+    selectedDevice = this.value;
+    console.log(`🔄 Updating data for: ${selectedDevice}`);
+    updateDeviceTimeGraphs(selectedTime);
+});
+
 // **Run on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
+
+    document.getElementById("daily").addEventListener("click", () => updateTimeGraphs('daily'));
+    document.getElementById("weekly").addEventListener("click", () => updateTimeGraphs('weekly'));
+    document.getElementById("monthly").addEventListener("click", () => updateTimeGraphs('monthly'));
+    
     console.log("✅ Page Loaded. Initializing graphs...");
     createDeviceCharts();
     createDeviceTimeGraphs();
