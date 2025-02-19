@@ -1,5 +1,4 @@
 
-
 // Import shared data from energyData.js
 import { timeLabels, energyData, devicesByArea, areaData, deviceData } from './energyData.js';
 
@@ -25,9 +24,9 @@ function createAreaCharts() {
     areaPieChart = new Chart(areaComparisonPieCtx, {
         type: 'pie',
         data: {
-            labels: Object.keys(energyData),
+            labels: Object.keys(areaData),  
             datasets: [{
-                data: Object.values(energyData).map(area => area[selectedTime].reduce((a, b) => a + b, 0)),
+                data: Object.values(areaData), 
                 backgroundColor: ['red', 'blue', 'green', 'orange']
             }]
         }
@@ -36,16 +35,17 @@ function createAreaCharts() {
     areaBarChart = new Chart(areaComparisonBarCtx, {
         type: 'bar',
         data: {
-            labels: Object.keys(energyData),
+            labels: Object.keys(areaData), // Labels from areaData
             datasets: [{
                 label: 'Energy Usage (kW)',
-                data: Object.values(energyData).map(area => area[selectedTime].reduce((a, b) => a + b, 0)),
+                data: Object.values(areaData), // Use areaData values directly
                 backgroundColor: 'teal'
             }]
         },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 }
+
 
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
@@ -80,26 +80,24 @@ function createTimeGraphs() {
 
 // **Update Time Graphs Based on Period Selection**
 function updateTimeGraphs(period) {
-    selectedTime = period;
-
-    energyChart.data.labels = timeLabels[selectedTime];
-    energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime];
-    energyChart.update();
-
-    costChart.data.labels = timeLabels[selectedTime];
-    costChart.data.datasets[0].data = energyData[selectedArea][selectedTime].map(x => x * 2);
-    costChart.update();
-
-    // Highlight active button
-    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
-    document.getElementById(period).classList.add("active-button");
-
-    const activeButton = document.getElementById(period);
-    if (activeButton) {
-        activeButton.classList.add("active-button");
-    } else {
-        console.error(` Error: Button ID '${period}' not found!`);
+    function updateTimeGraphs(period) {
+        selectedTime = period;
+    
+        console.log("Energy Data for Selected Time:", energyData[selectedTime]); // Debugging
+    
+        energyChart.data.labels = timeLabels[selectedTime];
+        energyChart.data.datasets[0].data = energyData[selectedTime]; // Use energyData[selectedTime] directly
+        energyChart.update();
+    
+        costChart.data.labels = timeLabels[selectedTime];
+        costChart.data.datasets[0].data = costData[selectedTime]; // Use costData[selectedTime]
+        costChart.update();
+    
+        // Highlight active button
+        document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+        document.getElementById(period).classList.add("active-button");
     }
+    
 }
 
 // **Update Area Data on Selection**
