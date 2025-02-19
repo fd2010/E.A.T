@@ -1,4 +1,3 @@
-
 // Import shared data from energyData.js
 import { timeLabels, energyData, costData, devicesByArea, areaData, deviceData } from './energyData.js';
 
@@ -7,7 +6,7 @@ console.log("🔎 timeLabels:", timeLabels);
 console.log("🔎 energyData:", energyData);
 console.log("🔎 devicesByArea:", devicesByArea);
 
-// Chart Elements
+// **Chart Elements**
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
 const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
 const areaTimeCostCtx = document.getElementById('areaTimeCostChart').getContext('2d');
@@ -15,10 +14,7 @@ const areaTimeEnergyCtx = document.getElementById('areaTimeEnergyChart').getCont
 const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
 const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
-let selectedArea = "meeting";
-let selectedTime = "daily";
-let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
-
+// **Normalize Area Names**
 function normalizeArea(area) {
     const mapping = {
         "meeting": "Meeting Room",
@@ -26,11 +22,15 @@ function normalizeArea(area) {
         "common": "Common Areas",
         "special": "Special"
     };
-    return mapping[area] || area;  // Return mapped value or original if no match
+    return mapping[area] || area;
 }
-selectedArea = normalizeArea(selectedArea);
 
-// **Initialize Area Comparison Charts*
+// **Set Default Values**
+let selectedArea = normalizeArea("meeting");
+let selectedTime = "daily";
+let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
+
+// **Initialize Area Comparison Charts**
 function createAreaCharts() {
     areaPieChart = new Chart(areaComparisonPieCtx, {
         type: 'pie',
@@ -46,10 +46,10 @@ function createAreaCharts() {
     areaBarChart = new Chart(areaComparisonBarCtx, {
         type: 'bar',
         data: {
-            labels: Object.keys(areaData), // Labels from areaData
+            labels: Object.keys(areaData),
             datasets: [{
                 label: 'Energy Usage (kW)',
-                data: Object.values(areaData), // Use areaData values directly
+                data: Object.values(areaData),
                 backgroundColor: 'teal'
             }]
         },
@@ -57,13 +57,12 @@ function createAreaCharts() {
     });
 }
 
-
 // **Initialize Time-Based Graphs**
-
 function createTimeGraphs() {
-    console.log("🔍 costData:", costData);  // Debugging log
+    console.log("🔍 Initializing Time Graphs...");
+    
     if (!costData) {
-        console.error("❌ costData is not defined!");
+        console.error("❌ costData is missing!");
         return;
     }
 
@@ -73,7 +72,7 @@ function createTimeGraphs() {
             labels: timeLabels[selectedTime],
             datasets: [{
                 label: 'Energy (kW)',
-                data: energyData[selectedTime], // ✅ Uses energyData[selectedTime] directly
+                data: energyData[selectedTime],
                 borderColor: 'blue',
                 fill: false
             }]
@@ -87,7 +86,7 @@ function createTimeGraphs() {
             labels: timeLabels[selectedTime],
             datasets: [{
                 label: 'Cost (£)',
-                data: costData[selectedTime],  // ✅ Uses costData[selectedTime]
+                data: costData[selectedTime],
                 borderColor: 'red',
                 fill: false
             }]
@@ -96,14 +95,10 @@ function createTimeGraphs() {
     });
 }
 
-
-
-
 // **Update Time Graphs Based on Period Selection**
-
 window.updateTimeGraphs = function (period) {
     selectedTime = period;
-    console.log("⏳ Updating Time Graphs:", period);
+    console.log(`⏳ Updating Time Graphs for ${period}`);
 
     energyChart.data.labels = timeLabels[selectedTime];
     energyChart.data.datasets[0].data = energyData[selectedTime];
@@ -113,26 +108,16 @@ window.updateTimeGraphs = function (period) {
     costChart.data.datasets[0].data = costData[selectedTime];
     costChart.update();
 
-    // Highlight the active button
+    // Highlight active button
     document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
 };
-
-
-
-// **Update Area Data on Selection**
-document.getElementById('areaTypeDropdown').addEventListener('change', function () {
-    selectedArea = normalizeArea(this.value);  // Normalize selection
-    console.log("🔄 Updating area:", selectedArea);
-    updateAreaData();  // Refresh charts & device list
-});
-
 
 // **Update Device Charts Based on Selected Area**
 function updateAreaData() {
     selectedArea = normalizeArea(selectedArea);
     console.log("🔍 Selected Area:", selectedArea);
-    
+
     if (!devicesByArea[selectedArea]) {
         console.error(`❌ No data found for selected area: '${selectedArea}'`);
         return;
@@ -181,9 +166,8 @@ function updateAreaData() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
-    updateTimeGraphs(selectedTime); // Ensure graphs update
+    updateTimeGraphs(selectedTime);
 }
-
 
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
@@ -201,6 +185,13 @@ function calculateTotals() {
     document.getElementById('totalCost').textContent = totalCost.toFixed(2);
 }
 
+// **Dropdown Event Listener**
+document.getElementById('areaTypeDropdown').addEventListener('change', function () {
+    selectedArea = normalizeArea(this.value);
+    console.log("🔄 Updating area:", selectedArea);
+    updateAreaData();
+});
+
 // **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
     const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
@@ -211,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
     console.log("✅ Canvas elements loaded correctly!");
+    selectedArea = normalizeArea(document.getElementById('areaTypeDropdown').value);
 
     // Call functions AFTER elements exist
     createAreaCharts();
