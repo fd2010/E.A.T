@@ -1,6 +1,12 @@
+
+
 // Import shared data from energyData.js
 import { timeLabels, energyData, devicesByArea, areaData, deviceData } from './energyData.js';
 
+console.log("✅ energyData.js imported successfully!");
+console.log("🔎 timeLabels:", timeLabels);
+console.log("🔎 energyData:", energyData);
+console.log("🔎 devicesByArea:", devicesByArea);
 
 // Chart Elements
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
@@ -170,14 +176,19 @@ function calculateTotals() {
 
 // **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById('areaTypeDropdown').value = "meeting";
+    const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
+    const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
+    const areaTimeCostCtx = document.getElementById('areaTimeCostChart').getContext('2d');
+    const areaTimeEnergyCtx = document.getElementById('areaTimeEnergyChart').getContext('2d');
+    const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
+    const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
-    document.getElementById("daily").addEventListener("click", () => updateTimeGraphs('daily'));
-    document.getElementById("weekly").addEventListener("click", () => updateTimeGraphs('weekly'));
-    document.getElementById("monthly").addEventListener("click", () => updateTimeGraphs('monthly'));
+    console.log("✅ Canvas elements loaded correctly!");
     
+    // Call functions AFTER elements exist
     createAreaCharts();
     createTimeGraphs();
     updateAreaData();
     calculateTotals();
 });
+

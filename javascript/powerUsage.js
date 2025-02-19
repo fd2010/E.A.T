@@ -163,8 +163,10 @@ function calculateTotals() {
     // Assign values to the footer
     document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
     document.getElementById('totalCost').textContent = `£${totalCost.toFixed(2)}`;
-    document.getElementById('minUsage').textContent = `Room: ${minRoom}, Device: ${minDevice}`;
-    document.getElementById('maxUsage').textContent = `Room: ${maxRoom}, Device: ${maxDevice}`;
+    document.getElementById('minUsageRoom').textContent = ` ${minRoom}`;
+    document.getElementById('maxUsageRoom').textContent = `: ${maxRoom}`;
+    document.getElementById('minUsageDevice').textContent = ` ${minDevice}`;
+    document.getElementById('maxUsageDevice').textContent = ` ${maxDevice}`;
 }
 
 // **Run Scripts on Page Load**
