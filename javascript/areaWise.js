@@ -166,8 +166,10 @@ function updateAreaData() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
+    // ✅ Update Time Graphs when the area is changed
     updateTimeGraphs(selectedTime);
 }
+
 
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
