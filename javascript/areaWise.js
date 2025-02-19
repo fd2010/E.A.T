@@ -1,6 +1,7 @@
 
 // Import shared data from energyData.js
-import { timeLabels, energyData, devicesByArea, areaData, deviceData } from './energyData.js';
+import { timeLabels, energyData, costData, devicesByArea, areaData, deviceData } from './energyData.js';
+
 
 console.log("✅ energyData.js imported successfully!");
 console.log("🔎 timeLabels:", timeLabels);
@@ -117,6 +118,11 @@ document.getElementById('areaTypeDropdown').addEventListener('change', function 
 
 // **Update Device Charts Based on Selected Area**
 function updateAreaData() {
+    if (!devicesByArea[selectedArea]) {
+        console.error(`❌ No data found for selected area: '${selectedArea}'`);
+        return;  // Prevents further errors
+    }
+
     let deviceHTML = "";
     let deviceNames = [];
     let deviceEnergy = [];
