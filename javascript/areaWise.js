@@ -13,7 +13,7 @@ let selectedArea = "meeting";
 let selectedTime = "daily";
 let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
 
-// **Initialize Area Comparison Charts**
+// **Initialize Area Comparison Charts*
 function createAreaCharts() {
     areaPieChart = new Chart(areaComparisonPieCtx, {
         type: 'pie',
