@@ -137,7 +137,7 @@
 }
 
 .graph-buttons button {
-    background-color: #c69307;
+    background-color: #c69307; /* Default button color */
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -154,8 +154,10 @@
 }
 
 .active-button {
-    background-color: #ad8004;
+    background-color: #ad8004 !important;
+    color: #fff;
 }
+
 
 /* Info Panels */
 .panel-wrapper {

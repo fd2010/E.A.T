@@ -166,7 +166,10 @@ window.updateDeviceTimeGraphs = function (period) {
     deviceCostChart.data.datasets[0].data = getDeviceCostData(selectedDevice, selectedTime);
     deviceCostChart.update();
 
-    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+    // **Ensure Active Button is Highlighted**
+    document.querySelectorAll(".graph-buttons button").forEach(btn => {
+        btn.classList.remove("active-button");
+    });
     document.getElementById(period).classList.add("active-button");
 };
 
@@ -239,4 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("daily").addEventListener("click", () => updateDeviceTimeGraphs('daily'));
     document.getElementById("weekly").addEventListener("click", () => updateDeviceTimeGraphs('weekly'));
     document.getElementById("monthly").addEventListener("click", () => updateDeviceTimeGraphs('monthly'));
+
+    // **Set Daily as Default Active Button**
+    document.getElementById("daily").classList.add("active-button");
 });
