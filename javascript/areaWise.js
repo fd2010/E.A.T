@@ -68,7 +68,7 @@ function createDeviceCharts() {
             datasets: [{
                 label: 'Energy Usage (kW)',
                 data: Object.values(deviceData),
-                backgroundColor: 'teal'
+                backgroundColor: 'blue'
             }]
         },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
