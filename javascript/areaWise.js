@@ -160,6 +160,10 @@ document.getElementById('deviceTypeDropdown').addEventListener('change', functio
 
 // **Run on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("daily").addEventListener("click", () => updateTimeGraphs('daily'));
+    document.getElementById("weekly").addEventListener("click", () => updateTimeGraphs('weekly'));
+    document.getElementById("monthly").addEventListener("click", () => updateTimeGraphs('monthly'));
+
     console.log("✅ Page Loaded. Initializing graphs...");
     createDeviceCharts();
     createDeviceTimeGraphs();
