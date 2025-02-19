@@ -1,6 +1,14 @@
 // Import shared data from energyData.js
 import { timeLabels, energyData, costData, devicesByArea, areaData, deviceData } from './energyData.js';
 
+console.log("✅ energyData.js imported successfully!");
+console.log("🔎 timeLabels:", timeLabels);
+console.log("🔎 energyData:", energyData);
+console.log("🔎 costData:", costData);
+console.log("🔎 devicesByArea:", devicesByArea);
+console.log("🔎 areaData:", areaData);
+console.log("🔎 deviceData:", deviceData);
+
 // **Chart Elements**
 const areaComparisonPieCtx = document.getElementById('areaComparisonPie').getContext('2d');
 const areaComparisonBarCtx = document.getElementById('areaComparisonBar').getContext('2d');
@@ -10,7 +18,7 @@ const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
 const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
 // **Set Default Values**
-let selectedArea = "Meeting Room"; // No normalization needed
+let selectedArea = "Meeting Room";
 let selectedTime = "daily";
 let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
 
@@ -213,7 +221,7 @@ document.getElementById('areaTypeDropdown').addEventListener('change', function 
 document.addEventListener("DOMContentLoaded", function () {
 
     console.log(" Canvas elements loaded correctly!");
-    selectedArea = normalizeArea(document.getElementById('areaTypeDropdown').value);
+    selectedArea = document.getElementById('areaTypeDropdown').value;
 
     // Call functions AFTER elements exist
     createAreaCharts();
