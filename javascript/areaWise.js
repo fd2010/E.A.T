@@ -101,24 +101,22 @@ function createTimeGraphs() {
 
 // **Update Time Graphs Based on Period Selection**
 
-function updateTimeGraphs(period) {
-   
+window.updateTimeGraphs = function (period) {
     selectedTime = period;
-
-    console.log("Energy Data for Selected Time:", energyData[selectedTime]); // Debugging
+    console.log("⏳ Updating Time Graphs:", period);
 
     energyChart.data.labels = timeLabels[selectedTime];
-    energyChart.data.datasets[0].data = energyData[selectedTime]; // Use energyData[selectedTime] directly
+    energyChart.data.datasets[0].data = energyData[selectedTime];
     energyChart.update();
 
     costChart.data.labels = timeLabels[selectedTime];
-    costChart.data.datasets[0].data = costData[selectedTime]; // Use costData[selectedTime]
+    costChart.data.datasets[0].data = costData[selectedTime];
     costChart.update();
 
-    // Highlight active button
+    // Highlight the active button
     document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
-}
+};
 
 
 
@@ -132,7 +130,7 @@ document.getElementById('areaTypeDropdown').addEventListener('change', function 
 
 // **Update Device Charts Based on Selected Area**
 function updateAreaData() {
-    selectedArea = normalizeArea(selectedArea);  // Fix area names
+    selectedArea = normalizeArea(selectedArea);
     console.log("🔍 Selected Area:", selectedArea);
     
     if (!devicesByArea[selectedArea]) {
@@ -183,7 +181,7 @@ function updateAreaData() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
-    updateTimeGraphs(selectedTime);  // Ensure graphs update too
+    updateTimeGraphs(selectedTime); // Ensure graphs update
 }
 
 
