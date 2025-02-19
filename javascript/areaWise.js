@@ -86,6 +86,13 @@ function updateTimeGraph(period) {
     // Highlight active button
     document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
+
+    const activeButton = document.getElementById(period);
+    if (activeButton) {
+        activeButton.classList.add("active-button");
+    } else {
+        console.error(` Error: Button ID '${period}' not found!`);
+    }
 }
 
 // **Update Area Data on Selection**

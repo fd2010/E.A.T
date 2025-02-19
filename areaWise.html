@@ -48,9 +48,11 @@
             </aside>
 
             <div class="graph-buttons">
-                <button onclick="updateTimeGraph('daily')">Daily</button>
-                <button onclick="updateTimeGraph('weekly')">Weekly</button>
-                <button onclick="updateTimeGraph('monthly')">Monthly</button>
+                <div class="graph-buttons">
+                    <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                    <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                    <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                </div>                
             </div>
 
             <div class="graph-container-wrapper">
