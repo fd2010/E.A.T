@@ -1,5 +1,5 @@
 // Import shared data from energyData.js
-import { timeLabels, energyData, costData, devicesByArea, areaData, deviceData } from './energyData.js';
+import { timeLabels, energyData, costData, devicesByArea, deviceData } from './energyData.js';
 
 console.log("✅ energyData.js imported successfully!");
 console.log("🔎 timeLabels:", timeLabels);
@@ -17,6 +17,36 @@ const deviceAreaBarCtx = document.getElementById('deviceAreaBarChart').getContex
 let selectedDevice = "Computers";
 let selectedTime = "daily";
 let devicePieChart, deviceBarChart, deviceEnergyChart, deviceCostChart, deviceAreaPieChart, deviceAreaBarChart;
+
+// **Helper Function: Get Energy Data for Device**
+function getDeviceEnergyData(device, time) {
+    let data = Array(timeLabels[time].length).fill(0);
+
+    Object.entries(devicesByArea).forEach(([area, devices]) => {
+        devices.forEach(d => {
+            if (d.name === device) {
+                data = data.map((val, index) => val + (energyData[area] ? energyData[area][time][index] || 0 : 0));
+            }
+        });
+    });
+
+    return data;
+}
+
+// **Helper Function: Get Cost Data for Device**
+function getDeviceCostData(device, time) {
+    let data = Array(timeLabels[time].length).fill(0);
+
+    Object.entries(devicesByArea).forEach(([area, devices]) => {
+        devices.forEach(d => {
+            if (d.name === device) {
+                data = data.map((val, index) => val + (costData[area] ? costData[area][time][index] || 0 : 0));
+            }
+        });
+    });
+
+    return data;
+}
 
 // **Initialize Device Comparison Charts**
 function createDeviceCharts() {
@@ -47,13 +77,15 @@ function createDeviceCharts() {
 
 // **Initialize Time-Based Graphs**
 function createDeviceTimeGraphs() {
+    console.log(`🔍 Initializing Time Graphs for '${selectedDevice}' (${selectedTime})`);
+
     deviceEnergyChart = new Chart(deviceTimeEnergyCtx, {
         type: 'line',
         data: {
             labels: timeLabels[selectedTime],
             datasets: [{
-                label: 'Energy (kW)',
-                data: energyData[selectedDevice][selectedTime],
+                label: `Energy (kW) - ${selectedDevice}`,
+                data: getDeviceEnergyData(selectedDevice, selectedTime),
                 borderColor: 'blue',
                 fill: false
             }]
@@ -65,8 +97,8 @@ function createDeviceTimeGraphs() {
         data: {
             labels: timeLabels[selectedTime],
             datasets: [{
-                label: 'Cost (£)',
-                data: costData[selectedDevice][selectedTime],
+                label: `Cost (£) - ${selectedDevice}`,
+                data: getDeviceCostData(selectedDevice, selectedTime),
                 borderColor: 'red',
                 fill: false
             }]
@@ -77,61 +109,51 @@ function createDeviceTimeGraphs() {
 // **Update Time Graphs Based on Period Selection**
 window.updateDeviceTimeGraphs = function (period) {
     selectedTime = period;
-    deviceEnergyChart.data.datasets[0].data = energyData[selectedDevice][selectedTime];
+    console.log(`🔄 Updating Time Graphs for ${selectedDevice} (${period})`);
+
+    deviceEnergyChart.data.labels = timeLabels[selectedTime];
+    deviceEnergyChart.data.datasets[0].data = getDeviceEnergyData(selectedDevice, selectedTime);
     deviceEnergyChart.update();
 
-    deviceCostChart.data.datasets[0].data = costData[selectedDevice][selectedTime];
+    deviceCostChart.data.labels = timeLabels[selectedTime];
+    deviceCostChart.data.datasets[0].data = getDeviceCostData(selectedDevice, selectedTime);
     deviceCostChart.update();
+
+    // Highlight the active button
+    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+    document.getElementById(period).classList.add("active-button");
 };
 
 // **Calculate Totals for Sticky Footer**
 function calculateTotals() {
     let totalEnergy = 0, totalCost = 0;
-    let minRoom = "", maxRoom = "", minDevice = "", maxDevice = "";
-    let minEnergy = Infinity, maxEnergy = -Infinity;
-    let minRoomEnergy = Infinity, maxRoomEnergy = -Infinity; // Separate tracking for room totals
+    let minUsage = Infinity, maxUsage = -Infinity;
+    let minDevice = "", maxDevice = "";
 
-    Object.entries(devicesByArea).forEach(([room, devices]) => {
-        let roomTotal = 0;
+    Object.entries(deviceData).forEach(([device, usage]) => {
+        totalEnergy += usage;
+        totalCost += usage * 2; // Assume cost is proportional to energy usage
 
-        devices.forEach(device => {
-            totalEnergy += device.energy;
-            totalCost += device.cost;
-            roomTotal += device.energy;
-
-            // Track minimum and maximum energy usage **for devices**
-            if (device.energy < minEnergy) {
-                minEnergy = device.energy;
-                minDevice = device.name;
-            }
-            if (device.energy > maxEnergy) {
-                maxEnergy = device.energy;
-                maxDevice = device.name;
-            }
-        });
-
-        // Track **minimum and maximum energy usage for rooms**
-        if (roomTotal < minRoomEnergy) {
-            minRoomEnergy = roomTotal;
-            minRoom = room;
+        if (usage < minUsage) {
+            minUsage = usage;
+            minDevice = device;
         }
-        if (roomTotal > maxRoomEnergy) {
-            maxRoomEnergy = roomTotal;
-            maxRoom = room;
+        if (usage > maxUsage) {
+            maxUsage = usage;
+            maxDevice = device;
         }
     });
 
     // Assign values to the footer
     document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
     document.getElementById('totalCost').textContent = `${totalCost.toFixed(2)}`;
-    document.getElementById('minUsageRoom').textContent = ` ${minRoom}`;
-    document.getElementById('maxUsageRoom').textContent = ` ${maxRoom}`;
-    document.getElementById('minUsageDevice').textContent = ` ${minDevice}`;
-    document.getElementById('maxUsageDevice').textContent = ` ${maxDevice}`;
+    document.getElementById('minUsageDevice').textContent = `${minDevice}`;
+    document.getElementById('maxUsageDevice').textContent = `${maxDevice}`;
 }
 
 // **Run on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ Page Loaded. Initializing graphs...");
     createDeviceCharts();
     createDeviceTimeGraphs();
     calculateTotals();
