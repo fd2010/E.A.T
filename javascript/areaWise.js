@@ -60,7 +60,7 @@ function createAreaCharts() {
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
     console.log("🔍 Initializing Time Graphs...");
-    
+
     if (!costData) {
         console.error("❌ costData is missing!");
         return;
@@ -106,11 +106,11 @@ window.updateTimeGraphs = function (period) {
     }
 
     energyChart.data.labels = timeLabels[selectedTime];
-    energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime]; // ✅ Filter for selected area
+    energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime]; // ✅ Use selected area
     energyChart.update();
 
     costChart.data.labels = timeLabels[selectedTime];
-    costChart.data.datasets[0].data = costData[selectedArea][selectedTime]; // ✅ Filter for selected area
+    costChart.data.datasets[0].data = costData[selectedArea][selectedTime]; // ✅ Use selected area
     costChart.update();
 
     // Highlight the active button
@@ -118,8 +118,7 @@ window.updateTimeGraphs = function (period) {
     document.getElementById(period).classList.add("active-button");
 };
 
-
-// **Update Device Charts Based on Selected Area**
+// **Update Device & Time Graphs When Changing Area**
 function updateAreaData() {
     selectedArea = normalizeArea(selectedArea);
     console.log("🔍 Selected Area:", selectedArea);
@@ -172,9 +171,10 @@ function updateAreaData() {
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 
-    // ✅ Ensure time graphs update when area is changed
+    // ✅ Update time graphs when area changes
     updateTimeGraphs(selectedTime);
 }
+
 
 
 
