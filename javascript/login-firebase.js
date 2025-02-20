@@ -1,22 +1,20 @@
+//login-firebase.js
 import { auth, database } from '../database/firebase-config.js';
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { ref, get } from "firebase/database";
 
 // Add login handler
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
     event.preventDefault();
-    
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const statusDiv = document.getElementById('status');
-    
+
     try {
-        // Attempt to sign in
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-
-        // Get user data from database
         const snapshot = await get(ref(database, 'users/' + user.uid));
+
         if (snapshot.exists()) {
             const userData = snapshot.val();
             localStorage.setItem('userData', JSON.stringify(userData));
@@ -26,26 +24,23 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 window.location.href = './dashboard.html';
             }, 1000);
         } else {
-            statusDiv.textContent = 'User data not found';
+            console.error(`User data not found for UID: ${user.uid}`);
+            statusDiv.textContent = 'User data not found. Please check your account details.';
         }
     } catch (error) {
-        console.error('Error:', error);
-        let errorMessage = 'Login failed: ';
-        
-        switch (error.code) {
-            case 'auth/invalid-email':
-                errorMessage = 'Invalid email format';
-                break;
-            case 'auth/user-not-found':
-                errorMessage = 'No account found with these credentials';
-                break;
-            case 'auth/wrong-password':
-                errorMessage = 'Incorrect password';
-                break;
-            default:
-                errorMessage += error.message;
+        console.error("Login failed:", error); // Log the full error object
+        let errorMessage = "Login failed. ";
+        if (error.code === "auth/user-not-found") {
+          errorMessage = "User not found.";
+        } else if (error.code === "auth/wrong-password") {
+          errorMessage = "Wrong password.";
+        } else if (error.code === "auth/invalid-email") {
+          errorMessage = "Invalid email.";
+        } else if (error.code.startsWith("firebase/database/")) {
+            errorMessage = "Database error: " + error.message;
+        } else {
+          errorMessage += error.message;
         }
-        
         statusDiv.textContent = errorMessage;
     }
 });

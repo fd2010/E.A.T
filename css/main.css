@@ -185,7 +185,8 @@
 /* Status Messages */
 .statusMessage {
     margin-top: 10px;
-    color: red;
+    color: #c62828;
+    background-color: #ffebee;
 }
 
 /* Desktop Styles (≥768px) */

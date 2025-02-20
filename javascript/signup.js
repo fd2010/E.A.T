@@ -1,11 +1,11 @@
 import { deviceTypes } from './device-type.js';
 
 
- // Initialise room counter
- let roomCounter = 0;
+// Initialise room counter
+let roomCounter = 0;
  
- // Add event listener for the "Add Room" button
- document.getElementById('addRoom').addEventListener('click', () => {
+// Add event listener for the "Add Room" button
+document.getElementById('addRoom').addEventListener('click', () => {
     roomCounter++;// Increment room counter
  
     // Create devices container with styling
@@ -157,4 +157,4 @@ import { deviceTypes } from './device-type.js';
     roomInput.querySelector('.removeRoom').addEventListener('click', () => {
         devicesDiv.remove(); // Remove entire container with room and devices
     });
- });
+});

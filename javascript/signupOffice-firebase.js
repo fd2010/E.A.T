@@ -1,6 +1,7 @@
+//signupOffice-firebase.js
 import { auth, database } from '../database/firebase-config.js';
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { ref, set, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, set, get } from "firebase/database";
 import { deviceTypes } from './device-type.js';
 
 function generateOfficeID() {
@@ -173,22 +174,19 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         console.error('Error during signup:', error);
         let errorMessage = 'An error occurred during signup: ';
         
-        switch (error.code) {
-            case 'auth/email-already-in-use':
-                errorMessage = 'This email is already registered.';
-                break;
-            case 'auth/invalid-email':
-                errorMessage = 'Invalid email address.';
-                break;
-            case 'auth/weak-password':
-                errorMessage = 'Please choose a stronger password (at least 6 characters).';
-                break;
-            default:
-                errorMessage = error.message;
+        if (error.code === "auth/email-already-in-use"){
+            errorMessage = "Email already in use";
+        } else if (error.code === "auth/invalid-email"){
+            errorMessage = "Invalid Email";
+        } else if (error.code === "auth/weak-password"){
+            errorMessage = "Password too weak";
+        } else if (error.message.includes("PERMISSION_DENIED")){
+            errorMessage = "Permission Denied. Please check your Firebase Database security rules.";
+        } else {
+            errorMessage = error.message;
         }
         
         statusDiv.textContent = errorMessage;
-        statusDiv.style.backgroundColor = '#ffebee';
-        statusDiv.style.color = '#c62828';
+        statusDiv.className = 'statusMessage';
     }
 });

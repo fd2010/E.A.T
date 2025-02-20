@@ -1,6 +1,6 @@
 import { auth, database } from '../database/firebase-config.js';
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { ref, get, set } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { ref, get, set } from "firebase/database";
 import { updateRoomTabs, updateUserDisplay, toggleLoadingState } from './display-dashboard.js';
 import { initialiseAddDeviceModal } from './add-device.js';
 
@@ -67,7 +67,6 @@ async function initialiseDashboard() {
 
             try {
                 console.log('Getting user data for:', user.uid);
-                
                 // Fetch fresh data from Firebase
                 const userRef = ref(database, `users/${user.uid}`);
                 console.log('Fetching user data from database...');
@@ -102,7 +101,7 @@ async function initialiseDashboard() {
                     }
                 } else {
                     console.error('No user data found in database');
-                    throw new Error('User data not found in database');
+                    throw new Error('User data not found in database for UID: ' + user.uid);
                 }
 
             } catch (error) {
@@ -118,9 +117,7 @@ async function initialiseDashboard() {
 }
 
 // Start initialisation when the page loads
-console.log('Setting up DOMContentLoaded listener');
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded - Initialising dashboard and modal');
     initialiseDashboard();
     initialiseAddDeviceModal();
 });
