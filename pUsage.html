@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Usage</title>
+    <link rel="stylesheet" href="./pUsage.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <a href="home.html" class="sidebar-icon"><img src="./images/icons/home.png" alt="Home"></a>
+        <a href="pUsage.html" class="sidebar-icon active"><img src="./images/icons/power.png" alt="Power Usage"></a>
+        <a href="home.html" class="sidebar-icon"><img src="./images/icons/plus.png" alt="Add"></a>
+        <a href="home.html" class="sidebar-icon"><img src="./images/icons/phone.png" alt="Phone"></a>
+        <a href="index.html" class="sidebar-icon"><img src="./images/icons/exit.png" alt="Exit"></a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header>
+            <h1>Power Usage</h1>
+            <h2>Here's your device energy consumption rate</h2>
+        </header>
+
+        <section class="overall-usage">
+            <h3>Overall Usage</h3>
+            <div class="graph-container">
+                <canvas id="areaTimeEnergyChart"></canvas>
+                <canvas id="areaTimeCostChart"></canvas>
+            </div>
+        </section>
+
+        <section class="usage-by-area">
+            <h3>Usage by Area</h3>
+            <a href="areaWise.html" class="arrow-link">➡</a>
+            <div class="graph-container">
+                <canvas id="areaComparisonPie"></canvas>
+                <canvas id="areaComparisonBar"></canvas>
+            </div>
+        </section>
+
+        <section class="summary-section">
+            <div class="summary-box">
+                <p>Total Expenses:</p>
+                <h2 id="totalCost">£0.0</h2>
+            </div>
+            <div class="summary-box">
+                <p>Total Power Usage:</p>
+                <h2 id="totalEnergy">0 kWh</h2>
+            </div>
+        </section>
+
+        <section class="device-usage">
+            <h3>Device Usage</h3>
+            <a href="deviceWise.html" class="arrow-link">➡</a>
+            <div class="graph-container">
+                <canvas id="devicePieChart"></canvas>
+                <canvas id="deviceBarChart"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="./pUsage.js" defer></script>
+</body>
+</html>
