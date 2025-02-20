@@ -4,65 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Power Usage</title>
-    <link rel="stylesheet" href="./pUsage.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link rel="stylesheet" href="pUsage.css">
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
-        <a href="home.html" class="sidebar-icon"><img src="./images/icons/home.png" alt="Home"></a>
-        <a href="pUsage.html" class="sidebar-icon active"><img src="./images/icons/power.png" alt="Power Usage"></a>
-        <a href="home.html" class="sidebar-icon"><img src="./images/icons/plus.png" alt="Add"></a>
-        <a href="home.html" class="sidebar-icon"><img src="./images/icons/phone.png" alt="Phone"></a>
-        <a href="index.html" class="sidebar-icon"><img src="./images/icons/exit.png" alt="Exit"></a>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <header>
-            <h1>Power Usage</h1>
-            <h2>Here's your device energy consumption rate</h2>
-        </header>
-
-        <section class="overall-usage">
-            <h3>Overall Usage</h3>
-            <div class="graph-container">
-                <canvas id="areaTimeEnergyChart"></canvas>
-                <canvas id="areaTimeCostChart"></canvas>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
             </div>
-        </section>
-
-        <section class="usage-by-area">
-            <h3>Usage by Area</h3>
-            <a href="areaWise.html" class="arrow-link">➡</a>
-            <div class="graph-container">
-                <canvas id="areaComparisonPie"></canvas>
-                <canvas id="areaComparisonBar"></canvas>
-            </div>
-        </section>
-
-        <section class="summary-section">
-            <div class="summary-box">
-                <p>Total Expenses:</p>
-                <h2 id="totalCost">£0.0</h2>
-            </div>
-            <div class="summary-box">
-                <p>Total Power Usage:</p>
-                <h2 id="totalEnergy">0 kWh</h2>
-            </div>
-        </section>
-
-        <section class="device-usage">
-            <h3>Device Usage</h3>
-            <a href="deviceWise.html" class="arrow-link">➡</a>
-            <div class="graph-container">
-                <canvas id="devicePieChart"></canvas>
-                <canvas id="deviceBarChart"></canvas>
-            </div>
-        </section>
-    </main>
-
-    <script type="module" src="./pUsage.js" defer></script>
+            <nav>
+                <ul>
+                    <li><a href="#"><img src="icon1.png" alt="Icon 1"></a></li>
+                    <li><a href="#"><img src="icon2.png" alt="Icon 2"></a></li>
+                    <li><a href="#"><img src="icon3.png" alt="Icon 3"></a></li>
+                    <li><a href="#"><img src="icon4.png" alt="Icon 4"></a></li>
+                    <li><a href="#"><img src="icon5.png" alt="Icon 5"></a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Power Usage</h1>
+                <p>Here's your device energy consumption rate</p>
+            </header>
+            <section class="overall-usage">
+                <h2>Overall Usage</h2>
+                <div class="chart">
+                    <img src="chart1.png" alt="Overall Usage Chart">
+                </div>
+                <div class="expenses">
+                    <div class="expense-box">
+                        <h3>Expenses</h3>
+                        <p>This month: £270.0</p>
+                        <p>Today: £0.0</p>
+                    </div>
+                    <div class="expense-box">
+                        <h3>Power Usage</h3>
+                        <p>This month: 70 kWh</p>
+                        <p>Today: 5 kWh</p>
+                    </div>
+                </div>
+            </section>
+            <section class="usage-by-area">
+                <h2>Usage by Area</h2>
+                <div class="chart">
+                    <img src="chart2.png" alt="Usage by Area Chart">
+                </div>
+            </section>
+            <section class="device-usage">
+                <h2>Device Usage</h2>
+                <div class="chart">
+                    <img src="chart3.png" alt="Device Usage Chart">
+                </div>
+                <ul>
+                    <li>60% A/C</li>
+                    <li>70% Lights</li>
+                    <li>60% Computer</li>
+                </ul>
+            </section>
+        </main>
+    </div>
 </body>
 </html>
