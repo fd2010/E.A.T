@@ -1,8 +1,14 @@
 // All below code copied from firebase console
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+// import { getAuth } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+// import { getDatabase } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+// import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { getAnalytics } from "firebase/analytics"; // optional
+
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyAOw5Zc-E3Gq74lGYAVHcpkgNnNrumrdu0",
