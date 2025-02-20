@@ -5,65 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Power Usage</title>
     <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="pUsage.css">
+    <link rel="stylesheet" href="./css/pUsage.css">
 </head>
-<body>
+<body class="bodyLight">
     <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="logo.png" alt="Logo">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#"><img src="icon1.png" alt="Icon 1"></a></li>
-                    <li><a href="#"><img src="icon2.png" alt="Icon 2"></a></li>
-                    <li><a href="#"><img src="icon3.png" alt="Icon 3"></a></li>
-                    <li><a href="#"><img src="icon4.png" alt="Icon 4"></a></li>
-                    <li><a href="#"><img src="icon5.png" alt="Icon 5"></a></li>
-                </ul>
-            </nav>
-        </aside>
+        <!-- 1st Vertical Section: Sidebar -->
+        <nav class="sidebar" style="background-color: #B3A99A;">
+            <a href="home.html"><img src="./images/icons/home-icon.png" alt="Home" class="sidebar-icon"></a>
+            <a href="pUsage.html"><img src="./images/icons/power-icon.png" alt="Power Usage" class="sidebar-icon"></a>
+            <a href="home.html"><img src="./images/icons/plus-icon.png" alt="Plus" class="sidebar-icon"></a>
+            <a href="home.html"><img src="./images/icons/phone-icon.png" alt="Phone" class="sidebar-icon"></a>
+            <a href="index.html"><img src="./images/icons/exit-icon.png" alt="Exit" class="sidebar-icon"></a>
+        </nav>
+
+        <!-- 2nd Vertical Section: Main Content -->
         <main class="main-content">
-            <header>
-                <h1>Power Usage</h1>
-                <p>Here's your device energy consumption rate</p>
-            </header>
-            <section class="overall-usage">
-                <h2>Overall Usage</h2>
-                <div class="chart">
-                    <img src="chart1.png" alt="Overall Usage Chart">
-                </div>
-                <div class="expenses">
-                    <div class="expense-box">
-                        <h3>Expenses</h3>
-                        <p>This month: £270.0</p>
-                        <p>Today: £0.0</p>
-                    </div>
-                    <div class="expense-box">
-                        <h3>Power Usage</h3>
-                        <p>This month: 70 kWh</p>
-                        <p>Today: 5 kWh</p>
-                    </div>
-                </div>
+            <h1 class="h1Light">Power Usage</h1>
+            <h2 class="h2Light">Here's your device energy consumption</h2>
+
+            <!-- Overall Usage (Empty Section) -->
+            <section class="graph-section" style="background-color: #F2F3EC;">
+                <h3>Overall Usage</h3>
+                <div class="empty-graph"></div>
             </section>
-            <section class="usage-by-area">
-                <h2>Usage by Area</h2>
-                <div class="chart">
-                    <img src="chart2.png" alt="Usage by Area Chart">
+
+            <!-- Usage by Area (Empty Section with Arrow) -->
+            <section class="graph-section" style="background-color: #FAF2E3;">
+                <div class="section-header">
+                    <h3>Usage by Area</h3>
+                    <a href="areaWise.html"><img src="./images/icons/arrow-icon.png" alt="Arrow" class="arrow-icon"></a>
                 </div>
-            </section>
-            <section class="device-usage">
-                <h2>Device Usage</h2>
-                <div class="chart">
-                    <img src="chart3.png" alt="Device Usage Chart">
-                </div>
-                <ul>
-                    <li>60% A/C</li>
-                    <li>70% Lights</li>
-                    <li>60% Computer</li>
-                </ul>
+                <div class="empty-graph"></div>
             </section>
         </main>
+
+        <!-- 3rd Vertical Section: Right Panel -->
+        <aside class="right-panel" style="background-color: #AFAAAA;">
+            <div class="panel expense-panel">
+                <h3>Total Expenses</h3>
+                <p>This month: £270.00</p>
+                <p>Today: £0.00</p>
+            </div>
+            <div class="panel power-panel">
+                <h3>Total Power Usage</h3>
+                <p>This month: 70 kWh</p>
+                <p>Today: 5 kWh</p>
+            </div>
+            <div class="device-panel">
+                <a href="deviceWise.html">
+                    <h3>Device Usage</h3>
+                    <div class="empty-graph"></div>
+                </a>
+            </div>
+        </aside>
     </div>
+
+    <!-- Sticky Footer for Summary Data (Optional, can be removed or adjusted) -->
+    <footer class="sticky-footer">
+        <div class="metric-box">
+            <h2><span id="totalEnergy"></span> kWh</h2>
+            <p>Total Energy Used</p>
+        </div>
+        <div class="metric-box">
+            <h2><span id="totalCost"></span></h2>
+            <p>Total Cost of Energy</p>
+        </div>
+    </footer>
+
+    <!-- Back Button and Company Branding (Optional, can be adjusted) -->
+    <div style="width: 100%">
+        <a href="dashboard.html" class="back-link">
+            <img src="./images/icons/back-icon.png" alt="Back Icon" class="back-icon">
+        </a>
+    </div>
+    <div class="divLight">
+        <p id="companyName">PearCare.Inc</p>
+        <div id="line"></div>
+    </div>
+
+    <script type="module" src="./javascript/powerUsage.js"></script>
 </body>
 </html>
