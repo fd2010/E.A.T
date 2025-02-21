@@ -25,14 +25,13 @@
     max-width: 1440px;
     margin: 0 auto;
     padding: 20px;
+    min-height: 100vh; /* Ensure container takes full viewport height */
     position: relative;
-    height: 100vh; /* Ensure the container takes the full viewport height */
 }
 
 /* Sidebar Styles */
 .sidebar {
     width: 145px;
-    height: 960px;
     background-color: #B3A99A;
     border-radius: 40px;
     display: flex;
@@ -40,6 +39,8 @@
     align-items: center;
     padding: 20px 0;
     margin-bottom: 20px;
+    flex: 0 0 145px; /* Fixed width, no growth or shrink */
+    height: 100%; /* Extend to full height of container */
     position: absolute;
     left: 23px;
     top: 31px;
@@ -59,7 +60,10 @@
     margin-left: 168px; /* Offset for sidebar */
     margin-right: 0;
     margin-top: 31px; /* Align with sidebar top */
-    height: calc(100vh - 960px - 471px - 40px); /* Adjust height to fit between sidebar and right panel */
+    height: 100%; /* Extend to full height of container */
+    overflow: auto; /* Allow scrolling if content overflows */
+    position: relative;
+    max-width: 1016px; /* Width of main content (1440 - 145 - 255 - padding) */
 }
 
 .power-usage-title {
@@ -97,6 +101,7 @@
     border-radius: 15px;
     box-shadow: 0px 23px 28.6px rgba(0, 0, 0, 0.03);
     position: relative;
+    height: calc(50% - 40px); /* Split height evenly between graphs, accounting for margins */
 }
 
 .graph-title {
@@ -111,21 +116,17 @@
 .overall-usage {
     width: 100%;
     max-width: 853px;
-    height: 355px;
+    height: 100%;
     background-color: #F2F3EC;
-    position: absolute;
-    left: 223px;
-    top: 191px;
+    position: relative;
 }
 
 .usage-by-area {
     width: 100%;
     max-width: 891px;
-    height: 352px;
+    height: 100%;
     background-color: #FAF2E3;
-    position: absolute;
-    left: 214px;
-    top: 604px;
+    position: relative;
 }
 
 .graph-container {
@@ -164,17 +165,17 @@
 
 /* Right Panel Styles */
 .right-panel {
-    width: 100%;
-    max-width: 255px;
+    width: 255px;
     background-color: #AFAAAA;
     box-shadow: 0px 23px 28.6px rgba(0, 0, 0, 0.03);
     border-radius: 15px;
     padding: 20px;
-    margin-top: auto; /* Push to the bottom */
+    margin-top: auto; /* Push to bottom */
+    flex: 0 0 255px; /* Fixed width, no growth or shrink */
+    height: 471px; /* Fixed height as per image */
     position: absolute;
     left: 1141px;
     top: 482px;
-    height: 471px;
 }
 
 .panel {
@@ -289,12 +290,13 @@
     margin-top: 5px;
 }
 
-/* Ensure responsiveness */
+/* Ensure responsiveness and full height */
 @media (max-width: 1440px) {
     .container {
         width: 100%;
         padding: 10px;
         flex-direction: column;
+        height: auto; /* Allow height to adjust naturally */
     }
     .sidebar {
         width: 100%;
@@ -303,18 +305,28 @@
         justify-content: space-around;
         position: static;
         margin-bottom: 10px;
+        flex: 0 0 auto; /* Remove fixed height */
     }
     .main-content {
         margin: 0;
         width: 100%;
         height: auto;
         position: static;
+        max-width: none;
+        flex: 1; /* Allow main content to grow */
+        overflow: auto; /* Allow scrolling if needed */
     }
     .right-panel {
         width: 100%;
         max-width: none;
         position: static;
         margin-top: 20px;
+        height: auto; /* Allow height to adjust */
+        flex: 0 0 auto; /* Remove fixed height */
+    }
+    .graph-section {
+        height: auto; /* Remove fixed height for responsiveness */
+        max-height: 50vh; /* Limit height for smaller screens */
     }
     .back-link {
         position: fixed;
@@ -330,5 +342,9 @@
         position: static;
         width: 100%;
         max-width: 100%;
+        height: auto; /* Allow natural height */
+    }
+    .sidebar-icon {
+        margin: 5px 0; /* Adjust icon spacing for mobile */
     }
 }
