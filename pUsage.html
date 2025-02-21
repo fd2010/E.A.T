@@ -11,7 +11,7 @@
 <body class="bodyLight">
     <div class="container">
         <!-- 1st Vertical Section: Sidebar -->
-        <nav class="sidebar" style="background-color: #B3A99A;">
+        <nav class="sidebar">
             <a href="home.html"><img src="./images/icons/home-icon.png" alt="Home" class="sidebar-icon"></a>
             <a href="pUsage.html"><img src="./images/icons/power-icon.png" alt="Power Usage" class="sidebar-icon"></a>
             <a href="home.html"><img src="./images/icons/plus-icon.png" alt="Plus" class="sidebar-icon"></a>
@@ -25,7 +25,7 @@
             <h2 class="energy-consumption">Here’s your device energy consumption rate</h2>
 
             <!-- Overall Usage (Line Graph) -->
-            <section class="graph-section overall-usage" style="background-color: #F2F3EC;">
+            <section class="graph-section overall-usage">
                 <h3 class="graph-title">Overall Usage</h3>
                 <div class="graph-container">
                     <canvas id="overallUsageChart"></canvas>
@@ -38,11 +38,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="arrow-right" onclick="location.href='#'"><img src="./images/icons/arrow-right.png" alt="Arrow"></div>
             </section>
 
             <!-- Usage by Area (Bar Chart) -->
-            <section class="graph-section usage-by-area" style="background-color: #FAF2E3;">
+            <section class="graph-section usage-by-area">
                 <h3 class="graph-title">Usage by Area</h3>
                 <div class="graph-container">
                     <canvas id="usageByAreaChart"></canvas>
@@ -54,12 +53,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="arrow-right" onclick="location.href='areaWise.html'"><img src="./images/icons/arrow-right.png" alt="Arrow"></div>
             </section>
         </main>
 
-        <!-- 3rd Vertical Section: Right Panel -->
-        <aside class="right-panel" style="background-color: #AFAAAA;">
+        <!-- 3rd Vertical Section: Right Panel (Bottom) -->
+        <aside class="right-panel">
             <div class="panel expenses-panel">
                 <h3>Expenses</h3>
                 <p>This month: £270.00</p>
@@ -92,7 +90,6 @@
                         <div class="color-bar" style="background-color: #ADB4F3;"></div>
                     </div>
                 </div>
-                <div class="arrow-right" onclick="location.href='deviceWise.html'"><img src="./images/icons/arrow-right.png" alt="Arrow"></div>
             </div>
         </aside>
     </div>
