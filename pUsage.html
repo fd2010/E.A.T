@@ -53,6 +53,15 @@
                 <h3 class="graph-title">Overall Usage</h3>
                 <div class="graph-container">
                     <!-- Graph will be inserted here by JS -->
+                    <canvas id="overallUsageChart"></canvas>
+                    <div class="filter">
+                        <span>kWH</span>
+                        <select>
+                            <option value="monthly">Monthly</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="daily">Daily</option>
+                        </select>
+                    </div>
                 </div>
             </section>
 
@@ -61,6 +70,14 @@
                 <h3 class="graph-title">Usage by Area</h3>
                 <div class="graph-container">
                     <!-- Graph will be inserted here by JS -->
+                    <canvas id="usageByAreaChart"></canvas>
+                    <div class="filter">
+                        <span>kWh</span>
+                        <select>
+                            <option value="monthly">Monthly</option>
+                            <option value="office1">Office 1</option>
+                        </select>
+                    </div>
                 </div>
             </section>
         </main>
@@ -103,10 +120,10 @@
             </div>
         </aside>
     </div>
-    
+
     <!-- Back Button -->
-    <a href="dashboard.html" class="back-link">
-        <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
+    <a href="dashboard.html" class="back link">
+        <img src="./images/icons/back-icon.png" alt="Back Icon" class="back-icon">
     </a>
 
     <!-- Company Branding -->
