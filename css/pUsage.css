@@ -20,7 +20,7 @@
 /* Container for Layout */
 .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
@@ -38,7 +38,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    margin-bottom: 20px;
+    margin-right: 20px;
     flex: 0 0 145px; /* Fixed width, no growth or shrink */
     height: 100%; /* Extend to full height of container */
     position: absolute;
@@ -58,7 +58,7 @@
     flex: 1;
     padding: 20px;
     margin-left: 168px; /* Offset for sidebar */
-    margin-right: 0;
+    margin-right: 275px; /* Offset for right panel */
     margin-top: 31px; /* Align with sidebar top */
     height: 100%; /* Extend to full height of container */
     overflow: auto; /* Allow scrolling if content overflows */
@@ -170,11 +170,11 @@
     box-shadow: 0px 23px 28.6px rgba(0, 0, 0, 0.03);
     border-radius: 15px;
     padding: 20px;
-    margin-top: auto; /* Push to bottom */
+    margin-left: 20px;
     flex: 0 0 255px; /* Fixed width, no growth or shrink */
-    height: 471px; /* Fixed height as per image */
+    height: 100%; /* Extend to full height of container */
     position: absolute;
-    left: 1141px;
+    right: 23px;
     top: 482px;
 }
 
@@ -290,13 +290,13 @@
     margin-top: 5px;
 }
 
-/* Ensure responsiveness and full height */
+/* Ensure responsiveness and side-by-side layout */
 @media (max-width: 1440px) {
     .container {
         width: 100%;
         padding: 10px;
-        flex-direction: column;
-        height: auto; /* Allow height to adjust naturally */
+        flex-direction: column; /* Stack vertically on smaller screens */
+        height: auto; /* Allow natural height */
     }
     .sidebar {
         width: 100%;
@@ -305,7 +305,7 @@
         justify-content: space-around;
         position: static;
         margin-bottom: 10px;
-        flex: 0 0 auto; /* Remove fixed height */
+        flex: 0 0 auto; /* Remove fixed height and width */
     }
     .main-content {
         margin: 0;
@@ -321,8 +321,8 @@
         max-width: none;
         position: static;
         margin-top: 20px;
-        height: auto; /* Allow height to adjust */
-        flex: 0 0 auto; /* Remove fixed height */
+        height: auto; /* Allow natural height */
+        flex: 0 0 auto; /* Remove fixed height and width */
     }
     .graph-section {
         height: auto; /* Remove fixed height for responsiveness */
