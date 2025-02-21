@@ -48,12 +48,12 @@
             <h1 class="power-usage-title">Power Usage</h1>
             <p class="energy-consumption">Here's your device energy consumption rate</p>
 
-            <!-- Overall Usage (Line Graph) -->
+            <!-- Overall Usage (Empty Section) -->
             <section class="graph-section overall-usage">
                 <h3 class="graph-title">Overall Usage</h3>
                 <div class="graph-container">
-                    <!-- Graph will be inserted here by JS -->
-                    <canvas id="overallUsageChart"></canvas>
+                    <!-- Empty graph container -->
+                    <div class="empty-graph"></div>
                     <div class="filter">
                         <span>kWH</span>
                         <select>
@@ -65,12 +65,12 @@
                 </div>
             </section>
 
-            <!-- Usage by Area (Bar Chart) -->
+            <!-- Usage by Area (Empty Section) -->
             <section class="graph-section usage-by-area">
                 <h3 class="graph-title">Usage by Area</h3>
                 <div class="graph-container">
-                    <!-- Graph will be inserted here by JS -->
-                    <canvas id="usageByAreaChart"></canvas>
+                    <!-- Empty graph container -->
+                    <div class="empty-graph"></div>
                     <div class="filter">
                         <span>kWh</span>
                         <select>
@@ -97,8 +97,8 @@
             <div class="device-panel">
                 <h3>Device Usage</h3>
                 <div class="pie-chart-container">
-                    <!-- Pie chart will be inserted here by JS -->
-                    <canvas id="deviceUsageChart"></canvas>
+                    <!-- Empty pie chart container -->
+                    <div class="empty-pie"></div>
                 </div>
                 <div class="device-usage-details">
                     <div class="device-item">
@@ -132,7 +132,6 @@
         <div id="line"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./javascript/powerUsage.js"></script>
 </body>
 </html>

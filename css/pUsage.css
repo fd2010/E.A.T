@@ -110,6 +110,12 @@
     position: relative;
 }
 
+.empty-graph {
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* No background for empty graphs */
+}
+
 .filter {
     position: absolute;
     top: 20px;
@@ -200,9 +206,12 @@
     width: 174px;
     height: 174px;
     margin: 0 auto 20px;
-    /* Placeholder styling for empty chart container */
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+}
+
+.empty-pie {
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* No background for empty pie chart */
 }
 
 .device-usage-details {
@@ -239,10 +248,10 @@
 }
 
 /* Back Button and Company Branding */
-.back-link {
+.back {
     position: fixed;
-    right: 23px;
-    top: 31px;
+    left: 23px;
+    bottom: 20px;
     z-index: 100;
 }
 
@@ -309,9 +318,9 @@
         height: 300px;
     }
     
-    .back-link {
+    .back {
         top: 10px;
-        right: 10px;
+        left: 10px;
     }
     
     .back-icon {
