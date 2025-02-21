@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 /* Reset & box-sizing */
 * {
@@ -10,36 +10,40 @@
 
 /* Body & Global Styles */
 .bodyLight {
-    background-color: #ECEFE7;
+    background-color: #FFFFFF;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
 }
 
 /* Container for Layout */
 .container {
     display: flex;
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto;
+    width: 1440px;
+    height: 1024px;
+    margin: 0 auto;
+    position: relative;
 }
 
 /* Sidebar Styles */
 .sidebar {
-    width: 60px;
-    height: 100vh;
+    width: 145px;
+    height: 960px;
+    background-color: #B3A99A;
+    border-radius: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    background-color: #B3A99A;
+    position: absolute;
+    left: 23px;
+    top: 31px;
 }
 
 .sidebar-icon {
-    width: 30px;
-    height: 30px;
+    width: 75px;
+    height: 74px;
     margin: 10px 0;
     cursor: pointer;
 }
@@ -48,112 +52,249 @@
 .main-content {
     flex: 1;
     padding: 20px;
+    margin-left: 168px; /* Offset for sidebar */
+    margin-right: 300px; /* Offset for right panel */
 }
 
-.h1Light {
-    color: #000;
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 60px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-bottom: 10px;
+.power-usage-title {
+    position: absolute;
+    width: 332px;
+    height: 59px;
+    left: 244px;
+    top: 31px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 59px;
+    text-align: center;
+    color: #C3C559;
 }
 
-.h2Light {
-    color: #34495e;
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-bottom: 20px;
+.energy-consumption {
+    position: absolute;
+    width: 393px;
+    height: 77px;
+    left: 248px;
+    top: 96px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+    color: #5E6C40;
 }
 
 .graph-section {
     margin: 20px 0;
     padding: 20px;
     border-radius: 15px;
+    position: relative;
 }
 
-.graph-section h3 {
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 24px;
+.graph-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
     margin-bottom: 10px;
 }
 
-.empty-graph {
+.overall-usage, .usage-by-area {
+    box-shadow: 0px 23px 28.6px rgba(0, 0, 0, 0.03);
+}
+
+.overall-usage {
+    width: 853px;
+    height: 355px;
+    left: 223px;
+    top: 191px;
+    background-color: #F2F3EC;
+}
+
+.usage-by-area {
+    width: 891px;
+    height: 352px;
+    left: 214px;
+    top: 604px;
+    background-color: #FAF2E3;
+}
+
+.graph-container {
     width: 100%;
-    height: 300px;
+    height: 100%;
+    position: relative;
+}
+
+.filter {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter span {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #808080;
+}
+
+.filter select {
+    width: 130px;
+    height: 28px;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.44);
     background-color: #fff;
-    border: 2px solid #dcdcdc;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.arrow-icon {
-    width: 20px;
-    height: 20px;
     cursor: pointer;
+}
+
+.arrow-right {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.arrow-right img {
+    width: 34px;
+    height: 26px;
 }
 
 /* Right Panel Styles */
 .right-panel {
-    width: 300px;
+    width: 255px;
+    height: 471px;
+    background-color: #AFAAAA;
+    box-shadow: 0px 23px 28.6px rgba(0, 0, 0, 0.03);
+    border-radius: 15px;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    position: absolute;
+    right: 23px;
+    top: 482px;
 }
 
 .panel {
     background-color: #fff;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 43px;
+    margin-bottom: 10px;
     text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    font-size: 14px;
+    color: #000000;
 }
 
-.expense-panel, .power-panel {
-    background-color: #D9D9D9;
+.expenses-panel {
+    background-color: #EBEC80;
+    width: 183px;
+    height: 84px;
+    position: absolute;
+    left: 36px;
+    top: 228px;
+}
+
+.power-usage-panel {
+    background-color: #FFDC52;
+    width: 183px;
+    height: 84px;
+    position: absolute;
+    left: 36px;
+    top: 337px;
 }
 
 .device-panel {
-    background-color: #ecf0f1;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.device-panel a {
-    text-decoration: none;
-    color: #2c3e50;
+    position: relative;
 }
 
 .device-panel h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: rgba(22, 26, 65, 0.78);
     margin-bottom: 10px;
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 20px;
 }
 
-/* Sticky Footer, Back Button, and Company Branding (Optional, can be adjusted) */
-.sticky-footer, .back-link, .divLight {
-    /* Retain your existing styles or adjust as needed */
+.pie-chart-container {
+    width: 174px;
+    height: 174px;
+    margin: 0 auto;
 }
 
-/* Ensure responsiveness */
-@media (max-width: 768px) {
+.device-usage-details {
+    margin-top: 20px;
+}
+
+.device-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-family: 'Lato', sans-serif;
+}
+
+.percentage {
+    font-weight: 700;
+    font-size: 24px;
+    color: rgba(22, 26, 65, 0.78);
+    margin-right: 10px;
+}
+
+.device-type {
+    font-weight: 700;
+    font-size: 16px;
+    color: rgba(22, 26, 65, 0.41);
+    margin-right: 10px;
+}
+
+.color-bar {
+    width: 93px;
+    height: 5px;
+    border-radius: 5px;
+}
+
+/* Back Button and Company Branding */
+.back-link {
+    position: absolute;
+    left: 1328px;
+    top: 31px;
+}
+
+.back-icon {
+    width: 75px;
+    height: 74px;
+}
+
+.company-branding {
+    position: absolute;
+    text-align: center;
+    bottom: 20px;
+    width: 100%;
+}
+
+#companyName {
+    font-family: 'Inria Serif', serif;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+#line {
+    width: 110px;
+    height: 2px;
+    background-color: #2c3e50;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+
+/* Ensure responsiveness (optional, adjust as needed) */
+@media (max-width: 1440px) {
     .container {
+        width: 100%;
         flex-direction: column;
     }
     .sidebar {
@@ -161,9 +302,15 @@
         height: auto;
         flex-direction: row;
         justify-content: space-around;
-        padding: 10px 0;
+        position: static;
+    }
+    .main-content {
+        margin: 0;
+        width: 100%;
     }
     .right-panel {
         width: 100%;
+        position: static;
+        margin-top: 20px;
     }
 }

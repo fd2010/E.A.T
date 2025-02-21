@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Power Usage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/pUsage.css">
 </head>
 <body class="bodyLight">
@@ -20,69 +21,94 @@
 
         <!-- 2nd Vertical Section: Main Content -->
         <main class="main-content">
-            <h1 class="h1Light">Power Usage</h1>
-            <h2 class="h2Light">Here's your device energy consumption</h2>
+            <h1 class="power-usage-title">Power Usage</h1>
+            <h2 class="energy-consumption">Here’s your device energy consumption rate</h2>
 
-            <!-- Overall Usage (Empty Section) -->
-            <section class="graph-section" style="background-color: #F2F3EC;">
-                <h3>Overall Usage</h3>
-                <div class="empty-graph"></div>
+            <!-- Overall Usage (Line Graph) -->
+            <section class="graph-section overall-usage" style="background-color: #F2F3EC;">
+                <h3 class="graph-title">Overall Usage</h3>
+                <div class="graph-container">
+                    <canvas id="overallUsageChart"></canvas>
+                    <div class="filter">
+                        <span>kWH</span>
+                        <select>
+                            <option value="monthly">Monthly</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="daily">Daily</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="arrow-right" onclick="location.href='#'"><img src="./images/icons/arrow-right.png" alt="Arrow"></div>
             </section>
 
-            <!-- Usage by Area (Empty Section with Arrow) -->
-            <section class="graph-section" style="background-color: #FAF2E3;">
-                <div class="section-header">
-                    <h3>Usage by Area</h3>
-                    <a href="areaWise.html"><img src="./images/icons/arrow-icon.png" alt="Arrow" class="arrow-icon"></a>
+            <!-- Usage by Area (Bar Chart) -->
+            <section class="graph-section usage-by-area" style="background-color: #FAF2E3;">
+                <h3 class="graph-title">Usage by Area</h3>
+                <div class="graph-container">
+                    <canvas id="usageByAreaChart"></canvas>
+                    <div class="filter">
+                        <span>kWh</span>
+                        <select>
+                            <option value="monthly">Monthly</option>
+                            <option value="office1">Office 1</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="empty-graph"></div>
+                <div class="arrow-right" onclick="location.href='areaWise.html'"><img src="./images/icons/arrow-right.png" alt="Arrow"></div>
             </section>
         </main>
 
         <!-- 3rd Vertical Section: Right Panel -->
         <aside class="right-panel" style="background-color: #AFAAAA;">
-            <div class="panel expense-panel">
-                <h3>Total Expenses</h3>
+            <div class="panel expenses-panel">
+                <h3>Expenses</h3>
                 <p>This month: £270.00</p>
-                <p>Today: £0.00</p>
+                <p>Today: £30.00</p>
             </div>
-            <div class="panel power-panel">
-                <h3>Total Power Usage</h3>
+            <div class="panel power-usage-panel">
+                <h3>Power Usage</h3>
                 <p>This month: 70 kWh</p>
                 <p>Today: 5 kWh</p>
             </div>
             <div class="device-panel">
-                <a href="deviceWise.html">
-                    <h3>Device Usage</h3>
-                    <div class="empty-graph"></div>
-                </a>
+                <h3>Device Usage</h3>
+                <div class="pie-chart-container">
+                    <canvas id="deviceUsageChart"></canvas>
+                </div>
+                <div class="device-usage-details">
+                    <div class="device-item">
+                        <span class="percentage">60%</span>
+                        <span class="device-type">A/C</span>
+                        <div class="color-bar" style="background-color: #2B3695;"></div>
+                    </div>
+                    <div class="device-item">
+                        <span class="percentage">70%</span>
+                        <span class="device-type">Lights</span>
+                        <div class="color-bar" style="background-color: #6976EB;"></div>
+                    </div>
+                    <div class="device-item">
+                        <span class="percentage">60%</span>
+                        <span class="device-type">Computer</span>
+                        <div class="color-bar" style="background-color: #ADB4F3;"></div>
+                    </div>
+                </div>
+                <div class="arrow-right" onclick="location.href='deviceWise.html'"><img src="./images/icons/arrow-right.png" alt="Arrow"></div>
             </div>
         </aside>
     </div>
 
-    <!-- Sticky Footer for Summary Data (Optional, can be removed or adjusted) -->
-    <footer class="sticky-footer">
-        <div class="metric-box">
-            <h2><span id="totalEnergy"></span> kWh</h2>
-            <p>Total Energy Used</p>
-        </div>
-        <div class="metric-box">
-            <h2><span id="totalCost"></span></h2>
-            <p>Total Cost of Energy</p>
-        </div>
-    </footer>
+    <!-- Back Button -->
+    <a href="dashboard.html" class="back-link">
+        <img src="./images/icons/back-icon.png" alt="Back Icon" class="back-icon">
+    </a>
 
-    <!-- Back Button and Company Branding (Optional, can be adjusted) -->
-    <div style="width: 100%">
-        <a href="dashboard.html" class="back-link">
-            <img src="./images/icons/back-icon.png" alt="Back Icon" class="back-icon">
-        </a>
-    </div>
-    <div class="divLight">
+    <!-- Company Branding -->
+    <div class="company-branding">
         <p id="companyName">PearCare.Inc</p>
         <div id="line"></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="./javascript/powerUsage.js"></script>
 </body>
 </html>
