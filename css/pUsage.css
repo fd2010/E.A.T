@@ -39,6 +39,8 @@
     margin: 31px 0 0 23px;
     height: calc(100vh - 62px);
     position: fixed;
+    left: 0;
+    z-index: 100;
 }
 
 .sidebar-top, .sidebar-center, .sidebar-bottom {
@@ -57,8 +59,7 @@
 /* Main Content Styles */
 .main-content {
     flex: 1;
-    margin-left: 190px;
-    margin-right: 270px;
+    margin-left: 190px; /* sidebar width + margin */
     padding: 31px 20px 20px 20px;
     position: relative;
 }
@@ -104,54 +105,7 @@
     background-color: #FAF2E3;
 }
 
-.graph-container {
-    width: 100%;
-    height: calc(100% - 40px);
-    position: relative;
-}
-
-.filter {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.filter span {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    color: #808080;
-}
-
-.filter select {
-    width: 130px;
-    height: 28px;
-    border: 1px solid rgba(0, 0, 0, 0.11);
-    border-radius: 5px;
-    font-family: 'Lato', sans-serif;
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.44);
-    background-color: #fff;
-    cursor: pointer;
-    padding: 0 5px;
-}
-
-/* Right Panel Styles */
-.right-panel {
-    width: 250px;
-    position: fixed;
-    right: 23px;
-    top: 31px;
-    height: calc(100vh - 62px);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px 0;
-}
-
+/* Right side panel */
 .panel {
     border-radius: 30px;
     padding: 15px;
@@ -196,19 +150,6 @@
     text-align: center;
 }
 
-.pie-chart-container {
-    width: 174px;
-    height: 174px;
-    margin: 0 auto 20px;
-    /* Placeholder styling for empty chart container */
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-}
-
-.device-usage-details {
-    margin-top: 20px;
-}
-
 .device-item {
     display: flex;
     align-items: center;
@@ -216,27 +157,7 @@
     font-family: 'Lato', sans-serif;
 }
 
-.percentage {
-    font-weight: 700;
-    font-size: 24px;
-    color: rgba(22, 26, 65, 0.78);
-    margin-right: 10px;
-    width: 60px;
-}
 
-.device-type {
-    font-weight: 700;
-    font-size: 16px;
-    color: rgba(22, 26, 65, 0.41);
-    margin-right: 10px;
-    width: 80px;
-}
-
-.color-bar {
-    width: 93px;
-    height: 5px;
-    border-radius: 5px;
-}
 
 /* Back Button and Company Branding */
 .back-link {
