@@ -36,7 +36,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 30px 0;
-    margin: 31px 0 0 23px;
+    margin: 31px 0 0 0; /* Removed left margin to flush with left edge */
     height: calc(100vh - 62px);
     position: fixed;
 }
@@ -57,7 +57,7 @@
 /* Main Content Styles */
 .main-content {
     flex: 1;
-    margin-left: 190px;
+    margin-left: 145px; /* Adjusted to match sidebar width exactly, removing extra space */
     margin-right: 270px;
     padding: 31px 20px 20px 20px;
     position: relative;
