@@ -6,11 +6,11 @@
     <title>Power Usage</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/pUsage.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bodyLight">
     <div class="container">
-        <!-- 1st Vertical Section: Sidebar (Left) -->
+        <!-- Sidebar (Left) -->
         <nav class="sidebar">
             <!-- User Icon at the Top -->
             <div class="sidebar-top">
@@ -42,17 +42,17 @@
                 </a>
             </div>
         </nav>
-        
 
-        <!-- 2nd Vertical Section: Main Content (Graphs and Titles, Middle) -->
+        <!-- Main Content (Middle) -->
         <main class="main-content">
             <h1 class="power-usage-title">Power Usage</h1>
-            <h2 class="energy-consumption">Here’s your device energy consumption rate</h2>
+            <p class="energy-consumption">Here's your device energy consumption rate</p>
 
             <!-- Overall Usage (Line Graph) -->
             <section class="graph-section overall-usage">
                 <h3 class="graph-title">Overall Usage</h3>
                 <div class="graph-container">
+                    <!-- Graph will be inserted here by JS -->
                     <canvas id="overallUsageChart"></canvas>
                     <div class="filter">
                         <span>kWH</span>
@@ -69,6 +69,7 @@
             <section class="graph-section usage-by-area">
                 <h3 class="graph-title">Usage by Area</h3>
                 <div class="graph-container">
+                    <!-- Graph will be inserted here by JS -->
                     <canvas id="usageByAreaChart"></canvas>
                     <div class="filter">
                         <span>kWh</span>
@@ -81,12 +82,12 @@
             </section>
         </main>
 
-        <!-- 3rd Vertical Section: Right Panel (Right) -->
+        <!-- Right Panel -->
         <aside class="right-panel">
             <div class="panel expenses-panel">
                 <h3>Expenses</h3>
-                <p>This month: £270.00</p>
-                <p>Today: £30.00</p>
+                <p>This month: £270.0</p>
+                <p>Today: £30.0</p>
             </div>
             <div class="panel power-usage-panel">
                 <h3>Power Usage</h3>
@@ -96,6 +97,7 @@
             <div class="device-panel">
                 <h3>Device Usage</h3>
                 <div class="pie-chart-container">
+                    <!-- Pie chart will be inserted here by JS -->
                     <canvas id="deviceUsageChart"></canvas>
                 </div>
                 <div class="device-usage-details">
@@ -131,6 +133,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="module" src="./javascript/powerUsage.js"></script>
+    <script src="./javascript/powerUsage.js"></script>
 </body>
 </html>
