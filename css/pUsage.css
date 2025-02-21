@@ -39,6 +39,7 @@
     margin: 31px 0 0 0; /* Removed left margin to flush with left edge */
     height: calc(100vh - 62px);
     position: fixed;
+    left: 23px;
 }
 
 .sidebar-top, .sidebar-center, .sidebar-bottom {
