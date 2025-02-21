@@ -25,7 +25,8 @@
     max-width: 1440px;
     margin: 0 auto;
     padding: 20px;
-    min-height: 100vh; /* Ensure container takes full viewport height */
+    min-height: 100vh;
+    /* Ensure container takes full viewport height */
     position: relative;
 }
 
@@ -39,8 +40,10 @@
     align-items: center;
     padding: 20px 0;
     margin-right: 20px;
-    flex: 0 0 145px; /* Fixed width, no growth or shrink */
-    height: 100%; /* Extend to full height of container */
+    flex: 0 0 145px;
+    /* Fixed width, no growth or shrink */
+    height: 100%;
+    /* Extend to full height of container */
     position: absolute;
     left: 23px;
     top: 31px;
@@ -57,13 +60,19 @@
 .main-content {
     flex: 1;
     padding: 20px;
-    margin-left: 168px; /* Offset for sidebar */
-    margin-right: 275px; /* Offset for right panel */
-    margin-top: 31px; /* Align with sidebar top */
-    height: 100%; /* Extend to full height of container */
-    overflow: auto; /* Allow scrolling if content overflows */
+    margin-left: 168px;
+    /* Offset for sidebar */
+    margin-right: 275px;
+    /* Offset for right panel */
+    margin-top: 31px;
+    /* Align with sidebar top */
+    height: 100%;
+    /* Extend to full height of container */
+    overflow: auto;
+    /* Allow scrolling if content overflows */
     position: relative;
-    max-width: 1016px; /* Width of main content (1440 - 145 - 255 - padding) */
+    max-width: 1016px;
+    /* Width of main content (1440 - 145 - 255 - padding) */
 }
 
 .power-usage-title {
@@ -101,7 +110,8 @@
     border-radius: 15px;
     box-shadow: 0px 23px 28.6px rgba(0, 0, 0, 0.03);
     position: relative;
-    height: calc(50% - 40px); /* Split height evenly between graphs, accounting for margins */
+    height: calc(50% - 40px);
+    /* Split height evenly between graphs, accounting for margins */
 }
 
 .graph-title {
@@ -171,8 +181,10 @@
     border-radius: 15px;
     padding: 20px;
     margin-left: 20px;
-    flex: 0 0 255px; /* Fixed width, no growth or shrink */
-    height: 100%; /* Extend to full height of container */
+    flex: 0 0 255px;
+    /* Fixed width, no growth or shrink */
+    height: 100%;
+    /* Extend to full height of container */
     position: absolute;
     right: 23px;
     top: 482px;
@@ -295,9 +307,12 @@
     .container {
         width: 100%;
         padding: 10px;
-        flex-direction: column; /* Stack vertically on smaller screens */
-        height: auto; /* Allow natural height */
+        flex-direction: column;
+        /* Stack vertically on smaller screens */
+        height: auto;
+        /* Allow natural height */
     }
+
     .sidebar {
         width: 100%;
         height: auto;
@@ -305,46 +320,82 @@
         justify-content: space-around;
         position: static;
         margin-bottom: 10px;
-        flex: 0 0 auto; /* Remove fixed height and width */
+        flex: 0 0 auto;
+        /* Remove fixed height and width */
     }
+
+
+
+    /* Sidebar Center Icons */
+    .sidebar-center {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+
+
     .main-content {
         margin: 0;
         width: 100%;
         height: auto;
         position: static;
         max-width: none;
-        flex: 1; /* Allow main content to grow */
-        overflow: auto; /* Allow scrolling if needed */
+        flex: 1;
+        /* Allow main content to grow */
+        overflow: auto;
+        /* Allow scrolling if needed */
     }
+
     .right-panel {
         width: 100%;
         max-width: none;
         position: static;
         margin-top: 20px;
-        height: auto; /* Allow natural height */
-        flex: 0 0 auto; /* Remove fixed height and width */
+        height: auto;
+        /* Allow natural height */
+        flex: 0 0 auto;
+        /* Remove fixed height and width */
     }
+
     .graph-section {
-        height: auto; /* Remove fixed height for responsiveness */
-        max-height: 50vh; /* Limit height for smaller screens */
+        height: auto;
+        /* Remove fixed height for responsiveness */
+        max-height: 50vh;
+        /* Limit height for smaller screens */
     }
+
     .back-link {
         position: fixed;
         left: auto;
         right: 20px;
         top: 20px;
     }
+
     .company-branding {
         position: static;
         margin-top: 20px;
     }
-    .power-usage-title, .energy-consumption, .overall-usage, .usage-by-area, .expenses-panel, .power-usage-panel, .device-panel {
+
+    .power-usage-title,
+    .energy-consumption,
+    .overall-usage,
+    .usage-by-area,
+    .expenses-panel,
+    .power-usage-panel,
+    .device-panel {
         position: static;
         width: 100%;
         max-width: 100%;
-        height: auto; /* Allow natural height */
+        height: auto;
+        /* Allow natural height */
     }
+
     .sidebar-icon {
-        margin: 5px 0; /* Adjust icon spacing for mobile */
+        margin: 5px 0;
+        /* Adjust icon spacing for mobile */
     }
 }
