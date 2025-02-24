@@ -49,79 +49,63 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle form submission
     loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-
+        console.log('Login form submitted'); 
+    
         try {
-            // Get form values
             const email = emailInput.value.trim();
             const password = passwordInput.value;
-
-            // Basic validation
+    
+            console.log('Email:', email); // Log the email
+            console.log('Password:', password); // Log the password
+    
             if (!email || !password) {
                 showStatus('Please fill in all fields.', 'error');
                 return;
             }
-
-            // Email format validation
+    
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 showStatus('Please enter a valid email address.', 'error');
                 return;
             }
-
-            // Show loading state
+    
             setLoading(true);
             showStatus('Logging in...', 'loading');
-
-            // Attempt login
+    
+            console.log('Attempting to sign in with Firebase...'); // Log before Firebase sign-in
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-
-            // Get user data from database
+            console.log('Firebase sign-in successful. User:', user); // Log the user object
+    
             const snapshot = await get(ref(database, 'users/' + user.uid));
-
             if (snapshot.exists()) {
                 const userData = snapshot.val();
-                
-                // Update last login time
-                try {
-                    await set(ref(database, `users/${user.uid}/lastLogin`), new Date().toISOString());
-                } catch (error) {
-                    console.warn('Failed to update last login time:', error);
-                }
-
-                // Store user data in localStorage
+                console.log('User data found:', userData); // Log the user data
+    
                 localStorage.setItem('userData', JSON.stringify(userData));
-
-                // Show success message
                 showStatus('Login successful! Redirecting...', 'success');
-
-                // Redirect to dashboard
+    
                 setTimeout(() => {
+                    console.log('Redirecting to dashboard...'); // Log before redirect
                     window.location.href = './dashboard.html';
                 }, 1000);
-
             } else {
                 throw new Error('User data not found');
             }
-
         } catch (error) {
             console.error('Login error:', error);
             setLoading(false);
-
-            // Handle different error types
+    
             let errorMessage;
             switch (error.code) {
                 case 'auth/user-not-found':
                     errorMessage = 'No account found with this email.';
-                    emailInput.focus();
                     break;
                 case 'auth/wrong-password':
                     errorMessage = 'Incorrect password.';
-                    passwordInput.focus();
                     break;
                 case 'auth/invalid-email':
                     errorMessage = 'Invalid email format.';
-                    emailInput.focus();
                     break;
                 case 'auth/too-many-requests':
                     errorMessage = 'Too many failed attempts. Please try again later.';
@@ -132,10 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 default:
                     errorMessage = 'Login failed. Please try again.';
             }
-
+    
             showStatus(errorMessage, 'error');
-            
-            // Clear password field on error
             passwordInput.value = '';
         }
     });
