@@ -1,6 +1,9 @@
+// Debug helper
+console.log('dashboard.js loading...');
+
 import { auth, database } from '../database/firebase-config.js';
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { ref, get, set } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { updateRoomTabs, updateUserDisplay, toggleLoadingState } from './display-dashboard.js';
 import { initialiseAddDeviceModal } from './add-device.js';
 
@@ -55,65 +58,98 @@ async function initialiseDashboard() {
         // Show loading state
         toggleLoadingState(true);
 
-        // Check authentication state
-        onAuthStateChanged(auth, async (user) => {
-            console.log('Auth state changed:', user ? 'User is logged in' : 'No user');
+        // First check if there's user data in localStorage
+        const storedUserData = localStorage.getItem('userData');
+        
+        if (storedUserData) {
+            console.log('Found stored user data');
+            const userData = JSON.parse(storedUserData);
             
-            if (!user) {
-                console.log('No user found, redirecting to login');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            try {
-                console.log('Getting user data for:', user.uid);
+            // Hide loading state and show dashboard
+            toggleLoadingState(false);
+            
+            // Update the UI with user data
+            await updateUserInterface(userData);
+            
+            // Still verify with Firebase that the user is logged in
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    console.log('No authenticated user found, redirecting to login');
+                    localStorage.removeItem('userData');
+                    window.location.href = 'login.html';
+                }
+            });
+            
+            // Add logout functionality
+            setupLogoutButton();
+            
+        } else {
+            // No stored data, check authentication state
+            console.log('No stored user data, checking auth state');
+            onAuthStateChanged(auth, async (user) => {
+                console.log('Auth state changed:', user ? 'User is logged in' : 'No user');
                 
-                // Fetch fresh data from Firebase
-                const userRef = ref(database, `users/${user.uid}`);
-                console.log('Fetching user data from database...');
-                const snapshot = await get(userRef);
-
-                if (snapshot.exists()) {
-                    console.log('User data found in database');
-                    const userData = snapshot.val();
-                    
-                    // Hide loading state and show dashboard
-                    toggleLoadingState(false);
-                    
-                    // Update the UI with user data
-                    await updateUserInterface(userData);
-                    
-                    // Update localStorage
-                    localStorage.setItem('userData', JSON.stringify(userData));
-                    
-                    // Add logout functionality
-                    const logoutBtn = document.getElementById('logoutBtn');
-                    if (logoutBtn) {
-                        logoutBtn.addEventListener('click', async () => {
-                            try {
-                                await signOut(auth);
-                                localStorage.removeItem('userData');
-                                window.location.href = 'login.html';
-                            } catch (error) {
-                                console.error('Logout error:', error);
-                                alert('Error signing out. Please try again.');
-                            }
-                        });
-                    }
-                } else {
-                    console.error('No user data found in database');
-                    throw new Error('User data not found in database');
+                if (!user) {
+                    console.log('No user found, redirecting to login');
+                    window.location.href = 'login.html';
+                    return;
                 }
 
-            } catch (error) {
-                console.error('Error in auth state change handler:', error);
-                handleError(error);
-            }
-        });
+                try {
+                    console.log('Getting user data for:', user.uid);
+                    
+                    // Fetch fresh data from Firebase
+                    const userRef = ref(database, `users/${user.uid}`);
+                    console.log('Fetching user data from database...');
+                    const snapshot = await get(userRef);
 
+                    if (snapshot.exists()) {
+                        console.log('User data found in database');
+                        const userData = snapshot.val();
+                        
+                        // Hide loading state and show dashboard
+                        toggleLoadingState(false);
+                        
+                        // Update the UI with user data
+                        await updateUserInterface(userData);
+                        
+                        // Update localStorage
+                        localStorage.setItem('userData', JSON.stringify(userData));
+                        
+                        // Add logout functionality
+                        setupLogoutButton();
+                        
+                    } else {
+                        console.error('No user data found in database');
+                        throw new Error('User data not found in database');
+                    }
+
+                } catch (error) {
+                    console.error('Error in auth state change handler:', error);
+                    handleError(error);
+                }
+            });
+        }
     } catch (error) {
         console.error('Error in initialization:', error);
         handleError(error);
+    }
+}
+
+// Set up logout button functionality
+function setupLogoutButton() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                localStorage.removeItem('userData');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Error signing out. Please try again.');
+            }
+        });
     }
 }
 

@@ -12,8 +12,7 @@
         <div class="container">
             <h1 class="h1Light"><b><u>LOGIN</u></b></h1>
 
-            <form id="loginForm"> 
-
+            <form id="loginForm" onsubmit="return false;"> 
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -34,11 +33,16 @@
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" id="lightcyanButton" class="buttonHome">LOGIN</button>
+                <button type="submit" id="loginBtn" class="buttonHome" style="background-color: #C1E6E3;">LOGIN</button>
             </form>
 
             <!-- Status message -->
             <div id="status" class="statusMessage"></div>
+
+            <!-- Signup Link -->
+            <div class="signup-link">
+                <a href="signup.html">Don't have an account? Sign up here</a>
+            </div>
 
             <!-- Back Button -->
             <a href="welcome.html">

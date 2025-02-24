@@ -1,4 +1,3 @@
-<!-- signupUser.html -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,25 +7,24 @@
         <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="./css/formstyles.css">
-        <!-- database link -->
-        <script type="module" src="./database/firebase-config.js" defer></script>
+        <!-- Removed database link that was using defer -->
     </head>
-    <body class = "bodyLight">
+    <body class="bodyLight">
 
-        <div class = "container">
-            <h1 class = "h1Light"><b><u>SIGNUP</u></b></h1>
+        <div class="container">
+            <h1 class="h1Light"><b><u>SIGNUP</u></b></h1>
 
             <!-- Back Button -->
-            <a href = "signup.html">
+            <a href="signup.html">
                 <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
             </a>
 
-            <form id="loginForm" > 
+            <form id="signupForm" onsubmit="return false;"> 
 
                 <!-- ID section -->
                 <section class="form-section">
                     
-                    <h2 class="h2Light"><u>Identification details</u></h2>  <!-- TODO - try making titles like this bold -->
+                    <h2 class="h2Light"><u>Identification details</u></h2>
 
                     <!-- Email -->
                     <div class="form-group">
@@ -47,7 +45,7 @@
                     <!-- Office ID -->
                     <div class="form-group">
 
-                        <label for="officeID">Office ID:<span class ="info-star" title="Please enter the Office ID">*</span></label>
+                        <label for="officeID">Office ID:<span class="info-star" title="Please enter the Office ID">*</span></label>
                         <div class="input-container">
                             <input type="text" id="officeID" name="officeID" required>
                             <img src="./images/icons/office Icon.png" alt="Office Icon">
@@ -58,7 +56,7 @@
                     <!-- Preferred Name -->
                     <div class="form-group">
 
-                        <label for="prefName">Preferred Name:<span class ="info-star" title="Please enter the name you would like to be displayed on your account">*</span></label>
+                        <label for="prefName">Preferred Name:<span class="info-star" title="Please enter the name you would like to be displayed on your account">*</span></label>
                         <div class="input-container">
                             <input type="text" id="prefName" name="prefName" required>
                             <img src="./images/icons/user icon.png" alt="User Icon">
@@ -72,14 +70,14 @@
 
                 <br>
 
-                <!-- Create  password -->
+                <!-- Create password -->
                 <section class="form-section">
 
                     <h2 class="h2Light"><u> Create a Password</u></h2>
 
                     <!-- Password -->
                     <div class="form-group">
-                        <label for="password">Password:<span class ="info-star" title="Please enter a secure password">*</span></label>
+                        <label for="password">Password:<span class="info-star" title="Please enter a secure password">*</span></label>
                         <div class="input-container">
                             <input type="password" id="password" name="password" required>
                             <img src="./images/icons/Lock Icon.png" alt="Lock Icon" class="lock-icon">
@@ -90,7 +88,7 @@
 
                     <!-- Confirm Password -->
                     <div class="form-group">
-                        <label for="confirmPassword">Confirm Password:<span class ="info-star" title="Please re-type password">*</span></label>
+                        <label for="confirmPassword">Confirm Password:<span class="info-star" title="Please re-type password">*</span></label>
                         <div class="input-container">
                             <input type="password" id="confirmPassword" name="confirmPassword" required>
                             <img src="./images/icons/Lock Icon.png" alt="Lock Icon" class="lock-icon">
@@ -106,7 +104,7 @@
                     <h2 class="h2Light"><u>Role Selection</u></h2>
                     <!-- Role Selection -->
                     <div class="form-group role-selection">
-                        <label>Select Role:<span class ="info-star" title="Select valid role">*</span></label>
+                        <label>Select Role:<span class="info-star" title="Select valid role">*</span></label>
                         <div class="radio-container">
                             <!-- Employee -->
                             <div class="radio-option">
@@ -137,21 +135,24 @@
 
 
                 <!-- Submit Button -->
-                <button type="submit" id="submit" class="buttonHome lightcyanButton">SIGN UP</button>
+                <button type="submit" id="submitBtn" class="buttonHome" style="background-color: #C1E6E3;">SIGN UP</button>
 
             </form>
 
+            <!-- Status message div -->
+            <div id="status" class="statusMessage"></div>
+
             <!-- Back Button -->
-            <a href = "signup.html">
+            <a href="signup.html">
                 <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
             </a>
         
         </div>
 
         <!-- Company name -->
-        <div class = "divLight">
-            <p id = "companyName">PearCare.Inc</p>
-            <div id = "line"></div>
+        <div class="divLight">
+            <p id="companyName">PearCare.Inc</p>
+            <div id="line"></div>
         </div>
 
         <script src="./javascript/forms.js"></script>

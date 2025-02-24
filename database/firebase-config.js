@@ -17,12 +17,11 @@ const firebaseConfig = {
     messagingSenderId: "333108098273",
     appId: "1:333108098273:web:ddabe077f6be647ad1b3a0",
     measurementId: "G-CP2WDCMRM9"
-  };
+};
   
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const database = getDatabase(app);
-  const analytics = getAnalytics(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
   
-  export { app, auth, database, analytics };
+export { app, auth, database };
