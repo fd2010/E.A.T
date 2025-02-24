@@ -1,145 +1,123 @@
-// login-firebase.js
-import { auth, database } from '../database/firebase-config.js';
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { ref, get } from "firebase/database";
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Document loaded, setting up form handlers');
+    
+    const form = document.getElementById('loginForm');
+    
+    if (form) {
+      console.log('Form found, attaching submit handler');
+      
+      // First, add a submission prevention handler to guarantee it runs
+      form.addEventListener('submit', function(event) {
+        console.log('Form submit event triggered');
+        event.preventDefault();
+        console.log('Default form submission prevented');
+        
+        // You don't need to do anything else here, your other event handlers will still run
+      }, true); // The 'true' ensures this runs before other handlers
+    } else {
+      console.error('Form with ID "loginForm" not found!');
+      // Check if the form might have a different ID
+      const forms = document.querySelectorAll('form');
+      console.log('Forms found on page:', forms.length);
+      forms.forEach((f, i) => console.log(`Form ${i} id:`, f.id));
+    }
+});
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Get DOM elements
+import { auth, database } from '../database/firebase-config.js';
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
+// Debug helper
+console.log('login-firebase.js loaded');
+
+// Ensure DOM is loaded before accessing elements
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded - Setting up login form handler');
+    
     const loginForm = document.getElementById('loginForm');
     const statusDiv = document.getElementById('status');
-    const loadingSpinner = document.getElementById('loadingSpinner');
-    const submitButton = document.getElementById('submitButton');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-
-    // Helper function to show status message
-    function showStatus(message, type) {
-        statusDiv.textContent = message;
-        statusDiv.style.display = 'block';
-        
-        // Set colors based on message type
-        switch(type) {
-            case 'error':
-                statusDiv.style.backgroundColor = '#ffebee';
-                statusDiv.style.color = '#c62828';
-                break;
-            case 'success':
-                statusDiv.style.backgroundColor = '#e8f5e9';
-                statusDiv.style.color = '#2e7d32';
-                break;
-            case 'loading':
-                statusDiv.style.backgroundColor = '#e3f2fd';
-                statusDiv.style.color = '#1976d2';
-                break;
-            default:
-                statusDiv.style.backgroundColor = '#e3f2fd';
-                statusDiv.style.color = '#1976d2';
-        }
+    
+    if (!loginForm) {
+        console.error('Login form not found!');
+        return;
     }
-
-    // Helper function to toggle loading state
-    function setLoading(isLoading) {
-        loadingSpinner.style.display = isLoading ? 'block' : 'none';
-        submitButton.disabled = isLoading;
-        emailInput.disabled = isLoading;
-        passwordInput.disabled = isLoading;
-        submitButton.textContent = isLoading ? 'Logging in...' : 'LOGIN';
+    
+    if (!statusDiv) {
+        console.error('Status div not found!');
     }
-
-    // Handle form submission
-    loginForm.addEventListener('submit', async (event) => {
+    
+    // Add login handler with explicit preventDefault
+    loginForm.addEventListener('submit', async function(event) {
+        // This is critical - must prevent default form submission
         event.preventDefault();
-        console.log('Login form submitted'); 
-    
+        console.log('Login form submitted, default prevented');
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        if (!statusDiv) {
+            // Create status div if it doesn't exist
+            const container = document.querySelector('.container');
+            const newStatusDiv = document.createElement('div');
+            newStatusDiv.id = 'status';
+            newStatusDiv.className = 'statusMessage';
+            container.appendChild(newStatusDiv);
+            statusDiv = newStatusDiv;
+        }
+        
         try {
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-    
-            console.log('Email:', email); // Log the email
-            console.log('Password:', password); // Log the password
-    
-            if (!email || !password) {
-                showStatus('Please fill in all fields.', 'error');
-                return;
-            }
-    
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showStatus('Please enter a valid email address.', 'error');
-                return;
-            }
-    
-            setLoading(true);
-            showStatus('Logging in...', 'loading');
-    
-            console.log('Attempting to sign in with Firebase...'); // Log before Firebase sign-in
+            // Show login attempt status
+            statusDiv.textContent = 'Logging in...';
+            statusDiv.style.color = 'blue';
+            
+            console.log('Attempting to sign in with:', email);
+            
+            // Attempt to sign in
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            console.log('Firebase sign-in successful. User:', user); // Log the user object
-    
+            console.log('User signed in:', user.uid);
+
+            // Get user data from database
+            console.log('Fetching user data from database');
             const snapshot = await get(ref(database, 'users/' + user.uid));
+            
             if (snapshot.exists()) {
                 const userData = snapshot.val();
-                console.log('User data found:', userData); // Log the user data
-    
+                console.log('User data retrieved:', userData);
                 localStorage.setItem('userData', JSON.stringify(userData));
-                showStatus('Login successful! Redirecting...', 'success');
-    
+                
+                statusDiv.textContent = 'Login successful!';
+                statusDiv.style.color = 'green';
+                
+                console.log('Redirecting to dashboard in 1 second');
                 setTimeout(() => {
-                    console.log('Redirecting to dashboard...'); // Log before redirect
                     window.location.href = './dashboard.html';
                 }, 1000);
             } else {
-                throw new Error('User data not found');
+                console.error('User data not found in database');
+                statusDiv.textContent = 'User data not found';
+                statusDiv.style.color = 'red';
             }
         } catch (error) {
             console.error('Login error:', error);
-            setLoading(false);
-    
-            let errorMessage;
+            let errorMessage = 'Login failed: ';
+            
             switch (error.code) {
+                case 'auth/invalid-email':
+                    errorMessage = 'Invalid email format';
+                    break;
                 case 'auth/user-not-found':
-                    errorMessage = 'No account found with this email.';
+                    errorMessage = 'No account found with these credentials';
                     break;
                 case 'auth/wrong-password':
-                    errorMessage = 'Incorrect password.';
-                    break;
-                case 'auth/invalid-email':
-                    errorMessage = 'Invalid email format.';
-                    break;
-                case 'auth/too-many-requests':
-                    errorMessage = 'Too many failed attempts. Please try again later.';
-                    break;
-                case 'auth/network-request-failed':
-                    errorMessage = 'Network error. Please check your internet connection.';
+                    errorMessage = 'Incorrect password';
                     break;
                 default:
-                    errorMessage = 'Login failed. Please try again.';
+                    errorMessage += error.message;
             }
-    
-            showStatus(errorMessage, 'error');
-            passwordInput.value = '';
+            
+            statusDiv.textContent = errorMessage;
+            statusDiv.style.color = 'red';
         }
     });
-
-    // Clear status message when user starts typing
-    emailInput.addEventListener('input', () => {
-        statusDiv.style.display = 'none';
-    });
-
-    passwordInput.addEventListener('input', () => {
-        statusDiv.style.display = 'none';
-    });
-
-    // Handle password visibility toggle
-    const togglePassword = document.getElementById('togglePassword');
-    if (togglePassword && passwordInput) {
-        togglePassword.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            togglePassword.src = type === 'password' 
-                ? './images/icons/eye-open.png' 
-                : './images/icons/eye-closed.png';
-        });
-    }
 });

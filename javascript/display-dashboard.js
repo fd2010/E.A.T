@@ -1,4 +1,4 @@
-import { ref, update, onValue } from "firebase/database";
+import { ref, update, onValue } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
 import { deviceTypes, deviceTypesNotInverted } from './device-type.js';
 
@@ -54,10 +54,15 @@ async function deviceToggle(device, roomName, isOn, deviceKey) {
         const devicePath = `offices/${officeID}/rooms/${roomName}/${deviceKey}`;
         const updates = {};
         
+        // Update the status in Firebase
         updates[`${devicePath}/status`] = isOn ? 'On' : 'Off';
+        
         await update(ref(database), updates);
         
+        // Update device state in local memory
         device.status = isOn ? 'On' : 'Off';
+        
+        // Update the UI immediately
         const deviceCard = document.querySelector(`[data-device-id="${deviceKey}"]`);
         if (deviceCard) {
             deviceCard.classList.toggle('device-card-active', isOn);
@@ -68,7 +73,7 @@ async function deviceToggle(device, roomName, isOn, deviceKey) {
         }
     } catch (error) {
         console.error('Error toggling device:', error);
-        alert('Failed to update device status: ' + (error.message || error)); // Improved error message
+        alert('Failed to update device status. Please try again.');
     }
 }
 
@@ -77,7 +82,10 @@ function setupRealtimeUpdates(officeID) {
     onValue(officeRef, (snapshot) => {
         const rooms = snapshot.val();
         if (rooms) {
+            // Store the latest room data
             window._latestRoomData = rooms;
+            
+            // Update the currently displayed room if it exists
             const activeTab = document.querySelector('.room-tab.active');
             if (activeTab) {
                 const roomName = activeTab.textContent;
@@ -86,10 +94,7 @@ function setupRealtimeUpdates(officeID) {
                 }
             }
         }
-    }, error => {
-        console.error("Error setting up real-time updates:", error);
-        alert("Error setting up real-time updates. Please refresh the page."); //add error message
-    }); // added error callback
+    });
 }
 
 function updateRoomTabs(rooms) {

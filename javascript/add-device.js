@@ -1,4 +1,4 @@
-import { ref, update, get } from "firebase/database";
+import { ref, update, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
 import { deviceTypes } from './device-type.js';
 
@@ -171,7 +171,6 @@ async function addDeviceToRoom(deviceName) {
         currentStep = 1;
     } catch (error) {
         console.error('Error adding device:', error);
-        alert('Error adding device: ' + (error.message || error)); //Improved error message.
     }
 }
 
