@@ -20,12 +20,12 @@ export function initialiseAddDeviceModal() {
                         <div id="roomsList" class="rooms-list">
                             <!-- Rooms will be inserted here -->
                         </div>
-                        <button id="addNewRoomBtn" class="buttonHome" style="background-color: #C1E6E3;">
+                        <button id="addNewRoomBtn" class="buttonHome lightcyanButton">
                             + Add New Room
                         </button>
                         <div id="newRoomInput" style="display: none;" class="form-group">
                             <input type="text" id="newRoomName" placeholder="Enter room name">
-                            <button id="confirmNewRoom" class="buttonHome" style="background-color: #C1E6E3;">
+                            <button id="confirmNewRoom" class="buttonHome lightcyanButton">
                                 Add Room
                             </button>
                         </div>
@@ -48,7 +48,7 @@ export function initialiseAddDeviceModal() {
                         </div>
                         <div class="form-group">
                             <input type="text" id="deviceName" placeholder="Enter device name">
-                            <button id="confirmDevice" class="buttonHome" style="background-color: #C1E6E3;">
+                            <button id="confirmDevice" class="buttonHome lightcyanButton">
                                 Add Device
                             </button>
                         </div>
