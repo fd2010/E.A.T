@@ -5,15 +5,15 @@ import { getDatabase } from "firebase/database";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: "your-api-key",
+    apiKey: "AIzaSyAOw5Zc-E3Gq74lGYAVHcpkgNnNrumrdu0",
     authDomain: "energy-analysis-tool.firebaseapp.com",
     databaseURL: "https://energy-analysis-tool-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "energy-analysis-tool",
-    storageBucket: "energy-analysis-tool.appspot.com",
-    messagingSenderId: "your-sender-id",
-    appId: "your-app-id",
-    measurementId: "your-measurement-id"
-};
+    storageBucket: "energy-analysis-tool.firebasestorage.app",
+    messagingSenderId: "333108098273",
+    appId: "1:333108098273:web:ddabe077f6be647ad1b3a0",
+    measurementId: "G-CP2WDCMRM9"
+  };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
