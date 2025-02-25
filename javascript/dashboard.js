@@ -44,7 +44,7 @@ function handleError(error) {
             <h1>Error Loading Dashboard</h1>
             <p>${error.message}</p>
             <p>Please try logging in again.</p>
-            <button onclick="window.location.href='login.html'" class="buttonHome" style="background-color: #C1E6E3;">
+            <button onclick="window.location.href='login.html'" class="buttonHome lightcyanButton">
                 Return to Login
             </button>
         `;
