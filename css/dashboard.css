@@ -241,7 +241,8 @@
 /* Device's display */
 .device-display{
     border-radius: 23px;
-    background: #FAF7EF;
+    /* background: #FAF7EF; new deign colour */
+    background: #e4dfa363; 
 }
 
 
