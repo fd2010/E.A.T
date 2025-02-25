@@ -19,6 +19,32 @@
 
     <div class="infoCont" style="display: block">
       <p>Contact form</p>
+
+      <form class="contactForm" action="">
+        <label for="uName">Your name:</label>
+        <input
+          type="text"
+          id="uName"
+          name="wholename"
+          placeholder="Your name..."
+        /><br /><br />
+
+        <label for="company">Your company:</label>
+        <input
+          type="text"
+          id="company"
+          name="companyname"
+          placeholder="Your company..."
+        /><br /><br />
+
+        <label for="productCh">Product you are enquiring about:</label>
+        <select id="productCh" name="productCh">
+          <option value="no_choice">Please Select a product</option>
+          <option value="eat">E.A.T</option></select
+        ><br /><br />
+
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   </body>
 
