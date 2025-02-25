@@ -238,6 +238,12 @@
     scrollbar-color: #9BA87C #f1f1f1;
 }
 
+/* Device's display */
+.device-display{
+    border-radius: 23px;
+    background: #FAF7EF;
+}
+
 
 /* Devices Grid */
 .devices-grid {
