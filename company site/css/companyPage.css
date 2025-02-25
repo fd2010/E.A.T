@@ -101,6 +101,8 @@ hTemp {
 
   margin: 4vw;
   padding: 2vw;
+
+  border-radius: 10px;
 }
 
 .leftContainer {
