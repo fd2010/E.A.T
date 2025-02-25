@@ -1,167 +1,182 @@
 /* For the company page */
 
+@import url("https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
 /* Thinking of using the following colour scheme - https://coolors.co/827377-002035-22aed1-6d8ea0-70b77e */
 
-
 .navBarDiv {
-    background-color: #827377;
-    display:flex;
-    clear: both;
-    height: 90px;
+  background-color: #dbc99f;
+  display: flex;
+  clear: both;
+  height: 90px;
 
-    /* This keeps the nav bar at the top of the screen when scrolling */
-    position: sticky;
-    top: 0;
+  /* This keeps the nav bar at the top of the screen when scrolling */
+  position: sticky;
+  top: 0;
 
-    margin: 2vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin: 2vw;
 
-    border-radius: 50px;
-    justify-content: space-evenly;
-
+  border-radius: 30px;
+  justify-content: space-evenly;
 }
 
 .navBarDiv a {
-    color:#002035;
-    font-size: 1.5vw;
-    font-family: "Kay Pho Du", sans-serif;
-    text-decoration: none;
+  color: #002035;
+  font-size: 1.5vw;
+  font-family: "Kay Pho Du", sans-serif;
+  text-decoration: none;
 
-    padding: 0.8vw;
-    display: flex;
-    align-items: center;
-    padding: 2vw;
-   
-    
-    float:left;
-    text-align: center;
+  padding: 0.8vw;
+  display: flex;
+  align-items: center;
+  padding: 2vw;
 
+  border-radius: 10px;
+
+  float: left;
+  text-align: center;
 }
 
 /* Adds the onmouseover effect */
 .navBarDiv a:hover {
-    background-color: white;
-    color: #002035;
+  background-color: white;
+  color: #002035;
 }
 
 /* For the nav bar link that the user is currently on */
 #activeLink {
-    color: #e7ec5a;
-    background-color: #4d4245;
+  color: #e7ec5a;
+  background-color: #4d4245;
 }
 
 p1 {
-    font-family: "Kay Pho Du", sans-serif;
+  font-family: "Kay Pho Du", sans-serif;
 }
 
 h2 {
-    font-family: "Kay Pho Du", sans-serif ;
-    text-align: center;
+  font-family: "Kay Pho Du", sans-serif;
+  text-align: center;
 }
 
 h4 {
-    font-family: "Kay Pho Du", sans-serif ;
+  font-family: "Kay Pho Du", sans-serif;
 }
 
 h11 {
-    font-size: 3vw;
-    font-family: "Inria Serif";
-    
-    text-decoration: underline;
-    font-weight: bold;
+  font-size: 3vw;
+  font-family: "Inria Serif";
 
-    display: flex;
-    padding: 1vw;
+  text-decoration: underline;
+  font-weight: bold;
+
+  display: flex;
+  padding: 1vw;
 }
 
 /* Used for the line breaks on the page */
 h12 {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 hTemp {
-    background-color: red;
+  background-color: red;
 }
 
 /* Nav bar logo */
 #pClogo {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin: 10px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: 10px;
 }
 
 .infoCont {
-    background-color: #faeb74;
+  background-color: #faeb74;
 
-    display: flex;
-    justify-content:center;
+  display: flex;
+  justify-content: center;
 
-    margin: 4vw;
-    padding: 2vw;
+  margin: 4vw;
+  padding: 2vw;
 }
 
 .leftContainer {
-    display: flex;
-    float: left;
+  display: flex;
+  float: left;
 
-    margin: 2vw;
-    margin-left: 5vw;
-    padding: 10px;
-    border-radius: 50px;
+  margin: 2vw;
+  margin-left: 5vw;
+  padding: 10px;
+  border-radius: 50px;
 
-    background-color: #70B77E;
+  background-color: #70b77e;
 }
 
 .rightContainer {
-    display: flex;
-    float: right;
+  display: flex;
+  float: right;
 
-    margin: 2vw;
-    margin-right: 5vw;
-    padding: 10px;
-    border-radius: 50px;
+  margin: 2vw;
+  margin-right: 5vw;
+  padding: 10px;
+  border-radius: 50px;
 
-    background-color: #6D8EA0;
+  background-color: #6d8ea0;
 }
 
 .centerContainer {
-    display: block;
-    float: right;
+  display: block;
+  float: right;
 
-    margin: 2vw;
-    margin-right: 5vw;
-    padding: 10px;
-    border-radius: 30px;
+  margin: 2vw;
+  margin-right: 5vw;
+  padding: 10px;
+  border-radius: 30px;
 
-    background-color: #6D8EA0;
+  background-color: #dbc99f;
+}
+
+.productImg {
+  width: 30vw;
+
+  border-color: black;
+  border-width: 5px;
+  border-radius: 10px;
 }
 
 #codeImage {
-    width: 30vw;
-    height: auto;
+  width: 30vw;
+  height: auto;
 
-    padding: 1vw;
+  padding: 1vw;
 }
-
 
 .lineSeparator {
-    display: block;
+  display: block;
 
-    text-align: center;
-
+  text-align: center;
 }
 
+.contactUsButton {
+  align-self: center;
 
+  border-radius: 10px;
 
+  margin-left: 8vw;
 
+  font-family: "Kay Pho Du", sans-serif;
+  font-size: 20px;
+}
 
 footer {
-    background-color: #827377 ;
+  background-color: #827377;
 
-    margin: 0;
-    padding: 2vw;
+  margin: 0;
+  padding: 2vw;
 
-    font-family: "Kay Pho Du", sans-serif ;
-    text-align: center;
-
+  font-family: "Kay Pho Du", sans-serif;
+  text-align: center;
 }
