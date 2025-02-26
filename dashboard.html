@@ -70,11 +70,23 @@
                 <div class="info-cards">
                     
 
+
+                    
                     <div class="info-card energy">
 
-                        <div class="graph-container">
-                            <canvas id="energyCostChart"></canvas>
 
+                        <div class="graph-buttons">
+                            <div class="graph-buttons">
+                                <button id="daily">Daily</button>
+                                <button id="weekly">Weekly</button>
+                                <button id="monthly">Monthly</button>
+                            </div>
+                        </div>
+
+                        <div class="graph-container-wrapper">
+                            <div class="graph-container">
+                                <canvas id="energyCostChart"></canvas>
+                            </div>
                         </div>
                     </div>
 
@@ -137,6 +149,7 @@
             };
         </script>
         
+        <script type="module" src="./javascript/powerUsage.js"></script>
         <script type="module" src="./javascript/dashboard.js"></script>
         <script type="module" src="./javascript/add-device.js"></script>
     </body>
