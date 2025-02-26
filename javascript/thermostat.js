@@ -1,9 +1,53 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Thermostat functionality
   const dialElement = document.getElementById('thermostat-dial');
   const handleElement = document.getElementById('dial-handle');
   const tempDisplay = document.getElementById('temp-display');
   const powerToggle = document.getElementById('power-toggle');
   
+  // Weather functionality
+  const currentTemperatureElement = document.getElementById('current-temprature');
+  const weatherDescElement = document.querySelector('.weather-desc');
+
+
+  //RIGHT NOW THIS IS RANDOM AS WE NEED TO SIGN UP FOR A API KEY TO IMPLEMENT THIS
+  // Add weather update functionality
+  function updateWeather() {
+    const randomTemp = Math.floor(Math.random() * 20) + 5;
+    
+    const weatherConditions = [
+      'Clear sky',
+      'Few clouds',
+      'Scattered clouds',
+      'Overcast',
+      'Light rain',
+      'Moderate rain',
+      'Heavy rain',
+      'Foggy',
+      'Light snow',
+      'Snow'
+    ];
+    
+    const randomCondition = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+    
+    // Update the temperature display
+    if (currentTemperatureElement) {
+      currentTemperatureElement.textContent = `+${randomTemp}°C Outdoor Temperature`;
+    }
+    
+    // Update the weather description
+    if (weatherDescElement) {
+      weatherDescElement.textContent = randomCondition;
+    }
+  }
+  
+  // Call the weather update function when the page loads
+  updateWeather();
+  
+
+  // Thermostat controls:
+  
+  // Check if thermostat elements exist
   if (!dialElement || !handleElement || !tempDisplay || !powerToggle) {
     console.error('Thermostat elements not found');
     return;

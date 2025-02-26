@@ -634,10 +634,10 @@
             <div class="header">
                 <!-- Greeting Bubble -->
                 <div class="greeting-bubble">
-                    <div class="greeting-text">Hi, <span id="prefName">System Admin</span> 👋</div>
+                    <div class="greeting-text">Hi, <span id="prefName"> Loading name...</span> 👋</div>
                     <div class="weather-info">
-                        <div class="temperature">+13°C Outdoor Temperature</div>
-                        <div class="weather-desc">Foggy rainy weather, an umbrella is recommended</div>
+                        <div id="current-temprature" class="temperature">Loading temprature...</div>
+                        <div class="weather-desc">Loading weather description...</div>
                     </div>
                 </div>
                 
@@ -646,7 +646,7 @@
                     <div class="profile-icon">
                         <img src="./images/icons/User Profile Icon.png" alt="User">
                     </div>
-                    <div class="user-role" id="userRole">System Admin</div>
+                    <div class="user-role" id="userRole">Loading role... </div>
                     <button id="logoutBtn" class="logout-btn">Logout</button>
                 </div>
             </div>
@@ -661,12 +661,10 @@
                     
                     <!-- Room Navigation -->
                     <div class="room-tabs" id="roomTabs">
-                        <!-- These will be populated by your JS -->
                     </div>
                     
                     <!-- Devices Grid -->
                     <div class="devices-grid" id="devicesGrid">
-                        <!-- These will be populated by your JS -->
                     </div>
                 </div>
                 
@@ -674,11 +672,13 @@
                 <div class="energy-section">
                     <div class="graph-header">
                         <div class="graph-title">Power Consumption</div>
-                        <select class="graph-period" id="graphPeriod">
-                            <option>Monthly</option>
-                            <option>Weekly</option>
-                            <option>Daily</option>
-                        </select>
+                        <div class="graph-buttons">
+                            <div class="graph-buttons">
+                                <button id="daily">Daily</button>
+                                <button id="weekly">Weekly</button>
+                                <button id="monthly">Monthly</button>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Chart -->
@@ -733,7 +733,7 @@
             </div>
 
             <!-- Company Name -->
-            <div class="divLight">
+            <div class="divLight" style="margin-top:50px;">
                 <p id="companyName">PearCare.Inc</p>
                 <div id="line" style="margin: auto;"></div>
             </div>
