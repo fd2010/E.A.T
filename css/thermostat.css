@@ -1,0 +1,203 @@
+/* Thermostat CSS - Scoped to .info-card.temprature .thermostat-container */
+.info-card.temprature .thermostat-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+}
+
+.info-card.temprature .thermostat-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.info-card.temprature .thermostat-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.info-card.temprature .power-switch {
+    display: flex;
+    align-items: center;
+}
+
+.info-card.temprature .power-label {
+    margin-right: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.info-card.temprature .switch {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 16px;
+}
+
+.info-card.temprature .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.info-card.temprature .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 16px;
+}
+
+.info-card.temprature .slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.info-card.temprature input:checked + .slider {
+    background-color: #9BA87C;
+}
+
+.info-card.temprature input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+.info-card.temprature .thermostat-dial {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.info-card.temprature .dial-center {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.info-card.temprature .temperature-display {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    font-family: "Kay Pho Du", sans-serif;
+    margin: 0;
+}
+
+.info-card.temprature .status {
+    font-size: 10px;
+    color: #333;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    font-family: "Kay Pho Du", sans-serif;
+}
+
+.info-card.temprature .status-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #FFDC52;
+    margin-top: 2px;
+}
+
+.info-card.temprature .dial-marker {
+    position: absolute;
+    width: 2px;
+    height: 6px;
+    background-color: #999;
+    top: 5px;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: 1px;
+}
+
+.info-card.temprature .temperature-label {
+    position: absolute;
+    font-size: 8px;
+    color: #666;
+    font-family: "Kay Pho Du", sans-serif;
+}
+
+.info-card.temprature .dial-handle {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .info-card.temprature .thermostat-dial {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .info-card.temprature .dial-center {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .info-card.temprature .temperature-display {
+        font-size: 22px;
+    }
+    
+    .info-card.temprature .dial-handle {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-card.temprature .thermostat-dial {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .info-card.temprature .dial-center {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .info-card.temprature .temperature-display {
+        font-size: 20px;
+    }
+    
+    .info-card.temprature .status {
+        font-size: 8px;
+    }
+    
+    .info-card.temprature .dial-handle {
+        width: 100px;
+        height: 100px;
+    }
+}

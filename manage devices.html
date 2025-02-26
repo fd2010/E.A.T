@@ -3,22 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dashboard - E.A.T</title>
-        <link rel="stylesheet" href="./css/powerUsagePage.css">
+        <title>Manage devices - E.A.T</title>
         <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="./css/formstyles.css">
         <link rel="stylesheet" href="./css/dashboard.css">
         <link rel="stylesheet" href="./css/addDevice.css">
-        <link rel="stylesheet" href="./css/thermostat.css">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
 
     <body class="bodyLight">
 
         <!-- Loading and Error States -->
         <div id="loadingState" style="text-align: center; padding: 20px;">
-            Loading dashboard...
+            Loading devices...
         </div>
 
         <div id="errorDisplay" style="display: none; color: red; text-align: center; padding: 20px;"></div>
@@ -53,59 +50,6 @@
                     </div>
 
                 </div>
-
-                <!-- Info Cards -->
-                <div class="info-cards">
-
-                    <div class="info-card temprature">
-                        <div class="info-card-content">
-                            <div class="thermostat-container">
-                                <div class="thermostat-header">
-                                    <div class="thermostat-title">Thermostat</div>
-                                    <div class="power-switch">
-                                        <span class="power-label">On</span>
-                                        <label class="switch">
-                                            <input type="checkbox" id="power-toggle" checked>
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="thermostat-dial" id="thermostat-dial">
-                                    <div class="dial-center">
-                                        <div class="status">HEATING</div>
-                                        <div class="temperature-display" id="temp-display">21</div>
-                                        <div class="status-icon"></div>
-                                    </div>
-                                    <div class="dial-handle" id="dial-handle"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-
-                    
-                    <div class="info-card energy">
-
-
-                        <div class="graph-buttons">
-                            <div class="graph-buttons">
-                                <button id="daily">Daily</button>
-                                <button id="weekly">Weekly</button>
-                                <button id="monthly">Monthly</button>
-                            </div>
-                        </div>
-
-                        <div class="graph-container-wrapper">
-                            <div class="graph-container">
-                                <canvas id="energyCostChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
 
             <div class="device-display">
                 <!-- Room Navigation -->
@@ -169,9 +113,7 @@
             };
         </script>
         
-        <script type="module" src="./javascript/powerUsage.js"></script>
         <script type="module" src="./javascript/dashboard.js"></script>
         <script type="module" src="./javascript/add-device.js"></script>
-        <script type="module" src="./javascript/thermostat.js"></script>
     </body>
 </html>
