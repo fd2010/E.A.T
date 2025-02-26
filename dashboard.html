@@ -4,11 +4,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard - E.A.T</title>
+        <link rel="stylesheet" href="./css/powerUsagePage.css">
         <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="./css/formstyles.css">
         <link rel="stylesheet" href="./css/dashboard.css">
         <link rel="stylesheet" href="./css/addDevice.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
 
     <body class="bodyLight">
@@ -31,6 +33,24 @@
                         <label> Hi, <span id="prefName">Loading...</span> </label>
 
                         <span class="role-badge" id="userRole">Loading...</span>
+
+
+                        <div class="info-card weather">
+
+                            <div class="info-card-content">
+                                <div class="info-icon">
+                                    <img src="./images/icons/weather clouds.png" alt="Weather Icon">
+                                </div>
+    
+                                <div class="info-details">
+                                    <div class="temperature">10°C</div>
+                                    <div class="info-label">Current Temperature</div>
+                                </div>
+                            </div>
+    
+                        </div>
+
+
                     </div>
 
 
@@ -48,32 +68,13 @@
 
                 <!-- Info Cards -->
                 <div class="info-cards">
-                    <div class="info-card weather">
-
-                        <div class="info-card-content">
-                            <div class="info-icon">
-                                <img src="./images/icons/weather clouds.png" alt="Weather Icon">
-                            </div>
-
-                            <div class="info-details">
-                                <div class="temperature">10°C</div>
-                                <div class="info-label">Current Temperature</div>
-                            </div>
-                        </div>
-
-                    </div>
+                    
 
                     <div class="info-card energy">
 
-                        <div class="info-card-content">
-                            <div class="info-icon">
-                                <img src="./images/icons/lightning_icon(MIT).png" alt="Lightning Icon">
-                            </div>
+                        <div class="graph-container">
+                            <canvas id="energyCostChart"></canvas>
 
-                            <div class="info-details">
-                                <div class="energy-value">10.5 kwh</div>
-                                <div class="info-label">Today: £27.00</div>
-                            </div>
                         </div>
                     </div>
 
