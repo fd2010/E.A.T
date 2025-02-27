@@ -71,6 +71,13 @@
                 margin-top: auto;
                 margin-bottom: 20px;
             }
+
+            .logout-icon img {
+                width: 36px;
+                height: 36px;
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
             
             /* Main Content */
             .main-content {
@@ -188,7 +195,7 @@
                 height: 100%;
             }
 
-            .logout-btn img {
+            li .logout-btn img {
                 width: 15px;
                 height: 15px;
             }
@@ -659,12 +666,13 @@
             </div>
             <div class="nav-icons">
                 <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
-                <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
                 <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
+                <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
                 <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
             </div>
+
             <div class="logout-icon">
-                <img src="./images/icons/User Profile Icon.png" alt="Logout" class="nav-icon">
+                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
             </div>
         </nav>
     
@@ -694,9 +702,7 @@
                             <li><img src="./images/icons/notification bell.png" alt="Notifications"></li>
                             <li><button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button></li>
 
-                        </ul>
-
-                        
+                        </ul>                        
                     </div>
                 </div>
             </div>
