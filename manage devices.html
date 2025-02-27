@@ -22,6 +22,24 @@
 
         <!-- Main Dashboard Content (hidden initially) -->
         <div id="dashboardContent" class="dashboard-container" style="display: none;">
+
+            <!-- Side Navigation -->
+            <nav class="side-nav">
+                <div class="nav-logo">
+                    <img src="./images/icons/User Profile Icon.png" alt="Logo">
+                </div>
+                <div class="nav-icons">
+                    <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
+                    <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
+                    <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
+                    <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+                </div>
+
+                <div class="logout-icon">
+                    <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
+                </div>
+            </nav>
+
             <!-- Top Section -->
             <div class="top-section">
                 <!-- Greeting -->
@@ -31,7 +49,7 @@
                         <label> Hi, <span id="prefName">Loading...</span> </label>
 
                         <span class="role-badge" id="userRole">Loading...</span>
-                        
+
                     </div>
 
 
@@ -59,38 +77,6 @@
                 </div>
             </div>
 
-        </div>
-
-        <!-- Nav bar  -->
-        <div class="navBar">
-            <ul class="navList">
-
-                <!-- Dashbord link -->
-                <li class="navItem">
-                    <a href="dashboard.html" alt="Home">
-                        <img src="./images/icons/Home Icon.png" alt="Dashboard" class="navIcon">
-                    </a>
-                </li>
-
-                <!-- Add a device -->
-                <li class="navItem">
-                    <img src="./images/icons/Add Device Icon.png" alt="Add device" class="navIcon" onclick="showAddDevice()">
-                </li>
-
-                <!-- Power usage -->
-                <li class="navItem">
-                    <a href="powerUsage.html" alt="Power Usage">
-                        <img src="./images/icons/View Stats Icon.png" alt="Power Usage" class="navIcon">
-                    </a>
-                </li>
-
-                <!-- Manage devices -->
-                <li class="navItem">
-                    <a href="manage devices.html" alt="Power Usage">
-                        <img src="./images/icons/tablet device (MIT licence).png" alt="Manage devices" class="navIcon">
-                    </a>
-                </li>
-            </ul>    
         </div>
 
         <!-- Company Name -->

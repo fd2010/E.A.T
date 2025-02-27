@@ -8,14 +8,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/powerUsagePage.css">
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/addDevice.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="bodyLight">
 
+    <!-- Side Navigation -->
+    <nav class="side-nav">
+        <div class="nav-logo">
+            <img src="./images/icons/User Profile Icon.png" alt="Logo">
+        </div>
+        <div class="nav-icons">
+            <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
+            <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
+            <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
+            <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+        </div>
+
+        <div class="logout-icon">
+            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
+        </div>
+    </nav>
+
     <!-- Header Section -->
     <header class="header">
         <h1 class="h1Light">Power Usage </h1>
+        <br>
         <h2 class="h2Light">Track your energy consumption and costs</h2>
     </header>
 
@@ -96,16 +116,6 @@
         </div>
     </footer>
 
-
-    <!-- Back Button -->
-    <div style="width: 100%">
-        <a href="dashboard.html" class="back-link">
-            <img src="./images/icons/back icon.png" alt="Back Icon" class="back-icon">
-        </a>
-    </div>
-
-    <br>
-
     <!-- Company name -->
     <div class="divLight">
         <p id="companyName">PearCare.Inc</p>
@@ -113,6 +123,7 @@
     </div>
 
     <script type="module" src="./javascript/powerUsage.js"></script>
+    <script type="module" src="./javascript/add-device.js"></script>
 </body>
 
 
