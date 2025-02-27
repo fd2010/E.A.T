@@ -655,6 +655,7 @@ li .logout-btn img {
 
 #errorDisplay {
     color: #c62828;
+    display: none;
 }
 
 
