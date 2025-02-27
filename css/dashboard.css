@@ -92,6 +92,49 @@
     border-radius: 50%; 
 }
 
+/* User-profile */
+
+.user-profile {
+    background-color: #000; 
+    padding: 15px 20px;
+    border-radius: 20px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-role {
+    background-color: #f5f5f5;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+
+.user-profile-options {
+    display: flex;
+    gap: 10px;
+}
+
+.user-profile-options li {
+    list-style: none;
+    background-color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-profile-options li img {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+}
+
 
 
 /* Role Badge */
