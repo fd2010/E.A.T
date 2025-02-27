@@ -184,12 +184,15 @@ function showStep(step) {
     }
 }
 
-// Function to show the modal
-window.showAddDevice = function() {
+// Function to show the modal - make it accessible globally
+function showAddDevice() {
     const modal = document.getElementById('addDeviceModal');
-    modal.style.display = 'block';
+    if (!modal) {
+        initialiseAddDeviceModal();
+    }
+    document.getElementById('addDeviceModal').style.display = 'block';
     showStep(1);
-};
+}
 
 function closeModal() {
     const modal = document.getElementById('addDeviceModal');
@@ -201,3 +204,13 @@ function closeModal() {
     selectedRoom = null;
     selectedDevice = null;
 }
+
+// Make showAddDevice function globally accessible
+window.showAddDevice = showAddDevice;
+
+// Initialize the modal when the script loads
+document.addEventListener('DOMContentLoaded', () => {
+    initialiseAddDeviceModal();
+});
+
+export { showAddDevice };

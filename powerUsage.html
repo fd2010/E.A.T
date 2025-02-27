@@ -122,8 +122,18 @@
         <div id="line" style="margin-bottom: 100px;"></div>
     </div>
 
-    <script type="module" src="./javascript/powerUsage.js"></script>
+    <!-- Error handling script -->
+    <script>
+        window.onerror = function(msg, url, line, col, error) {
+            console.error('Global error:', error, 'Message:', msg, 'Line:', line);
+            return false;
+        };
+    </script>
+
+    <!-- Import scripts -->
     <script type="module" src="./javascript/add-device.js"></script>
+    <script type="module" src="./javascript/powerUsage.js"></script>
+    <script type="module" src="./javascript/dashboard.js"></script>
 </body>
 
 
