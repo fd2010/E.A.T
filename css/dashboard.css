@@ -298,28 +298,37 @@
 
 /* Device Cards */
 .device-card {
-    background-color: #292D32;
+    background-color: #555a60; /* #292D32 */
     color: white;
-    padding: 20px;
-    border-radius: 20px;
+    border-radius: 23px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    transition: transform 0.2s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
     position: relative;
-    width: 20px; 
+    width: 150px; 
     margin: 10px;
-    min-width: 150px;
-    gap: 15px;
     justify-content: space-between;
+    padding: 15px;
+    align-items: center; /* COME BACK TO THIS AS IT MESSES WIHT THE ALIGNEMNT OF IT DISPLAYING LEFT TO RIHGT*/
+    height: 200px;
 }
+
 
 .device-card-active {
     background-color: #DBC99F;
     color: black;
-    filter: drop-shadow(0 28px 32px #FFDC52);
+    filter: drop-shadow(0 20px 16px #FFDC52);
     transition: filter 0.3s ease-in-out;
 }
+
+ /* Text color adjustments for device info */
+ .device-card .device-info,
+ .device-card .device-type,  
+ .device-card.off .device-info {
+     color: #aaa;
+ }
+
+
 
 .device-icon-container {
     margin-bottom: 10px;

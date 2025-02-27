@@ -13,13 +13,6 @@
         <link rel="stylesheet" href="./css/thermostat.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
-            /* Reset and Base Styles */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-    
             
             /* Side Navigation */
             .side-nav {
@@ -234,47 +227,14 @@
             .devices-grid {
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                gap: 15px;
                 height: 300px;
                 overflow-y: auto;
                 padding-right: 5px;
                 min-width:90% ;
             }
             
-            /* Default state (off) */
-            .device-card {
-                background-color: #292D32;
-                color: white;
-                border-radius: 10px;
-                padding: 15px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                height: 200px;
-                position: relative;
-            }
 
-            /* Active state (on) */
-            .device-card.device-card-active {
-                background-color: #DBC99F;
-                color: black;
-            }
-
-            /* Text color adjustments for device info */
-            .device-card .device-info,
-            .device-card .device-type {
-                color: #aaa;
-            }
-
-            .device-card.device-card-active .device-info,
-            .device-card.device-card-active .device-type {
-                color: #555;
-            }
-
-            /* You can also add a transition for smooth color changes */
-            .device-card {
-                transition: background-color 0.3s ease, color 0.3s ease;
-            }
+            
             
             .device-icon {
                 width: 40px;
@@ -294,9 +254,6 @@
                 margin-bottom: 15px;
             }
             
-            .device-card.off .device-info {
-                color: #aaa;
-            }
             
             /* Toggle switch */
             .toggle-switch {
@@ -354,7 +311,7 @@
             .energy-section {
                 grid-column: 1 / 2;
                 grid-row: 2 / 3;
-                background-color: #fff;
+                background-color: #ECEFE7;
                 border-radius: 20px;
                 padding: 20px;
             }
