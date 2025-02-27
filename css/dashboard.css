@@ -487,6 +487,46 @@ input:checked + .toggle-slider:before {
 }
 
 
+/* Side Navigation */
+.side-nav {
+    width: 120px;
+    background-color: #C1B99F;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    z-index: 100;
+}
+
+.nav-logo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 40px;
+}
+
+.nav-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-icon {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.nav-icon:hover {
+    transform: scale(1.1);
+}
+
+
 /* Nav Bar */
 .navBar {
     width: 100%;
