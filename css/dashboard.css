@@ -742,6 +742,18 @@ li .logout-btn img {
 
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .devices-section {
+        width: 100%;
+    }
+
+}
+
 @media (max-width: 768px) {
     .info-cards {
         flex-direction: column;
@@ -761,12 +773,20 @@ li .logout-btn img {
     .greeting-bubble {
         font-size: 20px;
         padding: 12px 20px;
+        max-width: 60%;
     }
 
     .logout-button {
         position: absolute;
         font-size: 14px;
         padding: 8px 16px;
+    }
+    .side-nav {
+        width: 80px;
+    }
+    
+    .dashboard-container {
+        margin-left: 80px;
     }
 }
 
@@ -787,10 +807,17 @@ li .logout-btn img {
     .greeting-bubble {
         font-size: 18px;
         padding: 10px 15px;
+        max-width: 100%;
     }
 
     .info-card {
         padding: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
     }
 }
 
