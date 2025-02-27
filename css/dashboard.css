@@ -380,18 +380,18 @@
 }
 
 .room-tabs::-webkit-scrollbar-thumb {
-    background: #9BA87C;
+    background: #898082;
     border-radius: 3px;
 }
 
 .room-tabs::-webkit-scrollbar-thumb:hover {
-    background: #7a8763;
+    background: #898082;
 }
 
 /* Firefox scrollbar styling */
 .room-tabs {
     scrollbar-width: thin;
-    scrollbar-color: #9BA87C #f1f1f1;
+    scrollbar-color: #898082 #f1f1f1;
 }
 
 /* Device's display */
@@ -420,7 +420,29 @@
     margin-left: auto; 
     margin-right: auto;
     padding-right: 5px;
+    scrollbar-width: thin;
+    scrollbar-color: #898082 #f1f1f1;
 }
+
+/* Scrollbar Styling */
+.devices-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.devices-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.devices-grid::-webkit-scrollbar-thumb {
+    background: #898082;
+    border-radius: 3px;
+}
+
+.devices-grid::-webkit-scrollbar-thumb:hover {
+    background: #898082;
+}
+
 
 
 /* Device Cards */
