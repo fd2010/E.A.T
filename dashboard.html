@@ -14,124 +14,26 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             
-            /* Dashboard Grid */
-            .dashboard-grid {
-                display: grid;
-                grid-template-columns: 1fr 400px; 
-                grid-template-rows: auto auto;
-                gap: 20px;
-                flex: 1;
-                width: 100%;
-            }
             
-            /* Device Section */
-            .devices-section {
-                grid-column: 1 / 2;
-                grid-row: 1 / 2;
-                background-color: #eeeeeebb;
-                border-radius: 20px;
-                padding: 20px;
-                width: 100%; 
-                min-width: 0; 
-            }
             
-            .section-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 15px;
-            }
+           
             
-            .section-title {
-                font-family: "Kay Pho Du", sans-serif;
-                font-size: 20px;
-                font-weight: 500;
-            }
-            
-            .room-temp {
-                font-size: 16px;
-                font-weight: 500;
-            }
-            
-            .room-selector {
-                padding: 5px 10px;
-                border-radius: 15px;
-                border: none;
-                background-color: #f5f5f5;
-                margin-left: 10px;
-                cursor: pointer;
-            }
-            
-            /* Horizontal scrolling room tabs */
-            .room-tabs {
-                display: flex;
-                gap: 15px;
-                overflow-x: auto;
-                padding-bottom: 10px;
-                margin-bottom: 15px;
-                scrollbar-width: thin;
-            }
-            
-            .room-tab {
-                min-width: 130px;
-                flex: 0 0 auto;
-                padding: 10px 20px;
-                border-radius: 20px;
-                cursor: pointer;
-                white-space: nowrap;
-                font-family: "Kay Pho Du", sans-serif;
-                background-color: #e4dfa3;
-                text-align: center;
-                transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-            }
-            
-            .room-tab:hover {
-                transform: scale(1.05);
-            }
-            
-            .room-tab.active {
-                background-color: #9BA87C;
-                color: white;
-            }
-            
-            /* Devices grid with 1 rows max, then scroll */
-            .devices-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                height: 300px;
-                overflow-y: auto;
-                padding-right: 5px;
-                min-width:90% ;
-            }
-            
+           
 
             
+    
             
-            .device-icon {
-                width: 40px;
-                height: 40px;
-                margin-bottom: 10px;
-            }
-            
-            .device-name {
-                font-size: 16px;
-                font-weight: 500;
-                margin-bottom: 5px;
-            }
-            
-            .device-info {
-                font-size: 14px;
-                color: #555;
-                margin-bottom: 15px;
-            }
+    
             
             
-            /* Toggle switch */
-            .toggle-switch {
-                position: absolute;
-                bottom: 15px;
-                right: 15px;
-            }
+    
+
+    
+            
+            
+            
+            
+            
             
             .switch {
                 position: relative;
