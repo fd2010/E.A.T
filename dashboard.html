@@ -469,8 +469,8 @@
             
             .thermostat-dial {
                 position: relative;
-                width: 220px;
-                height: 220px;
+                width: 280px;  /* Increased from 220px */
+                height: 280px; /* Increased from 220px */
                 border-radius: 50%;
                 background-color: white;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -501,9 +501,9 @@
                 color: #888;
             }
             
-            .dial-center {
-                width: 150px;
-                height: 150px;
+            .dial-centre {
+                width: 200px;  /* Increased from 150px */
+                height: 200px; /* Increased from 150px */
                 border-radius: 50%;
                 background-color: #f8f8f8;
                 display: flex;
@@ -521,13 +521,96 @@
             }
             
             .temperature-display {
-                font-size: 60px;
+                font-size: 80px;  /* Increased from 60px */
                 font-weight: 300;
                 color: #333;
                 line-height: 1;
                 font-family: "Kay Pho Du", sans-serif;
             }
-            
+
+            .status {
+                font-size: 18px;  /* Increased from smaller size */
+                color: #333;
+                text-transform: uppercase;
+                margin-bottom: 5px;
+            }
+
+            .info-card.temprature .thermostat-dial {
+                position: relative;
+                width: 220px;  /* Increased from 140px */
+                height: 220px; /* Increased from 140px */
+                border-radius: 50%;
+                background-color: white;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+            }
+                 
+            .info-card.temprature .dial-center {
+                width: 150px;  /* Increased from 90px */
+                height: 150px; /* Increased from 90px */
+                border-radius: 50%;
+                background-color: #f8f8f8;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            .info-card.temprature .temperature-display {
+                font-size: 46px;  /* Increased from 26px */
+                font-weight: bold;
+                color: #333;
+                font-family: "Kay Pho Du", sans-serif;
+                margin: 0;
+            }
+
+            .info-card.temprature .status {
+                font-size: 16px;  /* Increased from 10px */
+                color: #333;
+                text-transform: uppercase;
+                margin-bottom: 5px;
+                font-family: "Kay Pho Du", sans-serif;
+            }
+
+            .info-card.temprature .dial-handle {
+                position: absolute;
+                width: 220px;  /* Increased from 140px */
+                height: 220px; /* Increased from 140px */
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            .info-card.temprature .temperature-label {
+                position: absolute;
+                font-size: 12px;  /* Increased from 8px */
+                color: #666;
+                font-family: "Kay Pho Du", sans-serif;
+            }
+
+            .info-card.temprature .dial-marker {
+                position: absolute;
+                width: 3px;   /* Increased from 2px */
+                height: 10px; /* Increased from 6px */
+                background-color: #999;
+                top: 5px;
+                left: 50%;
+                transform-origin: bottom center;
+                border-radius: 1px;
+            }
+
+            .info-card.temprature .status-icon {
+                width: 18px;  /* Increased from 12px */
+                height: 18px; /* Increased from 12px */
+                border-radius: 50%;
+                background-color: #FFDC52;
+                margin-top: 5px;
+            }
+
+
             .eco-icon {
                 margin-top: 10px;
                 color: #4CAF50;
@@ -638,6 +721,26 @@
                 #loadingState, #errorDisplay {
                     margin-left: 80px;
                 }
+
+                .info-card.temprature .thermostat-dial {
+                    width: 180px;
+                    height: 180px;
+                }
+                
+                .info-card.temprature .dial-center {
+                    width: 120px;
+                    height: 120px;
+                }
+                
+                .info-card.temprature .temperature-display {
+                    font-size: 36px;
+                }
+                
+                .info-card.temprature .dial-handle {
+                    width: 180px;
+                    height: 180px;
+                }
+
             }
             
             @media (max-width: 480px) {
@@ -762,7 +865,7 @@
                                         </div>
                                     </div>
                                     <div class="thermostat-dial" id="thermostat-dial">
-                                        <div class="dial-center">
+                                        <div class="dial-centre">
                                             <div class="status">HEATING</div>
                                             <div class="temperature-display" id="temp-display">21</div>
                                             <div class="status-icon"></div>

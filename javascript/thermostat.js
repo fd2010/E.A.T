@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Call the weather update function when the page loads
   updateWeather();
-  
+
 
   // Thermostat controls:
   
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
       label.className = 'temperature-label';
       
       // Temperature values (10, 20, 30, 40)
-      const temp = 10 + (i / 3) * 10;
+      const temp = 10 + (i / 3) * 5;
       label.textContent = `${temp}°`;
       
       // Position label outside the markers
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function updateTemperatureFromAngle(angle) {
     // Map angle (0-360) to temperature (10-40)
-    const temp = Math.round(10 + (angle / 360) * 30);
+    const temp = Math.round(10 + (angle / 360) * 20);
     tempDisplay.textContent = temp;
   }
   
