@@ -181,6 +181,32 @@
     color: #666;
 }
 
+/* Energy Recommendation */
+.energy-recommendation {
+    background-color: #9BA87C;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.recommendation-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.recommendation-title {
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 18px;
+}
+
+.recommendation-content {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
 
 
 /* Room Navigation */
@@ -327,6 +353,11 @@
  .device-card.off .device-info {
      color: #aaa;
  }
+
+ .device-card.device-card-active .device-info,
+.device-card.device-card-active .device-type {
+    color: #555;
+}
 
 
 
