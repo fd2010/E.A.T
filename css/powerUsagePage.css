@@ -131,13 +131,36 @@
     transform: scale(1);
 }
 
+.graph-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.graph-title {
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 18px;
+}
+
+.graph-period {
+    padding: 5px 10px;
+    border-radius: 15px;
+    border: none;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.chart-container {
+    height: 250px;
+    width: 100%;
+}
 
 .graph-buttons {
     text-align: center;
 }
 
 .graph-buttons button {
-    background-color: #ADA8A9;
+    background-color: #b9b9b9b6;
     color: #fff;
     border: none;
     padding: 10px 20px;
