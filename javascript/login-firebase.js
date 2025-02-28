@@ -3,7 +3,7 @@ console.log('login-firebase.js loading...');
 
 import { auth, database } from '../database/firebase-config.js';
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { ref, get, update } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
 // Function to update status message
 function updateStatus(message, isError = true) {
@@ -13,6 +13,29 @@ function updateStatus(message, isError = true) {
     statusDiv.textContent = message;
     statusDiv.style.color = isError ? 'red' : 'green';
     statusDiv.style.display = 'block';
+}
+
+// Function to update last login timestamp
+async function updateLastLogin(userId) {
+    try {
+        // Create current timestamp
+        const timestamp = new Date().toISOString();
+        
+        // Create the update object
+        const updates = {};
+        updates[`users/${userId}/lastLogin`] = timestamp;
+        
+        // Update the database
+        console.log('Updating last login timestamp for user:', userId);
+        await update(ref(database), updates);
+        console.log('Last login timestamp updated successfully');
+        
+        return timestamp;
+    } catch (error) {
+        console.error('Error updating last login timestamp:', error);
+        // We don't want to fail the login process if this update fails
+        // So we just log the error and continue
+    }
 }
 
 // Function to handle login
@@ -35,6 +58,14 @@ async function handleLogin(email, password) {
         if (snapshot.exists()) {
             const userData = snapshot.val();
             console.log('User data retrieved:', userData);
+            
+            // Update last login timestamp
+            const lastLoginTimestamp = await updateLastLogin(user.uid);
+            
+            // Update the userData object with new lastLogin time if update was successful
+            if (lastLoginTimestamp) {
+                userData.lastLogin = lastLoginTimestamp;
+            }
             
             // Store user data in localStorage for use across the app
             localStorage.setItem('userData', JSON.stringify(userData));
