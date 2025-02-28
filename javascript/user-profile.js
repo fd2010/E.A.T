@@ -62,7 +62,7 @@ function updateUserInfo(userData) {
 function updateOfficeInfo(officeData) {
     // Update office details
     document.getElementById('officeID').textContent = officeData.officeID || 'N/A';
-    document.getElementById('organizationName').textContent = officeData.organisationName || 'N/A';
+    document.getElementById('organisationName').textContent = officeData.organisationName || 'N/A';
     
     // Format and display address
     const address = officeData.address || {};
@@ -165,7 +165,7 @@ async function updateUserInterface(userData) {
             console.error('Office data not found');
             // Display error or placeholder for office information
             document.getElementById('officeID').textContent = 'Office not found';
-            document.getElementById('organizationName').textContent = 'N/A';
+            document.getElementById('organisationName').textContent = 'N/A';
             document.getElementById('officeAddress').textContent = 'No address information';
             document.getElementById('officeFloors').textContent = 'N/A';
             
