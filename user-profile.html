@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Profile - E.A.T</title>
+        <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./css/main.css">
+        <link rel="stylesheet" href="./css/formstyles.css">
+        <link rel="stylesheet" href="./css/dashboard.css">
+        <link rel="stylesheet" href="./css/addDevice.css">
+        <link rel="stylesheet" href="./css/user-profile.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    
+    <body class="bodyLight">
+        <!-- Loading and Error States -->
+        <div id="loadingState">Loading profile data...</div>
+        <div id="errorDisplay"></div>
+    
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-logo">
+                <img src="./images/icons/User Profile Icon.png" alt="Logo">
+            </div>
+            <div class="nav-icons">
+                <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
+                <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
+                <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
+                <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+            </div>
+    
+
+            <div class="logout-icon">
+                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
+            </div>
+        </nav>
+    
+        <!-- Main Content -->
+        <div id="profileContent" class="dashboard-container">
+            <!-- Header Section -->
+            <div class="header">
+                <!-- Greeting Bubble -->
+                <div class="greeting-bubble">
+                    <div class="greeting-text">Hi, <span id="prefName">Loading name...</span> 👋</div>
+                </div>
+                
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <div class="profile-icon">
+                        <img src="./images/icons/User Profile Icon.png" alt="User">
+                    </div>
+                    <div class="user-role" id="userRole">Loading role...</div>
+                    <div>
+                        <ul class="user-profile-options">
+                            <li><img src="./images/icons/settings cog (MIT).png" alt="Settings"></li>
+                            <li><img src="./images/icons/notification bell.png" alt="Notifications"></li>
+                            <li><button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button></li>
+                        </ul>                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Content Grid -->
+            <div class="dashboard-grid">
+                <!-- User Info Section -->
+                <div class="user-info-section section-card">
+                    <div class="section-header">
+                        <div class="section-title">User Information</div>
+                    </div>
+                    
+                    <div class="user-details">
+                        <div class="user-detail-item">
+                            <div class="detail-label">Name:</div>
+                            <div class="detail-value" id="userName">Loading...</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="detail-label">Email:</div>
+                            <div class="detail-value" id="userEmail">Loading...</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="detail-label">Role:</div>
+                            <div class="detail-value" id="userRoleDetail">Loading...</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="detail-label">Last Login:</div>
+                            <div class="detail-value" id="lastLogin">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Office Info Section -->
+                <div class="office-info-section section-card">
+                    <div class="section-header">
+                        <div class="section-title">Office Information</div>
+                    </div>
+                    
+                    <div class="office-details">
+                        <div class="office-detail-item">
+                            <div class="detail-label">Office ID:</div>
+                            <div class="detail-value" id="officeID">Loading...</div>
+                        </div>
+                        <div class="office-detail-item">
+                            <div class="detail-label">Organization:</div>
+                            <div class="detail-value" id="organizationName">Loading...</div>
+                        </div>
+                        <div class="office-detail-item">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value" id="officeAddress">Loading...</div>
+                        </div>
+                        <div class="office-detail-item">
+                            <div class="detail-label">Number of Floors:</div>
+                            <div class="detail-value" id="officeFloors">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Room Summary Section -->
+                <div class="room-summary-section section-card">
+                    <div class="section-header">
+                        <div class="section-title">Room Summary</div>
+                    </div>
+                    
+                    <div class="room-summary">
+                        <div class="room-summary-item">
+                            <div class="summary-label">Total Rooms:</div>
+                            <div class="summary-value" id="totalRooms">Loading...</div>
+                        </div>
+                        <div class="room-summary-item">
+                            <div class="summary-label">Total Devices:</div>
+                            <div class="summary-value" id="totalDevices">Loading...</div>
+                        </div>
+                        <div class="room-summary-item">
+                            <div class="summary-label">Active Devices:</div>
+                            <div class="summary-value" id="activeDevices">Loading...</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
+                <!-- Active Room Section -->
+                <div class="active-rooms-devices-section section-card">
+                    <!-- Room List -->
+                    <div class="room-list-container">
+                        <h3>Rooms</h3>
+                        <div class="room-list" id="roomList">
+                            <!-- Room items will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Name -->
+            <div class="divLight" style="margin-top:50px;">
+                <p id="companyName">PearCare.Inc</p>
+                <div id="line" style="margin: auto;"></div>
+            </div>
+        </div>
+
+        <!-- Error handling -->
+        <script>
+            window.onerror = function(msg, url, line, col, error) {
+                const errorDisplay = document.getElementById('errorDisplay');
+                errorDisplay.style.display = 'block';
+                errorDisplay.innerHTML = `An error occurred: ${msg}<br>Line: ${line}`;
+                console.error('Global error:', error);
+                return false;
+            };
+        </script>
+        
+        <!-- Script imports -->
+        <script type="module" src="./javascript/user-profile.js"></script>
+        <script type="module" src="./javascript/add-device.js"></script>
+
+    </body>
+</html>
