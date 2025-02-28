@@ -12,68 +12,75 @@
     </head>
 
     <body class="bodyLight">
-
         <!-- Loading and Error States -->
-        <div id="loadingState" style="text-align: center; padding: 20px;">
-            Loading devices...
-        </div>
+        <div id="loadingState">Loading dashboard...</div>
+        <div id="errorDisplay"></div>
+    
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-logo">
+                <img src="./images/icons/User Profile Icon.png" alt="Logo">
+            </div>
+            <div class="nav-icons">
+                <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
+                <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
+                <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
+                <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+            </div>
 
-        <div id="errorDisplay" style="display: none; color: red; text-align: center; padding: 20px;"></div>
+            <div class="logout-icon">
+                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
+            </div>
+        </nav>
+    
+        <!-- Main Content -->
+        <div id="dashboardContent" class="dashboard-container">
+            <!-- Header Section -->
+            <div class="header">
 
-        <!-- Main Dashboard Content (hidden initially) -->
-        <div id="dashboardContent" class="dashboard-container" style="display: none;">
-
-            <!-- Side Navigation -->
-            <nav class="side-nav">
-                <div class="nav-logo">
-                    <img src="./images/icons/User Profile Icon.png" alt="Logo">
-                </div>
-                <div class="nav-icons">
-                    <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
-                    <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
-                    <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
-                    <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
-                </div>
-
-                <div class="logout-icon">
-                    <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
-                </div>
-            </nav>
-
-            <!-- Top Section -->
-            <div class="top-section">
-                <!-- Greeting -->
-                <div class="greeting-container">
+                <!-- DISPLAYING AS NONE SO IT DOESNT BREAK DUE TO PROPPERITES IN dashbaord.js -->
+                <div style="display: none;">
+                    <!-- Greeting Bubble -->
                     <div class="greeting-bubble">
-
-                        <label> Hi, <span id="prefName">Loading...</span> </label>
-
-                        <span class="role-badge" id="userRole">Loading...</span>
-
-                    </div>
-
-
-                    <div class="profile-section">
-                        <div class="profile-icon">
-                            <img src="./images/icons/User Profile Icon.png" alt="User Icon" style="width: 80%; height: 80%;">
+                        <div class="greeting-text">Hi, <span id="prefName"> Loading name...</span> 👋</div>
+                        <div class="weather-info">
+                            <div id="current-temprature" class="temperature">Loading temprature...</div>
+                            <div class="weather-desc">Loading weather description...</div>
                         </div>
-                        <!-- Logout Button -->
-                        <button id="logoutBtn" class="logout-button">
-                            Logout
-                        </button>
                     </div>
+                    
+                    <!-- User Profile -->
+                    <div class="user-profile">
+                        <div class="profile-icon">
+                            <img src="./images/icons/User Profile Icon.png" alt="User">
+                        </div>
+                        <div class="user-role" id="userRole">Loading role... </div>
+                        <div>
+                            <ul class="user-profile-options">
+                                
+                                <li><img src="./images/icons/settings cog (MIT).png" alt="Settings"></li>
+                                <li><img src="./images/icons/notification bell.png" alt="Notifications"></li>
+                                <li><button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button></li>
 
-                </div>
-
-            <div class="device-display">
-                <!-- Room Navigation -->
-                <div class="room-navigation">
-                    <div class="room-tabs" id="roomTabs">
+                            </ul>                   
+                        </div>
                     </div>
                 </div>
-
-                <!-- Devices Grid -->
-                <div class="devices-grid" id="devicesGrid">
+            </div>
+            
+            <!-- Dashboard Grid -->
+            <div class="manage-devices-grid">
+                <!-- Devices Section -->
+                <div class="devices-section">
+                    <div class="section-header">
+                        <div class="section-title">My Devices</div>
+                    </div>
+                    
+                    <!-- Room Navigation -->
+                    <div class="room-tabs" id="roomTabs"></div>
+                    
+                    <!-- Devices Grid -->
+                    <div class="devices-grid" id="devicesGrid"></div>
                 </div>
             </div>
 
@@ -95,6 +102,7 @@
             };
         </script>
         
+
         <script type="module" src="./javascript/dashboard.js"></script>
         <script type="module" src="./javascript/add-device.js"></script>
     </body>
