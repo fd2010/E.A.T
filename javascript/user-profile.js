@@ -1,6 +1,4 @@
-// Debug helper
-console.log('user-profile.js loading...');
-
+// user-profile.js
 import { auth, database } from '../database/firebase-config.js';
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
@@ -70,7 +68,7 @@ function updateOfficeInfo(officeData) {
         address.buildingNumber || '',
         address.street || '',
         address.city || '',
-        address.county ? address.county + ',' : '',
+        address.county ? address.county + '' : '',
         address.postcode || ''
     ].filter(Boolean).join(', ');
     
@@ -135,7 +133,6 @@ function updateRoomSummary(rooms) {
 
 // Function to update the entire user interface with user and office data
 async function updateUserInterface(userData) {
-    console.log('Updating UI with user data:', userData);
     
     // Update user information
     updateUserInfo(userData);
@@ -183,7 +180,6 @@ async function updateUserInterface(userData) {
 
 // Initialize profile page
 async function initialiseProfile() {
-    console.log('Starting profile initialization');
     try {
         // Show loading state
         toggleLoadingState(true);
@@ -192,7 +188,6 @@ async function initialiseProfile() {
         const storedUserData = localStorage.getItem('userData');
         
         if (storedUserData) {
-            console.log('Found stored user data');
             const userData = JSON.parse(storedUserData);
             
             // Hide loading state and show profile content
@@ -204,7 +199,6 @@ async function initialiseProfile() {
             // Still verify with Firebase that the user is logged in
             onAuthStateChanged(auth, (user) => {
                 if (!user) {
-                    console.log('No authenticated user found, redirecting to login');
                     localStorage.removeItem('userData');
                     window.location.href = 'login.html';
                 }
@@ -215,26 +209,20 @@ async function initialiseProfile() {
             
         } else {
             // No stored data, check authentication state
-            console.log('No stored user data, checking auth state');
             onAuthStateChanged(auth, async (user) => {
-                console.log('Auth state changed:', user ? 'User is logged in' : 'No user');
                 
                 if (!user) {
-                    console.log('No user found, redirecting to login');
                     window.location.href = 'login.html';
                     return;
                 }
 
                 try {
-                    console.log('Getting user data for:', user.uid);
                     
                     // Fetch fresh data from Firebase
                     const userRef = ref(database, `${USERS_PATH}/${user.uid}`);
-                    console.log('Fetching user data from database...');
                     const snapshot = await get(userRef);
 
                     if (snapshot.exists()) {
-                        console.log('User data found in database');
                         const userData = snapshot.val();
                         
                         // Hide loading state and show profile content
@@ -283,9 +271,7 @@ function setupLogoutButton() {
     });
 }
 
-// Start initialization when the page loads
-console.log('Setting up DOMContentLoaded listener');
+// Start initialisation when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded - Initialising profile page');
     initialiseProfile();
 });
