@@ -2,9 +2,9 @@
 console.log('search-device.js loading...');
 
 /**
- * Initialize the device search functionality
+ * Initialise the device search functionality
  */
-function initializeDeviceSearch() {
+function initialiseDeviceSearch() {
     const searchInput = document.getElementById('deviceSearchInput');
     if (!searchInput) {
         console.error('Device search input not found');
@@ -17,7 +17,7 @@ function initializeDeviceSearch() {
         filterDevices(searchTerm);
     });
 
-    console.log('Device search initialized');
+    console.log('Device search initialised');
 }
 
 /**
@@ -68,15 +68,15 @@ function reapplySearchFilter() {
     }
 }
 
-// Initialize when DOM is loaded
+// Initialise when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded - Initializing device search');
-    initializeDeviceSearch();
+    initialiseDeviceSearch();
 });
 
 // Export functions for use in other files
 export {
-    initializeDeviceSearch,
+    initialiseDeviceSearch,
     filterDevices,
     reapplySearchFilter
 };

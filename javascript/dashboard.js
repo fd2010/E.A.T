@@ -1,4 +1,3 @@
-// Debug helper
 console.log('dashboard.js loading...');
 
 import { auth, database } from '../database/firebase-config.js';
