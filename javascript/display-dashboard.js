@@ -2,7 +2,7 @@ import { ref, update, onValue } from "https://www.gstatic.com/firebasejs/11.1.0/
 import { database } from '../database/firebase-config.js';
 import { deviceTypes, deviceTypesNotInverted } from './device-type.js';
 import { reapplySearchFilter } from './search-device.js';
-
+ 
 function searchDevicePath(device) {
     return deviceTypes[device.type] || './images/icons/error icon inverted.png';
 }
