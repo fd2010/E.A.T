@@ -162,6 +162,12 @@ hTemp {
   border-radius: 10px;
 }
 
+.footprintImg {
+  height: 20vw;
+
+  margin: 1vw;
+}
+
 #codeImage {
   width: 30vw;
   height: auto;
@@ -174,6 +180,18 @@ hTemp {
   opacity: 0;
   transition: opacity 2s ease-in;
   /* transition-delay: 1s; */
+}
+
+.headshotContainer {
+  display: inline-block;
+  justify-content: center;
+  margin: 1.5vw;
+}
+
+.headshotIcon {
+  border-radius: 100%;
+  display: block;
+  width: 130px;
 }
 
 .lineSeparator {
