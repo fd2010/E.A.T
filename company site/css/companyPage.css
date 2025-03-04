@@ -162,6 +162,12 @@ hTemp {
   border-radius: 10px;
 }
 
+.footprintImg {
+  height: 20vw;
+
+  margin: 1vw;
+}
+
 #codeImage {
   width: 30vw;
   height: auto;
