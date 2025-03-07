@@ -742,8 +742,8 @@ li .logout-btn img {
 }
 
 .nav-icon {
-    width: 36px;
-    height: 36px;
+    width: 26px;
+    height: 26px;
     cursor: pointer;
     transition: transform 0.2s;
 }
