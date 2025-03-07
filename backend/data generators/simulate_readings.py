@@ -19,6 +19,7 @@ class SmartMeterSimulator:
             # TODO add Lights
             # TODO add Projector
             # TODO add Speakers
+            # TODO add roomba
 
         }
     

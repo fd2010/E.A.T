@@ -71,25 +71,23 @@ FIX THE LOGIN BORDER
 FIX ADD DEVICE BUTTONS
 CHANGE SCROOL BAR STLYING TO KINDA LOOK LIKE:
 
+    /* Custom scrollbar for rooms list */
+    .rooms-list::-webkit-scrollbar {
+        width: 6px;
+    }
 
+    .rooms-list::-webkit-scrollbar-track {
+        border-radius: 3px;
+    }
 
-/* Custom scrollbar for rooms list */
-.rooms-list::-webkit-scrollbar {
-    width: 6px;
-}
+    .rooms-list::-webkit-scrollbar-thumb {
+        background: #000000;
+        border-radius: 3px;
+    }
 
-.rooms-list::-webkit-scrollbar-track {
-    border-radius: 3px;
-}
-
-.rooms-list::-webkit-scrollbar-thumb {
-    background: #000000;
-    border-radius: 3px;
-}
-
-.rooms-list::-webkit-scrollbar-thumb:hover {
-    background: #7a8763;
-}
+    .rooms-list::-webkit-scrollbar-thumb:hover {
+        background: #7a8763;
+    }
 
 
 
