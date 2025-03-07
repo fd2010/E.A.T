@@ -17,7 +17,7 @@
     margin-bottom: 20px;
 }
 
-.thermostat-title {
+.thermostat-title, .clock-title  {
     font-family: "Kay Pho Du", sans-serif;
     font-size: 18px;
     font-weight: 500;
@@ -197,11 +197,6 @@
     margin-bottom: 10px;
 }
 
-.clock-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-}
 
 /* Analog Clock Styles */
 .analog-clock {
