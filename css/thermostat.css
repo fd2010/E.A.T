@@ -176,6 +176,147 @@
     margin-top: 5px;
 }
 
+/* Analog Clock with Digital Display Styles */
+.clock {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.clock-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.clock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.clock-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Analog Clock Styles */
+.analog-clock {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 10px auto;
+}
+
+.clock-face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+                -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.marking {
+    position: absolute;
+    background-color: #333;
+}
+
+.marking-12, .marking-6 {
+    width: 4px;
+    height: 12px;
+    left: calc(50% - 2px);
+}
+
+.marking-12 {
+    top: 10px;
+}
+
+.marking-6 {
+    bottom: 10px;
+}
+
+.marking-3, .marking-9 {
+    width: 12px;
+    height: 4px;
+    top: calc(50% - 2px);
+}
+
+.marking-3 {
+    right: 10px;
+}
+
+.marking-9 {
+    left: 10px;
+}
+
+.hand {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform-origin: 50% 100%;
+    border-radius: 10px;
+}
+
+.hour-hand {
+    width: 6px;
+    height: 50px;
+    margin-left: -3px;
+    background-color: #333;
+}
+
+.minute-hand {
+    width: 4px;
+    height: 70px;
+    margin-left: -2px;
+    background-color: #666;
+}
+
+.second-hand {
+    width: 2px;
+    height: 75px;
+    margin-left: -1px;
+    background-color: #e74c3c;
+}
+
+.center-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    top: calc(50% - 6px);
+    left: calc(50% - 6px);
+    background-color: #333;
+    border-radius: 50%;
+}
+
+/* Digital Display Styles */
+.digital-display {
+    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+    border-radius: 10px;
+    padding: 8px 15px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.1),
+                -3px -3px 7px rgba(255, 255, 255, 0.8);
+    margin-top: 15px;
+}
+
+.time {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 2px;
+}
+
+.date {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
 @media (max-width: 1200px) {
 
     .thermostat-section {

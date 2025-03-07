@@ -189,7 +189,7 @@
 }
 
 
-.user-profile-options {
+/* .user-profile-options {
     display: flex;
     gap: 10px;
 }
@@ -216,7 +216,7 @@
     width: 18px;
     height: 18px;
     object-fit: contain;
-}
+} */
 
 /* Role Badge */
 .role-badge {

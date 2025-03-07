@@ -25,10 +25,14 @@
                 <a href="user-profile.html"><img src="./images/icons/User Profile Icon.png" alt="User"></a>
             </div>
             <div class="nav-icons">
+                <img src="./images/icons/notification bell.png" alt="Notifications" class="nav-icon">
                 <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
                 <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
-                <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
                 <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+                <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
+                
+                <img src="./images/icons/settings cog (MIT).png" alt="Settings" class="nav-icon">
+                
             </div>
 
             <div class="logout-icon">
@@ -43,6 +47,10 @@
                 <!-- Greeting Bubble -->
                 <div class="greeting-bubble">
                     <div class="greeting-text">Hi, <span id="prefName"> Loading name...</span> 👋</div>
+
+                    
+
+                    <!-- Weather Information -->
                     <div class="weather-info">
                         <div id="current-temprature" class="temperature">Loading temprature...</div>
                         <div class="weather-desc">Loading weather description...</div>
@@ -54,16 +62,16 @@
                     <div class="profile-icon">
                         <a href="user-profile.html"><img src="./images/icons/User Profile Icon.png" alt="User"></a>
                     </div>
+
                     <div class="user-role" id="userRole">Loading role... </div>
+                    <!--                     
                     <div>
                         <ul class="user-profile-options">
                             
-                            <li><img src="./images/icons/settings cog (MIT).png" alt="Settings"></li>
-                            <li><img src="./images/icons/notification bell.png" alt="Notifications"></li>
-                            <li><button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button></li>
+                            
 
                         </ul>                        
-                    </div>
+                    </div> -->
                 </div>
             </div>
             
@@ -102,8 +110,7 @@
                         <canvas id="energyCostChart"></canvas>
                     </div>
                 </div>
-                
-                <!-- Thermostat Section -->
+
                 <div class="sidebar-section">
                     
                     <!-- Thermostat Dial -->
@@ -136,6 +143,37 @@
                         </div>
                     </div>
                    
+                    <!-- Analog Clock Section -->
+                    <div class="info-card clock">
+                        <div class="info-card-content">
+                            <div class="clock-container">
+                                <div class="clock-header">
+                                    <div class="clock-title">Clock</div>
+                                </div>
+                                
+                                <!-- Analog Clock Face -->
+                                <div class="analog-clock">
+                                    <div class="clock-face">
+                                        <div class="marking marking-12"></div>
+                                        <div class="marking marking-3"></div>
+                                        <div class="marking marking-6"></div>
+                                        <div class="marking marking-9"></div>
+                                        
+                                        <div class="hand hour-hand" id="hour-hand"></div>
+                                        <div class="hand minute-hand" id="minute-hand"></div>
+                                        <div class="hand second-hand" id="second-hand"></div>
+                                        <div class="center-dot"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Digital Display at Bottom -->
+                                <div class="digital-display">
+                                    <div class="time" id="clock-time">00:00:00</div>
+                                    <div class="date" id="clock-date">Monday, Jan 1</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     
                     <!-- Green Energy Recommendation -->
@@ -171,6 +209,42 @@
                 console.error('Global error:', error);
                 return false;
             };
+        </script>
+
+        <script>
+            function updateClock() {
+                    const now = new Date();
+                    const hours = now.getHours();
+                    const minutes = now.getMinutes();
+                    const seconds = now.getSeconds();
+                    
+                    // Update analog clock hands
+                    const hourDeg = (hours % 12) * 30 + minutes * 0.5; // 30 degrees per hour + adjustment for minutes
+                    const minuteDeg = minutes * 6; // 6 degrees per minute
+                    const secondDeg = seconds * 6; // 6 degrees per second
+                    
+                    document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
+                    document.getElementById('minute-hand').style.transform = `rotate(${minuteDeg}deg)`;
+                    document.getElementById('second-hand').style.transform = `rotate(${secondDeg}deg)`;
+                    
+                    // Update digital display
+                    const hoursDisplay = hours.toString().padStart(2, '0');
+                    const minutesDisplay = minutes.toString().padStart(2, '0');
+                    const secondsDisplay = seconds.toString().padStart(2, '0');
+                    document.getElementById('clock-time').textContent = `${hoursDisplay}:${minutesDisplay}:${secondsDisplay}`;
+                    
+                    // Update date
+                    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+                    document.getElementById('clock-date').textContent = now.toLocaleDateString('en-US', options);
+                    
+                    // Call this function every second
+                    setTimeout(updateClock, 1000);
+                }
+
+                // Start the clock when the page loads
+                window.onload = function() {
+                    updateClock();
+                };
         </script>
         
         <script type="module" src="./javascript/powerUsage.js"></script>

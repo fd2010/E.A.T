@@ -40,7 +40,7 @@
 
 /* Layout & Container Styles */
 .bodyLight {
-    background-color: #FBF6D0;
+    /* background-color: #FBF6D0; */
     font-family: "Montserrat", sans-serif;
     /* background: #FFF; new design colour remove later*/
     display: flex;
