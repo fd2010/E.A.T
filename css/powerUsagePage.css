@@ -153,7 +153,7 @@
 }
 
 .graph-buttons button {
-    background-color: #b9b9b9b6;
+    background-color: #9cab83;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -166,11 +166,11 @@
 }
 
 .graph-buttons button:hover {
-    background-color: #898082;
+    background-color: #606952;
 }
 
 .active-button {
-    background-color: #898082 !important;
+    background-color: #606952 !important;
     color: #fff;
 }
 

@@ -64,6 +64,11 @@ Undergo code review
 Merge after approval
 
 ### Testing
+
+### TODO's
+
+FIX THE LOGIN BORDER
+FIX ADD DEVICE BUTTONS
 ...
 
 ### Deployment

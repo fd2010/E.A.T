@@ -2,7 +2,7 @@
 
 /* Section Card Styling */
 .section-card {
-    background-color: white;
+    background-color: #ECEFE7;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -15,7 +15,7 @@
 .room-summary-item {
     display: flex;
     padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #827868;
 }
 
 .detail-label,
@@ -45,14 +45,14 @@
 .room-list {
     max-height: 300px;
     overflow-y: auto;
-    border: 1px solid #eee;
+    border: 1px solid #827868;
     border-radius: 8px;
 }
 
 .room-item {
     display: flex;
     padding: 12px 16px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #827868;
     align-items: center;
 }
 
@@ -74,7 +74,8 @@
 }
 
 .room-active-count {
-    color: #4caf50;
+    font-weight: bold;
+    color: #737F39;
 }
 
 /* Activity List Styling */
@@ -85,7 +86,7 @@
 
 .activity-item {
     padding: 12px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #827868;
 }
 
 .activity-item:last-child {

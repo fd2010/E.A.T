@@ -104,7 +104,7 @@ async function loadRooms() {
         if (snapshot.exists()) {
             Object.keys(snapshot.val()).forEach(roomName => {
                 const roomButton = document.createElement('button');
-                roomButton.className = 'room-button buttonHome darkishgreenishButton';
+                roomButton.className = 'room-button buttonHome yellowishButton';
                 roomButton.textContent = roomName;
                 roomButton.onclick = () => {
                     selectedRoom = roomName;

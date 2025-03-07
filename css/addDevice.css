@@ -11,7 +11,7 @@
 }
 
 .modal-content {
-    background-color: #faf9f1;
+    background-color: #ffff;
     margin: 5% auto;
     padding: 20px;
     border-radius: 65px;
@@ -52,7 +52,8 @@
     flex-direction: column;
     gap: 10px;
     margin: 20px 0;
-    max-height: 280px; /* Height for 4 rooms (4 * 60px room height + gaps) */
+    max-height: 280px; 
+    color: #000;
     overflow-y: auto;
     padding-right: 10px;
 }
@@ -63,12 +64,11 @@
 }
 
 .rooms-list::-webkit-scrollbar-track {
-    background: #948787;
     border-radius: 3px;
 }
 
 .rooms-list::-webkit-scrollbar-thumb {
-    background: #cbe987;
+    background: #000000;
     border-radius: 3px;
 }
 
@@ -82,7 +82,7 @@
     padding: 15px;
     border: none;
     border-radius: 65px;
-    background-color: #C1E6E3;
+    background-color: #DBC99F;
     cursor: pointer;
     font-family: "Kay Pho Du", sans-serif;
     font-size: 16px;
@@ -109,6 +109,7 @@
     padding: 15px;
     border-radius: 20px;
     background-color: #DBC99F;
+    color: #000;
     cursor: pointer;
     transition: transform 0.2s;
 }

@@ -138,6 +138,13 @@
     color: #fff;
 }
 
+.yellowishButton {
+    background-color: #DBC99F; 
+    text-decoration: none; 
+    outline: none; 
+    color: #000;
+}
+
 .lightblueishButton {
     background-color: #7EA8F4;  
     text-decoration: none; 
