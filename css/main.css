@@ -216,6 +216,32 @@
     background-color: #ffebee;
 }
 
+/* Global scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7a8763;
+}
+
+/* Firefox global scrollbar styling */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #000000 transparent;
+}
+
 /* Desktop Styles (≥768px) */
 @media screen and (min-width: 768px) {
     .boxChoice {

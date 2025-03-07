@@ -39,7 +39,23 @@
     overflow-y: auto;
 }
 
+/* Custom scrollbar for manage-devices-grid */
+.manage-devices-grid .devices-grid::-webkit-scrollbar {
+    width: 6px;
+}
 
+.manage-devices-grid .devices-grid::-webkit-scrollbar-track {
+    border-radius: 3px;
+}
+
+.manage-devices-grid .devices-grid::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 3px;
+}
+
+.manage-devices-grid .devices-grid::-webkit-scrollbar-thumb:hover {
+    background: #7a8763;
+}
 
 /* Device Section */
 .devices-section {
@@ -348,10 +364,8 @@
     gap: 15px;
     padding-bottom: 10px;
     overflow-x: auto;
-    scrollbar-width: thin;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-    scrollbar-width: thin;
     padding: 5px;
     border-radius: 23px;
     margin-bottom: 15px;
@@ -403,27 +417,28 @@
 
 /* Scrollbar Styling */
 .room-tabs::-webkit-scrollbar {
+    width: 6px;
     height: 6px;
 }
 
 .room-tabs::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: transparent;
     border-radius: 3px;
 }
 
 .room-tabs::-webkit-scrollbar-thumb {
-    background: #898082;
+    background: #000000;
     border-radius: 3px;
 }
 
 .room-tabs::-webkit-scrollbar-thumb:hover {
-    background: #898082;
+    background: #7a8763;
 }
 
 /* Firefox scrollbar styling */
 .room-tabs {
     scrollbar-width: thin;
-    scrollbar-color: #898082 #f1f1f1;
+    scrollbar-color: #000000 transparent;
 }
 
 /* Device's display */
@@ -452,27 +467,31 @@
     margin-left: auto; 
     margin-right: auto;
     padding-right: 5px;
-    scrollbar-width: thin;
-    scrollbar-color: #898082 #f1f1f1;
 }
 
-/* Scrollbar Styling */
+/* Scrollbar Styling for devices-grid */
 .devices-grid::-webkit-scrollbar {
-    height: 6px;
+    width: 6px;
 }
 
 .devices-grid::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: transparent;
     border-radius: 3px;
 }
 
 .devices-grid::-webkit-scrollbar-thumb {
-    background: #898082;
+    background: #000000;
     border-radius: 3px;
 }
 
 .devices-grid::-webkit-scrollbar-thumb:hover {
-    background: #898082;
+    background: #7a8763;
+}
+
+/* Firefox scrollbar styling */
+.devices-grid {
+    scrollbar-width: thin;
+    scrollbar-color: #000000 transparent;
 }
 
 
@@ -878,18 +897,19 @@ li .logout-btn img {
 
 
 
-/* Scrollbar Styling */
+/* Scrollbar Styling for room-navigation */
 .room-navigation::-webkit-scrollbar {
+    width: 6px;
     height: 6px;
 }
 
 .room-navigation::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: transparent;
     border-radius: 3px;
 }
 
 .room-navigation::-webkit-scrollbar-thumb {
-    background: #9BA87C;
+    background: #000000;
     border-radius: 3px;
 }
 
