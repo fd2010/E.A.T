@@ -87,6 +87,7 @@ function setupModalEventListeners() {
             await addDeviceToRoom(deviceName);
             closeModal();
         }
+        location.reload();
     });
 }
 
