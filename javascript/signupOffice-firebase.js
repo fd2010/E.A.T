@@ -43,6 +43,12 @@ function generateOfficeID() {
 async function saveOfficeData(officeID, officeData) {
     try {
         console.log('Saving office data:', officeData);
+        
+        // Ensure temperature field is added to the office data
+        if (!officeData.hasOwnProperty('temperature')) {
+            officeData.temperature = 0;
+        }
+        
         await set(ref(database, 'offices/' + officeID), officeData);
         console.log('Office data saved successfully');
         return true;
@@ -210,8 +216,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 floors: parseInt(floors),
                 rooms: getRoomData(),
+                temperature: 0,
                 createdAt: new Date().toISOString()
-            };
+        };
 
             // Create admin account
             console.log('Creating admin account with email:', email);

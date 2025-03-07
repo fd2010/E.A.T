@@ -50,9 +50,55 @@ function handleError(error) {
     }
 }
 
-// Initialize dashboard
+// Function to synchronise the thermostat with the Firebase temperature value
+async function synchroniseTemperature(officeID) {
+    try {
+        const officeRef = ref(database, `offices/${officeID}`);
+        const officeSnapshot = await get(officeRef);
+        
+        if (officeSnapshot.exists()) {
+            const officeData = officeSnapshot.val();
+            
+            // Check if temperature field exists
+            if (officeData.hasOwnProperty('temperature')) {
+                const storedTemp = officeData.temperature;
+                console.log('Retrieved temperature from Firebase:', storedTemp);
+                
+                // Get thermostat elements
+                const tempDisplay = document.getElementById('temp-display');
+                const powerToggle = document.getElementById('power-toggle');
+                const dialElement = document.getElementById('thermostat-dial');
+                
+                // Update the thermostat UI if elements exist
+                if (tempDisplay && powerToggle && dialElement) {
+                    // If temperature is 0, set thermostat to off
+                    if (storedTemp === 0) {
+                        tempDisplay.textContent = "OFF";
+                        powerToggle.checked = false;
+                        dialElement.style.opacity = 0.5;
+                    } else {
+                        // Otherwise set thermostat to on with stored temperature
+                        tempDisplay.textContent = storedTemp.toString();
+                        powerToggle.checked = true;
+                        dialElement.style.opacity = 1;
+                        
+                        // Optional: Calculate and update the dial position based on the temperature
+                        // This would require additional code to map the temperature back to an angle
+                    }
+                }
+            } else {
+                console.log('No temperature field found in office data, will be created when thermostat is used');
+            }
+        }
+    } catch (error) {
+        console.error('Error synchronising temperature:', error);
+    }
+}
+
+
+// Initialise dashboard
 async function initialiseDashboard() {
-    console.log('Starting dashboard initialization');
+    console.log('Starting dashboard initialisation');
     try {
         // Show loading state
         toggleLoadingState(true);
@@ -69,6 +115,11 @@ async function initialiseDashboard() {
             
             // Update the UI with user data
             await updateUserInterface(userData);
+            
+            // Synchronise thermostat with Firebase temperature
+            if (userData.officeID) {
+                synchroniseTemperature(userData.officeID);
+            }
             
             // Still verify with Firebase that the user is logged in
             onAuthStateChanged(auth, (user) => {
@@ -112,6 +163,11 @@ async function initialiseDashboard() {
                         // Update the UI with user data
                         await updateUserInterface(userData);
                         
+                        // Synchronise thermostat with Firebase temperature
+                        if (userData.officeID) {
+                            synchroniseTemperature(userData.officeID);
+                        }
+                        
                         // Update localStorage
                         localStorage.setItem('userData', JSON.stringify(userData));
                         
@@ -130,7 +186,7 @@ async function initialiseDashboard() {
             });
         }
     } catch (error) {
-        console.error('Error in initialization:', error);
+        console.error('Error in initialisation:', error);
         handleError(error);
     }
 }

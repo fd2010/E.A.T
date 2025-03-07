@@ -1,4 +1,8 @@
+  // Import Firebase modules
+import { database } from '../database/firebase-config.js';
+import { ref, update } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 document.addEventListener('DOMContentLoaded', function() {
+
   // Thermostat functionality
   const dialElement = document.getElementById('thermostat-dial');
   const handleElement = document.getElementById('dial-handle');
@@ -9,6 +13,28 @@ document.addEventListener('DOMContentLoaded', function() {
   const currentTemperatureElement = document.getElementById('current-temprature');
   const weatherDescElement = document.querySelector('.weather-desc');
 
+  // Function to update temperature in Firebase
+  async function updateTemperatureInFirebase(temp) {
+    try {
+      // Get the office ID from localStorage
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      if (!userData || !userData.officeID) {
+        console.error('User data or office ID not found');
+        return;
+      }
+      
+      const officeID = userData.officeID;
+      const updates = {};
+      
+      // Update the temperature in Firebase
+      updates[`offices/${officeID}/temperature`] = temp;
+      
+      await update(ref(database), updates);
+      console.log('Temperature updated in Firebase:', temp);
+    } catch (error) {
+      console.error('Error updating temperature in Firebase:', error);
+    }
+  }
 
   //RIGHT NOW THIS IS RANDOM AS WE NEED TO SIGN UP FOR A API KEY TO IMPLEMENT THIS
   // Add weather update functionality
@@ -145,22 +171,42 @@ document.addEventListener('DOMContentLoaded', function() {
     document.removeEventListener('touchmove', drag);
     document.removeEventListener('mouseup', endDrag);
     document.removeEventListener('touchend', endDrag);
+    
+    // Get current temperature value when dragging ends
+    const tempText = tempDisplay.textContent;
+    
+    // Only update Firebase if power is on and we have a valid temperature (not "OFF")
+    if (powerToggle.checked && tempText !== "OFF") {
+      const temp = parseInt(tempText);
+      if (!isNaN(temp)) {
+        updateTemperatureInFirebase(temp);
+      }
+    }
   }
   
   function updateTemperatureFromAngle(angle) {
     // Map angle (0-360) to temperature (10-40)
     const temp = Math.round(10 + (angle / 360) * 20);
-    tempDisplay.textContent = temp;
+    // Make sure the temperature is never below 10 when in 'on' mode
+    const displayTemp = Math.max(10, temp);
+    tempDisplay.textContent = displayTemp;
   }
   
   // Toggle power
   powerToggle.addEventListener('change', function() {
     if (!this.checked) {
-      tempDisplay.textContent = "0";
+      tempDisplay.textContent = "OFF";
       dialElement.style.opacity = 0.5;
+      // Update Firebase with 0 temperature when thermostat is turned off
+      updateTemperatureInFirebase(0);
     } else {
       updateTemperatureFromAngle(currentAngle);
       dialElement.style.opacity = 1;
+      // Update Firebase with current temperature when thermostat is turned on
+      const temp = parseInt(tempDisplay.textContent);
+      if (!isNaN(temp)) {
+        updateTemperatureInFirebase(temp);
+      }
     }
   });
 });
