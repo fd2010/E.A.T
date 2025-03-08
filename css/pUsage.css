@@ -115,16 +115,125 @@
     background-color: #FAF2E3;
 }
 
+/* Graph Section */
+
+.graph-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.graph-section h2 {
+    margin-bottom: 20px;
+}
+
+.graph-container-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* General Graph Container Styling */
+.graph-container {
+    flex: 1;
+    min-width: 400px;
+    max-width: 600px;
+    width: 100%;
+    height: calc(100% - 40px);
+    background-color: #fff;
+    border: 2px solid #dcdcdc;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /*position: relative;*/
+}
+
 .graph-container {
     width: 100%;
     height: calc(100% - 40px);
-    position: relative;
+
 }
 
 .empty-graph {
     width: 100%;
     height: 100%;
     background-color: transparent; /* No background for empty graphs */
+}
+/* Redirect Button Styling */
+.redirect-button {
+    background-color: #ADA8A9 ;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+}
+
+.redirect-button:hover {
+    background-color: #898082;
+    transform: scale(1.05);
+}
+
+.redirect-button:active {
+    background-color: #898082;
+    transform: scale(1);
+}
+
+.graph-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.graph-title {
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 18px;
+}
+
+.chart-container {
+    height: 250px;
+    width: 100%;
+}
+
+.graph-buttons {
+    text-align: center;
+    border-radius: 23px;
+}
+
+.graph-buttons button {
+    background-color: #9cab83;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.graph-buttons button:hover {
+    background-color: #606952;
+}
+
+.active-button {
+    background-color: #606952 !important;
+    color: #fff;
 }
 
 .filter {
@@ -340,4 +449,20 @@
     .graph-section {
         height: 250px;
     }
+}
+
+/* Drop down */
+#areaTypeDropdown {
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}
+
+#areaTypeDropdown:hover {
+    border-color:  #ADA8A9;
 }
