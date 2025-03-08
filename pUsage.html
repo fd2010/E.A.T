@@ -23,41 +23,16 @@
         <div class="nav-icons">
             <img src="./images/icons/notification bell.png" alt="Notifications" class="nav-icon">
             <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
-            <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices"
-                    class="nav-icon"></a>
+            <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
             <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
             <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
-
+            
             <img src="./images/icons/settings cog (MIT).png" alt="Settings" class="nav-icon">
-            <!-- Section 1: Line Graphs for Total Energy & Cost -->
-            <section class="graph-section">
-                <h2 class="h2Light">Total Energy & Cost Over Time</h2>
-
-                <!-- Time Selection Buttons -->
-                <div class="graph-buttons">
-                    <div class="graph-buttons">
-                        <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                        <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                        <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
-                    </div>
-                </div>
-
-                <!-- Graphs -->
-                <div class="graph-container-wrapper">
-                    <div class="graph-container">
-                        <canvas id="energyCostChart"></canvas>
-                    </div>
-                    <div class="graph-container">
-                        <canvas id="energyUsageChart"></canvas>
-                    </div>
-                </div>
-
-            </section>
+            
         </div>
 
         <div class="logout-icon">
-            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout"
-                    title="Logout"></button>
+            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
         </div>
     </nav>
 
@@ -69,55 +44,21 @@
 
             <!-- Overall Usage (Empty Section) -->
             <section class="graph-section overall-usage">
+                <h3 class="graph-title">Overall Usage</h3>
                 <div class="graph-container">
                     <!-- Empty graph container -->
                     <div class="empty-graph"></div>
-                    <section class="graph-section">
-            
-                        <!-- Time Selection Buttons -->
-                        <div class="graph-buttons">
-                            <div class="graph-buttons">
-                                <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                                <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                                <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
-                            </div>
-                        </div>
-            
-                        <!-- Graphs -->
-                        <div class="graph-container-wrapper">
-                            <div class="graph-container">
-                                <canvas id="energyCostChart"></canvas>
-                            </div>
-                            <div class="graph-container">
-                                <canvas id="energyUsageChart"></canvas>
-                            </div>
-                        </div>
-            
-                    </section>
 
                 </div>
             </section>
 
             <!-- Usage by Area (Empty Section) -->
             <section class="graph-section usage-by-area">
+                <h3 class="graph-title">Usage by Area</h3>
                 <div class="graph-container">
                     <!-- Empty graph container -->
                     <div class="empty-graph"></div>
-                    <section class="graph-section">
-                        <div class="section-header">
-                            <h2 class="h2Light">Energy Usage by Area</h2>
-                            <button class="redirect-button" onclick="location.href='areaWise.html'">View Detailed Report</button>
-                        </div>
-            
-                        <div class="graph-container-wrapper">
-                            <div class="graph-container">
-                                <canvas id="areaPieChart"></canvas>
-                            </div>
-                            <div class="graph-container">
-                                <canvas id="areaBarChart"></canvas>
-                            </div>
-                        </div>
-                    </section>
+
                 </div>
             </section>
         </main>
@@ -171,5 +112,4 @@
     <script type="module" src="./javascript/powerUsage.js"></script>
     <script type="module" src="./javascript/dashboard.js"></script>
 </body>
-
 </html>
