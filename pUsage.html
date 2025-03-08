@@ -1,12 +1,12 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power Usage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
+    <title>Power Usage </title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/pUsage.css">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/dashboard.css">
@@ -15,116 +15,118 @@
 </head>
 
 <body class="bodyLight">
+
     <!-- Side Navigation -->
     <nav class="side-nav">
         <div class="nav-logo">
             <a href="user-profile.html"><img src="./images/icons/User Profile Icon.png" alt="User"></a>
         </div>
         <div class="nav-icons">
+            <img src="./images/icons/notification bell.png" alt="Notifications" class="nav-icon">
             <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
             <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
-            <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
             <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+            <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
+            
+            <img src="./images/icons/settings cog (MIT).png" alt="Settings" class="nav-icon">
+            
         </div>
+
         <div class="logout-icon">
             <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="dashboard-container">
-        <!-- Header Section -->
-        <div class="header">
-            <div class="greeting-bubble">
-                <h1 class="h1Light">Power Usage</h1>
-                <h2 class="h2Light">Here’s your device energy consumption rate</h2>
-            </div>
-        </div>
+    <div class="container">
+        <!-- Main Content (Middle) -->
+        <main class="main-content">
+            <h1 class="power-usage-title">Power Usage</h1>
+            <p class="energy-consumption">Here's your device energy consumption rate</p>
 
-        <!-- Dashboard Grid -->
-        <div class="dashboard-grid">
-            <!-- Overall Usage Section -->
-            <div class="energy-section">
-                <div class="graph-header">
-                    <div class="graph-title">Overall Usage</div>
-                    <div class="graph-buttons">
-                        <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                        <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                        <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+            <!-- Overall Usage (Empty Section) -->
+            <section class="graph-section overall-usage">
+                <h3 class="graph-title">Overall Usage</h3>
+                <div class="graph-container">
+                    <!-- Empty graph container -->
+                    <div class="empty-graph"></div>
+                    <div class="filter">
+                        <span>kWH</span>
+                        <select>
+                            <option value="monthly">Monthly</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="daily">Daily</option>
+                        </select>
                     </div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="energyCostChart"></canvas>
-                </div>
-            </div>
+            </section>
 
-            <!-- Usage by Area Section -->
-            <div class="energy-section">
-                <div class="graph-header">
-                    <div class="graph-title">Usage by Area</div>
-                    <div class="graph-buttons">
-                        <button id="areaDaily" onclick="updateAreaGraphs('daily')">Daily</button>
-                        <button id="areaMonthly" onclick="updateAreaGraphs('monthly')">Monthly</button>
+            <!-- Usage by Area (Empty Section) -->
+            <section class="graph-section usage-by-area">
+                <h3 class="graph-title">Usage by Area</h3>
+                <div class="graph-container">
+                    <!-- Empty graph container -->
+                    <div class="empty-graph"></div>
+                    <div class="filter">
+                        <span>kWh</span>
+                        <select>
+                            <option value="monthly">Monthly</option>
+                            <option value="office1">Office 1</option>
+                        </select>
                     </div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="areaBarChart"></canvas>
-                </div>
-            </div>
+            </section>
+        </main>
 
-            <!-- Device Usage Section -->
-            <div class="sidebar-section">
-                <div class="graph-header">
-                    <div class="graph-title">Device Usage</div>
+        <!-- Right Panel -->
+        <aside class="right-panel">
+            <div class="panel expenses-panel">
+                <h3>Expenses</h3>
+                <p>This month: £270.0</p>
+                <p>Today: £30.0</p>
+            </div>
+            <div class="panel power-usage-panel">
+                <h3>Power Usage</h3>
+                <p>This month: 70 kWh</p>
+                <p>Today: 5 kWh</p>
+            </div>
+            <div class="device-panel">
+                <h3>Device Usage</h3>
+                <div class="pie-chart-container">
+                    <!-- Empty pie chart container -->
+                    <div class="empty-pie"></div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="devicePieChart"></canvas>
-                </div>
-                <div class="info-cards">
-                    <div class="info-card expense-panel">
-                        <h3>Expenses</h3>
-                        <p>This month: £270.00</p>
-                        <p>Today: £0.50</p>
+                <div class="device-usage-details">
+                    <div class="device-item">
+                        <span class="percentage">60%</span>
+                        <span class="device-type">A/C</span>
+                        <div class="color-bar" style="background-color: #2B3695;"></div>
                     </div>
-                    <div class="info-card power-panel">
-                        <h3>Power Usage</h3>
-                        <p>This month: 70 kWh</p>
-                        <p>Today: 5 kWh</p>
+                    <div class="device-item">
+                        <span class="percentage">70%</span>
+                        <span class="device-type">Lights</span>
+                        <div class="color-bar" style="background-color: #6976EB;"></div>
+                    </div>
+                    <div class="device-item">
+                        <span class="percentage">60%</span>
+                        <span class="device-type">Computer</span>
+                        <div class="color-bar" style="background-color: #ADB4F3;"></div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Sticky Footer for Summary Data -->
-        <footer class="sticky-footer">
-            <div class="metric-box">
-                <h2><span id="totalEnergy">70</span> kWh</h2>
-                <p>Total Energy Used</p>
-            </div>
-            <div class="metric-box">
-                <h2><span id="totalCost">£270.00</span></h2>
-                <p>Total Cost of Energy</p>
-            </div>
-        </footer>
-
-        <!-- Company Branding -->
-        <div class="divLight" style="margin-top: 50px;">
-            <p id="companyName">PearCare.Inc</p>
-            <div id="line" style="margin: auto;"></div>
-        </div>
+        </aside>
     </div>
 
-    <!-- Error handling script -->
-    <script>
-        window.onerror = function(msg, url, line, col, error) {
-            console.error('Global error:', error, 'Message:', msg, 'Line:', line);
-            return false;
-        };
-    </script>
+    <!-- Back Button -->
+    <a href="dashboard.html" class="back link">
+        <img src="./images/icons/back-icon.png" alt="Back Icon" class="back-icon">
+    </a>
 
-    <!-- Import scripts -->
-    <script type="module" src="./javascript/add-device.js"></script>
-    <script type="module" src="./javascript/powerUsage.js"></script>
-    <script type="module" src="./javascript/dashboard.js"></script>
+    <!-- Company Branding -->
+    <div class="company-branding">
+        <p id="companyName">PearCare.Inc</p>
+        <div id="line"></div>
+    </div>
+
+    <script src="./javascript/powerUsage.js"></script>
 </body>
 </html>
