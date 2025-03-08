@@ -69,7 +69,37 @@
 
             <!-- Overall Usage (Empty Section) -->
             <section class="graph-section overall-usage">
-                <h3 class="graph-title">Overall Usage</h3>
+                <div class="graph-container">
+                    <!-- Empty graph container -->
+                    <div class="empty-graph"></div>
+                    <section class="graph-section">
+            
+                        <!-- Time Selection Buttons -->
+                        <div class="graph-buttons">
+                            <div class="graph-buttons">
+                                <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                                <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                                <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                            </div>
+                        </div>
+            
+                        <!-- Graphs -->
+                        <div class="graph-container-wrapper">
+                            <div class="graph-container">
+                                <canvas id="energyCostChart"></canvas>
+                            </div>
+                            <div class="graph-container">
+                                <canvas id="energyUsageChart"></canvas>
+                            </div>
+                        </div>
+            
+                    </section>
+
+                </div>
+            </section>
+
+            <!-- Usage by Area (Empty Section) -->
+            <section class="graph-section usage-by-area">
                 <div class="graph-container">
                     <!-- Empty graph container -->
                     <div class="empty-graph"></div>
@@ -88,17 +118,6 @@
                             </div>
                         </div>
                     </section>
-
-                </div>
-            </section>
-
-            <!-- Usage by Area (Empty Section) -->
-            <section class="graph-section usage-by-area">
-                <h3 class="graph-title">Usage by Area</h3>
-                <div class="graph-container">
-                    <!-- Empty graph container -->
-                    <div class="empty-graph"></div>
-
                 </div>
             </section>
         </main>
