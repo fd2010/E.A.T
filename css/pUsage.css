@@ -182,10 +182,17 @@
     font-size: 14px;
     border-radius: 20px;
     cursor: pointer;
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 35px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     font-weight: 600;
+}
+
+
+.redirect-icon {
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
 }
 
 .redirect-button:hover {

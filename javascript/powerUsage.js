@@ -139,9 +139,6 @@ function updateTimeGraphs(period) {
 
 // **Initialize Area-wise Usage Charts**
 function createAreaCharts() {
-    // Only create these charts on the power usage page
-    if (!areaPieCtx || !areaBarCtx) return;
-
     console.log('Creating area charts');
     try {
         areaPieChart = new Chart(areaPieCtx, {
@@ -341,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setupEventListeners();
 
         // Create charts based on which page we're on
-        createTimeGraphs(); // Both pages need this, but now it's safe
+        createTimeGraphs(); 
 
         createAreaCharts();
         createDeviceCharts();
