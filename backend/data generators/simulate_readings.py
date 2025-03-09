@@ -15,12 +15,11 @@ class SmartMeterSimulator:
             'Coffee Machine': {'watts_range': (200, 1200)},
             'Monitor': {'watts_range': (20, 40)},
             'Server': {'watts_range': (200, 500)},
-            'Air Conditioner': {'watts_range': (500, 1500)} # TODO rename to 'A/C'
-            # TODO add Lights
-            # TODO add Projector
-            # TODO add Speakers
-            # TODO add roomba
-
+            'A/C': {'watts_range': (500, 1500)},  # Renamed from 'Air Conditioner'
+            'Lights': {'watts_range': (10, 100)},  # Added Lights
+            'Projector': {'watts_range': (150, 300)},  # Added Projector
+            'Speakers': {'watts_range': (15, 80)},  # Added Speakers
+            'Roomba': {'watts_range': (30, 70)}  # Added Roomba
         }
     
     def check_database(self):
@@ -38,10 +37,27 @@ class SmartMeterSimulator:
     def generate_reading(self):
         voltage = random.uniform(215, 225)
         
+        # Get current month to determine which range to use
+        current_month = datetime.now().month
+        
         total_watts = 0
         for device, specs in self.devices.items():
             if random.random() < 0.7:  # 70% chance device is active
-                device_watts = random.uniform(*specs['watts_range'])
+                min_watts, max_watts = specs['watts_range']
+                range_width = max_watts - min_watts
+                
+                # Determine which portion of the range to use based on the month
+                if current_month in [11, 12, 1, 2]:  # Nov, Dec, Jan, Feb - upper 25%
+                    device_min = min_watts + 0.75 * range_width
+                    device_max = max_watts
+                elif current_month in [3, 4, 5]:  # Mar, Apr, May - lower 25%
+                    device_min = min_watts
+                    device_max = min_watts + 0.25 * range_width
+                else:  # Jun, Jul, Aug, Sep, Oct - middle 50%
+                    device_min = min_watts + 0.25 * range_width
+                    device_max = min_watts + 0.75 * range_width
+                
+                device_watts = random.uniform(device_min, device_max)
                 total_watts += device_watts
         
         return voltage, total_watts
@@ -66,7 +82,7 @@ class SmartMeterSimulator:
             return False
     
     def run(self, interval=10):
-        # Check if th databse exists
+        # Check if the database exists
         if not self.check_database():
             print("Failed to initialise database. Exiting...")
             return
