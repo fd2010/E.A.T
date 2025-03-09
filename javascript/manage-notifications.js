@@ -148,7 +148,8 @@ function createNotificationElement(notification, emailKey, userEmail) {
     item.className = 'recent-notification-item';
     item.style.backgroundColor = color || '#4285F4';
     
-    const iconPath = `./images/icons/${type}.png`;
+    // Updated to use SVG instead of PNG
+    const iconPath = `./images/icons/${type}.svg`;
     const date = new Date(timestamp || Date.now());
     const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
     
@@ -226,10 +227,10 @@ function setupNotificationTypeChange() {
             // Update color preview
             colorSelect.style.backgroundColor = colorSelect.value;
             
-            // Update the preview icon
+            // Update the preview icon - changed to SVG
             const previewIcon = document.getElementById('previewIcon');
             if (previewIcon) {
-                previewIcon.src = `./images/icons/${this.value}.png`;
+                previewIcon.src = `./images/icons/${this.value}.svg`;
                 previewIcon.alt = this.value;
             }
             

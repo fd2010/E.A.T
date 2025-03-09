@@ -210,7 +210,8 @@ function createNotificationElement(notification) {
     item.className = `notification-item notification-${type}`;
     item.style.backgroundColor = color || '#4285F4';
     
-    const iconPath = `./images/icons/${type}.png`;
+    // Updated to use SVG instead of PNG
+    const iconPath = `./images/icons/${type}.svg`;
     
     item.innerHTML = `
         <img src="${iconPath}" alt="${type}" class="notification-icon">
@@ -233,6 +234,7 @@ function createNotificationElement(notification) {
     
     return item;
 }
+
 
 // Delete a notification from Firebase
 async function deleteNotification(notificationId) {
