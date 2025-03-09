@@ -114,9 +114,10 @@
     padding-right: 10px;
     box-sizing: border-box;
     width: 100%;
-    border: 2px solid #000;
     border-radius: 15px;
+    border: 2px solid #ffffff33;
     background-color: #ffffff33;
+    
 }
 
 /* Custom scrollbar for rooms list */
