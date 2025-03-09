@@ -170,8 +170,6 @@
 
 /* Redirect Button Styling */
 .redirect-button {
-    background-color: #ADA8A9 ;
-    color: white;
     border: none;
     padding: 10px 15px;
     font-size: 14px;
@@ -179,7 +177,7 @@
     cursor: pointer;
     width: 30px;
     height: 35px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: transform 0.2s ease;
     font-weight: 600;
 }
 
@@ -305,12 +303,12 @@
 }
 
 .expenses-panel {
-    background-color: #EBEC80;
+    background-color: #ADB4F3;
     height: 84px;
 }
 
 .power-usage-panel {
-    background-color: #FFDC52;
+    background-color: #6976EB;
     height: 84px;
 }
 

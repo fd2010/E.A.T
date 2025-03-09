@@ -148,8 +148,24 @@ function createAreaCharts() {
                 labels: Object.keys(areaData),
                 datasets: [{
                     data: Object.values(areaData),
-                    backgroundColor: ['red', 'blue', 'green', 'purple']
+                    backgroundColor: [
+                        '#2B3695', '#3445A0', '#3E53AC', '#4A63B8', '#556FC3',
+                        '#617BCE', '#6D88D9', '#7A95E4', '#86A3EF', '#92B0FA'
+                    ]
                 }]
+
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true },
+                    cutout: "70%", // Adjusts the center hole size (Donut effect)
+                    plugins: {
+                        legend: {
+                            position: "right" // Move legend to right side
+                        }
+                    }
+                }
             }
         });
 
@@ -163,17 +179,8 @@ function createAreaCharts() {
                     backgroundColor: 'teal'
                 }]
             },
-            options: {
-                responsive: true,
-                scales: {y: { beginAtZero: true }, 
-                cutout: "60%", // Adjusts the center hole size (Donut effect)
-                    plugins: {
-                        legend: {
-                            position: "right" // Move legend to right side
-                        }
-                    }
-                }
-            }
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+
         });
     } catch (error) {
         console.error('Error creating area charts:', error);
