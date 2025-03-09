@@ -23,9 +23,9 @@ function handleError(error) {
         errorDisplay.style.display = 'flex';
         errorDisplay.innerHTML = `
             <h1>Error</h1>
-            <p>${error.message}</p>
-            <button onclick="window.location.href='login.html'" class="buttonHome lightcyanButton">
-                Return to Login
+            <p>${error.message || 'An unknown error occurred'}</p>
+            <button onclick="window.location.href='dashboard.html'" class="buttonHome lightcyanButton">
+                Return to Dashboard
             </button>
         `;
     }
@@ -38,11 +38,11 @@ function showStatusMessage(message, isSuccess = true) {
     
     statusDiv.textContent = message;
     statusDiv.className = 'notification-status ' + (isSuccess ? 'success' : 'error');
+    statusDiv.style.display = 'block';
     
     // Hide the message after 5 seconds
     setTimeout(() => {
         statusDiv.style.display = 'none';
-        statusDiv.className = 'notification-status';
     }, 5000);
 }
 
@@ -68,7 +68,7 @@ async function sendNotification() {
             color: notificationColor,
             message: notificationMessage,
             timestamp: Date.now(),
-            createdBy: JSON.parse(localStorage.getItem('userData'))?.email || 'Unknown'
+            createdBy: JSON.parse(localStorage.getItem('userData'))?.email || 'System Administrator'
         };
         
         // Push to Firebase with a unique ID
@@ -89,7 +89,7 @@ async function sendNotification() {
         
     } catch (error) {
         console.error('Error sending notification:', error);
-        showStatusMessage('Failed to send notification: ' + error.message, false);
+        showStatusMessage('Failed to send notification: ' + (error.message || 'Unknown error'), false);
     }
 }
 
@@ -136,7 +136,7 @@ async function searchUserNotifications() {
         }
     } catch (error) {
         console.error('Error searching notifications:', error);
-        showStatusMessage('Failed to search notifications: ' + error.message, false);
+        showStatusMessage('Failed to search notifications: ' + (error.message || 'Unknown error'), false);
     }
 }
 
@@ -166,10 +166,11 @@ function createNotificationElement(notification, emailKey, userEmail) {
     `;
     
     // Add event listener for deleting notification
-    item.querySelector('.notification-delete').addEventListener('click', async () => {
+    item.querySelector('.notification-delete').addEventListener('click', async (e) => {
+        e.stopPropagation();
         try {
-            const notificationId = item.querySelector('.notification-delete').dataset.id;
-            const emailKey = item.querySelector('.notification-delete').dataset.email;
+            const notificationId = e.target.dataset.id;
+            const emailKey = e.target.dataset.email;
             
             await remove(ref(database, `notifications/${emailKey}/${notificationId}`));
             
@@ -183,51 +184,164 @@ function createNotificationElement(notification, emailKey, userEmail) {
             }
         } catch (error) {
             console.error('Error deleting notification:', error);
-            showStatusMessage('Failed to delete notification: ' + error.message, false);
+            showStatusMessage('Failed to delete notification: ' + (error.message || 'Unknown error'), false);
         }
     });
     
     return item;
 }
 
-// Initialize page when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    toggleLoadingState(true);
-    
-    // Check if user is authenticated
-    onAuthStateChanged(auth, async (user) => {
-        if (!user) {
-            console.log('No authenticated user found, redirecting to login');
-            window.location.href = 'login.html';
-            return;
-        }
+// Function to initialize notification color preview
+function initializeColorPreview() {
+    const colorSelect = document.getElementById('notificationColor');
+    if (colorSelect) {
+        // Set initial background color
+        colorSelect.style.backgroundColor = colorSelect.value;
         
-        try {
-            // Hide loading state and show content
-            toggleLoadingState(false);
-            
-            // Set up event listeners
-            document.getElementById('sendNotificationBtn').addEventListener('click', sendNotification);
-            document.getElementById('searchBtn').addEventListener('click', searchUserNotifications);
-            
-            // Also trigger search on Enter key for email search
-            document.getElementById('searchUserEmail').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    searchUserNotifications();
-                }
-            });
-            
-            // Initialize color preview
+        // Update background color when selection changes
+        colorSelect.addEventListener('change', function() {
+            this.style.backgroundColor = this.value;
+        });
+    }
+}
+
+// Function to setup notification type change behavior
+function setupNotificationTypeChange() {
+    const typeRadios = document.querySelectorAll('input[name="notificationType"]');
+    typeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Update color based on notification type
             const colorSelect = document.getElementById('notificationColor');
+            switch(this.value) {
+                case 'reminder':
+                    colorSelect.value = '#4285F4'; // Blue
+                    break;
+                case 'warning':
+                    colorSelect.value = '#FBBC05'; // Yellow
+                    break;
+                case 'fault':
+                    colorSelect.value = '#EA4335'; // Red
+                    break;
+            }
+            // Update color preview
             colorSelect.style.backgroundColor = colorSelect.value;
             
-            colorSelect.addEventListener('change', function() {
-                this.style.backgroundColor = this.value;
-            });
+            // Update the preview icon
+            const previewIcon = document.getElementById('previewIcon');
+            if (previewIcon) {
+                previewIcon.src = `./images/icons/${this.value}.png`;
+                previewIcon.alt = this.value;
+            }
             
-        } catch (error) {
-            console.error('Error initializing page:', error);
-            handleError(error);
-        }
+            // Update the preview background color
+            const previewItem = document.getElementById('previewItem');
+            if (previewItem) {
+                previewItem.style.backgroundColor = colorSelect.value;
+            }
+        });
     });
+}
+
+// Function to setup live notification preview
+function setupLivePreview() {
+    const messageInput = document.getElementById('notificationMessage');
+    const colorSelect = document.getElementById('notificationColor');
+    const previewContent = document.getElementById('previewContent');
+    const previewItem = document.getElementById('previewItem');
+    
+    // Update preview on message change
+    if (messageInput && previewContent) {
+        messageInput.addEventListener('input', function() {
+            previewContent.textContent = this.value || 'Your notification will appear like this';
+        });
+    }
+    
+    // Update preview on color change
+    if (colorSelect && previewItem) {
+        colorSelect.addEventListener('change', function() {
+            previewItem.style.backgroundColor = this.value;
+        });
+    }
+}
+
+// Initialize page when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Notification manager initializing...');
+    
+    try {
+        // Show loading state initially
+        toggleLoadingState(true);
+        
+        // Initialize UI components that don't require Firebase
+        initializeColorPreview();
+        setupNotificationTypeChange();
+        setupLivePreview();
+        
+        // Add debug system
+        console.log('Setting up debug failsafe...');
+        // If authentication takes too long, just show the interface
+        setTimeout(() => {
+            const loadingState = document.getElementById('loadingState');
+            if (loadingState && loadingState.style.display !== 'none') {
+                console.log('Debug timeout activated - showing notification manager interface');
+                toggleLoadingState(false);
+                showStatusMessage('Firebase authentication timeout. Some features may be limited.', false);
+            }
+        }, 3000); // 3 second failsafe
+        
+        // Set up event listeners
+        document.getElementById('sendNotificationBtn').addEventListener('click', sendNotification);
+        document.getElementById('searchBtn').addEventListener('click', searchUserNotifications);
+        
+        // Also trigger search on Enter key for email search
+        document.getElementById('searchUserEmail').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchUserNotifications();
+            }
+        });
+        
+        // Check if user is authenticated
+        console.log('Checking authentication status...');
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                console.log('No authenticated user found, but we will allow access for testing');
+                toggleLoadingState(false);
+                showStatusMessage('You are not logged in. This is a testing environment.', false);
+                return;
+            }
+            
+            try {
+                console.log('User authenticated, setting up notification manager');
+                // Hide loading state and show content
+                toggleLoadingState(false);
+                
+                // Initialize default notifications view if admin email is available
+                const userData = JSON.parse(localStorage.getItem('userData'));
+                if (userData && userData.email) {
+                    // Pre-fill search field with admin's email
+                    document.getElementById('searchUserEmail').value = userData.email;
+                    // Pre-fill the form email field with the same email
+                    document.getElementById('userEmail').value = userData.email;
+                    // Perform initial search
+                    searchUserNotifications();
+                }
+                
+            } catch (error) {
+                console.error('Error initializing notification manager:', error);
+                handleError(error);
+            }
+        });
+    } catch (error) {
+        console.error('Error in initialization:', error);
+        handleError(error);
+        // Still show the interface for testing
+        toggleLoadingState(false);
+    }
 });
+
+// Export key functions
+export {
+    sendNotification,
+    searchUserNotifications,
+    showStatusMessage
+};

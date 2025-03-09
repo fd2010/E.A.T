@@ -115,7 +115,7 @@
 }
 
 .device-option:hover {
-    
+
     transform: scale(1.05);
 }
 
@@ -197,6 +197,25 @@
 .form-group input:focus {
     outline: none;
     border-bottom-color: #DBC99F;
+}
+
+/* close pop ups css */
+#addDeviceModal .close-button {
+    z-index: 1010; 
+}
+
+
+#notificationModal .close-button {
+    z-index: 1010; 
+}
+
+
+#addDeviceModal {
+    z-index: 1000;
+}
+
+#notificationModal {
+    z-index: 1001;
 }
 
 /* Responsive Design */

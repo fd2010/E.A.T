@@ -1,0 +1,443 @@
+/* Enhanced Manage Notifications Styles */
+.notification-form-container,
+.recent-notifications-container,
+.notification-preview-container {
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notification-form-container:hover,
+.recent-notifications-container:hover,
+.notification-preview-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.h2Light {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: 'Kay Pho Du', sans-serif;
+}
+
+/* FIXED: Form section should be displayed as flex */
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px 15px;
+    background-color: #fff;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.radio-option:hover {
+    background-color: #f0f0f0;
+}
+
+.radio-option input[type="radio"] {
+    cursor: pointer;
+}
+
+.radio-option label {
+    cursor: pointer;
+    font-family: 'Kay Pho Du', sans-serif;
+}
+
+/* Type-specific colors for radio options */
+.radio-option input[value="reminder"] + label {
+    color: #4285F4;
+}
+
+.radio-option input[value="warning"] + label {
+    color: #FBBC05;
+}
+
+.radio-option input[value="fault"] + label {
+    color: #EA4335;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+    width: 100%;
+    padding: 15px;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Kay Pho Du', sans-serif;
+    font-size: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #4285F4;
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* Status message styling */
+.notification-status {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    display: none;
+    font-family: 'Kay Pho Du', sans-serif;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.notification-status.success {
+    background-color: rgba(52, 168, 83, 0.2);
+    color: #34A853;
+    display: block;
+}
+
+.notification-status.error {
+    background-color: rgba(234, 67, 53, 0.2);
+    color: #EA4335;
+    display: block;
+}
+
+/* Recent Notifications List */
+.recent-notifications-list {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Scrollbar styling */
+.recent-notifications-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.recent-notifications-list::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+}
+
+.recent-notifications-list::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 3px;
+}
+
+.recent-notifications-list::-webkit-scrollbar-thumb:hover {
+    background: #7a8763;
+}
+
+/* Firefox scrollbar */
+.recent-notifications-list {
+    scrollbar-width: thin;
+    scrollbar-color: #000000 transparent;
+}
+
+.recent-notification-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.recent-notification-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.notification-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+}
+
+.notification-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.notification-message {
+    color: #FFFFFF;
+    margin-bottom: 8px;
+    font-family: 'Kay Pho Du', sans-serif;
+}
+
+.notification-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.notification-type-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.notification-type-reminder {
+    background-color: rgba(52, 168, 83, 0.3);
+    color: #FFFFFF;
+}
+
+.notification-type-warning {
+    background-color: rgba(251, 188, 5, 0.3);
+    color: #FFFFFF;
+}
+
+.notification-type-fault {
+    background-color: rgba(234, 67, 53, 0.3);
+    color: #FFFFFF;
+}
+
+.notification-delete {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.notification-delete:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+.no-notifications-message {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-style: italic;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    font-family: 'Kay Pho Du', sans-serif;
+}
+
+/* Form input styling */
+.input-container {
+    display: flex;
+    gap: 10px;
+}
+
+#userEmail, 
+#searchUserEmail {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Kay Pho Du', sans-serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#userEmail:focus,
+#searchUserEmail:focus {
+    outline: none;
+    border-color: #4285F4;
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+#searchBtn {
+    width: 100px;
+    height: 42px;
+    margin-left: 10px;
+}
+
+/* Color select styling */
+#notificationColor {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Kay Pho Du', sans-serif;
+    width: 100%;
+    cursor: pointer;
+    color: #333;
+    transition: border-color 0.2s ease;
+}
+
+#notificationColor:focus {
+    outline: none;
+    border-color: #4285F4;
+}
+
+#notificationColor option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Preview container styling */
+.notification-preview-container {
+    background-color: #f5f5f5;
+}
+
+.notification-preview {
+    background-color: #35383E;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.notification-preview .notification-item {
+    margin: 0;
+}
+
+.preview-note {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    font-family: 'Kay Pho Du', sans-serif;
+}
+
+/* Loading state */
+#loadingState {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    font-size: 18px;
+    color: #333;
+    font-family: 'Kay Pho Du', sans-serif;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error display styling */
+#errorDisplay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+    color: #EA4335;
+    font-family: 'Kay Pho Du', sans-serif;
+}
+
+#errorDisplay h1 {
+    margin-bottom: 15px;
+    color: #EA4335;
+}
+
+#errorDisplay button {
+    margin-top: 20px;
+}
+
+/* Back to dashboard button */
+.back-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.back-container a {
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .notification-form-container,
+    .recent-notifications-container,
+    .notification-preview-container {
+        padding: 15px;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .input-container {
+        flex-direction: column;
+    }
+    
+    #searchBtn {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .notification-details {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

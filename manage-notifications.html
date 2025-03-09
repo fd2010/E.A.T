@@ -3,229 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Notifications - E.A.T</title>
+    <title>Notification Manager - E.A.T</title>
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/formstyles.css">
     <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="stylesheet" href="./css/manage-notifications.css">
+    <link rel="stylesheet" href="./css/notification.css">
     <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
 </head>
 
-<style>
-    /* Manage Notifications Specific Styles */
-    .notification-form-container,
-    .recent-notifications-container {
-        background-color: #35383E;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 30px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-section {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .radio-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    .radio-option {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .radio-option input[type="radio"] {
-        cursor: pointer;
-    }
-
-    .radio-option label {
-        cursor: pointer;
-    }
-
-    textarea {
-        resize: vertical;
-        min-height: 80px;
-        width: 100%;
-        padding: 10px;
-        background-color: transparent;
-        color: #FFFFFF;
-        border: none;
-        border-bottom: 1px solid #FFFFFF;
-        font-family: 'Kay Pho Du', sans-serif;
-        font-size: 16px;
-    }
-
-    .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 10px;
-    }
-
-    .notification-status {
-        margin-top: 20px;
-        padding: 10px;
-        border-radius: 4px;
-        text-align: center;
-        display: none;
-    }
-
-    .notification-status.success {
-        background-color: rgba(52, 168, 83, 0.2);
-        color: #34A853;
-        display: block;
-    }
-
-    .notification-status.error {
-        background-color: rgba(234, 67, 53, 0.2);
-        color: #EA4335;
-        display: block;
-    }
-
-    /* Recent Notifications List */
-    .recent-notifications-list {
-        margin-top: 20px;
-        max-height: 400px;
-        overflow-y: auto;
-    }
-
-    .recent-notification-item {
-        display: flex;
-        align-items: center;
-        padding: 12px 15px;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        position: relative;
-    }
-
-    .notification-icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 12px;
-    }
-
-    .notification-info {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-
-    .notification-message {
-        color: #FFFFFF;
-        margin-bottom: 5px;
-    }
-
-    .notification-details {
-        display: flex;
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    .notification-user {
-        margin-right: 15px;
-    }
-
-    .notification-timestamp {
-        margin-right: 15px;
-    }
-
-    .notification-type-badge {
-        font-size: 11px;
-        padding: 2px 6px;
-        border-radius: 10px;
-        text-transform: uppercase;
-    }
-
-    .notification-type-reminder {
-        background-color: rgba(52, 168, 83, 0.2);
-        color: #34A853;
-    }
-
-    .notification-type-warning {
-        background-color: rgba(251, 188, 5, 0.2);
-        color: #FBBC05;
-    }
-
-    .notification-type-fault {
-        background-color: rgba(234, 67, 53, 0.2);
-        color: #EA4335;
-    }
-
-    .notification-delete {
-        position: absolute;
-        top: 12px;
-        right: 15px;
-        width: 22px;
-        height: 22px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.2);
-        color: #FFFFFF;
-        font-size: 14px;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
-
-    .notification-delete:hover {
-        background-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .no-notifications-message {
-        text-align: center;
-        padding: 20px;
-        color: #888;
-        font-style: italic;
-    }
-
-    /* Form input styling */
-    #searchUserEmail {
-        width: calc(100% - 100px);
-    }
-
-    #searchBtn {
-        width: 90px;
-        height: 40px;
-        margin-left: 10px;
-    }
-
-    /* Color preview for select */
-    #notificationColor option {
-        background-color: #35383E;
-    }
-
-    /* Loading state */
-    #loadingState, 
-    #errorDisplay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #35383E;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        font-size: 24px;
-        color: white;
-    }
-
-    #errorDisplay {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px;
-    }
-</style>
 <body class="bodyLight">
     <!-- Loading and Error States -->
-    <div id="loadingState">Loading...</div>
+    <div id="loadingState">
+        <div class="spinner"></div>
+        <div style="margin-top: 20px;">Loading notification manager...</div>
+    </div>
     <div id="errorDisplay"></div>
 
     <!-- Main Content -->
@@ -233,7 +25,8 @@
         <!-- Header Section -->
         <div class="header">
             <div class="greeting-bubble">
-                <div class="greeting-text">Notification Management System</div>
+                <div class="greeting-text">Notification Manager</div>
+                <div class="weather-desc">Testing tool for sending notifications to users</div>
             </div>
         </div>
 
@@ -270,7 +63,7 @@
                 <div class="form-group">
                     <label for="notificationColor">Notification Color:<span class="info-star">*</span></label>
                     <div class="input-container">
-                        <select id="notificationColor">
+                        <select id="notificationColor" style="cursor: pointer;">
                             <option value="#4285F4">Blue</option>
                             <option value="#EA4335">Red</option>
                             <option value="#FBBC05">Yellow</option>
@@ -299,7 +92,7 @@
         
         <!-- Recent Notifications List -->
         <div class="recent-notifications-container">
-            <h2 class="h2Light">Recent Notifications</h2>
+            <h2 class="h2Light">Notification History</h2>
             
             <div class="form-group">
                 <label for="searchUserEmail">Search by User Email:</label>
@@ -314,9 +107,65 @@
                 <div class="no-notifications-message">Search for a user to see their notifications</div>
             </div>
         </div>
+
+        <!-- Preview Container -->
+        <div class="notification-preview-container">
+            <h2 class="h2Light">Notification Preview</h2>
+            
+            <div class="notification-preview">
+                <div id="previewItem" class="notification-item" style="background-color: #4285F4;">
+                    <img src="./images/icons/reminder.png" alt="reminder" class="notification-icon" id="previewIcon">
+                    <div class="notification-content" id="previewContent">Your notification will appear like this</div>
+                    <div class="notification-close">×</div>
+                </div>
+            </div>
+            
+            <div class="preview-note">
+                This is how the notification will appear to users in their notification panel
+            </div>
+        </div>
+        
+        <!-- Back to Dashboard -->
+        <div class="back-container" style="margin-top: 40px; text-align: center;">
+            <a href="dashboard.html" class="buttonHome lightcyanButton">Back to Dashboard</a>
+        </div>
     </div>
 
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js"></script>
+    <!-- IMPORTANT: We're changing the script filename to match your actual JS file -->
     <script type="module" src="./javascript/manage-notifications.js"></script>
+    
+    <!-- Debug Script to show errors -->
+    <script>
+        window.onerror = function(msg, url, line, col, error) {
+            console.error('Global error:', error);
+            const errorDisplay = document.getElementById('errorDisplay');
+            if (errorDisplay) {
+                errorDisplay.style.display = 'flex';
+                errorDisplay.innerHTML = `
+                    <h1>An Error Occurred</h1>
+                    <p>${msg}</p>
+                    <p>Line: ${line}</p>
+                    <button onclick="window.location.href='dashboard.html'" class="buttonHome lightcyanButton">
+                        Return to Dashboard
+                    </button>
+                `;
+            }
+            return false;
+        };
+        
+        // Manual fallback to show interface after a timeout in case Firebase auth takes too long
+        setTimeout(() => {
+            const loadingState = document.getElementById('loadingState');
+            const notificationsContent = document.getElementById('notificationsContent');
+            
+            if (loadingState && loadingState.style.display !== 'none') {
+                console.log('Fallback timeout activated - showing notification manager interface');
+                if (loadingState) loadingState.style.display = 'none';
+                if (notificationsContent) notificationsContent.style.display = 'block';
+            }
+        }, 5000); // 5 second fallback
+    </script>
 </body>
 </html>

@@ -4,18 +4,26 @@ import { ref, onValue, update, get, remove } from "https://www.gstatic.com/fireb
 
 // Initialize notification system
 function initializeNotificationSystem() {
+    // First check if we're on a page that should have notifications
+    const notificationImg = document.querySelector('img[alt="Notifications"]');
+    if (!notificationImg) {
+        console.log('No notification bell found on this page, skipping initialization');
+        return;
+    }
+
     // Create notification modal if it doesn't exist
-    if (!document.getElementById('notificationModal')) {
+    const notificationModal = document.getElementById('notificationModal');
+    
+    // Add CSS if needed
+    if (!document.querySelector('link[href="./css/notification.css"]')) {
         const notificationCss = document.createElement('link');
         notificationCss.rel = 'stylesheet';
-        notificationCss.href = './css/notifications.css';
+        notificationCss.href = './css/notification.css';
         document.head.appendChild(notificationCss);
-
-        const modalHTML = document.getElementById('notification-modal-template').innerHTML;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-        setupNotificationEventListeners();
     }
+
+    // Set up event listeners for existing modal
+    setupNotificationEventListeners();
 
     // Convert notification bell to have badge
     setupNotificationBell();
@@ -54,8 +62,24 @@ function setupNotificationBell() {
 
 // Set up event listeners for notification interactions
 function setupNotificationEventListeners() {
-    // Close button for notification modal
-    document.querySelector('#notificationModal .close-button').addEventListener('click', hideNotificationModal);
+    // More direct approach to find and attach event to close button
+    setTimeout(() => {
+        const closeButton = document.querySelector('#notificationModal .close-button');
+        if (closeButton) {
+            console.log('Found notification close button, attaching event');
+            
+            // Add direct click handler with named function for debugging
+            closeButton.onclick = function notificationCloseHandler(e) {
+                console.log('Notification close button clicked');
+                e.preventDefault();
+                e.stopPropagation();
+                hideNotificationModal();
+                return false; // Extra measure to prevent event propagation
+            };
+        } else {
+            console.log('Could not find notification close button');
+        }
+    }, 100); // Small delay to ensure DOM is ready
     
     // Close modal when clicking outside of it
     window.addEventListener('click', (event) => {
@@ -65,6 +89,7 @@ function setupNotificationEventListeners() {
         }
     });
 }
+
 
 // Show notification modal
 function showNotificationModal() {
@@ -77,9 +102,13 @@ function showNotificationModal() {
 
 // Hide notification modal
 function hideNotificationModal() {
+    console.log('Attempting to hide notification modal');
     const modal = document.getElementById('notificationModal');
     if (modal) {
+        console.log('Modal found, hiding it');
         modal.style.display = 'none';
+    } else {
+        console.log('Modal not found');
     }
 }
 

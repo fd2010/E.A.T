@@ -101,3 +101,24 @@
 .notification-fault {
     border-left: 4px solid #F44336;
 }
+
+#notificationModal .close-button {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    font-size: 30px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #ff6b6b;
+    color: white;
+    z-index: 1100; /* Ensure it's above everything else */
+    pointer-events: auto; /* Force it to be clickable */
+}
+
+#notificationModal .modal-content {
+    position: relative; /* Ensure positioned elements work */
+}

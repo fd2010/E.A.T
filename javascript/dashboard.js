@@ -187,6 +187,22 @@ async function initialiseDashboard() {
             });
         }
         initializeNotificationSystem();
+        // Add this to dashboard.js at the end of the initialiseDashboard function
+        // or in the DOMContentLoaded event handler
+        setTimeout(() => {
+            const notificationCloseBtn = document.querySelector('#notificationModal .close-button');
+            if (notificationCloseBtn) {
+                console.log('Adding direct event listener to notification close button');
+                notificationCloseBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Notification close button clicked via direct handler');
+                    const modal = document.getElementById('notificationModal');
+                    if (modal) modal.style.display = 'none';
+                    return false;
+                });
+            }
+        }, 1000); // Delay to ensure DOM is fully loaded
 
     } catch (error) {
         console.error('Error in initialisation:', error);
@@ -218,3 +234,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initialiseDashboard();
     initialiseAddDeviceModal();
 });
+

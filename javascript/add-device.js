@@ -64,7 +64,13 @@ export function initialiseAddDeviceModal() {
 
 function setupModalEventListeners() {
     // Close button
-    document.querySelector('.close-button').addEventListener('click', closeModal);
+    const closeButton = document.querySelector('#addDeviceModal .close-button');
+    if (closeButton) {
+        closeButton.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent event bubbling
+            closeModal();
+        });
+    }
 
     // Add new room button
     document.getElementById('addNewRoomBtn').addEventListener('click', () => {
