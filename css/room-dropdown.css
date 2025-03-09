@@ -1,0 +1,159 @@
+/* Room Dropdown Styles */
+.room-dropdown-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 20px auto;
+    position: relative;
+    font-family: "Kay Pho Du", sans-serif;
+}
+
+.room-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 23px;
+    background-color: #b9b9b9b6;
+    cursor: pointer;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+    color: #333;
+}
+
+.room-select:hover {
+    background-color: #a0a0a0;
+}
+
+.room-select:focus {
+    background-color: #000000;
+    color: white;
+}
+
+.dropdown-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid #333;
+    pointer-events: none;
+}
+
+.room-select:focus + .dropdown-arrow {
+    border-top-color: white;
+}
+
+/* Custom styling for dropdown options */
+.room-select option {
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 10px;
+}
+
+/* Hide the original room tabs */
+.room-tabs {
+    display: none !important;
+}
+
+/* Make sure this looks good in Manage Devices page too */
+.manage-devices-grid .room-dropdown-container {
+    margin-bottom: 15px;
+}
+
+
+/* Styles for the room view toggle switch */
+.view-toggle-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+    padding: 0 20px;
+    font-family: "Kay Pho Du", sans-serif;
+}
+
+.view-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.tabs-label, .dropdown-label {
+    color: #555;
+    font-weight: 500;
+}
+
+/* The switch - the box around the slider */
+.view-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.view-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.view-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #9BA87C;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.view-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .view-toggle-slider {
+    background-color: #000000;
+}
+
+input:checked + .view-toggle-slider:before {
+    transform: translateX(26px);
+}
+
+/* Active state styling */
+.view-toggle-switch input:checked ~ .dropdown-label {
+    color: #000;
+    font-weight: 600;
+}
+
+.view-toggle-switch input:not(:checked) ~ .tabs-label {
+    color: #000;
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .view-toggle-container {
+        justify-content: center;
+    }
+    .room-dropdown-container {
+        max-width: 100%;
+    }
+}
