@@ -1085,6 +1085,10 @@ li .logout-btn img {
 
 /* Side Navigation */
 .side-nav {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border-radius: 23px;
     width: 120px;
     background-color: #C1B99F;
     height: 100vh;

@@ -24,9 +24,9 @@ export function initialiseSettingsModal() {
 
                         <!-- Room tabs toggle -->
                         <div class="setting-item">
-                            <div class="setting-label">Scrollable Tabs </div>
+                            <div class="setting-label">Scrollable Tabs</div>
                             <label class="switch">
-                                <input type="checkbox" id="darkModeToggle">
+                                <input type="checkbox" id="scrollableTabsToggle">
                                 <span class="slider"></span>
                             </label>
                         </div>
@@ -53,6 +53,7 @@ export function initialiseSettingsModal() {
 
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         setupSettingsEventListeners();
+        loadSavedSettings();
     }
 }
 
@@ -70,8 +71,17 @@ function setupSettingsEventListeners() {
     const darkModeToggle = document.getElementById('darkModeToggle');
     if (darkModeToggle) {
         darkModeToggle.addEventListener('change', function() {
-            // This is where dark mode functionality would go
-            console.log('Dark mode:', this.checked ? 'On' : 'Off');
+            toggleDarkMode(this.checked);
+            saveSettings('darkMode', this.checked);
+        });
+    }
+
+    // Scrollable Tabs Toggle
+    const scrollableTabsToggle = document.getElementById('scrollableTabsToggle');
+    if (scrollableTabsToggle) {
+        scrollableTabsToggle.addEventListener('change', function() {
+            toggleScrollableTabs(this.checked);
+            saveSettings('scrollableTabs', this.checked);
         });
     }
 
@@ -79,11 +89,7 @@ function setupSettingsEventListeners() {
     const exportDataBtn = document.getElementById('exportDataBtn');
     if (exportDataBtn) {
         exportDataBtn.addEventListener('click', function() {
-            // This is where export data functionality goes
-
-            //TODO
-
-            alert('Putting this job on muskaan and karan lol');
+            exportUserData();
         });
     }
 
@@ -91,8 +97,6 @@ function setupSettingsEventListeners() {
     const aboutBtn = document.getElementById('aboutBtn');
     if (aboutBtn) {
         aboutBtn.addEventListener('click', function() {
-            // This is where about page functionality would go
-            console.log('About clicked');
             alert('Energy Allocation Tracker (E.A.T)\nVersion 1.0\nDeveloped by PearCare Inc.');
         });
     }
@@ -104,6 +108,116 @@ function setupSettingsEventListeners() {
             closeSettingsModal();
         }
     });
+}
+
+// Function to toggle dark mode
+function toggleDarkMode(isDark) {
+    const body = document.body;
+    
+    // Change the body's background color
+    if (isDark) {
+        body.classList.remove('bodyLight');
+        body.classList.add('bodyDark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+        body.classList.remove('bodyDark');
+        body.classList.add('bodyLight');
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+
+    // Invert company branding
+    const companyDiv = document.querySelector('.divLight');
+    if (companyDiv) {
+        if (isDark) {
+            companyDiv.classList.remove('divLight');
+            companyDiv.classList.add('divDark');
+            // Also update the company name text color
+            const companyName = document.getElementById('companyName');
+            if (companyName) {
+                companyName.style.color = '#FFFFFF';
+            }
+            // Update the line color
+            const line = document.getElementById('line');
+            if (line) {
+                line.style.background = '#FFFFFF';
+            }
+        } else {
+            companyDiv.classList.remove('divDark');
+            companyDiv.classList.add('divLight');
+            // Reset company name text color
+            const companyName = document.getElementById('companyName');
+            if (companyName) {
+                companyName.style.color = '';
+            }
+            // Reset the line color
+            const line = document.getElementById('line');
+            if (line) {
+                line.style.background = '';
+            }
+        }
+    }
+
+}
+
+
+// Function to export user data
+function exportUserData() {
+    
+    alert('This is a job for karan and muskaan lol')
+}
+
+// Save settings to localStorage
+function saveSettings(key, value) {
+    try {
+        const settings = JSON.parse(localStorage.getItem('eatSettings')) || {};
+        settings[key] = value;
+        localStorage.setItem('eatSettings', JSON.stringify(settings));
+        
+        // If connected to Firebase, also save there
+        if (typeof database !== 'undefined') {
+            const user = getCurrentUser(); // You would need to implement this
+            if (user) {
+                const userSettingsRef = ref(database, `users/${user.uid}/settings`);
+                update(userSettingsRef, { [key]: value });
+            }
+        }
+    } catch (error) {
+        console.error('Error saving settings:', error);
+    }
+}
+
+// Load saved settings
+function loadSavedSettings() {
+    try {
+        const settings = JSON.parse(localStorage.getItem('eatSettings')) || {};
+        
+        // Apply dark mode if it was saved
+        if (settings.darkMode) {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                darkModeToggle.checked = true;
+            }
+            toggleDarkMode(true);
+        }
+        
+        // Apply scrollable tabs setting if it was saved
+        if (settings.hasOwnProperty('scrollableTabs')) {
+            const scrollableTabsToggle = document.getElementById('scrollableTabsToggle');
+            if (scrollableTabsToggle) {
+                scrollableTabsToggle.checked = settings.scrollableTabs;
+            }
+            toggleScrollableTabs(settings.scrollableTabs);
+        }
+        
+    } catch (error) {
+        console.error('Error loading settings:', error);
+    }
+}
+
+// Function to get the current user - placeholder, implement based on your auth system
+function getCurrentUser() {
+    // This would return the current user from your authentication system
+    return null;
 }
 
 // Function to show the settings modal
@@ -129,6 +243,17 @@ window.showSettingsModal = showSettingsModal;
 // Initialize the modal when the script loads
 document.addEventListener('DOMContentLoaded', () => {
     initialiseSettingsModal();
+    
+    // Check if we should load dark mode from URL parameters (for testing)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('darkMode')) {
+        const darkMode = urlParams.get('darkMode') === 'true';
+        toggleDarkMode(darkMode);
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.checked = darkMode;
+        }
+    }
 });
 
-export { showSettingsModal };
+export { showSettingsModal, toggleDarkMode };
