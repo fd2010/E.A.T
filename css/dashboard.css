@@ -71,7 +71,6 @@
     gap: 20px;
     width: 100%;
     height: calc(100vh - 250px);
-    min-height: 400px;
     padding: 20px;
     overflow-y: auto;
     overflow-x: hidden;

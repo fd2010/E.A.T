@@ -37,7 +37,7 @@
             </div>
 
             <div class="logout-icon">
-                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout" title="Logout"></button>
+                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout" title="Logout" class="nav-icon"></button>
             </div>
         </nav>
     
@@ -162,6 +162,20 @@
             </div>
         </div>
 
+        <!-- Notification Modal -->
+        <div id="notificationModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                
+                <h2 class="h2Light">Notifications</h2>
+                
+                <div id="notificationsList" class="notifications-list">
+                    <!-- Notifications will be dynamically inserted here -->
+                    <div class="no-notifications-message">No notifications to display</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Error handling -->
         <script>
             window.onerror = function(msg, url, line, col, error) {
@@ -176,5 +190,6 @@
         <script type="module" src="./javascript/user-profile.js"></script>
         <script type="module" src="./javascript/add-device.js"></script>
         <script type="module" src="./javascript/settings.js"></script>
+        <script type="module" src="./javascript/load-notifications.js"></script>
     </body>
 </html>

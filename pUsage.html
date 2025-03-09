@@ -36,7 +36,7 @@
         </div>
 
         <div class="logout-icon">
-            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout" title="Logout"></button>
+            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout" title="Logout" class="nav-icon"></button>
         </div>
     </nav>
 
@@ -117,16 +117,30 @@
         </aside>
     </div>
 
-    <!-- Company Branding -->
-    <div class="company-branding">
+    <!-- Company Name -->
+    <div class="divLight" style="margin-top:50px;">
         <p id="companyName">PearCare.Inc</p>
-        <div id="line"></div>
+        <div id="line" style="margin: auto;"></div>
+    </div>
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            
+            <h2 class="h2Light">Notifications</h2>
+            
+            <div id="notificationsList" class="notifications-list">
+                <!-- Notifications will be dynamically inserted here -->
+                <div class="no-notifications-message">No notifications to display</div>
+            </div>
+        </div>
     </div>
 
     <script type="module" src="./javascript/powerUsage.js"></script>
     <script type="module" src="./javascript/dashboard.js"></script>
     <script type="module" src="./javascript/add-device.js"></script>
     <script type="module" src="./javascript/settings.js"></script>
+    <script type="module" src="./javascript/load-notifications.js"></script>
 </body>
 
 </html>
