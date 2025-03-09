@@ -137,12 +137,13 @@ function updateTimeGraphs(period) {
     });
 }
 
+
 // **Initialize Area-wise Usage Charts**
 function createAreaCharts() {
     console.log('Creating area charts');
     try {
         areaPieChart = new Chart(areaPieCtx, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
                 labels: Object.keys(areaData),
                 datasets: [{
@@ -162,17 +163,26 @@ function createAreaCharts() {
                     backgroundColor: 'teal'
                 }]
             },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            options: {
+                responsive: true,
+                scales: {y: { beginAtZero: true }, 
+                cutout: "60%", // Adjusts the center hole size (Donut effect)
+                    plugins: {
+                        legend: {
+                            position: "right" // Move legend to right side
+                        }
+                    }
+                }
+            }
         });
     } catch (error) {
         console.error('Error creating area charts:', error);
     }
 }
 
+
 // **Initialize Device-wise Usage Charts**
 function createDeviceCharts() {
-    // Only create these charts on the power usage page
-    if (!devicePieCtx || !deviceBarCtx) return;
 
     console.log('Creating device charts');
     try {
@@ -338,7 +348,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setupEventListeners();
 
         // Create charts based on which page we're on
-        createTimeGraphs(); 
+        createTimeGraphs();
 
         createAreaCharts();
         createDeviceCharts();

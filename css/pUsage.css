@@ -156,11 +156,6 @@
     /*position: relative;*/
 }
 
-.graph-container {
-    width: 100%;
-    height: calc(100% - 40px);
-
-}
 
 /* Section Header Styling */
 .section-header {
