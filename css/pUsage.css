@@ -162,6 +162,17 @@
 
 }
 
+/* Section Header Styling */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 10px;
+    /* Adds spacing between the header and graphs */
+}
+
 /* Redirect Button Styling */
 .redirect-button {
     background-color: #ADA8A9 ;
@@ -171,6 +182,8 @@
     font-size: 14px;
     border-radius: 20px;
     cursor: pointer;
+    width: 26px;
+    height: 26px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     font-weight: 600;
 }
