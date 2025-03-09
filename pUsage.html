@@ -97,30 +97,21 @@
                 <p>This month: 70 kWh</p>
                 <p>Today: 5 kWh</p>
             </div>
+
+            <!-- device usage Panel -->
             <div class="device-panel">
                 <h3>Device Usage</h3>
+
+                <button class="redirect-button" onclick="location.href='areaWise.html'"><img
+                    src="images/icons/arow icon copy.png" alt="Area Usage" title="Area Usage" class="redirect-icon"></button>
+
                 <div class="pie-chart-container">
-                    <!-- Empty pie chart container -->
-                    <div class="empty-pie"></div>
-                </div>
-                <div class="device-usage-details">
-                    <div class="device-item">
-                        <span class="percentage">60%</span>
-                        <span class="device-type">A/C</span>
-                        <div class="color-bar" style="background-color: #2B3695;"></div>
-                    </div>
-                    <div class="device-item">
-                        <span class="percentage">70%</span>
-                        <span class="device-type">Lights</span>
-                        <div class="color-bar" style="background-color: #6976EB;"></div>
-                    </div>
-                    <div class="device-item">
-                        <span class="percentage">60%</span>
-                        <span class="device-type">Computer</span>
-                        <div class="color-bar" style="background-color: #ADB4F3;"></div>
-                    </div>
+                        <div class="graph-container">
+                            <canvas id="devicePieChart"></canvas>
+                        </div>
                 </div>
             </div>
+
         </aside>
     </div>
 

@@ -121,7 +121,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     margin: 20px 0;
     width: 100%;
     margin-bottom: 20px;
@@ -186,16 +185,6 @@
     width: 26px;
     height: 26px;
     cursor: pointer;
-}
-
-.redirect-button:hover {
-    background-color: #898082;
-    transform: scale(1.05);
-}
-
-.redirect-button:active {
-    background-color: #898082;
-    transform: scale(1);
 }
 
 .graph-header {
