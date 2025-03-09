@@ -169,6 +169,7 @@
 
 /* Redirect Button Styling */
 .redirect-button {
+    background-color: none ;
     border: none;
     padding: 10px 15px;
     font-size: 14px;
@@ -292,12 +293,12 @@
 }
 
 .expenses-panel {
-    background-color: #ADB4F3;
+    background-color: #FAF2E3;
     height: 84px;
 }
 
 .power-usage-panel {
-    background-color: #6976EB;
+    background-color: #FAF2E3;
     height: 84px;
 }
 
