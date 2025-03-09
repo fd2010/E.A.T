@@ -23,16 +23,18 @@
         <div class="nav-icons">
             <img src="./images/icons/notification bell.png" alt="Notifications" class="nav-icon">
             <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
-            <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
+            <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices"
+                    class="nav-icon"></a>
             <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
             <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
-            
+
             <img src="./images/icons/settings cog (MIT).png" alt="Settings" class="nav-icon">
-            
+
         </div>
 
         <div class="logout-icon">
-            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
+            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout"
+                    title="Logout"></button>
         </div>
     </nav>
 
@@ -42,21 +44,42 @@
             <h1 class="power-usage-title">Power Usage</h1>
             <p class="energy-consumption">Here's your device energy consumption rate</p>
 
+
+            <div class="section-header">
+                <h3 class="graph-title">Overall Usage</h3>
+                <button class="redirect-button" onclick="location.href='areaWise.html'"><img src="images/icons/arow icon copy.png" alt="Overall Usage"
+                    title="Overall Usage"></button>
+            </div>
+
             <!-- Overall Usage (Empty Section) -->
             <section class="graph-section overall-usage">
-                <h3 class="graph-title">Overall Usage</h3>
+
+                <!-- Time Selection Buttons -->
+                <div class="graph-buttons">
+                    <div class="graph-buttons">
+                        <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                        <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                        <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                    </div>
+                </div>
+
                 <div class="graph-container">
-                    <!--  graph container -->
                     <canvas id="energyUsageChart"></canvas>
 
                 </div>
             </section>
 
+            <div class="section-header">
+                <h3 class="graph-title">Usage by Area</h3>
+                <button class="redirect-button" onclick="location.href='areaWise.html'"><img src="images/icons/arow icon copy.png" alt="Area Usage"
+                    title="Area Usage"></button>
+            </div>
+
+        
             <!-- Usage by Area (Empty Section) -->
             <section class="graph-section usage-by-area">
-                <h3 class="graph-title">Usage by Area</h3>
+
                 <div class="graph-container">
-                    <!--  graph container -->
                     <canvas id="areaBarChart"></canvas>
                 </div>
             </section>
@@ -111,4 +134,5 @@
     <script type="module" src="./javascript/powerUsage.js"></script>
     <script type="module" src="./javascript/dashboard.js"></script>
 </body>
+
 </html>

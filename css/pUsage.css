@@ -153,7 +153,6 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     /*position: relative;*/
 }
 
@@ -312,7 +311,7 @@
     font-size: 18px;
     color: rgba(22, 26, 65, 0.78);
     margin-bottom: 15px;
-    text-align: center;
+    text-align: left;
 }
 
 .pie-chart-container {
