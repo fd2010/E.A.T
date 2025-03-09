@@ -157,6 +157,40 @@ function toggleDarkMode(isDark) {
         }
     }
 
+    // Update user profile section
+    const userProfile = document.querySelector('.user-profile');
+    if (userProfile) {
+        if (isDark) {
+            userProfile.style.background = 'linear-gradient(145deg,rgb(255, 255, 255),rgb(255, 255, 255))';
+            userProfile.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.5)';
+        } else {
+            userProfile.style.background = 'linear-gradient(145deg, #121212, #2a2a2a)';
+            userProfile.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
+        }
+    }
+
+    // Update user role badge
+    const userRole = document.getElementById('userRole');
+    if (userRole) {
+        if (isDark) {
+            userRole.style.backgroundColor = '#444444';
+            userRole.style.color = '#FFFFFF';
+        } else {
+            userRole.style.backgroundColor = '#f5f5f5';
+            userRole.style.color = '#333';
+        }
+    }
+
+    // Update profile icon background
+const profileIcon = document.querySelector('.profile-icon');
+if (profileIcon) {
+    if (isDark) {
+        profileIcon.style.backgroundColor = '#000000';
+    } else {
+        profileIcon.style.backgroundColor = '#FFF';
+    }
+}
+
 }
 
 
