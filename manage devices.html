@@ -9,6 +9,8 @@
         <link rel="stylesheet" href="./css/formstyles.css">
         <link rel="stylesheet" href="./css/dashboard.css">
         <link rel="stylesheet" href="./css/addDevice.css">
+        <link rel="stylesheet" href="./css/notification.css">
+        <link rel="stylesheet" href="./css/settings.css">
     </head>
 
     <body class="bodyLight">
@@ -19,21 +21,21 @@
         <!-- Side Navigation -->
         <nav class="side-nav">
             <div class="nav-logo">
-                <a href="user-profile.html"><img src="./images/icons/User Profile Icon.png" alt="User"></a>
+                <a href="user-profile.html"><img src="./images/icons/profile pic.svg" alt="User"></a>
             </div>
             <div class="nav-icons">
-                <img src="./images/icons/notification bell.png" alt="Notifications" class="nav-icon">
-                <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
-                <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
-                <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
-                <a href="pUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
+                <img src="./images/icons/bell 2 icon.svg" alt="Notifications" class="nav-icon">
+                <a href="dashboard.html"><img src="./images/icons/home icon.svg" alt="Home" class="nav-icon"></a>
+                <a href="manage devices.html"><img src="./images/icons/tablet device.svg" alt="Manage Devices" class="nav-icon"></a>
+                <img src="./images/icons/add device icon.svg" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+                <a href="pUsage.html"><img src="./images/icons/view stats icon.svg" alt="Stats" class="nav-icon"></a>
                 
-                <img src="./images/icons/settings cog (MIT).png" alt="Settings" class="nav-icon">
+                <img src="./images/icons/settings.svg" alt="Settings" class="nav-icon" onclick="showSettingsModal()">
                 
             </div>
 
             <div class="logout-icon">
-                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
+                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout" title="Logout"></button>
             </div>
         </nav>
     
@@ -116,7 +118,7 @@
 
         <script type="module" src="./javascript/dashboard.js"></script>
         <script type="module" src="./javascript/add-device.js"></script>
-        <script type="module" src="./javascript/search-device.js"></script>
+        <script type="module" src="./javascript/settings.js"></script>
         <!-- <script type="module" src="./javascript/fade-effects.js"></script> -->
     </body>
 </html>
