@@ -137,11 +137,9 @@ function updateTimeGraphs(period) {
     });
 }
 
+
 // **Initialize Area-wise Usage Charts**
 function createAreaCharts() {
-    // Only create these charts on the power usage page
-    if (!areaPieCtx || !areaBarCtx) return;
-
     console.log('Creating area charts');
     try {
         areaPieChart = new Chart(areaPieCtx, {
@@ -172,10 +170,10 @@ function createAreaCharts() {
     }
 }
 
+
+
 // **Initialize Device-wise Usage Charts**
 function createDeviceCharts() {
-    // Only create these charts on the power usage page
-    if (!devicePieCtx || !deviceBarCtx) return;
 
     console.log('Creating device charts');
     try {
@@ -252,28 +250,28 @@ function calculateTotals() {
 
         // Assign values to the footer
         totalEnergyElement.textContent = `${totalEnergy}`;
-        
+
         const totalCostElement = document.getElementById('totalCost');
         if (totalCostElement) {
             totalCostElement.textContent = `${totalCost.toFixed(2)}`;
         }
-        
+
         // Check if these elements exist before updating them
         const minUsageRoomElement = document.getElementById('minUsageRoom');
         if (minUsageRoomElement) {
             minUsageRoomElement.textContent = ` ${minRoom}`;
         }
-        
+
         const maxUsageRoomElement = document.getElementById('maxUsageRoom');
         if (maxUsageRoomElement) {
             maxUsageRoomElement.textContent = `: ${maxRoom}`;
         }
-        
+
         const minUsageDeviceElement = document.getElementById('minUsageDevice');
         if (minUsageDeviceElement) {
             minUsageDeviceElement.textContent = ` ${minDevice}`;
         }
-        
+
         const maxUsageDeviceElement = document.getElementById('maxUsageDevice');
         if (maxUsageDeviceElement) {
             maxUsageDeviceElement.textContent = ` ${maxDevice}`;
@@ -286,19 +284,19 @@ function calculateTotals() {
 // Setup event listeners for the period selection buttons
 function setupEventListeners() {
     console.log('Setting up event listeners');
-    
+
     try {
         // Add event listeners to all period buttons that exist on the page
         const dailyBtn = document.getElementById("daily");
         const weeklyBtn = document.getElementById("weekly");
         const monthlyBtn = document.getElementById("monthly");
-        
-        console.log('Buttons found:', { 
-            daily: !!dailyBtn, 
-            weekly: !!weeklyBtn, 
-            monthly: !!monthlyBtn 
+
+        console.log('Buttons found:', {
+            daily: !!dailyBtn,
+            weekly: !!weeklyBtn,
+            monthly: !!monthlyBtn
         });
-        
+
         if (dailyBtn) {
             console.log('Adding click listener to daily button');
             dailyBtn.addEventListener("click", () => {
@@ -306,7 +304,7 @@ function setupEventListeners() {
                 updateTimeGraphs('daily');
             });
         }
-        
+
         if (weeklyBtn) {
             console.log('Adding click listener to weekly button');
             weeklyBtn.addEventListener("click", () => {
@@ -314,7 +312,7 @@ function setupEventListeners() {
                 updateTimeGraphs('weekly');
             });
         }
-        
+
         if (monthlyBtn) {
             console.log('Adding click listener to monthly button');
             monthlyBtn.addEventListener("click", () => {
@@ -333,22 +331,20 @@ function setupEventListeners() {
 }
 
 // **Run Scripts on Page Load**
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM Content Loaded - Power usage script running");
-    
+
     try {
         // Setup event listeners
         setupEventListeners();
-        
+
         // Create charts based on which page we're on
-        createTimeGraphs(); // Both pages need this, but now it's safe
-        
-        if (isPowerUsagePage) {
-            // Create additional charts only for the power usage page
-            createAreaCharts();
-            createDeviceCharts();
-            calculateTotals();
-        }
+        createTimeGraphs();
+
+        createAreaCharts();
+        createDeviceCharts();
+        calculateTotals();
+
     } catch (error) {
         console.error('Error in DOMContentLoaded handler:', error);
     }
