@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="./css/dashboard.css">
         <link rel="stylesheet" href="./css/addDevice.css">
         <link rel="stylesheet" href="./css/thermostat.css">
+        <link rel="stylesheet" href="./css/notification.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     
@@ -199,6 +200,20 @@
 
 
      
+
+        <!-- Notification Modal -->
+        <div id="notificationModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                
+                <h2 class="h2Light">Notifications</h2>
+                
+                <div id="notificationsList" class="notifications-list">
+                    <!-- Notifications will be dynamically inserted here -->
+                    <div class="no-notifications-message">No notifications to display</div>
+                </div>
+            </div>
+        </div>
 
         <script>
             window.onerror = function(msg, url, line, col, error) {
