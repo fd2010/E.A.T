@@ -261,6 +261,38 @@
     height: 35px;
 }
 
+/* Dashboard-specific more items styling (for both devices and energy sections) */
+.dashboard-grid .devices-section,
+.dashboard-grid .energy-section {
+    position: relative; /* Ensure both sections can position absolute elements */
+}
+
+/* This class is only used in the dashboard, not in manage devices */
+.dashboard-more-items-link {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    text-decoration: none;
+}
+
+/* Scope the styling to dashboard only */
+.dashboard-more-items-link .more-items-img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.dashboard-more-items-link .more-items-img:hover {
+    transform: scale(1.2);
+}
+
+/* Energy section specific style adjustments if needed */
+.energy-section .dashboard-more-items-link {
+    bottom: 15px; /* Adjust if needed based on the energy section layout */
+}
+
 /* Zoom level and screen size media queries */
 @media screen and (min-width: 1600px) {
     .manage-devices-grid .devices-section {
@@ -1232,4 +1264,24 @@ li .logout-btn img {
 
 .room-navigation::-webkit-scrollbar-thumb:hover {
     background: #7a8763;
+}
+
+
+
+/* Target only the dashboard's devices grid (not manage devices page) */
+.dashboard-grid .devices-grid {
+    height: 200px; /* Reduced from 300px */
+    min-height: 200px;
+    margin-bottom: 0;
+}
+
+/* Target only the dashboard's device cards if needed */
+.dashboard-grid .device-card {
+    height: 180px; /* Slightly reduced to fit better */
+}
+
+/* Ensure these styles don't affect manage devices page */
+.manage-devices-grid .devices-grid {
+    height: calc(100vh - 250px);
+    min-height: 400px;
 }
