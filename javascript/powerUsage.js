@@ -213,14 +213,14 @@ const deviceUsage = Object.values(deviceData);
 
 const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.length);
 
-// Create datasets dynamically for a multi-ring effect
+ // Create datasets dynamically for each ring
 const datasets = deviceNames.map((device, index) => ({
-    label: device, 
+    label: device,
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
-    backgroundColor: [blueShades[index], '#E5E5E5'], //  Color + Gray for unused
-    borderWidth: 8, // Thicker rings
-    cutout: `${40 + index * 12}%`, // More space between rings
-    rotation: 270, // Start from top
+    backgroundColor: [blueShades[index], '#E5E5E5'], // Color + Gray for unused
+    borderWidth: 10, // Thicker rings
+    cutout: `${30 + index * 15}%`, // Expands rings outward for spacing
+    rotation: 0, // Starts from the top
 }));
 
 // **Initialize Device-wise Usage Charts**
@@ -234,26 +234,14 @@ function createDeviceCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } }, // Hide default legend
-                cutout: '25%', // Controls inner empty space
-            }
-        });
-
-        deviceBarChart = new Chart(deviceBarCtx, {
-            type: 'bar',
-            data: { datasets },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '30%', // Controls inner empty space
                 plugins: {
                     legend: { display: false }, // Hide default legend
                     tooltip: {
                         callbacks: {
-                            title: function(tooltipItems) {
+                            title: function (tooltipItems) {
                                 return deviceNames[tooltipItems[0].datasetIndex]; // Correct device label
                             },
-                            label: function(tooltipItem) {
+                            label: function (tooltipItem) {
                                 return `Usage: ${deviceUsage[tooltipItem.datasetIndex]}%`;
                             }
                         }
@@ -261,6 +249,20 @@ function createDeviceCharts() {
                 }
             }
         });
+
+        deviceBarChart = new Chart(deviceBarCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(deviceData),
+                datasets: [{
+                    label: 'Energy Usage (kW)',
+                    data: Object.values(deviceData),
+                    backgroundColor: 'purple'
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+        
     } catch (error) {
         console.error('Error creating device charts:', error);
     }
