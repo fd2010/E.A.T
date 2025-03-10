@@ -24,6 +24,7 @@
     margin: 0 auto;
     position: relative;
     min-height: 100vh;
+    background-color: #ffffff;
 }
 
 /* Side Navigation */
@@ -218,7 +219,7 @@
     justify-content: center; 
     align-items: center;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .graph-buttons {
