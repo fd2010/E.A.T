@@ -186,18 +186,33 @@ function createAreaCharts() {
 
 // Function to generate gradient shades between two colors
 function generateGradientColors(startColor, endColor, steps) {
-    let start = parseInt(startColor.slice(1), 16);
-    let end = parseInt(endColor.slice(1), 16);
-    let colors = [];
-
-    for (let i = 0; i < steps; i++) {
-        let r = ((start >> 16) * (steps - i) + (end >> 16) * i) / steps;
-        let g = (((start >> 8) & 0xff) * (steps - i) + ((end >> 8) & i)) / steps;
-        let b = ((start & 0xff) * (steps - i) + (end & 0xff) * i) / steps;
-
-        colors.push(`#${((1 << 24) + (Math.round(r) << 16) + (Math.round(g) << 8) + Math.round(b)).toString(16).slice(1)}`);
+    function hexToRgb(hex) {
+        hex = hex.replace(/^#/, '');
+        let bigint = parseInt(hex, 16);
+        return {
+            r: (bigint >> 16) & 255,
+            g: (bigint >> 8) & 255,
+            b: bigint & 255
+        };
     }
-    return colors;
+    
+    function rgbToHex(r, g, b) {
+        return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
+    }
+    
+    let startRGB = hexToRgb(startColor);
+    let endRGB = hexToRgb(endColor);
+    let gradient = [];
+    
+    for (let i = 0; i < steps; i++) {
+        let r = Math.round(startRGB.r + (endRGB.r - startRGB.r) * (i / (steps - 1)));
+        let g = Math.round(startRGB.g + (endRGB.g - startRGB.g) * (i / (steps - 1)));
+        let b = Math.round(startRGB.b + (endRGB.b - startRGB.b) * (i / (steps - 1)));
+        
+        gradient.push(rgbToHex(r, g, b));
+    }
+    
+    return gradient;
 }
 
 const deviceNames = Object.keys(deviceData);
