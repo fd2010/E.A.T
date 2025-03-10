@@ -1,337 +1,267 @@
 /* Thermostat Section */
-.thermostat-header {
+body {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.thermostat-title, .clock-title  {
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-/* Thermostat Dial */
-.thermostat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: left;
-    border-radius: 23px;
-}
-
-.thermostat-dial {
-    position: relative;
-    width: 280px;  
-    height: 280px;
-    border-radius: 50%;
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 30px;
-}
-
-.temperature-markers {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-
-.temperature-marker {
-    position: absolute;
-    width: 2px;
-    height: 10px;
-    background-color: #ddd;
-    transform-origin: center bottom;
-}
-
-.temperature-label {
-    position: absolute;
-    font-size: 12px;
-    color: #888;
-}
-
-.dial-centre {
-    width: 200px;  
-    height: 200px;
-    border-radius: 50%;
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.heating-label {
-    font-size: 14px;
-    color: #666;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-}
-
-.temperature-display {
-    font-size: 80px; 
-    font-weight: 300;
-    color: #333;
-    line-height: 1;
-    font-family: "Kay Pho Du", sans-serif;
-}
-
-.status {
-    font-size: 18px;  
-    color: #333;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-}
-
-.info-card.temprature .thermostat-dial {
-    position: relative;
-    width: 220px;  
-    height: 220px; 
-    border-radius: 50%;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-}
-        
-.info-card.temprature .dial-center {
-    width: 150px; 
-    height: 150px;
-    border-radius: 50%;
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.info-card.temprature .temperature-display {
-    font-size: 46px; 
-    font-weight: bold;
-    color: #333;
-    font-family: "Kay Pho Du", sans-serif;
+    height: 100vh;
     margin: 0;
-}
-
-.info-card.temprature .status {
-    font-size: 16px;  
-    color: #333;
-    text-transform: uppercase;
-    margin-bottom: 5px;
+    font-size: 18px;
     font-family: "Kay Pho Du", sans-serif;
-}
-
-.info-card.temprature .dial-handle {
-    position: absolute;
-    width: 220px;  
-    height: 220px; 
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.info-card.temprature .temperature-label {
-    position: absolute;
-    font-size: 12px;  
-    color: #666;
-    font-family: "Kay Pho Du", sans-serif;
-}
-
-.info-card.temprature .dial-marker {
-    position: absolute;
-    width: 3px;   
-    height: 10px; 
-    background-color: #999;
-    top: 5px;
-    left: 50%;
-    transform-origin: bottom center;
-    border-radius: 1px;
-}
-
-.info-card.temprature .status-icon {
-    width: 18px;  
-    height: 18px; 
-    border-radius: 50%;
-    background-color: #FFDC52;
-    margin-top: 5px;
-}
-
-/* Analog Clock with Digital Display Styles */
-.clock {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.clock-container {
+    font-weight: 500;
+  }
+   
+  #wrapper {
+    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-}
-
-.clock-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-
-/* Analog Clock Styles */
-.analog-clock {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 10px auto;
-}
-
-.clock-face {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-    border-radius: 50%;
-}
-
-.marking {
-    position: absolute;
-    background-color: #333;
-}
-
-.marking-12, .marking-6 {
-    width: 4px;
-    height: 12px;
-    left: calc(50% - 2px);
-}
-
-.marking-12 {
-    top: 10px;
-}
-
-.marking-6 {
-    bottom: 10px;
-}
-
-.marking-3, .marking-9 {
-    width: 12px;
-    height: 4px;
-    top: calc(50% - 2px);
-}
-
-.marking-3 {
-    right: 10px;
-}
-
-.marking-9 {
-    left: 10px;
-}
-
-.hand {
-    position: absolute;
-    left: 50%;
-    bottom: 50%;
-    transform-origin: 50% 100%;
-    border-radius: 10px;
-}
-
-.hour-hand {
-    width: 6px;
-    height: 50px;
-    margin-left: -3px;
-    background-color: #333;
-}
-
-.minute-hand {
-    width: 4px;
-    height: 70px;
-    margin-left: -2px;
-    background-color: #666;
-}
-
-.second-hand {
-    width: 2px;
-    height: 75px;
-    margin-left: -1px;
-    background-color: #e74c3c;
-}
-
-.center-dot {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    top: calc(50% - 6px);
-    left: calc(50% - 6px);
-    background-color: #333;
-    border-radius: 50%;
-}
-
-/* Digital Display Styles */
-.digital-display {
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-    border-radius: 10px;
-    padding: 8px 15px;
-    width: 100%;
+  }
+   
+  p {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+   
+  #info {
+    opacity: 0.2;
+    margin: 0;
     text-align: center;
-    margin-top: 15px;
-}
-
-.time {
-    font-size: 22px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 2px;
-}
-
-.date {
-    font-size: 14px;
-    color: #7f8c8d;
-}
-
-@media (max-width: 1200px) {
-
-    .thermostat-section {
-        grid-column: 1 / 2;
-        grid-row: 3 / 4;
-        max-width: 100%;
-    }
-
-}
-
-@media (max-width: 768px) {
-    .info-card.temprature .thermostat-dial {
-        width: 180px;
-        height: 180px;
-    }
-    
-    .info-card.temprature .dial-center {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .info-card.temprature .temperature-display {
-        font-size: 36px;
-    }
-    
-    .info-card.temprature .dial-handle {
-        width: 180px;
-        height: 180px;
-    }
-}
-
-@media (max-width: 480px) {
-}
-
-
-
-
-
+  }
+   
+  #termometer {
+    width: 25px;
+    background: #38383f;
+    height: 240px;
+    position: relative;
+    border: 9px solid #2a2a2e;
+    border-radius: 20px;
+    z-index: 1;
+    margin-bottom: 50px;
+  }
+  #termometer:before, #termometer:after {
+    position: absolute;
+    content: "";
+    border-radius: 50%;
+  }
+  #termometer:before {
+    width: 100%;
+    height: 34px;
+    bottom: 9px;
+    background: #38383f;
+    z-index: -1;
+  }
+  #termometer:after {
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: #3dcadf;
+    bottom: -41px;
+    border: 9px solid #2a2a2e;
+    z-index: -3;
+    left: 50%;
+  }
+  #termometer #graduations {
+    height: 59%;
+    top: 20%;
+    width: 50%;
+  }
+  #termometer #graduations, #termometer #graduations:before {
+    position: absolute;
+    border-top: 2px solid rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  }
+  #termometer #graduations:before {
+    content: "";
+    height: 34%;
+    width: 100%;
+    top: 32%;
+  }
+  #termometer #temperature {
+    bottom: 0;
+    background: linear-gradient(#f17a65, #3dcadf) no-repeat bottom;
+    width: 100%;
+    border-radius: 20px;
+    background-size: 100% 240px;
+    transition: all 0.2s ease-in-out;
+  }
+  #termometer #temperature, #termometer #temperature:before, #termometer #temperature:after {
+    position: absolute;
+  }
+  #termometer #temperature:before {
+    content: attr(data-value);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    z-index: 2;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1em;
+    line-height: 1;
+    transform: translateY(50%);
+    left: calc(100% + 1em / 1.5);
+    top: calc(-1em + 5px - 5px * 2);
+  }
+  #termometer #temperature:after {
+    content: "";
+    border-top: 0.4545454545em solid transparent;
+    border-bottom: 0.4545454545em solid transparent;
+    border-right: 0.6666666667em solid rgba(0, 0, 0, 0.7);
+    left: 100%;
+    top: calc(-1em / 2.2 + 5px);
+  }
+   
+  #playground {
+    font-size: 1.1em;
+  }
+  #playground #range {
+    display: flex;
+  }
+  #playground #range input[type=text] {
+    width: 2em;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    margin: 0 5px;
+    padding: 0px 5px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+  }
+  #playground #range input[type=text]:focus {
+    border-color: #3dcadf;
+    outline: none;
+  }
+  #playground #range input[type=text]:first-child {
+    text-align: right;
+  }
+  #playground #unit {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+  #playground #unit:hover {
+    cursor: pointer;
+  }
+   
+  input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+    margin: 5.5px 0;
+    width: 100%;
+  }
+  input[type=range]::-moz-focus-outer {
+    border: 0;
+  }
+  input[type=range]:hover {
+    cursor: pointer;
+  }
+  input[type=range]:focus {
+    outline: 0;
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #313137;
+    border-color: #313137;
+  }
+  input[type=range]:focus::-ms-fill-lower {
+    background: #2a2a2e;
+  }
+  input[type=range]:focus::-ms-fill-upper {
+    background: #313137;
+    border-color: #313137;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    cursor: default;
+    height: 10px;
+    transition: all 0.2s ease;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 1px 1px 1px transparent, 0 0 1px rgba(13, 13, 13, 0);
+    background: #2a2a2e;
+    border: 2px solid #2a2a2e;
+    border-radius: 5px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    box-shadow: 4px 4px 4px transparent, 0 0 4px rgba(13, 13, 13, 0);
+    background: #3dcadf;
+    border: 0px solid #3d3d44;
+    border-radius: 12px;
+    cursor: pointer;
+    height: 11px;
+    width: 18px;
+    -webkit-appearance: none;
+    margin-top: -2.5px;
+  }
+  input[type=range]::-moz-range-track {
+    box-shadow: 1px 1px 1px transparent, 0 0 1px rgba(13, 13, 13, 0);
+    cursor: default;
+    height: 10px;
+    transition: all 0.2s ease;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background: #2a2a2e;
+    border: 2px solid #2a2a2e;
+    border-radius: 5px;
+    height: 5px;
+  }
+  input[type=range]::-moz-range-thumb {
+    box-shadow: 4px 4px 4px transparent, 0 0 4px rgba(13, 13, 13, 0);
+    background: #3dcadf;
+    border: 0px solid #3d3d44;
+    border-radius: 12px;
+    cursor: pointer;
+    height: 7px;
+    width: 14px;
+  }
+  input[type=range]::-ms-track {
+    cursor: default;
+    height: 10px;
+    transition: all 0.2s ease;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background: transparent;
+    border-color: transparent;
+    border-width: 5.5px 0;
+    color: transparent;
+  }
+  input[type=range]::-ms-fill-lower {
+    box-shadow: 1px 1px 1px transparent, 0 0 1px rgba(13, 13, 13, 0);
+    background: #222226;
+    border: 2px solid #2a2a2e;
+    border-radius: 10px;
+  }
+  input[type=range]::-ms-fill-upper {
+    box-shadow: 1px 1px 1px transparent, 0 0 1px rgba(13, 13, 13, 0);
+    background: #2a2a2e;
+    border: 2px solid #2a2a2e;
+    border-radius: 10px;
+  }
+  input[type=range]::-ms-thumb {
+    box-shadow: 4px 4px 4px transparent, 0 0 4px rgba(13, 13, 13, 0);
+    background: #3dcadf;
+    border: 0px solid #3d3d44;
+    border-radius: 12px;
+    cursor: pointer;
+    height: 7px;
+    width: 14px;
+    margin-top: 2.5px;
+  }
+  input[type=range]:disabled::-webkit-slider-thumb {
+    cursor: not-allowed;
+  }
+  input[type=range]:disabled::-moz-range-thumb {
+    cursor: not-allowed;
+  }
+  input[type=range]:disabled::-ms-thumb {
+    cursor: not-allowed;
+  }
+  input[type=range]:disabled::-webkit-slider-runnable-track {
+    cursor: not-allowed;
+  }
+  input[type=range]:disabled::-ms-fill-lower {
+    cursor: not-allowed;
+  }
+  input[type=range]:disabled::-ms-fill-upper {
+    cursor: not-allowed;
+  }
