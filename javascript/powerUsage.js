@@ -150,30 +150,6 @@ function updateTimeGraphs(period) {
     });
 }
 
-// Function to generate gradient shades between two colors
-function generateGradientColors(startColor, endColor, steps) {
-    const start = parseInt(startColor.slice(1), 16);
-    const end = parseInt(endColor.slice(1), 16);
-
-    const startR = (start >> 16) & 0xff,
-        startG = (start >> 8) & 0xff,
-        startB = start & 0xff;
-    const endR = (end >> 16) & 0xff,
-        endG = (end >> 8) & 0xff,
-        endB = end & 0xff;
-
-    const colors = [];
-
-    for (let i = 0; i < steps; i++) {
-        const r = Math.round(startR + ((endR - startR) * i) / (steps - 1));
-        const g = Math.round(startG + ((endG - startG) * i) / (steps - 1));
-        const b = Math.round(startB + ((endB - startB) * i) / (steps - 1));
-        colors.push(`#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`);
-    }
-
-    return colors;
-}
-
 // **Initialize Area-wise Usage Charts**
 function createAreaCharts() {
     console.log('Creating area charts');
@@ -208,6 +184,22 @@ function createAreaCharts() {
 
 // PIE CHART - DEVICE
 
+// Function to generate gradient shades between two colors
+function generateGradientColors(startColor, endColor, steps) {
+    let start = parseInt(startColor.slice(1), 16);
+    let end = parseInt(endColor.slice(1), 16);
+    let colors = [];
+
+    for (let i = 0; i < steps; i++) {
+        let r = ((start >> 16) * (steps - i) + (end >> 16) * i) / steps;
+        let g = (((start >> 8) & 0xff) * (steps - i) + ((end >> 8) & i)) / steps;
+        let b = ((start & 0xff) * (steps - i) + (end & 0xff) * i) / steps;
+
+        colors.push(`#${((1 << 24) + (Math.round(r) << 16) + (Math.round(g) << 8) + Math.round(b)).toString(16).slice(1)}`);
+    }
+    return colors;
+}
+
 const deviceNames = Object.keys(deviceData);
 const deviceUsage = Object.values(deviceData);
 
@@ -220,6 +212,7 @@ const datasets = deviceNames.map((device, index) => ({
     backgroundColor: [blueShades[index], '#E5E5E5'], // Color + Gray for unused
     borderWidth: 10, // Thicker rings
     cutout: `${30 + index * 15}%`, // Expands rings outward for spacing
+    circumference: 360,
     rotation: 0, // Starts from the top
 }));
 
@@ -262,7 +255,7 @@ function createDeviceCharts() {
             },
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
         });
-        
+
     } catch (error) {
         console.error('Error creating device charts:', error);
     }
