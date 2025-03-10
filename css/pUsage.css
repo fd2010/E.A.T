@@ -17,7 +17,7 @@
 }
 
 /* Container for Layout */
-.container {
+.power-container {
     display: flex;
     width: 100%;
     max-width: 1440px;
@@ -79,7 +79,7 @@
     font-weight: 700;
     font-size: 48px;
     line-height: 59px;
-    color: #C3C559;
+    color: #000000;
     margin-bottom: 6px;
 }
 
@@ -87,7 +87,7 @@
     font-weight: 300;
     font-size: 20px;
     line-height: 24px;
-    color: #5E6C40;
+    color: #000000;
     margin-bottom: 40px;
 }
 
@@ -109,7 +109,7 @@
 }
 
 .overall-usage {
-    background-color: #F2F3EC;
+    background-color: #ECEFE7;
 }
 
 .usage-by-area {
@@ -189,6 +189,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    right: 5;
+    top: 5;
 }
 
 
@@ -339,12 +342,25 @@
     text-align: left;
 }
 
+
 .pie-chart-container {
-    width: 174px;
-    height: 174px;
+    width: 100%; /* Make it take full width of the container */
+    height: auto;
     margin: 0 auto 20px;
+    display: flex;
+    justify-content: center; /* Center it inside the panel */
+    align-items: center;
+    overflow: hidden; /* Prevents overflow */
+    padding: 10px;
 }
 
+.pie-container {
+    width: 150px; /* Adjust width for better fit */
+    height: 150px; /* Adjust height for better fit */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .empty-pie {
     width: 100%;
     height: 100%;
