@@ -64,8 +64,13 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Usage (kW)',
                         data: totalEnergyData[selectedTime],
-                        borderColor: '#606952',
-                        fill: false
+                        borderColor: '#606952', // Line color
+                        backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
+                        fill: false,
+                        tension: 0.4, // Makes the line curvy
+                        borderWidth: 2, // Adjust line thickness
+                        pointRadius: 4, // Adjust point size
+                        pointBackgroundColor: '#606952' // Point color
                     }]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -86,8 +91,13 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Cost (£)',
                         data: totalCostData[selectedTime],
-                        borderColor: '#B04242',
-                        fill: false
+                        borderColor: '#B04242', // Line color
+                        backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
+                        fill: false,
+                        tension: 0.4, // Makes the line curvy
+                        borderWidth: 2, // Adjust line thickness
+                        pointRadius: 4, // Adjust point size
+                        pointBackgroundColor: '#B04242' // Point color
                     }]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -170,7 +180,26 @@ function createAreaCharts() {
     }
 }
 
+// Define blue gradient shades (from dark to light)
+const blueShades = [
+    '#0D1981', '#1A2A97', '#2840AD', '#3656C3',
+    '#437DD9', '#5193EF', '#AABAF3', '#D3DCF9'
+];
 
+// Extract device names and usage values
+const deviceNames = Object.keys(deviceData);
+const deviceUsage = Object.values(deviceData);
+
+// Create datasets dynamically for a multi-ring effect
+const datasets = deviceNames.map((device, index) => ({
+    label: device,
+    data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
+    backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], // Color + Gray for empty space
+    borderWidth: 2,
+    cutout: `${50 + index * 10}%`, // Expands each ring outward
+    circumference: 180, // Half-circle effect (optional)
+    rotation: 270 // Aligns half-circle at the top (optional)
+}));
 
 // **Initialize Device-wise Usage Charts**
 function createDeviceCharts() {
@@ -178,16 +207,15 @@ function createDeviceCharts() {
     console.log('Creating device charts');
     try {
         devicePieChart = new Chart(devicePieCtx, {
-            type: 'pie',
-            data: {
-                labels: Object.keys(deviceData),
-                datasets: [{
-                    data: Object.values(deviceData),
-                    backgroundColor: [
-                        '#0D1981', '#1A2A97', '#2840AD', '#3656C3',
-                         '#437DD9', '#5193EF', '#AABAF3', '#D3DCF9'
-                    ]
-                }]
+            type: 'doughnut',
+            data: { labels: deviceNames, datasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false } // Hide default legend
+                },
+                cutout: '40%', // Controls inner empty space
             }
         });
 
