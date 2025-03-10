@@ -228,9 +228,9 @@ console.log("Generated Colors:", blueShades);
 const datasets = deviceNames.map((device, index) => ({
     label: device,
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
-    backgroundColor: [blueShades[index] || '#121c7b', '#E5E5E5'], // Color + Gray for unused
+    backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], // Color + Gray for unused
     borderWidth: 10, // Thicker rings
-    cutout: `${30 + index * 15}%`, // Expands rings outward for spacing
+    cutout: `${Math.min(30 + index * 10, 80)}%`, // Expands rings outward for spacing
     circumference: 360,
     rotation: 0, // Starts from the top
 }));
@@ -248,6 +248,7 @@ function createDeviceCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                clip: false,
                 plugins: {
                     legend: { display: false }, // Hide default legend
                     tooltip: {

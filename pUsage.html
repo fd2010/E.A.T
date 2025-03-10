@@ -27,16 +27,18 @@
         <div class="nav-icons">
             <img src="./images/icons/bell 2 icon.svg" alt="Notifications" class="nav-icon">
             <a href="dashboard.html"><img src="./images/icons/home icon.svg" alt="Home" class="nav-icon"></a>
-            <a href="manage devices.html"><img src="./images/icons/tablet device.svg" alt="Manage Devices" class="nav-icon"></a>
+            <a href="manage devices.html"><img src="./images/icons/tablet device.svg" alt="Manage Devices"
+                    class="nav-icon"></a>
             <img src="./images/icons/add device icon.svg" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
             <a href="pUsage.html"><img src="./images/icons/view stats icon.svg" alt="Stats" class="nav-icon"></a>
-            
+
             <img src="./images/icons/settings.svg" alt="Settings" class="nav-icon" onclick="showSettingsModal()">
-            
+
         </div>
 
         <div class="logout-icon">
-            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout" title="Logout" class="nav-icon"></button>
+            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout"
+                    title="Logout" class="nav-icon"></button>
         </div>
     </nav>
 
@@ -47,39 +49,41 @@
             <p class="energy-consumption">Here's your device energy consumption rate</p>
 
             <!-- Overall Usage (Empty Section) -->
-            <div class="section-header">
-                <h3 class="graph-title">Overall Usage</h3>
-        </div>           
-
-        <section class="graph-section overall-usage">
-
-            <div class="graph-buttons-container">
-                <div class="graph-buttons">
-                    <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                    <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                    <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+            <section class="graph-section overall-usage">
+                <div class="section-header">
+                    <h3 class="graph-title">Overall Usage</h3>
                 </div>
-                <button class="redirect-button" onclick="location.href='overallUsage.html'">
-                    <img src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage" class="redirect-icon">
-                </button>
-            </div>
-        
-            <div class="graph-container">
-                <canvas id="energyUsageChart"></canvas>
-            </div>
-            
-        </section>
+
+                <div class="graph-buttons-container">
+                    <div class="graph-buttons">
+                        <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                        <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                        <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                    </div>
+                    <button class="redirect-button" onclick="location.href='overallUsage.html'">
+                        <img src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
+                            class="redirect-icon">
+                    </button>
+                </div>
+
+                <div class="graph-container">
+                    <canvas id="energyUsageChart"></canvas>
+                </div>
+
+            </section>
 
 
             <!-- Usage by Area (Empty Section) -->
-            <div class="section-header">
-                <h3 class="graph-title">Usage by Area</h3>
-            </div>
 
             <section class="graph-section usage-by-area">
+                
+                <div class="section-header">
+                    <h3 class="graph-title">Usage by Area</h3>
+                </div>
 
                 <button class="redirect-button" onclick="location.href='areaWise.html'"><img
-                    src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage" class="redirect-icon"></button>
+                        src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
+                        class="redirect-icon"></button>
 
                 <div class="graph-container">
                     <canvas id="areaBarChart"></canvas>
@@ -105,12 +109,13 @@
                 <h3>Device Usage</h3>
 
                 <button class="redirect-button" onclick="location.href='deviceWise.html'"><img
-                    src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage" class="redirect-icon"></button>
+                        src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
+                        class="redirect-icon"></button>
 
                 <div class="pie-chart-container">
-                        <div class="pie-container">
-                            <canvas id="devicePieChart"></canvas>
-                        </div>
+                    <div class="pie-container">
+                        <canvas id="devicePieChart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -127,9 +132,9 @@
     <div id="notificationModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            
+
             <h2 class="h2Light">Notifications</h2>
-            
+
             <div id="notificationsList" class="notifications-list">
                 <!-- Notifications will be dynamically inserted here -->
                 <div class="no-notifications-message">No notifications to display</div>
@@ -138,7 +143,7 @@
     </div>
 
     <script>
-        window.onerror = function(msg, url, line, col, error) {
+        window.onerror = function (msg, url, line, col, error) {
             const errorDisplay = document.getElementById('errorDisplay');
             errorDisplay.style.display = 'block';
             errorDisplay.innerHTML = `An error occurred: ${msg}<br>Line: ${line}`;
