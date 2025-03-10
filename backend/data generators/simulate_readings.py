@@ -5,6 +5,29 @@ import os
 from datetime import datetime
 from create_database import create_database
 
+import firebase_admin
+from firebase_admin import credentials, db
+
+# Load your Firebase Admin credentials
+cred = credentials.Certificate("C:\Users\karan\OneDrive\Documents\GitHub\E.A.T\database\firebase-config.js")
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://energy-analysis-tool-default-rtdb.europe-west1.firebasedatabase.app'
+})
+
+# Reference to the root of the database
+ref = db.reference('/')
+
+# Retrieve data
+data = ref.get()
+print("Database data:", data)
+
+# Write data
+ref.child("test").set({"message": "Hello from Python!"})
+
+# Read back
+print("Test Data:", ref.child("test").get())
+
+
 class SmartMeterSimulator:
     def __init__(self, db_name='smart_meter.db'):
         self.db_name = os.path.abspath(db_name)
@@ -19,7 +42,7 @@ class SmartMeterSimulator:
             'Lights': {'watts_range': (10, 100)},  # Added Lights
             'Projector': {'watts_range': (150, 300)},  # Added Projector
             'Speakers': {'watts_range': (15, 80)},  # Added Speakers
-            'Roomba': {'watts_range': (30, 70)}  # Added Roomba
+            'Electric Hoover': {'watts_range': (30, 70)}
         }
     
     def check_database(self):
@@ -56,10 +79,10 @@ class SmartMeterSimulator:
                 else:  # Jun, Jul, Aug, Sep, Oct - middle 50%
                     device_min = min_watts + 0.25 * range_width
                     device_max = min_watts + 0.75 * range_width
-                
+            
                 device_watts = random.uniform(device_min, device_max)
                 total_watts += device_watts
-        
+         
         return voltage, total_watts
     
     def save_reading(self, voltage, watts):
