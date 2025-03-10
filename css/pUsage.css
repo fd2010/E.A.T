@@ -9,60 +9,15 @@
     box-sizing: border-box;
 }
 
-/* Body & Global Styles */
-.bodyLight {
-    background-color: #FFFFFF;
-    min-height: 100vh;
-    font-family: 'Montserrat', sans-serif;
-}
-
 /* Container for Layout */
-.container {
+.power-container {
     display: flex;
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
     position: relative;
     min-height: 100vh;
-}
-
-/* Side Navigation */
-.side-nav {
-    width: 120px;
-    background-color: #C1B99F;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    z-index: 100;
-}
-
-.nav-logo {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 40px;
-}
-
-.nav-icons {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    align-items: center;
-}
-
-.nav-icon {
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.nav-icon:hover {
-    transform: scale(1.1);
+    background-color: #ffffff;
 }
 
 /* Main Content Styles */
@@ -78,7 +33,7 @@
     font-weight: 700;
     font-size: 48px;
     line-height: 59px;
-    color: #C3C559;
+    color: #B3A99A;
     margin-bottom: 6px;
 }
 
@@ -86,8 +41,8 @@
     font-weight: 300;
     font-size: 20px;
     line-height: 24px;
-    color: #5E6C40;
-    margin-bottom: 40px;
+    color: #B3A99A;
+    margin-bottom: 10px;
 }
 
 .graph-section {
@@ -105,14 +60,23 @@
     line-height: 24px;
     color: #000000;
     margin-bottom: 15px;
+    margin-top: 20px;
 }
 
 .overall-usage {
-    background-color: #F2F3EC;
+    background-color: #ECEFE7;
 }
 
 .usage-by-area {
     background-color: #FAF2E3;
+}
+
+/* For other sections (Usage by Area and Device Usage), position redirect-button absolutely */
+.graph-section.usage-by-area .redirect-button,
+.device-panel .redirect-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 /* Graph Section */
@@ -121,11 +85,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     margin: 20px 0;
     width: 100%;
     margin-bottom: 20px;
     margin-top: 20px;
+    position: relative;
 }
 
 .graph-section h2 {
@@ -146,52 +110,26 @@
     min-width: 400px;
     max-width: 600px;
     width: 100%;
-    height: calc(100% - 40px);
-    background-color: #fff;
-    border: 2px solid #dcdcdc;
+    height: calc(100% - 60px);
     border-radius: 15px;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    /*position: relative;*/
 }
 
-.graph-container {
+
+/* Section Header Styling */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    height: calc(100% - 40px);
-
+    max-width: 800px;
+    margin-bottom: 10px;
+    /* Adds spacing between the header and graphs */
 }
 
-.empty-graph {
-    width: 100%;
-    height: 100%;
-    background-color: transparent; /* No background for empty graphs */
-}
-/* Redirect Button Styling */
-.redirect-button {
-    background-color: #ADA8A9 ;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-weight: 600;
-}
-
-.redirect-button:hover {
-    background-color: #898082;
-    transform: scale(1.05);
-}
-
-.redirect-button:active {
-    background-color: #898082;
-    transform: scale(1);
-}
 
 .graph-header {
     display: flex;
@@ -209,31 +147,69 @@
     width: 100%;
 }
 
+
+.graph-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 10px;
+}
+
 .graph-buttons {
     text-align: center;
     border-radius: 23px;
+    display: flex;
+    gap: 10px; 
+    align-items: center; 
 }
 
 .graph-buttons button {
     background-color: #9cab83;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 10px;
     margin: 0 5px;
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .graph-buttons button:hover {
-    background-color: #606952;
+    background-color: #8e9c77;
 }
 
 .active-button {
     background-color: #606952 !important;
     color: #fff;
+}
+/* Redirect Button Styling */
+.redirect-button {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 35px; 
+    height: 35px;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+
+.redirect-icon {
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
 }
 
 .filter {
@@ -298,20 +274,21 @@
 }
 
 .expenses-panel {
-    background-color: #EBEC80;
+    background-color: #FAF2E3;
     height: 84px;
 }
 
 .power-usage-panel {
-    background-color: #FFDC52;
+    background-color: #FAF2E3;
     height: 84px;
 }
 
 .device-panel {
-    background-color: #AFAAAA;
+    background-color: #B3A99A;
     border-radius: 15px;
     padding: 20px;
     margin-top: 20px;
+    position: relative;
 }
 
 .device-panel h3 {
@@ -319,15 +296,28 @@
     font-size: 18px;
     color: rgba(22, 26, 65, 0.78);
     margin-bottom: 15px;
-    text-align: center;
+    text-align: left;
 }
+
 
 .pie-chart-container {
-    width: 174px;
-    height: 174px;
+    width: 100%; /* Make it take full width of the container */
+    height: auto;
     margin: 0 auto 20px;
+    display: flex;
+    justify-content: center; /* Center it inside the panel */
+    align-items: center;
+    overflow: hidden; /* Prevents overflow */
+    padding: 10px;
 }
 
+.pie-container {
+    width: 150px; /* Adjust width for better fit */
+    height: 150px; /* Adjust height for better fit */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .empty-pie {
     width: 100%;
     height: 100%;

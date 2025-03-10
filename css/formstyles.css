@@ -162,7 +162,7 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     max-width: 500px;
     margin: 0 auto 20px; 
     padding: 20px; 
-    background: #e4ce7e;
+    background: #b3b3b3;
     box-sizing: border-box;
 }
 
@@ -176,7 +176,7 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
 }
 
 #roomAddingButtons {
-    background-color: #dbc98fd0;
+    background-color: #9e9d9d;
     border-radius: 65px;
     padding: 15px;
     width: 80%;

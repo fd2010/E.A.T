@@ -69,7 +69,7 @@ Merge after approval
 
 FIX THE LOGIN Bottom margin
 FIX ADD DEVICE BUTTONS
-NOTIFICATIONS
+NOTIFICATIONS  - partially implemented, needs to be implemented for all other pages
 FDADE AFFECT NEEDS FIXED
 
 

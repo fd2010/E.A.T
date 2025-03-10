@@ -77,7 +77,9 @@ export const deviceData = {
     "Heating": 15,
     "Monitors": 25,
     "Speakers": 10,
-    "Vending Machine": 10
+    "A/C": 22,
+    "Projector": 18,
+    "Vending Machine": 12
 };
 
 export const devicesByArea = {

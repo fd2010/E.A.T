@@ -64,8 +64,13 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Usage (kW)',
                         data: totalEnergyData[selectedTime],
-                        borderColor: 'blue',
-                        fill: false
+                        borderColor: '#606952', // Line color
+                        backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
+                        fill: false,
+                        tension: 0.4, // Makes the line curvy
+                        borderWidth: 2, // Adjust line thickness
+                        pointRadius: 4, // Adjust point size
+                        pointBackgroundColor: '#606952' // Point color
                     }]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -74,6 +79,8 @@ function createTimeGraphs() {
             console.error('Error creating energy usage chart:', error);
         }
     }
+
+
 
     // Create cost chart if the element exists
     if (energyCostCtx) {
@@ -86,8 +93,13 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Cost (£)',
                         data: totalCostData[selectedTime],
-                        borderColor: 'red',
-                        fill: false
+                        borderColor: '#B04242', // Line color
+                        backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
+                        fill: false,
+                        tension: 0.4, // Makes the line curvy
+                        borderWidth: 2, // Adjust line thickness
+                        pointRadius: 4, // Adjust point size
+                        pointBackgroundColor: '#B04242' // Point color
                     }]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -97,6 +109,7 @@ function createTimeGraphs() {
         }
     }
 }
+
 
 // **Update Time Graphs Based on Period Selection**
 function updateTimeGraphs(period) {
@@ -139,9 +152,6 @@ function updateTimeGraphs(period) {
 
 // **Initialize Area-wise Usage Charts**
 function createAreaCharts() {
-    // Only create these charts on the power usage page
-    if (!areaPieCtx || !areaBarCtx) return;
-
     console.log('Creating area charts');
     try {
         areaPieChart = new Chart(areaPieCtx, {
@@ -162,7 +172,7 @@ function createAreaCharts() {
                 datasets: [{
                     label: 'Energy Usage (kW)',
                     data: Object.values(areaData),
-                    backgroundColor: 'teal'
+                    backgroundColor: '#B04242'
                 }]
             },
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -172,21 +182,86 @@ function createAreaCharts() {
     }
 }
 
+// PIE CHART - DEVICE
+
+// Function to generate gradient shades between two colors
+function generateGradientColors(startColor, endColor, steps) {
+    function hexToRgb(hex) {
+        hex = hex.replace(/^#/, '');
+        let bigint = parseInt(hex, 16);
+        return {
+            r: (bigint >> 16) & 255,
+            g: (bigint >> 8) & 255,
+            b: bigint & 255
+        };
+    }
+    
+    function rgbToHex(r, g, b) {
+        return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
+    }
+    
+    let startRGB = hexToRgb(startColor);
+    let endRGB = hexToRgb(endColor);
+    let gradient = [];
+    
+    for (let i = 0; i < steps; i++) {
+        let r = Math.round(startRGB.r + (endRGB.r - startRGB.r) * (i / (steps - 1)));
+        let g = Math.round(startRGB.g + (endRGB.g - startRGB.g) * (i / (steps - 1)));
+        let b = Math.round(startRGB.b + (endRGB.b - startRGB.b) * (i / (steps - 1)));
+        
+        gradient.push(rgbToHex(r, g, b));
+    }
+    
+    return gradient;
+}
+
+const deviceNames = Object.keys(deviceData);
+const deviceUsage = Object.values(deviceData);
+
+const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.length);
+
+console.log("Device Names:", deviceNames);
+console.log("Device Usage:", deviceUsage);
+console.log("Generated Colors:", blueShades);
+
+ // Create datasets dynamically for each ring
+const datasets = deviceNames.map((device, index) => ({
+    label: device,
+    data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
+    backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], // Color + Gray for unused
+    borderWidth: 10, // Thicker rings
+    cutout: `${Math.min(30 + index * 10, 80)}%`, // Expands rings outward for spacing
+    circumference: 360,
+    rotation: 0, // Starts from the top
+}));
+
+console.log("Final Datasets:", datasets);
+
 // **Initialize Device-wise Usage Charts**
 function createDeviceCharts() {
-    // Only create these charts on the power usage page
-    if (!devicePieCtx || !deviceBarCtx) return;
 
     console.log('Creating device charts');
     try {
         devicePieChart = new Chart(devicePieCtx, {
-            type: 'pie',
-            data: {
-                labels: Object.keys(deviceData),
-                datasets: [{
-                    data: Object.values(deviceData),
-                    backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
-                }]
+            type: 'doughnut',
+            data: { labels: deviceNames, datasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                clip: false,
+                plugins: {
+                    legend: { display: false }, // Hide default legend
+                    tooltip: {
+                        callbacks: {
+                            title: function (tooltipItems) {
+                                return deviceNames[tooltipItems[0].datasetIndex]; // Correct device label
+                            },
+                            label: function (tooltipItem) {
+                                return `Usage: ${deviceUsage[tooltipItem.datasetIndex]}%`;
+                            }
+                        }
+                    }
+                }
             }
         });
 
@@ -202,6 +277,9 @@ function createDeviceCharts() {
             },
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
         });
+
+        devicePieChart.update();
+
     } catch (error) {
         console.error('Error creating device charts:', error);
     }
@@ -252,28 +330,28 @@ function calculateTotals() {
 
         // Assign values to the footer
         totalEnergyElement.textContent = `${totalEnergy}`;
-        
+
         const totalCostElement = document.getElementById('totalCost');
         if (totalCostElement) {
             totalCostElement.textContent = `${totalCost.toFixed(2)}`;
         }
-        
+
         // Check if these elements exist before updating them
         const minUsageRoomElement = document.getElementById('minUsageRoom');
         if (minUsageRoomElement) {
             minUsageRoomElement.textContent = ` ${minRoom}`;
         }
-        
+
         const maxUsageRoomElement = document.getElementById('maxUsageRoom');
         if (maxUsageRoomElement) {
             maxUsageRoomElement.textContent = `: ${maxRoom}`;
         }
-        
+
         const minUsageDeviceElement = document.getElementById('minUsageDevice');
         if (minUsageDeviceElement) {
             minUsageDeviceElement.textContent = ` ${minDevice}`;
         }
-        
+
         const maxUsageDeviceElement = document.getElementById('maxUsageDevice');
         if (maxUsageDeviceElement) {
             maxUsageDeviceElement.textContent = ` ${maxDevice}`;
@@ -286,19 +364,19 @@ function calculateTotals() {
 // Setup event listeners for the period selection buttons
 function setupEventListeners() {
     console.log('Setting up event listeners');
-    
+
     try {
         // Add event listeners to all period buttons that exist on the page
         const dailyBtn = document.getElementById("daily");
         const weeklyBtn = document.getElementById("weekly");
         const monthlyBtn = document.getElementById("monthly");
-        
-        console.log('Buttons found:', { 
-            daily: !!dailyBtn, 
-            weekly: !!weeklyBtn, 
-            monthly: !!monthlyBtn 
+
+        console.log('Buttons found:', {
+            daily: !!dailyBtn,
+            weekly: !!weeklyBtn,
+            monthly: !!monthlyBtn
         });
-        
+
         if (dailyBtn) {
             console.log('Adding click listener to daily button');
             dailyBtn.addEventListener("click", () => {
@@ -306,7 +384,7 @@ function setupEventListeners() {
                 updateTimeGraphs('daily');
             });
         }
-        
+
         if (weeklyBtn) {
             console.log('Adding click listener to weekly button');
             weeklyBtn.addEventListener("click", () => {
@@ -314,7 +392,7 @@ function setupEventListeners() {
                 updateTimeGraphs('weekly');
             });
         }
-        
+
         if (monthlyBtn) {
             console.log('Adding click listener to monthly button');
             monthlyBtn.addEventListener("click", () => {
@@ -333,22 +411,20 @@ function setupEventListeners() {
 }
 
 // **Run Scripts on Page Load**
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM Content Loaded - Power usage script running");
-    
+
     try {
         // Setup event listeners
         setupEventListeners();
-        
+
         // Create charts based on which page we're on
-        createTimeGraphs(); // Both pages need this, but now it's safe
-        
-        if (isPowerUsagePage) {
-            // Create additional charts only for the power usage page
-            createAreaCharts();
-            createDeviceCharts();
-            calculateTotals();
-        }
+        createTimeGraphs();
+
+        createAreaCharts();
+        createDeviceCharts();
+        calculateTotals();
+
     } catch (error) {
         console.error('Error in DOMContentLoaded handler:', error);
     }

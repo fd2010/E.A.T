@@ -5,6 +5,7 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { updateRoomTabs, updateUserDisplay, toggleLoadingState } from './display-dashboard.js';
 import { initialiseAddDeviceModal } from './add-device.js';
+import { initializeNotificationSystem } from './notifications.js';
 
 // Function to update user interface with user data
 async function updateUserInterface(userData) {
@@ -185,6 +186,24 @@ async function initialiseDashboard() {
                 }
             });
         }
+        initializeNotificationSystem();
+        // Add this to dashboard.js at the end of the initialiseDashboard function
+        // or in the DOMContentLoaded event handler
+        setTimeout(() => {
+            const notificationCloseBtn = document.querySelector('#notificationModal .close-button');
+            if (notificationCloseBtn) {
+                console.log('Adding direct event listener to notification close button');
+                notificationCloseBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Notification close button clicked via direct handler');
+                    const modal = document.getElementById('notificationModal');
+                    if (modal) modal.style.display = 'none';
+                    return false;
+                });
+            }
+        }, 1000); // Delay to ensure DOM is fully loaded
+
     } catch (error) {
         console.error('Error in initialisation:', error);
         handleError(error);
@@ -215,3 +234,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initialiseDashboard();
     initialiseAddDeviceModal();
 });
+

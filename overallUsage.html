@@ -45,49 +45,38 @@
     <div class="power-container">
         <!-- Main Content (Middle) -->
         <main class="main-content">
-            <h1 class="power-usage-title">Power Usage</h1>
-            <p class="energy-consumption">Here's your device energy consumption rate</p>
+            <h1 class="power-usage-title">Overall Power Usage</h1>
+            <p class="energy-consumption">Here's your overall energy consumption rate</p>
+
+            <!-- time buttons -->
+            <div class="graph-buttons">
+                <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+            </div>
 
             <!-- Overall Usage (Empty Section) -->
+            <div class="section-header">
+                <h3 class="graph-title">Overall Energy Usage</h3>
+            </div>
+
             <section class="graph-section overall-usage">
-                <div class="section-header">
-                    <h3 class="graph-title">Overall Usage</h3>
-                </div>
-
-                <div class="graph-buttons-container">
-                    <div class="graph-buttons">
-                        <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                        <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                        <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
-                    </div>
-                    <button class="redirect-button" onclick="location.href='overallUsage.html'">
-                        <img src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
-                            class="redirect-icon">
-                    </button>
-                </div>
-
                 <div class="graph-container">
                     <canvas id="energyUsageChart"></canvas>
                 </div>
-
             </section>
 
-
             <!-- Usage by Area (Empty Section) -->
+            <div class="section-header">
+                <h3 class="graph-title">Overall Cost Usage</h3>
+            </div>
 
             <section class="graph-section usage-by-area">
-                
-                <div class="section-header">
-                    <h3 class="graph-title">Usage by Area</h3>
-                </div>
-
-                <button class="redirect-button" onclick="location.href='areaWise.html'"><img
-                        src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
-                        class="redirect-icon"></button>
 
                 <div class="graph-container">
-                    <canvas id="areaBarChart"></canvas>
+                    <canvas id="energyCostChart"></canvas>
                 </div>
+
             </section>
         </main>
 
@@ -104,22 +93,8 @@
                 <p>Today: 5 kWh</p>
             </div>
 
-            <!-- device usage Panel -->
-            <div class="device-panel">
-                <h3>Device Usage</h3>
-
-                <button class="redirect-button" onclick="location.href='deviceWise.html'"><img
-                        src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
-                        class="redirect-icon"></button>
-
-                <div class="pie-chart-container">
-                    <div class="pie-container">
-                        <canvas id="devicePieChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
         </aside>
+
     </div>
 
     <!-- Company Name -->

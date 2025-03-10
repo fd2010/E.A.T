@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="./css/dashboard.css">
         <link rel="stylesheet" href="./css/addDevice.css">
         <link rel="stylesheet" href="./css/thermostat.css">
+        <link rel="stylesheet" href="./css/notification.css">
+        <link rel="stylesheet" href="./css/settings.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     
@@ -22,21 +24,21 @@
         <!-- Side Navigation -->
         <nav class="side-nav">
             <div class="nav-logo">
-                <a href="user-profile.html"><img src="./images/icons/User Profile Icon.png" alt="User"></a>
+                <a href="user-profile.html"><img src="./images/icons/profile pic.svg" alt="User"></a>
             </div>
             <div class="nav-icons">
-                <img src="./images/icons/notification bell.png" alt="Notifications" class="nav-icon">
-                <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
-                <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
-                <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
-                <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
+                <img src="./images/icons/bell 2 icon.svg" alt="Notifications" class="nav-icon">
+                <a href="dashboard.html"><img src="./images/icons/home icon.svg" alt="Home" class="nav-icon"></a>
+                <a href="manage devices.html"><img src="./images/icons/tablet device.svg" alt="Manage Devices" class="nav-icon"></a>
+                <img src="./images/icons/add device icon.svg" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+                <a href="pUsage.html"><img src="./images/icons/view stats icon.svg" alt="Stats" class="nav-icon"></a>
                 
-                <img src="./images/icons/settings cog (MIT).png" alt="Settings" class="nav-icon">
+                <img src="./images/icons/settings.svg" alt="Settings" class="nav-icon" onclick="showSettingsModal()">
                 
             </div>
 
             <div class="logout-icon">
-                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
+                <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout" title="Logout" class="nav-icon"></button>
             </div>
         </nav>
     
@@ -60,18 +62,10 @@
                 <!-- User Profile -->
                 <div class="user-profile">
                     <div class="profile-icon">
-                        <a href="user-profile.html"><img src="./images/icons/User Profile Icon.png" alt="User"></a>
+                        <a href="user-profile.html"><img src="./images/icons/profile pic.svg" alt="User"></a>
                     </div>
 
                     <div class="user-role" id="userRole">Loading role... </div>
-                    <!--                     
-                    <div>
-                        <ul class="user-profile-options">
-                            
-                            
-
-                        </ul>                        
-                    </div> -->
                 </div>
             </div>
             
@@ -89,7 +83,13 @@
                     
                     <!-- Devices Grid -->
                     <div class="devices-grid" id="devicesGrid">
+                        <!-- Device cards will be added here dynamically -->
                     </div>
+                    
+                    <!-- More items link-->
+                    <a href="manage devices.html" class="dashboard-more-items-link">
+                        <img src="./images/icons/more items.svg" alt="Click here to see more devices" class="more-items-img">
+                    </a>
                 </div>
                 
                 <!-- Energy Consumption Section -->
@@ -109,6 +109,11 @@
                     <div class="chart-container graph-container">
                         <canvas id="energyCostChart"></canvas>
                     </div>
+
+                    <!-- More items link-->
+                    <a href="pUsage.html" class="dashboard-more-items-link">
+                        <img src="./images/icons/more items.svg" alt="Click here to see more devices" class="more-items-img">
+                    </a>
                 </div>
 
                 <div class="sidebar-section">
@@ -194,11 +199,21 @@
                 <div id="line" style="margin: auto;"></div>
             </div>
 
-
         </div>
 
-
-     
+        <!-- Notification Modal -->
+        <div id="notificationModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                
+                <h2 class="h2Light">Notifications</h2>
+                
+                <div id="notificationsList" class="notifications-list">
+                    <!-- Notifications will be dynamically inserted here -->
+                    <div class="no-notifications-message">No notifications to display</div>
+                </div>
+            </div>
+        </div>
 
         <script>
             window.onerror = function(msg, url, line, col, error) {
@@ -215,6 +230,7 @@
         <script type="module" src="./javascript/dashboard.js"></script>
         <script type="module" src="./javascript/add-device.js"></script>
         <script type="module" src="./javascript/thermostat.js"></script>
-        <script type="module" src="./javascript/fade-effects.js"></script>
+        <script type="module" src="./javascript/settings.js"></script>
+        <!-- <script type="module" src="./javascript/fade-effects.js"></script> -->
     </body>
 </html>
