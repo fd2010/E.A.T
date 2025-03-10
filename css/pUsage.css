@@ -26,10 +26,7 @@
     min-height: 100vh;
     background-color: #ffffff;
 }
-[
-    #2B3695, '#3445A0', '#3E53AC', '#4A63B8', '#556FC3',
-    '#617BCE', '#6D88D9', '#7A95E4', '#86A3EF', '#92B0FA'
-]
+
 /* Side Navigation */
 .side-nav {
     width: 120px;

@@ -64,13 +64,8 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Usage (kW)',
                         data: totalEnergyData[selectedTime],
-                        borderColor: '#606952', // Line color
-                        backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
-                        fill: false,
-                        tension: 0.4, // Makes the line curvy
-                        borderWidth: 2, // Adjust line thickness
-                        pointRadius: 4, // Adjust point size
-                        pointBackgroundColor: '#606952' // Point color
+                        borderColor: '#606952',
+                        fill: false
                     }]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -91,13 +86,8 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Cost (£)',
                         data: totalCostData[selectedTime],
-                        borderColor: '#B04242', // Line color
-                        backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
-                        fill: false,
-                        tension: 0.4, // Makes the line curvy
-                        borderWidth: 2, // Adjust line thickness
-                        pointRadius: 4, // Adjust point size
-                        pointBackgroundColor: '#B04242' // Point color
+                        borderColor: '#B04242',
+                        fill: false
                     }]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -195,7 +185,7 @@ function createDeviceCharts() {
                     data: Object.values(deviceData),
                     backgroundColor: [
                         '#0D1981', '#1A2A97', '#2840AD', '#3656C3',
-                        '#437DD9', '#5193EF', '#AABAF3', '#D3DCF9'
+                         '#437DD9', '#5193EF', '#AABAF3', '#D3DCF9'
                     ]
                 }]
             }
