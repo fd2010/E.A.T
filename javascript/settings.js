@@ -23,6 +23,7 @@ export function initialiseSettingsModal() {
                         </div>
 
                         <!-- Room tabs toggle -->
+                        <!-- commented out
                         <div class="setting-item">
                             <div class="setting-label">Scrollable Tabs</div>
                             <label class="switch">
@@ -30,6 +31,7 @@ export function initialiseSettingsModal() {
                                 <span class="slider"></span>
                             </label>
                         </div>
+                        -->
                         
                         <!-- Export Data Setting -->
                         <div class="setting-item">
