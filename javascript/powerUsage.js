@@ -194,8 +194,8 @@ const deviceUsage = Object.values(deviceData);
 const datasets = deviceNames.map((device, index) => ({
     label: device,
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
-    backgroundColor: [blueShades[index % blueShades.length], index === 0 ? '#E5E5E5' : 'transparent'], // Gray only for the innermost ring
-    borderWidth: 6, // Thicker lines
+    backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], //  Color + Gray for empty space
+    borderWidth: 4, // Thicker lines
     cutout: `${30 + index * 12}%`, // Expands each ring outward
 }));
 
