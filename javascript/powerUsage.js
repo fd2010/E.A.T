@@ -249,7 +249,7 @@ function createDeviceCharts() {
                 responsive: true,
                 maintainAspectRatio: false,
                 clip: false,
-                cutout: '40%',
+                cutout: `${30 + index * 12}%`,
                 plugins: {
                     legend: { display: false }, // Hide default legend
                     tooltip: {
