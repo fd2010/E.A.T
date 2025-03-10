@@ -224,7 +224,7 @@ const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.leng
 const datasets = deviceNames.map((device, index) => ({
     label: device,
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
-    backgroundColor: [blueShades[index], '#E5E5E5'], // Color + Gray for unused
+    backgroundColor: [blueShades[index] || '#121c7b', '#E5E5E5'], // Color + Gray for unused
     borderWidth: 10, // Thicker rings
     cutout: `${30 + index * 15}%`, // Expands rings outward for spacing
     circumference: 360,
