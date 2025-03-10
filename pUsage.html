@@ -50,21 +50,23 @@
 
             <!-- Overall Usage (Empty Section) -->
             <section class="graph-section overall-usage">
-                <div class="section-header">
-                    <h3 class="graph-title">Overall Usage</h3>
-                </div>
 
                 <div class="graph-buttons-container">
-                    <div class="graph-buttons">
-                        <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                        <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                        <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                    <div class="section-header">
+                        <h3 class="graph-title">Overall Usage</h3>
                     </div>
-                    <button class="redirect-button" onclick="location.href='overallUsage.html'">
-                        <img src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
-                            class="redirect-icon">
-                    </button>
                 </div>
+                <button class="redirect-button" onclick="location.href='overallUsage.html'">
+                    <img src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage" class="redirect-icon">
+                </button>
+
+
+                <div class="graph-buttons">
+                    <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                    <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                    <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                </div>
+
 
                 <div class="graph-container">
                     <canvas id="energyUsageChart"></canvas>
@@ -76,7 +78,7 @@
             <!-- Usage by Area (Empty Section) -->
 
             <section class="graph-section usage-by-area">
-                
+
                 <div class="section-header">
                     <h3 class="graph-title">Usage by Area</h3>
                 </div>

@@ -229,7 +229,7 @@ const datasets = deviceNames.map((device, index) => ({
     label: device,
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
     backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], // Color + Gray for unused
-    borderWidth: 10, // Thicker rings
+    borderWidth: 5, // Thicker rings
     cutout: `${Math.min(30 + index * 10, 80)}%`, // Expands rings outward for spacing
     circumference: 360,
     rotation: 0, // Starts from the top
@@ -249,6 +249,7 @@ function createDeviceCharts() {
                 responsive: true,
                 maintainAspectRatio: false,
                 clip: false,
+                cutout: '40%',
                 plugins: {
                     legend: { display: false }, // Hide default legend
                     tooltip: {
