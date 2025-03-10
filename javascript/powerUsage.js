@@ -147,6 +147,29 @@ function updateTimeGraphs(period) {
     });
 }
 
+// Function to generate gradient shades between two colors
+function generateGradientColors(startColor, endColor, steps) {
+    const start = parseInt(startColor.slice(1), 16);
+    const end = parseInt(endColor.slice(1), 16);
+
+    const startR = (start >> 16) & 0xff,
+        startG = (start >> 8) & 0xff,
+        startB = start & 0xff;
+    const endR = (end >> 16) & 0xff,
+        endG = (end >> 8) & 0xff,
+        endB = end & 0xff;
+
+    const colors = [];
+
+    for (let i = 0; i < steps; i++) {
+        const r = Math.round(startR + ((endR - startR) * i) / (steps - 1));
+        const g = Math.round(startG + ((endG - startG) * i) / (steps - 1));
+        const b = Math.round(startB + ((endB - startB) * i) / (steps - 1));
+        colors.push(`#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`);
+    }
+
+    return colors;
+}
 
 // **Initialize Area-wise Usage Charts**
 function createAreaCharts() {
@@ -180,23 +203,19 @@ function createAreaCharts() {
     }
 }
 
-// Define blue gradient shades (from dark to light)
-const blueShades = [
-    '#0D1981', '#1A2A97', '#2840AD', '#3656C3',
-    '#437DD9', '#5193EF', '#AABAF3', '#D3DCF9'
-];
-
-// Extract device names and usage values
+// PIE CHART - DEVICE
+const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.length);
 const deviceNames = Object.keys(deviceData);
 const deviceUsage = Object.values(deviceData);
 
 // Create datasets dynamically for a multi-ring effect
 const datasets = deviceNames.map((device, index) => ({
-    label: deviceNames,
+    label: device,
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
-    backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], //  Color + Gray for empty space
-    borderWidth: 4, // Thicker lines
-    cutout: `${30 + index * 12}%`, // Expands each ring outward
+    backgroundColor: [blueShades[index], '#E5E5E5'], //  Color + Gray for empty space
+    borderWidth: 8, // Thicker lines
+    cutout: `${45 + index * 18}%`, // Expands each ring outward
+    rotation: 270,
 }));
 
 // **Initialize Device-wise Usage Charts**
@@ -211,7 +230,7 @@ function createDeviceCharts() {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } }, // Hide default legend
-                cutout: '20%', // Controls inner empty space
+                cutout: '25%', // Controls inner empty space
             }
         });
 
