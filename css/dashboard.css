@@ -767,6 +767,24 @@ li .logout-btn img {
 
 
 /* Side Navigation */
+#nav-selected{
+    position: relative;
+}
+
+#nav-selected::before {
+    content: "";
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #827868;
+    border-radius: 50%;
+    box-shadow: 0 0 3px rgba(130, 120, 104, 0.5);
+}
+
+
 .side-nav {
     margin-top: 5px;
     margin-left: 5px;
