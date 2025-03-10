@@ -218,10 +218,11 @@ function generateGradientColors(startColor, endColor, steps) {
 const deviceNames = Object.keys(deviceData);
 const deviceUsage = Object.values(deviceData);
 
-const blueShades = [
-    '#0D1981', '#1A2A97', '#2840AD', '#3656C3',
-    '#437DD9', '#5193EF', '#AABAF3', '#D3DCF9'
-];
+const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.length);
+
+console.log("Device Names:", deviceNames);
+console.log("Device Usage:", deviceUsage);
+console.log("Generated Colors:", blueShades);
 
  // Create datasets dynamically for each ring
 const datasets = deviceNames.map((device, index) => ({
