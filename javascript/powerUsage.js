@@ -86,7 +86,7 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Cost (£)',
                         data: totalCostData[selectedTime],
-                        borderColor: 'red',
+                        borderColor: '#B04242',
                         fill: false
                     }]
                 },
@@ -183,7 +183,10 @@ function createDeviceCharts() {
                 labels: Object.keys(deviceData),
                 datasets: [{
                     data: Object.values(deviceData),
-                    backgroundColor: ['red', 'blue', 'green', 'orange', 'purple', 'teal']
+                    backgroundColor: [
+                        '#0D1981', '#1A2A97', '#2840AD', '#3656C3',
+                        '#437DD9', '#5193EF', '#AABAF3', '#D3DCF9'
+                    ]
                 }]
             }
         });
