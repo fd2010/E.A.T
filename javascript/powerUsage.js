@@ -207,9 +207,11 @@ function createAreaCharts() {
 }
 
 // PIE CHART - DEVICE
-const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.length);
+
 const deviceNames = Object.keys(deviceData);
 const deviceUsage = Object.values(deviceData);
+
+const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.length);
 
 // Create datasets dynamically for a multi-ring effect
 const datasets = deviceNames.map((device, index) => ({
