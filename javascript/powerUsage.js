@@ -235,6 +235,8 @@ const datasets = deviceNames.map((device, index) => ({
     rotation: 0, // Starts from the top
 }));
 
+console.log("Final Datasets:", datasets);
+
 // **Initialize Device-wise Usage Charts**
 function createDeviceCharts() {
 
@@ -274,6 +276,8 @@ function createDeviceCharts() {
             },
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
         });
+
+        devicePieChart.update();
 
     } catch (error) {
         console.error('Error creating device charts:', error);
