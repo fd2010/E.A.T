@@ -51,24 +51,24 @@
                 <h3 class="graph-title">Overall Usage</h3>
         </div>           
 
-            <section class="graph-section overall-usage">
+        <section class="graph-section overall-usage">
 
-                <button class="redirect-button" onclick="location.href='areaWise.html'"><img
-                    src="images/icons/arow icon copy.png" alt="Area Usage" title="Area Usage" class="redirect-icon"></button>
-
-                <!-- Time Selection Buttons -->
+            <div class="graph-buttons-container">
                 <div class="graph-buttons">
-                    <div class="graph-buttons">
-                        <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                        <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                        <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
-                    </div>
+                    <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                    <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                    <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                    <button class="redirect-button" onclick="location.href='areaWise.html'">
+                        <img src="images/icons/arow icon copy.png" alt="Area Usage" title="Area Usage" class="redirect-icon">
+                    </button>
                 </div>
-
-                <div class="graph-container">
-                    <canvas id="energyUsageChart"></canvas>
-                </div>
-            </section>
+            </div>
+        
+            <div class="graph-container">
+                <canvas id="energyUsageChart"></canvas>
+            </div>
+            
+        </section>
 
 
             <!-- Usage by Area (Empty Section) -->
