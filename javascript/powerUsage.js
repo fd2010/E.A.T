@@ -192,7 +192,7 @@ const deviceUsage = Object.values(deviceData);
 
 // Create datasets dynamically for a multi-ring effect
 const datasets = deviceNames.map((device, index) => ({
-    label: device,
+    label: deviceNames,
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
     backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], //  Color + Gray for empty space
     borderWidth: 4, // Thicker lines
