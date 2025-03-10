@@ -175,32 +175,6 @@
     /* Adds spacing between the header and graphs */
 }
 
-/* Redirect Button Styling */
-.redirect-button {
-    background-color: transparent;
-    border: none;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    width: 35px; 
-    height: 35px;
-    transition: transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-
-.redirect-icon {
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-}
 
 .graph-header {
     display: flex;
@@ -221,7 +195,8 @@
 
 .graph-buttons-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     position: relative;
     padding: 10px;
@@ -239,13 +214,13 @@
     background-color: #9cab83;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 10px;
     margin: 0 5px;
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .graph-buttons button:hover {
@@ -255,6 +230,31 @@
 .active-button {
     background-color: #606952 !important;
     color: #fff;
+}
+/* Redirect Button Styling */
+.redirect-button {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 35px; 
+    height: 35px;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+
+.redirect-icon {
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
 }
 
 .filter {

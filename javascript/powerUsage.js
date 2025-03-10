@@ -64,7 +64,7 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Usage (kW)',
                         data: totalEnergyData[selectedTime],
-                        borderColor: 'blue',
+                        borderColor: '#606952',
                         fill: false
                     }]
                 },
@@ -160,7 +160,7 @@ function createAreaCharts() {
                 datasets: [{
                     label: 'Energy Usage (kW)',
                     data: Object.values(areaData),
-                    backgroundColor: 'teal'
+                    backgroundColor: '#B04242'
                 }]
             },
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
