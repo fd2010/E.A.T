@@ -60,47 +60,43 @@
                 <h3 class="graph-title">Overall Energy Usage</h3>
             </div>
 
-    </div>
+            <section class="graph-section overall-usage">
+                <div class="graph-buttons-container">
+                    <div class="graph-container">
+                        <canvas id="energyUsageChart"></canvas>
+                    </div>
+                </div>
+            </section>
 
-    <section class="graph-section overall-usage">
-
-        <div class="graph-buttons-container">
-
-            <div class="graph-container">
-                <canvas id="energyUsageChart"></canvas>
+            <!-- Usage by Area (Empty Section) -->
+            <div class="section-header">
+                <h3 class="graph-title">Overall Cost Usage</h3>
             </div>
 
-    </section>
+            <section class="graph-section usage-by-area">
 
+                <div class="graph-container">
+                    <canvas id="energyCostChart"></canvas>
+                </div>
 
-    <!-- Usage by Area (Empty Section) -->
-    <div class="section-header">
-        <h3 class="graph-title">Overall Cost Usage</h3>
-    </div>
+            </section>
+        </main>
 
-    <section class="graph-section usage-by-area">
+        <!-- Right Panel -->
+        <aside class="right-panel">
+            <div class="panel expenses-panel">
+                <h3>Expenses</h3>
+                <p>This month: £270.0</p>
+                <p>Today: £30.0</p>
+            </div>
+            <div class="panel power-usage-panel">
+                <h3>Power Usage</h3>
+                <p>This month: 70 kWh</p>
+                <p>Today: 5 kWh</p>
+            </div>
 
-        <div class="graph-container">
-            <canvas id="energyCostChart"></canvas>
-        </div>
+        </aside>
 
-    </section>
-    </main>
-
-    <!-- Right Panel -->
-    <aside class="right-panel">
-        <div class="panel expenses-panel">
-            <h3>Expenses</h3>
-            <p>This month: £270.0</p>
-            <p>Today: £30.0</p>
-        </div>
-        <div class="panel power-usage-panel">
-            <h3>Power Usage</h3>
-            <p>This month: 70 kWh</p>
-            <p>Today: 5 kWh</p>
-        </div>
-
-    </aside>
     </div>
 
     <!-- Company Name -->
