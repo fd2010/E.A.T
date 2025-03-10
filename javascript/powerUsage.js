@@ -80,6 +80,8 @@ function createTimeGraphs() {
         }
     }
 
+
+
     // Create cost chart if the element exists
     if (energyCostCtx) {
         console.log('Creating energy cost chart');
@@ -107,6 +109,7 @@ function createTimeGraphs() {
         }
     }
 }
+
 
 // **Update Time Graphs Based on Period Selection**
 function updateTimeGraphs(period) {
