@@ -8,8 +8,8 @@ from create_database import create_database
 import firebase_admin
 from firebase_admin import credentials, db
 
-# Load your Firebase Admin credentials
-cred = credentials.Certificate("C:\Users\karan\OneDrive\Documents\GitHub\E.A.T\database\firebase-config.js")
+# Load Firebase Admin credentials
+cred = credentials.Certificate(r"C:\Users\karan\OneDrive\Documents\GitHub\E.A.T\config\serviceAccountKey.json")
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://energy-analysis-tool-default-rtdb.europe-west1.firebasedatabase.app'
 })
