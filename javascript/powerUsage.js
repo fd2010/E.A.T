@@ -194,11 +194,9 @@ const deviceUsage = Object.values(deviceData);
 const datasets = deviceNames.map((device, index) => ({
     label: device,
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
-    backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], // Color + Gray for empty space
-    borderWidth: 2,
-    cutout: `${50 + index * 10}%`, // Expands each ring outward
-    circumference: 180, // Half-circle effect (optional)
-    rotation: 270 // Aligns half-circle at the top (optional)
+    backgroundColor: [blueShades[index % blueShades.length], index === 0 ? '#E5E5E5' : 'transparent'], // Gray only for the innermost ring
+    borderWidth: 6, // Thicker lines
+    cutout: `${30 + index * 12}%`, // Expands each ring outward
 }));
 
 // **Initialize Device-wise Usage Charts**
@@ -212,10 +210,8 @@ function createDeviceCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false } // Hide default legend
-                },
-                cutout: '40%', // Controls inner empty space
+                plugins: { legend: { display: false } }, // Hide default legend
+                cutout: '20%', // Controls inner empty space
             }
         });
 
