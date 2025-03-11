@@ -96,13 +96,7 @@
     margin-bottom: 20px;
 }
 
-.graph-container-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-}
+
 
 /* General Graph Container Styling */
 .graph-container {
@@ -142,12 +136,12 @@
 }
 
 .graphData {
-    font-weight: 400; /* Lighter weight to differentiate from heading */
-    font-size: 14px; /* Smaller size for hierarchy */
-    color: rgba(22, 26, 65, 0.6); /* Slightly lighter opacity for contrast */
-    margin-bottom: 10px; /* Reduced spacing compared to graph-title */
-    text-align: left; /* Matches alignment with graph-title */
-    font-family: 'Lato', sans-serif; /* Matches your project’s font */
+    font-weight: 500; 
+    font-size: 16px; 
+    color: rgba(22, 26, 65, 0.6); 
+    margin-bottom: 10px; 
+    text-align: left; 
+    font-family: 'Lato', sans-serif; 
 }
 
 .chart-container {
@@ -270,13 +264,13 @@
 
 .panel h3 {
     font-weight: 700;
-    font-size: 18px;
+    font-size: 17px;
     margin-bottom: 8px;
 }
 
 .panel p {
-    font-weight: 300;
-    font-size: 14px;
+    font-weight: 400;
+    font-size: 15px;
     margin-bottom: 4px;
 }
 
@@ -291,7 +285,7 @@
 }
 
 .device-wise {
-    background-color: #827868;
+    background-color: #F6F4F4;
     border-radius: 15px;
     padding: 20px;
     margin-top: 20px;
@@ -320,7 +314,7 @@
 }
 
 .pie-container {
-    width: 300px;
+    width: 250px;
     height: 300px;
     display: flex;
     justify-content: center;
@@ -328,7 +322,7 @@
 }
 
 #devicePieChart{ 
-    width: 300px; 
+    width: 250px; 
     height:300px;
 }
 
@@ -379,19 +373,6 @@
     height: 74px;
 }
 
-.company-branding {
-    position: fixed;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-/* #companyName {
-    font-family: 'Inria Serif', serif;
-    font-size: 16px;
-    color: #2c3e50;
-} */
 
 #line {
     width: 110px;
@@ -450,6 +431,7 @@
     }
 }
 
+/******  AREA PAGE ******/
 /* Drop down */
 #areaTypeDropdown {
     width: 250px;
@@ -500,5 +482,68 @@
 
 .device-panel h3 {
     margin-bottom: 5px;
-    color: #2c3e50;
+    color: rgba(22, 26, 65, 0.78);
+}
+
+#deviceList{
+    color: rgba(22, 26, 65, 0.78);
+}
+
+.graph-container-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+.area-graph-container {
+    width: 100%; 
+    height: auto; 
+    max-width: 600px;
+    min-height: 200px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#devicePieChart,
+#areaComparisonPie,
+#areaComparisonBar,
+#areaTimeCostChart,
+#areaTimeEnergyChart,
+#deviceBarChart {
+    width: 100% !important; /* Override inline styles */
+    height: auto !important; /* Allow height to adjust */
+    max-width: 250px; /* Limit maximum width */
+    max-height: 300px; /* Limit maximum height */
+}
+
+.area-graph-buttons {
+    text-align: center;
+    border-radius: 23px;
+    display: flex;
+    gap: 10px; 
+    align-items: center; 
+}
+
+.area-graph-buttons button {
+    background-color: #9cab83;
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    margin: 0 5px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.area-graph-buttons button:hover {
+    background-color: #8e9c77;
+}
+
+.area-active-button {
+    background-color: #606952 !important;
+    color: #fff;
 }

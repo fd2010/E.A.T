@@ -215,7 +215,7 @@ function generateGradientColors(startColor, endColor, steps) {
     return gradient;
 }
 
-const blueShades = generateGradientColors('#961616', '#d49494', Object.keys(deviceData).length);
+const blueShades = generateGradientColors('#486e6c', '#A7C7C5', Object.keys(deviceData).length);
 console.log("colours:", blueShades);
 
 // **Initialize Device-wise Usage Charts**
@@ -230,6 +230,7 @@ function createDeviceCharts() {
                 datasets: [{
                     data: Object.values(deviceData), // kWh values (Chart.js will calculate proportions)
                     backgroundColor: blueShades, // Gradient colors
+                    borderWidth: 0
                 }]
             },
 
@@ -240,15 +241,32 @@ function createDeviceCharts() {
                     legend: {
                         display: true, // Show legend
                         position: 'bottom', // Place at the bottom
+                        align: 'start', // Align to the left
                         labels: {
                             font: {
-                                size: 14,
+                                size: 16,
                                 family: 'Lato, sans-serif' // Match your font style
                             },
                             color: '#333333',
-                            boxWidth: 15,
-                            padding: 10
+                            boxWidth: 18,
+                            padding: 15, // Increase padding for spacing between items
+                            generateLabels: (chart) => {
+                                const data = chart.data;
+                                return data.labels.map((label, index) => ({
+                                    text: `${label}: ${data.datasets[0].data[index]} kWh`, // Format as "Device: kWh"
+                                    fillStyle: data.datasets[0].backgroundColor[index],
+                                    strokeStyle: data.datasets[0].backgroundColor[index],
+                                    pointStyle: 'circle',
+                                    hidden: !chart.getDataVisibility(index),
+                                    index: index
+                                }));
+                            }
                         }
+                    }
+                },
+                layout: {
+                    padding: {
+                        bottom: 20 // Add padding below the chart to space out the legend
                     }
                 }
             }
