@@ -315,7 +315,7 @@
 
 .pie-container {
     width: 250px;
-    height: 300px;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -550,10 +550,10 @@
 }
 
 .area-graph-buttons button:hover {
-    background-color: #9A8260;
+    background-color: #806c50;
 }
 
 .area-graph-buttons button.active-button {
-    background-color: #9A8260 !important;
+    background-color: #66553e !important;
 }
 
