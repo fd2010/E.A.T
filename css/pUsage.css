@@ -183,11 +183,10 @@
 .graph-buttons button:hover {
     background-color: #638785;
 }
-
-.active-button {
+.graph-buttons button.active-button {
     background-color: #486e6c !important;
-    color: #fff;
 }
+
 /* Redirect Button Styling */
 .redirect-button {
     background-color: transparent;
@@ -465,6 +464,7 @@
     background-color: #fff;
     color: #333;
     cursor: pointer;
+    margin-bottom: 30px;
 }
 
 #deviceTypeDropdown:hover {
@@ -499,8 +499,8 @@
 
 .graph-container-wrapper {
     display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping to ensure side-by-side layout */
-    justify-content: space-between; /* Distribute graphs evenly */
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 20px; /* Maintain spacing between graphs */
     width: 100%;
     align-items: center; /* Vertically center the graphs */
@@ -537,7 +537,7 @@
 }
 
 .area-graph-buttons button {
-    background-color: #A68F6B;
+    background-color: #A68F6B ;
     color: #fff;
     border: none;
     padding: 10px 10px;
@@ -553,7 +553,7 @@
     background-color: #9A8260;
 }
 
-.area-active-button {
-    background-color: #827868 !important;
-    color: #fff;
+.area-graph-buttons button.active-button {
+    background-color: #9A8260 !important;
 }
+
