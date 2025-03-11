@@ -56,6 +56,15 @@
 
 p1 {
   font-family: "Kay Pho Du", sans-serif;
+  justify-content: center;
+  text-align: center;
+  align-self: center;
+}
+
+p2 {
+  font-family: "Kay Pho Du", sans-serif;
+  font-size: 18px;
+  justify-content: center;
 }
 
 h2 {
@@ -69,6 +78,7 @@ h3 {
 
 h4 {
   font-family: "Kay Pho Du", sans-serif;
+  font-weight: 500;
 }
 
 h11 {
@@ -159,7 +169,7 @@ hTemp {
 }
 
 .productImg {
-  width: 30vw;
+  width: 40vw;
 
   border-color: black;
   border-width: 5px;
