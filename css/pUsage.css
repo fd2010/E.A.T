@@ -302,11 +302,11 @@
 
 
 .pie-chart-container {
-    width: 100%; /* Make it take full width of the container */
+    width: 100%; 
     height: auto;
     margin: 0 auto 20px;
     display: flex;
-    justify-content: center; /* Center it inside the panel */
+    justify-content: center; 
     align-items: center;
     overflow: visible; 
     padding: 10px;
