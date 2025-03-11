@@ -312,16 +312,16 @@
 }
 
 .pie-container {
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #devicePieChart{ 
-    width: 400px; 
-    height:400px;
+    width: 200px; 
+    height:200px;
 }
 
 

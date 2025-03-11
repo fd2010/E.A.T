@@ -195,47 +195,28 @@ function generateGradientColors(startColor, endColor, steps) {
             b: bigint & 255
         };
     }
-    
+
     function rgbToHex(r, g, b) {
         return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
     }
-    
+
     let startRGB = hexToRgb(startColor);
     let endRGB = hexToRgb(endColor);
     let gradient = [];
-    
+
     for (let i = 0; i < steps; i++) {
         let r = Math.round(startRGB.r + (endRGB.r - startRGB.r) * (i / (steps - 1)));
         let g = Math.round(startRGB.g + (endRGB.g - startRGB.g) * (i / (steps - 1)));
         let b = Math.round(startRGB.b + (endRGB.b - startRGB.b) * (i / (steps - 1)));
-        
+
         gradient.push(rgbToHex(r, g, b));
     }
-    
+
     return gradient;
 }
 
-const deviceNames = Object.keys(deviceData);
-const deviceUsage = Object.values(deviceData);
-
-const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.length);
-
-console.log("Device Names:", deviceNames);
-console.log("Device Usage:", deviceUsage);
-console.log("Generated Colors:", blueShades);
-
- // Create datasets dynamically for each ring
-const datasets = deviceNames.map((device, index) => ({
-    label: device,
-    data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
-    backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], // Color + Gray for unused
-    borderWidth: 8, // Thicker rings
-    cutout: `${Math.min(10 + index * 5, 50)}%`, // Expands rings outward for spacing
-    circumference: 360,
-    rotation: 0, // Starts from the top
-}));
-
-console.log("Final Datasets:", datasets);
+const blueShades = generateGradientColors('#121c7b', '#c3d1ff', Object.keys(deviceData).length);
+console.log("colours:", blueShades);
 
 // **Initialize Device-wise Usage Charts**
 function createDeviceCharts() {
@@ -243,26 +224,40 @@ function createDeviceCharts() {
     console.log('Creating device charts');
     try {
         devicePieChart = new Chart(devicePieCtx, {
-            type: 'doughnut',
-            data: { labels: deviceNames, datasets },
+            type: 'pie',
+            data: {
+                labels: Object.keys(deviceData),
+                datasets: [{
+                    data: Object.values(deviceData), // kWh values (Chart.js will calculate proportions)
+                    backgroundColor: blueShades, // Gradient colors
+                    borderColor: '#ffffff', // White border for a clean look
+                    borderWidth: 2, // Thin border to separate segments
+                }]
+            },
+
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                clip: false,
                 plugins: {
-                    legend: { display: false }, // Hide default legend
-                    tooltip: {
-                        callbacks: {
-                            title: function (tooltipItems) {
-                                return deviceNames[tooltipItems[0].datasetIndex]; 
+                    legend: {
+                        display: true, // Show legend
+                        position: 'bottom', // Place at the bottom
+                        labels: {
+                            font: {
+                                size: 14,
+                                family: 'Lato, sans-serif' // Match your font style
                             },
-                            label: function (tooltipItem) {
-                                return `Usage: ${deviceUsage[tooltipItem.datasetIndex]}%`;
-                            }
+                            color: '#333333',
+                            boxWidth: 15,
+                            padding: 10
                         }
                     }
                 }
-            }
+            },
+            animation: {
+                animateRotate: true, // Smooth rotation animation
+                animateScale: true // Scale animation for a polished effect
+            },
         });
 
         devicePieChart.update();
@@ -281,7 +276,7 @@ function createDeviceCharts() {
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
         });
 
-       
+
 
     } catch (error) {
         console.error('Error creating device charts:', error);
