@@ -73,7 +73,7 @@
 
 /* For other sections (Usage by Area and Device Usage), position redirect-button absolutely */
 .graph-section.usage-by-area .redirect-button,
-.device-panel .redirect-button {
+.device-wise .redirect-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -124,22 +124,30 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    text-align: left;
     width: 100%;
     max-width: 800px;
     margin-bottom: 10px;
     /* Adds spacing between the header and graphs */
-}
-
-
-.graph-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+    
 }
 
 .graph-title {
-    font-family: "Kay Pho Du", sans-serif;
+    font-weight: 700;
     font-size: 18px;
+    color: rgba(22, 26, 65, 0.78);
+    margin-bottom: 15px;
+    text-align: left;
+    margin-right: auto;
+}
+
+.graphData {
+    font-weight: 400; /* Lighter weight to differentiate from heading */
+    font-size: 14px; /* Smaller size for hierarchy */
+    color: rgba(22, 26, 65, 0.6); /* Slightly lighter opacity for contrast */
+    margin-bottom: 10px; /* Reduced spacing compared to graph-title */
+    text-align: left; /* Matches alignment with graph-title */
+    font-family: 'Lato', sans-serif; /* Matches your project’s font */
 }
 
 .chart-container {
@@ -282,7 +290,7 @@
     height: 84px;
 }
 
-.device-panel {
+.device-wise {
     background-color: #827868;
     border-radius: 15px;
     padding: 20px;
@@ -291,7 +299,7 @@
     height: 400px;
 }
 
-.device-panel h3 {
+.device-wise h3 {
     font-weight: 700;
     font-size: 18px;
     color: rgba(22, 26, 65, 0.78);
@@ -312,16 +320,16 @@
 }
 
 .pie-container {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #devicePieChart{ 
-    width: 200px; 
-    height:200px;
+    width: 300px; 
+    height:300px;
 }
 
 
@@ -456,4 +464,41 @@
 
 #areaTypeDropdown:hover {
     border-color:  #ADA8A9;
+}
+
+#deviceTypeDropdown {
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}
+
+#deviceTypeDropdown:hover {
+    border-color: #898082;
+}
+
+/* Device Section */
+.device-panel-container {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.device-panel {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.device-panel h3 {
+    margin-bottom: 5px;
+    color: #2c3e50;
 }

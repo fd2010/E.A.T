@@ -5,11 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Power Usage </title>
-    <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/powerUsagePage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/formstyles.css">
+    <link rel="stylesheet" href="./css/addDevice.css">
+    <link rel="stylesheet" href="./css/notification.css">
+    <link rel="stylesheet" href="./css/settings.css">
+    <link rel="stylesheet" href="./css/pUsage.css">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/dashboard.css">
-    <link rel="stylesheet" href="./css/addDevice.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -18,127 +22,160 @@
     <!-- Side Navigation -->
     <nav class="side-nav">
         <div class="nav-logo">
-            <a href="user-profile.html"><img src="./images/icons/User Profile Icon.png" alt="User"></a>
+            <a href="user-profile.html"><img src="./images/icons/profile pic.svg" alt="User"></a>
         </div>
         <div class="nav-icons">
-            <img src="./images/icons/notification bell.png" alt="Notifications" class="nav-icon">
-            <a href="dashboard.html"><img src="./images/icons/Home Icon.png" alt="Home" class="nav-icon"></a>
-            <a href="manage devices.html"><img src="./images/icons/tablet device (MIT licence).png" alt="Manage Devices" class="nav-icon"></a>
-            <img src="./images/icons/Add Device Icon.png" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
-            <a href="powerUsage.html"><img src="./images/icons/View Stats Icon.png" alt="Stats" class="nav-icon"></a>
-            
-            <img src="./images/icons/settings cog (MIT).png" alt="Settings" class="nav-icon">
-            
+            <img src="./images/icons/bell 2 icon.svg" alt="Notifications" class="nav-icon">
+            <a href="dashboard.html"><img src="./images/icons/home icon.svg" alt="Home" class="nav-icon"></a>
+            <a href="manage devices.html"><img src="./images/icons/tablet device.svg" alt="Manage Devices"
+                    class="nav-icon"></a>
+            <img src="./images/icons/add device icon.svg" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
+            <a href="pUsage.html" id="nav-selected"><img src="./images/icons/view stats icon.svg" alt="Stats" class="nav-icon"></a>
+
+            <img src="./images/icons/settings.svg" alt="Settings" class="nav-icon" onclick="showSettingsModal()">
+
         </div>
 
         <div class="logout-icon">
-            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout icon.png" alt="Logout" title="Logout"></button>
+            <button id="logoutBtn" class="logout-btn"><img src="./images/icons/logout 2 icon.svg" alt="Logout"
+                    title="Logout" class="nav-icon"></button>
         </div>
     </nav>
 
-    <!-- Header Section -->
-    <header class="header">
-        <h1 class="h1Light">Power Usage </h1>
-        <br>
-        <h2 class="h2Light">Track your energy consumption and costs</h2>
-    </header>
+    <div class="power-container">
+        <!-- Main Content (Middle) -->
+        <main class="main-content">
+            <h1 class="power-usage-title">Energy Usage by Area</h1>
+            <p class="energy-consumption">Analyze energy consumption in different office areas</p>
 
-    <main class="main-content">
+            <!-- Overall Usage by area -->
+            <section class="graph-section overall-usage pUsageSection">
 
-        <!-- Section 1: Line Graphs for Total Energy & Cost -->
-        <section class="graph-section">
-            <h2 class="h2Light">Total Energy & Cost Over Time</h2>
+                <div class="section-header">
+                    <h3 class="graph-title"Overall Energy Usage Office Areas</h3>
+                </div>
 
-            <!-- Time Selection Buttons -->
-            <div class="graph-buttons">
+                <div class="graph-container-wrapper">
+                    <div class="graph-container">
+                        <canvas id="areaComparisonPie"></canvas>
+                    </div>
+                    <div class="graph-container">
+                        <canvas id="areaComparisonBar"></canvas>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- Usage by Area selection -->
+
+            <section class="graph-section usage-by-area pUsageSection">
+
+                <div class="section-header">
+                    <h3 class="graph-title">Energy & Cost Usage in Selected Area</h3>
+                </div>
+
+                <select id="areaTypeDropdown">
+                    <option value="Meeting Room">Meeting Room</option>
+                    <option value="Common Areas">Common Areas</option>
+                    <option value="Workstations">Workstations</option>
+                    <option value="Special">Special</option>
+                </select>       
+
+                <div class="section-header">
+                    <<p class="graphData">Energy & Cost Usage Over Time in Selected Area</p>
+                </div>
+
                 <div class="graph-buttons">
-                    <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                    <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                    <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                    <div class="graph-buttons">
+                        <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                        <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                        <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+                    </div>
                 </div>
+
+                <div class="graph-container-wrapper">
+                    <div class="graph-container">
+                        <canvas id="areaTimeCostChart"></canvas>
+                    </div>
+                    <div class="graph-container">
+                        <canvas id="areaTimeEnergyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <<p class="graphData">Energy Usage in Selected Area </p>
+                </div>
+
+                <div class="graph-container-wrapper">
+                    <div class="graph-container">
+                        <canvas id="devicePieChart"></canvas>
+                    </div>
+                    <div class="graph-container">
+                        <canvas id="deviceBarChart"></canvas>
+                    </div>
+                </div>
+
+                <div class=" device-panel-container">
+                    <h2>Device List in Selected Area</h2>
+                    <div id="deviceList">
+                        <!-- Device details will be dynamically inserted here -->
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <!-- Right Panel -->
+        <aside class="right-panel">
+            <div class="panel expenses-panel pUsageSection">
+                <h3>Minimum Energy Usage by Area</h3>
+                <p><span id="minUsageRoom"></span></p>
+
+            </div>
+            <div class="panel power-usage-panel pUsageSection">
+                <h3>Maximum Energy Usage by Area</h3>
+                <p><span id="maxUsageRoom"></span> </p>
             </div>
 
-            <!-- Graphs -->
-            <div class="graph-container-wrapper">
-                <div class="graph-container">
-                    <canvas id="energyCostChart"></canvas>
-                </div>
-                <div class="graph-container">
-                    <canvas id="energyUsageChart"></canvas>
-                </div>
-            </div>
-
-        </section>
-
-
-        <!-- Section 2: Area-Wise Energy Usage -->
-        <section class="graph-section">
-            <div class="section-header">
-                <h2 class="h2Light">Energy Usage by Area</h2>
-                <button class="redirect-button" onclick="location.href='areaWise.html'">View Detailed Report</button>
-            </div>
-
-            <div class="graph-container-wrapper">
-                <div class="graph-container">
-                    <canvas id="areaPieChart"></canvas>
-                </div>
-                <div class="graph-container">
-                    <canvas id="areaBarChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- Section 3: Device Type Energy Usage -->
-        <section class="graph-section" >
-            <div class="section-header">
-                <h2 class="h2Light">Energy Usage by Device Type</h2>
-                <button class="redirect-button" onclick="location.href='deviceWise.html'">View Detailed Report</button>
-            </div>
-            <div class="graph-container-wrapper">
-                <div class="graph-container">
-                    <canvas id="devicePieChart"></canvas>
-                </div>
-                <div class="graph-container">
-                    <canvas id="deviceBarChart"></canvas>
-                </div>
-            </div>
-
-        </section>
-
-    </main>
-
-    <!-- Sticky Footer for Summary Data -->
-    <footer class="sticky-footer">
-        <div class="metric-box">
-            <h2><span id="totalEnergy"></span> kWh</h2>
-            <p>Total Energy Used</p>
-        </div>
-        <div class="metric-box">
-            <h2><span id="totalCost"></span></h2>
-            <p>Total Cost of Energy</p>
-        </div>
-    </footer>
-
-    <!-- Company name -->
-    <div class="divLight">
-        <p id="companyName">PearCare.Inc</p>
-        <div id="line" style="margin-bottom: 100px;"></div>
+        </aside>
     </div>
 
-    <!-- Error handling script -->
+    <!-- Company Name -->
+    <div class="divLight">
+        <p id="companyName">PearCare.Inc</p>
+        <div id="line" style="margin: auto;"></div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+
+            <h2 class="h2Light">Notifications</h2>
+
+            <div id="notificationsList" class="notifications-list">
+                <!-- Notifications will be dynamically inserted here -->
+                <div class="no-notifications-message">No notifications to display</div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        window.onerror = function(msg, url, line, col, error) {
-            console.error('Global error:', error, 'Message:', msg, 'Line:', line);
+        window.onerror = function (msg, url, line, col, error) {
+            const errorDisplay = document.getElementById('errorDisplay');
+            errorDisplay.style.display = 'block';
+            errorDisplay.innerHTML = `An error occurred: ${msg}<br>Line: ${line}`;
+            console.error('Global error:', error);
             return false;
         };
     </script>
 
-    <!-- Import scripts -->
-    <script type="module" src="./javascript/add-device.js"></script>
-    <script type="module" src="./javascript/powerUsage.js"></script>
+    <script type="module" src="./javascript/areaWise.js"></script>
     <script type="module" src="./javascript/dashboard.js"></script>
+    <script type="module" src="./javascript/add-device.js"></script>
+    <script type="module" src="./javascript/settings.js"></script>
+    <script type="module" src="./javascript/load-notifications.js"></script>
 </body>
-
 
 </html>

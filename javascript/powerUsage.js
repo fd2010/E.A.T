@@ -215,7 +215,7 @@ function generateGradientColors(startColor, endColor, steps) {
     return gradient;
 }
 
-const blueShades = generateGradientColors('#121c7b', '#c3d1ff', Object.keys(deviceData).length);
+const blueShades = generateGradientColors('#961616', '#d49494', Object.keys(deviceData).length);
 console.log("colours:", blueShades);
 
 // **Initialize Device-wise Usage Charts**
@@ -230,8 +230,6 @@ function createDeviceCharts() {
                 datasets: [{
                     data: Object.values(deviceData), // kWh values (Chart.js will calculate proportions)
                     backgroundColor: blueShades, // Gradient colors
-                    borderColor: '#ffffff', // White border for a clean look
-                    borderWidth: 2, // Thin border to separate segments
                 }]
             },
 
@@ -253,11 +251,7 @@ function createDeviceCharts() {
                         }
                     }
                 }
-            },
-            animation: {
-                animateRotate: true, // Smooth rotation animation
-                animateScale: true // Scale animation for a polished effect
-            },
+            }
         });
 
         devicePieChart.update();
@@ -413,6 +407,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM Content Loaded - Power usage script running");
 
     try {
+
+        calculateTotals();
         // Setup event listeners
         setupEventListeners();
 
