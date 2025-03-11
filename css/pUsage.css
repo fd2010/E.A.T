@@ -32,13 +32,13 @@
     font-weight: 700;
     font-size: 48px;
     line-height: 59px;
-    color: #B3A99A;
+    color: #827868;
     margin-bottom: 6px;
 }
 
 .energy-consumption {
-    font-weight: 300;
-    font-size: 20px;
+    font-weight: 400;
+    font-size: 25px;
     line-height: 24px;
     color: #B3A99A;
     margin-bottom: 10px;
@@ -283,7 +283,7 @@
 }
 
 .device-panel {
-    background-color: #B3A99A;
+    background-color: #827868;
     border-radius: 15px;
     padding: 20px;
     margin-top: 20px;
@@ -312,24 +312,18 @@
 }
 
 .pie-container {
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #devicePieChart{ 
-    width: 200px; 
-    height:200px;
-    border: 1px solid black;
+    width: 400px; 
+    height:400px;
 }
 
-.empty-pie {
-    width: 100%;
-    height: 100%;
-    background-color: transparent; /* No background for empty pie chart */
-}
 
 .device-usage-details {
     margin-top: 20px;
