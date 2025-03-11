@@ -190,6 +190,12 @@ hTemp {
   display: inline-block;
   justify-content: center;
   margin: 1.5vw;
+
+  transition: transform 0.5s ease-in-out;
+}
+
+.headshotContainer:hover {
+  transform: scale(1.2);
 }
 
 .headshotIcon {
