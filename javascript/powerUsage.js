@@ -249,13 +249,12 @@ function createDeviceCharts() {
                 responsive: true,
                 maintainAspectRatio: false,
                 clip: false,
-                cutout: '40%',
                 plugins: {
                     legend: { display: false }, // Hide default legend
                     tooltip: {
                         callbacks: {
                             title: function (tooltipItems) {
-                                return deviceNames[tooltipItems[0].datasetIndex]; // Correct device label
+                                return deviceNames[tooltipItems[0].datasetIndex]; 
                             },
                             label: function (tooltipItem) {
                                 return `Usage: ${deviceUsage[tooltipItem.datasetIndex]}%`;
@@ -265,6 +264,8 @@ function createDeviceCharts() {
                 }
             }
         });
+
+        devicePieChart.update();
 
         deviceBarChart = new Chart(deviceBarCtx, {
             type: 'bar',
@@ -279,7 +280,7 @@ function createDeviceCharts() {
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
         });
 
-        devicePieChart.update();
+       
 
     } catch (error) {
         console.error('Error creating device charts:', error);
