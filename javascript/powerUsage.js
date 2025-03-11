@@ -230,7 +230,7 @@ const datasets = deviceNames.map((device, index) => ({
     data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
     backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], // Color + Gray for unused
     borderWidth: 8, // Thicker rings
-    cutout: `${Math.min(30 + index * 10, 80)}%`, // Expands rings outward for spacing
+    cutout: `${Math.min(10 + index * 5, 50)}%`, // Expands rings outward for spacing
     circumference: 360,
     rotation: 0, // Starts from the top
 }));
@@ -266,6 +266,7 @@ function createDeviceCharts() {
         });
 
         devicePieChart.update();
+        console.log('Device chart created successfully');
 
         deviceBarChart = new Chart(deviceBarCtx, {
             type: 'bar',

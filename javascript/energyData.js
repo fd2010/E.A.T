@@ -74,12 +74,12 @@ export const areaData = {
 export const deviceData = {
     "Computers": 50,
     "Lights": 20,
-    "Heating": 15,
-    "Monitors": 25,
-    "Speakers": 10,
-    "A/C": 22,
-    "Projector": 18,
-    "Vending Machine": 12
+    "Heating": 40,
+  //  "Monitors": 25,
+   // "Speakers": 10,
+  //  "A/C": 22,
+  //  "Projector": 18,
+  //  "Vending Machine": 12
 };
 
 export const devicesByArea = {
