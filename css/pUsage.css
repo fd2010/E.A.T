@@ -50,6 +50,7 @@
     border-radius: 15px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
     position: relative;
+    height: auto;
 }
 
 .graph-title {
@@ -63,12 +64,12 @@
 
 .overall-usage {
     background-color: #ECEFE7;
-    height: 440px;
+    height: auto;
 }
 
 .usage-by-area {
     background-color: #FAF2E3;
-    height: 335px;
+    height: auto;
 }
 
 /* For other sections (Usage by Area and Device Usage), position redirect-button absolutely */
@@ -121,9 +122,7 @@
     text-align: left;
     width: 100%;
     max-width: 800px;
-    margin-bottom: 10px;
-    /* Adds spacing between the header and graphs */
-    
+    margin-bottom: 10px; /* Adds spacing between the header and graphs */
 }
 
 .graph-title {
@@ -140,6 +139,7 @@
     font-size: 16px; 
     color: rgba(22, 26, 65, 0.6); 
     margin-bottom: 10px; 
+    margin-top: 10px;
     text-align: left; 
     font-family: 'Lato', sans-serif; 
 }
@@ -166,8 +166,9 @@
     align-items: center; 
 }
 
+
 .graph-buttons button {
-    background-color: #9cab83;
+    background-color: #7ea19f;
     color: #fff;
     border: none;
     padding: 10px 10px;
@@ -180,11 +181,11 @@
 }
 
 .graph-buttons button:hover {
-    background-color: #8e9c77;
+    background-color: #638785;
 }
 
 .active-button {
-    background-color: #606952 !important;
+    background-color: #486e6c !important;
     color: #fff;
 }
 /* Redirect Button Styling */
@@ -290,7 +291,7 @@
     padding: 20px;
     margin-top: 20px;
     position: relative;
-    height: 400px;
+    height: auto;
 }
 
 .device-wise h3 {
@@ -435,17 +436,24 @@
 /* Drop down */
 #areaTypeDropdown {
     width: 250px;
-    padding: 10px;
+    padding: 10px 15px; /* Slight padding increase for comfort */
     font-size: 16px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    color: #333;
-    cursor: pointer;
+    border: 2px solid #D1D5DB; /* Softer gray border */
+    border-radius: 8px; /* Keep the original rounded corners */
+    background-color: #FFFFFF; /* White background */
+    color: #333333; /* Dark gray text */
+    transition: border-color 0.3s ease; /* Smooth border color transition */
 }
 
+/* Hover effect */
 #areaTypeDropdown:hover {
-    border-color:  #ADA8A9;
+    border-color: #ADA8A9; /* Slightly darker gray on hover */
+}
+
+/* Focus effect */
+#areaTypeDropdown:focus {
+    border-color: #827868; /* Match your dashboard’s muted brown */
+    outline: none; /* Remove default focus outline */
 }
 
 #deviceTypeDropdown {
@@ -491,16 +499,18 @@
 
 .graph-container-wrapper {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    flex-wrap: nowrap; /* Prevent wrapping to ensure side-by-side layout */
+    justify-content: space-between; /* Distribute graphs evenly */
+    gap: 20px; /* Maintain spacing between graphs */
     width: 100%;
+    align-items: center; /* Vertically center the graphs */
 }
+
 .area-graph-container {
-    width: 100%; 
-    height: auto; 
-    max-width: 600px;
-    min-height: 200px; 
+    width: 100%; /* Take up available space */
+    max-width: 300px; /* Limit width to fit side by side */
+    height: auto;
+    min-height: 200px; /* Minimum height to prevent collapse */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -527,7 +537,7 @@
 }
 
 .area-graph-buttons button {
-    background-color: #9cab83;
+    background-color: #A68F6B;
     color: #fff;
     border: none;
     padding: 10px 10px;
@@ -540,10 +550,10 @@
 }
 
 .area-graph-buttons button:hover {
-    background-color: #8e9c77;
+    background-color: #9A8260;
 }
 
 .area-active-button {
-    background-color: #606952 !important;
+    background-color: #827868 !important;
     color: #fff;
 }

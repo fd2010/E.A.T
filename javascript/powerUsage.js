@@ -64,13 +64,13 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Usage (kW)',
                         data: totalEnergyData[selectedTime],
-                        borderColor: '#606952', // Line color
+                        borderColor: '#486e6c', // Line color
                         backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
                         fill: false,
                         tension: 0.4, // Makes the line curvy
                         borderWidth: 2, // Adjust line thickness
                         pointRadius: 4, // Adjust point size
-                        pointBackgroundColor: '#606952' // Point color
+                        pointBackgroundColor: '#486e6c' // Point color
                     }]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
