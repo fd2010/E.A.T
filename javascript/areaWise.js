@@ -60,7 +60,7 @@ function createAreaCharts() {
     areaPieChart = new Chart(areaComparisonPieCtx, {
         type: 'pie',
         data: {
-            labels: Object.keys(areaData).map(label => `${label} (${Object.values(areaData)[Object.keys(areaData).indexOf(label)]} kWh)`), // Include kWh in labels
+            labels: Object.keys(areaData),
             datasets: [{
                 data: Object.values(areaData),
                 backgroundColor: areaShades, // Gradient colors
@@ -73,6 +73,8 @@ function createAreaCharts() {
             plugins: {
                 legend: {
                     display: true,
+                    position: 'bottom', // Place at the bottom
+                    align: 'start', // Align to the left
                     labels: {
                         font: {
                             size: 16,
@@ -180,14 +182,12 @@ window.updateTimeGraphs = function (period) {
 
 };
 
+
+const areaDataShades = generateGradientColors('#ec7878', '#B04242', Object.keys(areaData).length);
+
 // **Update Device & Time Graphs When Changing Area**
 function updateAreaData() {
     console.log("Selected Area:", selectedArea);
-
-    if (!devicesByArea[selectedArea]) {
-        console.error(`No data found for selected area: '${selectedArea}'`);
-        return;
-    }
 
     // Ensure devicesByArea[selectedArea] exists, or use an empty array to prevent errors
     const devices = devicesByArea[selectedArea] || [];
@@ -212,8 +212,34 @@ function updateAreaData() {
             labels: deviceNames,
             datasets: [{
                 data: deviceEnergy,
-                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']
+                backgroundColor: areaDataShades, // Gradient colors
+                borderWidth: 0
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom', // Place at the bottom
+                    align: 'start', // Align to the left
+                    labels: {
+                        font: {
+                            size: 16,
+                            family: 'Lato, sans-serif'
+                        },
+                        color: '#333333',
+                        boxWidth: 18,
+                        padding: 15
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    bottom: 20
+                }
+            }
         }
     });
 
