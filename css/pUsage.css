@@ -118,7 +118,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    text-align: left;
+    text-align: left !important;
     width: 100%;
     max-width: 800px;
     margin-bottom: 15px; /* Adds spacing between the header and graphs */
@@ -129,8 +129,7 @@
     font-weight: 500;
     color: rgba(22, 26, 65, 0.78);
     margin-bottom: 15px;
-    text-align: left;
-    text-align: left;
+    text-align: left !important;
 }
 
 .graphData {
