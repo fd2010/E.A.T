@@ -6,7 +6,7 @@
 /* Thinking of using the following colour scheme - https://coolors.co/827377-002035-22aed1-6d8ea0-70b77e */
 
 .navBarDiv {
-  background-color: #dbc99f;
+  background-color: #b3a99a;
   display: flex;
   clear: both;
   height: 90px;
@@ -21,6 +21,8 @@
 
   border-radius: 30px;
   justify-content: space-evenly;
+
+  z-index: 1;
 }
 
 .navBarDiv a {
@@ -54,6 +56,15 @@
 
 p1 {
   font-family: "Kay Pho Du", sans-serif;
+  justify-content: center;
+  text-align: center;
+  align-self: center;
+}
+
+p2 {
+  font-family: "Kay Pho Du", sans-serif;
+  font-size: 18px;
+  justify-content: center;
 }
 
 h2 {
@@ -67,11 +78,12 @@ h3 {
 
 h4 {
   font-family: "Kay Pho Du", sans-serif;
+  font-weight: 500;
 }
 
 h11 {
   font-size: 3vw;
-  font-family: "Inria Serif";
+  font-family: "Montserrat", sans-serif;
 
   text-decoration: underline;
   font-weight: bold;
@@ -98,7 +110,7 @@ hTemp {
 }
 
 .infoCont {
-  background-color: #faeb74;
+  background-color: #b3bb9c;
   /* background-color: transparent; */
 
   display: flex;
@@ -107,7 +119,9 @@ hTemp {
   margin: 6vw;
   padding: 2vw;
 
-  border-radius: 10px;
+  border-radius: 20%;
+
+  filter: drop-shadow(0 10px 8px #ffdc52);
 }
 
 .leftContainer {
@@ -139,7 +153,7 @@ hTemp {
   padding: 10px;
   border-radius: 50px;
 
-  background-color: #6d8ea0;
+  background-color: #b2daf1;
 }
 
 .centerContainer {
@@ -155,7 +169,7 @@ hTemp {
 }
 
 .productImg {
-  width: 30vw;
+  width: 40vw;
 
   border-color: black;
   border-width: 5px;
@@ -176,16 +190,22 @@ hTemp {
 
   padding: 1vw;
 
-  /* After page loads opacity turns on */
+  /* After page loads opacity turns on
   opacity: 0;
   transition: opacity 2s ease-in;
-  /* transition-delay: 1s; */
+  transition-delay: 1s; */
 }
 
 .headshotContainer {
   display: inline-block;
   justify-content: center;
   margin: 1.5vw;
+
+  transition: transform 0.5s ease-in-out;
+}
+
+.headshotContainer:hover {
+  transform: scale(1.2);
 }
 
 .headshotIcon {
@@ -200,7 +220,7 @@ hTemp {
   text-align: center;
 }
 
-.productButton {
+.GButton {
   display: block;
 
   color: green;
@@ -218,11 +238,11 @@ hTemp {
   transition: all 250ms;
 }
 
-.productButton:hover {
+.GButton:hover {
   transform: scale(1.05) rotate(-0.5deg);
 }
 
-.contactUsButton {
+/* .contactUsButton {
   align-self: center;
 
   border-radius: 10px;
@@ -231,7 +251,7 @@ hTemp {
 
   font-family: "Kay Pho Du", sans-serif;
   font-size: 20px;
-}
+} */
 
 .contactForm {
   text-align: center;
@@ -245,7 +265,7 @@ hTemp {
 }
 
 footer {
-  background-color: #827377;
+  background-color: #827868;
 
   margin: 0;
   padding: 2vw;

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Power Usage </title>
+    <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/formstyles.css">
     <link rel="stylesheet" href="./css/addDevice.css">
     <link rel="stylesheet" href="./css/notification.css">
@@ -48,7 +48,7 @@
             <h1 class="power-usage-title">Power Usage</h1>
             <p class="energy-consumption">Here's your device energy consumption rate</p>
 
-            <!-- Overall Usage (Empty Section) -->
+            <!-- Overall Usage -->
             <section class="graph-section overall-usage pUsageSection">
 
                 <div class="section-header">
@@ -56,7 +56,7 @@
                 </div>
 
                 <button class="redirect-button" onclick="location.href='overallUsage.html'"><img
-                        src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
+                        src="./images/icons/more items.svg" alt="Overall Usage" title="Overall Usage"
                         class="redirect-icon">
                 </button>
 
@@ -74,7 +74,7 @@
             </section>
 
 
-            <!-- Usage by Area (Empty Section) -->
+            <!-- Usage by Area -->
 
             <section class="graph-section usage-by-area pUsageSection">
 
@@ -82,7 +82,7 @@
                     <h3 class="graph-title">Usage by Area</h3>
                 </div>
 
-                <button class="redirect-button" onclick="location.href='areaWise.html'"><img
+                <button class="redirect-button" onclick="location.href='powerUsage.html'"><img
                         src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
                         class="redirect-icon">
                 </button>
@@ -90,28 +90,28 @@
                 <div class="graph-container">
                     <canvas id="areaBarChart"></canvas>
                 </div>
+
             </section>
         </main>
 
         <!-- Right Panel -->
         <aside class="right-panel">
             <div class="panel expenses-panel pUsageSection">
-                <h3>Expenses</h3>
-                <p>This month: £270.0</p>
-                <p>Today: £30.0</p>
+                <h3>Total Energy Used</h3>
+                <p><span id="totalEnergy"></span> kWh</p>
+
             </div>
             <div class="panel power-usage-panel pUsageSection">
-                <h3>Power Usage</h3>
-                <p>This month: 70 kWh</p>
-                <p>Today: 5 kWh</p>
+                <h3>Total Expenses</h3>
+                <p><span id="totalCost"></span></p>
             </div>
 
             <!-- device usage Panel -->
-            <div class="device-panel pUsageSection">
+            <div class="device-wise pUsageSection">
                 <h3>Device Usage</h3>
 
                 <button class="redirect-button" onclick="location.href='deviceWise.html'"><img
-                        src="./images/icons/more items.svg" alt="Area Usage" title="Area Usage"
+                        src="./images/icons/more items.svg" alt="Device Usage" title="Device Usage"
                         class="redirect-icon"></button>
 
                 <div class="pie-chart-container">
@@ -125,7 +125,7 @@
     </div>
 
     <!-- Company Name -->
-    <div class="divLight">
+    <div class="divLight" style="margin-bottom:25px;">
         <p id="companyName">PearCare.Inc</p>
         <div id="line" style="margin: auto;"></div>
     </div>

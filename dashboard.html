@@ -4,15 +4,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard - E.A.T</title>
-        <link rel="stylesheet" href="./css/powerUsagePage.css">
+        <link rel="stylesheet" href="./css/pUsage.css">
+        <!-- <link rel="stylesheet" href="./css/powerUsagePage.css"> -->
         <link href="https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="./css/formstyles.css">
         <link rel="stylesheet" href="./css/dashboard.css">
         <link rel="stylesheet" href="./css/addDevice.css">
         <link rel="stylesheet" href="./css/thermostat.css">
         <link rel="stylesheet" href="./css/notification.css">
         <link rel="stylesheet" href="./css/settings.css">
+        <link rel="stylesheet" href="./css/main.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     
@@ -96,18 +97,18 @@
                 <div class="energy-section">
                     <div class="graph-header">
                         <div class="graph-title">Power Consumption</div>
-                        <div class="graph-buttons">
+                        <div class="graph-buttons" style="align-items: right;">
                             <div class="graph-buttons">
-                                <button id="daily">Daily</button>
-                                <button id="weekly">Weekly</button>
-                                <button id="monthly">Monthly</button>
+                                <button id="daily"><p style="font-family: 'Montserrat', sans-serif;">Daily</p></button>
+                                <button id="weekly"><p style="font-family: 'Montserrat', sans-serif;">Weekly</p></button>
+                                <button id="monthly"><p style="font-family: 'Montserrat', sans-serif;">Monthly</p></button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Chart -->
                     <div class="chart-container graph-container">
-                        <canvas id="energyCostChart"></canvas>
+                        <canvas id="energyUsageChart"></canvas>
                     </div>
 
                     <!-- More items link-->

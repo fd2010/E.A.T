@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
 /* Dashboard Container */
 .dashboard-container {
     /* max-width: 1200px;
@@ -365,6 +368,7 @@
 }
 
 .recommendation-content {
+    font-family: "Montserrat", sans-serif !important;
     color: #fff;
     font-size: 14px;
     line-height: 1.5;
