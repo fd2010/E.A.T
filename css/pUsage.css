@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inria+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kay+Pho+Du&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 /* Reset & box-sizing */
 * {
@@ -122,12 +121,22 @@
     text-align: left;
     width: 100%;
     max-width: 800px;
-    margin-bottom: 10px; /* Adds spacing between the header and graphs */
+    margin-bottom: 15px; /* Adds spacing between the header and graphs */
+}
+.section-header h3 {
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(22, 26, 65, 0.78);
+    margin-bottom: 15px;
+    text-align: left;
+    text-align: left;
 }
 
 .graph-title {
-    font-weight: 700;
-    font-size: 18px;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
     color: rgba(22, 26, 65, 0.78);
     margin-bottom: 15px;
     text-align: left;
@@ -262,8 +271,9 @@
 }
 
 .panel h3 {
-    font-weight: 700;
-    font-size: 17px;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
     margin-bottom: 8px;
 }
 
@@ -293,8 +303,9 @@
 }
 
 .device-wise h3 {
-    font-weight: 700;
-    font-size: 18px;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
     color: rgba(22, 26, 65, 0.78);
     margin-bottom: 15px;
     text-align: left;
@@ -308,14 +319,13 @@
     display: flex;
     justify-content: center; 
     align-items: center;
-    overflow: visible; 
-    padding: 10px;
     overflow: visible !important;
+    padding: 10px;
 }
 
 .pie-container {
     width: 250px;
-    height: 400px;
+    height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -338,13 +348,6 @@
     font-family: 'Lato', sans-serif;
 }
 
-.percentage {
-    font-weight: 700;
-    font-size: 24px;
-    color: rgba(22, 26, 65, 0.78);
-    margin-right: 10px;
-    width: 60px;
-}
 
 .device-type {
     font-weight: 700;
@@ -468,6 +471,9 @@
 }
 
 .device-panel h3 {
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
     margin-bottom: 5px;
     color: rgba(22, 26, 65, 0.78);
 }
@@ -487,7 +493,7 @@
 
 .area-graph-container {
     width: 100%; /* Take up available space */
-    max-width: 600px;
+    max-width: 400px;
     min-width: 300px; /* Limit width to fit side by side */
     height: auto;
     min-height: 200px; /* Minimum height to prevent collapse */
