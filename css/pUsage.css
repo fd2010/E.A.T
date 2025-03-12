@@ -313,23 +313,27 @@
 
 
 .pie-chart-container {
-    width: 100%; 
+    width: 100%;
     height: auto;
-    margin: 0 auto 20px;
     display: flex;
-    justify-content: center; 
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start; /* Ensure it starts at the top */
     overflow: visible !important;
-    padding: 10px;
+    padding: 0; /* Remove extra padding */
+    margin: 0 auto 10px; /* Reduce space at the bottom */
 }
 
 .pie-container {
-    width: 250px;
-    height: 600px;
+    width: 100%;
+    max-width: 280px;
+    min-height: 280px; /* Reduce minimum height */
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
 }
+
 
 #devicePieChart{ 
     width: 100%; 
