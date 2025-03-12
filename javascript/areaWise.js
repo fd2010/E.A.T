@@ -77,11 +77,11 @@ function createAreaCharts() {
                     align: 'start', // Align to the left
                     labels: {
                         font: {
-                            size: 16,
+                            size: 13,
                             family: 'Lato, sans-serif'
                         },
                         color: '#333333',
-                        boxWidth: 18,
+                        boxWidth: 14,
                         padding: 15
                     }
                 }
@@ -226,11 +226,11 @@ function updateAreaData() {
                     align: 'start', // Align to the left
                     labels: {
                         font: {
-                            size: 16,
+                            size: 13,
                             family: 'Lato, sans-serif'
                         },
                         color: '#333333',
-                        boxWidth: 18,
+                        boxWidth: 14,
                         padding: 15
                     }
                 }

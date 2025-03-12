@@ -310,11 +310,12 @@
     align-items: center;
     overflow: visible; 
     padding: 10px;
+    overflow: visible !important;
 }
 
 .pie-container {
     width: 250px;
-    height: 250px;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -486,7 +487,8 @@
 
 .area-graph-container {
     width: 100%; /* Take up available space */
-    max-width: 300px; /* Limit width to fit side by side */
+    max-width: 600px;
+    min-width: 300px; /* Limit width to fit side by side */
     height: auto;
     min-height: 200px; /* Minimum height to prevent collapse */
     display: flex;

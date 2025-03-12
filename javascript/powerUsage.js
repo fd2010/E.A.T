@@ -215,7 +215,7 @@ function generateGradientColors(startColor, endColor, steps) {
     return gradient;
 }
 
-const blueShades = generateGradientColors('#486e6c', '#A7C7C5', Object.keys(deviceData).length);
+const blueShades = generateGradientColors('#486e6c', '#e6f7f5', Object.keys(deviceData).length);
 console.log("colours:", blueShades);
 
 // **Initialize Device-wise Usage Charts**
@@ -244,12 +244,12 @@ function createDeviceCharts() {
                         align: 'start', // Align to the left
                         labels: {
                             font: {
-                                size: 16,
+                                size: 13,
                                 family: 'Lato, sans-serif' // Match your font style
                             },
                             color: '#333333',
-                            boxWidth: 18,
-                            padding: 15, // Increase padding for spacing between items
+                            boxWidth: 13,
+                            padding: 13, // Increase padding for spacing between items
                             generateLabels: (chart) => {
                                 const data = chart.data;
                                 return data.labels.map((label, index) => ({
