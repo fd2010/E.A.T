@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/formstyles.css">
-    <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="stylesheet" href="./css/addDevice.css">
     <link rel="stylesheet" href="./css/notification.css">
     <link rel="stylesheet" href="./css/settings.css">
     <link rel="stylesheet" href="./css/pUsage.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="stylesheet" href="./css/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -60,7 +60,7 @@
                 <h3 class="graph-title">Overall Energy Usage</h3>
             </div>
 
-            <section class="graph-section overall-usage">
+            <section class="graph-section overall-usage pUsageSection">
                 <div class="graph-container">
                     <canvas id="energyUsageChart"></canvas>
                 </div>
@@ -71,7 +71,7 @@
                 <h3 class="graph-title">Overall Cost Usage</h3>
             </div>
 
-            <section class="graph-section usage-by-area">
+            <section class="graph-section usage-by-area pUsageSection">
 
                 <div class="graph-container">
                     <canvas id="energyCostChart"></canvas>
@@ -82,12 +82,12 @@
 
         <!-- Right Panel -->
         <aside class="right-panel">
-            <div class="panel expenses-panel">
+            <div class="panel expenses-panel pUsageSection">
                 <h3>Expenses</h3>
                 <p>This month: £270.0</p>
                 <p>Today: £30.0</p>
             </div>
-            <div class="panel power-usage-panel">
+            <div class="panel power-usage-panel pUsageSection">
                 <h3>Power Usage</h3>
                 <p>This month: 70 kWh</p>
                 <p>Today: 5 kWh</p>
