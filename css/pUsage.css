@@ -21,13 +21,14 @@
 /* Main Content Styles */
 .main-content {
     flex: 1;
-    margin-left: 145px; /* Adjusted to match sidebar width exactly, removing extra space */
+    margin-left: 140px; /* Adjusted to match sidebar width exactly, removing extra space */
     margin-right: 270px;
-    padding: 31px 20px 20px 20px;
+    padding: 20px 20px 20px 20px;
     position: relative;
 }
 
 .power-usage-title {
+    font-family: "Kay Pho Du", sans-serif;
     font-weight: 700;
     font-size: 48px;
     line-height: 59px;
@@ -36,6 +37,7 @@
 }
 
 .energy-consumption {
+    font-family: "Kay Pho Du", sans-serif;
     font-weight: 400;
     font-size: 25px;
     line-height: 24px;
@@ -53,8 +55,9 @@
 }
 
 .graph-title {
-    font-weight: 700;
+    font-family: "Kay Pho Du", sans-serif;
     font-size: 20px;
+    font-weight: 500;
     line-height: 24px;
     color: #000000;
     margin-bottom: 5px;
@@ -133,8 +136,9 @@
 }
 
 .graphData {
-    font-weight: 500; 
-    font-size: 16px; 
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
     color: rgba(22, 26, 65, 0.6); 
     margin-bottom: 10px; 
     margin-top: 10px;
@@ -220,9 +224,9 @@
 }
 
 .filter span {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
+    font-family: "Kay Pho Du", sans-serif;
     font-size: 18px;
+    font-weight: 500;
     color: #808080;
 }
 
@@ -267,6 +271,7 @@
 }
 
 .panel p {
+    font-family: "Kay Pho Du", sans-serif;
     font-weight: 400;
     font-size: 15px;
     margin-bottom: 4px;
@@ -343,8 +348,9 @@
 
 
 .device-type {
-    font-weight: 700;
+    font-family: "Kay Pho Du", sans-serif;
     font-size: 16px;
+    font-weight: 500;
     color: rgba(22, 26, 65, 0.41);
     margin-right: 10px;
     width: 80px;
