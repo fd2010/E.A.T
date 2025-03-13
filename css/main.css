@@ -307,3 +307,54 @@
         font-size: 18px;
     }
 }
+
+
+
+/* Dark mode styles */
+
+[data-theme="dark"] .modal-content {
+    background-color: #121212 !important;
+    /* Removed general text color override */
+}
+
+/* Only change heading colors */
+[data-theme="dark"] .modal-content .h2Light {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .modal-content .step {
+    background-color: #2a2a2a !important;
+}
+
+[data-theme="dark"] .modal-content input[type="text"] {
+    background-color: #333333 !important;
+    /* No longer overriding text color */
+    border-bottom-color: #666666 !important;
+}
+
+/* Removed placeholder color override */
+
+/* Dark mode for notification items */
+[data-theme="dark"] .notification-item {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .no-notifications-message {
+    color: #aaaaaa !important;
+}
+
+/* Style adjustments for settings modal in dark mode */
+/* Removed text color overrides for settings items */
+
+/* Ensure device options and room buttons maintain proper contrast */
+[data-theme="dark"] .device-option,
+[data-theme="dark"] .room-button {
+    /* Preserve the original colors as they should have good contrast already */
+    color: #000 !important;
+}
+
+/* Make sure form buttons maintain their styling */
+[data-theme="dark"] .modal-content .buttonHome {
+    /* Preserve button styling while ensuring text is visible */
+    color: #000 !important;
+}
