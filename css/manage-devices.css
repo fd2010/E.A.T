@@ -8,6 +8,7 @@
     padding-bottom: 50px;
     margin: 0 auto;
     overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin-top: 0px;
 }
 
 .manage-devices-grid .devices-section {
