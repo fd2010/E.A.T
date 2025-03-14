@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="./css/logout-button-fix.css">
         <link rel="stylesheet" href="./css/manage-devices.css">
         <link rel="stylesheet" href="./css/main.css">
+        <link rel="stylesheet" href="./css/delete-device.css">
     </head>
 
     <body class="bodyLight">
@@ -98,7 +99,12 @@
                     <div class="devices-grid" id="devicesGrid"></div>
 
                     <!-- Remove Device Button -->
-                    <div style="position: relative; margin-bottom: 25px;"><img class="delete-device-button" src="./images/icons/bin icon.svg" alt="delete device"></div>
+                    <div style="position: relative; margin-bottom: 25px;">
+                        <button id="deleteDeviceBtn" class="delete-device-button" title="Delete devices">
+                            <img src="./images/icons/bin icon.svg" alt="delete device">
+                        </button>
+                    </div>
+                    
                 </div>
             </div>
 
@@ -138,6 +144,7 @@
         <script type="module" src="./javascript/dashboard.js"></script>
         <script type="module" src="./javascript/add-device.js"></script>
         <script type="module" src="./javascript/settings.js"></script>
+        <script type="module" src="./javascript/delete-device.js"></script>
         <!-- <script type="module" src="./javascript/fade-effects.js"></script> -->
     </body>
 </html>
