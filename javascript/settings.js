@@ -23,6 +23,7 @@ export function initialiseSettingsModal() {
                         </div>
 
                         <!-- Room tabs toggle -->
+                        <!-- commented out
                         <div class="setting-item">
                             <div class="setting-label">Scrollable Tabs</div>
                             <label class="switch">
@@ -30,6 +31,7 @@ export function initialiseSettingsModal() {
                                 <span class="slider"></span>
                             </label>
                         </div>
+                        -->
                         
                         <!-- Export Data Setting -->
                         <div class="setting-item">
@@ -110,7 +112,9 @@ function setupSettingsEventListeners() {
     });
 }
 
-// Function to toggle dark mode
+// Implementation plan:
+// 1. Replace the existing toggleDarkMode function in settings.js with this updated version
+// 2. Add the CSS rules to your main.css or create a new dark-mode.css file and import it
 function toggleDarkMode(isDark) {
     const body = document.body;
     
@@ -182,15 +186,60 @@ function toggleDarkMode(isDark) {
     }
 
     // Update profile icon background
-const profileIcon = document.querySelector('.profile-icon');
-if (profileIcon) {
-    if (isDark) {
-        profileIcon.style.backgroundColor = '#000000';
-    } else {
-        profileIcon.style.backgroundColor = '#FFF';
+    const profileIcon = document.querySelector('.profile-icon');
+    if (profileIcon) {
+        if (isDark) {
+            profileIcon.style.backgroundColor = '#000000';
+        } else {
+            profileIcon.style.backgroundColor = '#FFF';
+        }
     }
-}
 
+    // NEW: Update ONLY modal backgrounds for dark mode (preserve most text color)
+    const modalContents = document.querySelectorAll('.modal-content');
+    modalContents.forEach(modal => {
+        if (isDark) {
+            modal.style.backgroundColor = '#121212';
+            // Don't change text color
+        } else {
+            modal.style.backgroundColor = '#FFFFFF';
+            // Don't change text color
+        }
+    });
+    
+    // Update h2Light elements inside modals for dark mode (headers only)
+    const modalHeadings = document.querySelectorAll('.modal-content .h2Light');
+    modalHeadings.forEach(heading => {
+        if (isDark) {
+            heading.style.color = '#FFFFFF';
+        } else {
+            heading.style.color = '#000000';
+        }
+    });
+
+    // NEW: Update modal step containers for dark mode
+    const modalSteps = document.querySelectorAll('.modal-content .step');
+    modalSteps.forEach(step => {
+        if (isDark) {
+            step.style.backgroundColor = '#2a2a2a';
+        } else {
+            step.style.backgroundColor = '#D9D9D9';
+        }
+    });
+
+    // NEW: Update ONLY background of form inputs in modals for dark mode
+    const modalInputs = document.querySelectorAll('.modal-content input[type="text"]');
+    modalInputs.forEach(input => {
+        if (isDark) {
+            input.style.backgroundColor = '#333333';
+            // Don't change text color
+            input.style.borderBottomColor = '#666666';
+        } else {
+            input.style.backgroundColor = 'transparent';
+            // Don't change text color
+            input.style.borderBottomColor = '#000000';
+        }
+    });
 }
 
 

@@ -1,337 +1,364 @@
 /* Thermostat Section */
 .thermostat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .thermostat-title, .clock-title  {
-    font-family: "Kay Pho Du", sans-serif;
-    font-size: 18px;
-    font-weight: 500;
+  font-family: "Kay Pho Du", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 /* Thermostat Dial */
 .thermostat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: left;
-    border-radius: 23px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  border-radius: 23px;
 }
 
 .thermostat-dial {
-    position: relative;
-    width: 280px;  
-    height: 280px;
-    border-radius: 50%;
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 30px;
+  position: relative;
+  width: 280px;  
+  height: 280px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 30px;
 }
 
 .temperature-markers {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 
 .temperature-marker {
-    position: absolute;
-    width: 2px;
-    height: 10px;
-    background-color: #ddd;
-    transform-origin: center bottom;
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background-color: #ddd;
+  transform-origin: center bottom;
 }
 
 .temperature-label {
-    position: absolute;
-    font-size: 12px;
-    color: #888;
+  position: absolute;
+  font-size: 12px;
+  color: #888;
 }
 
 .dial-centre {
-    width: 200px;  
-    height: 200px;
-    border-radius: 50%;
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+  width: 200px;  
+  height: 200px;
+  border-radius: 50%;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .heating-label {
-    font-size: 14px;
-    color: #666;
-    text-transform: uppercase;
-    margin-bottom: 5px;
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 5px;
 }
 
 .temperature-display {
-    font-size: 80px; 
-    font-weight: 300;
-    color: #333;
-    line-height: 1;
-    font-family: "Kay Pho Du", sans-serif;
+  font-size: 80px; 
+  font-weight: 300;
+  color: #333;
+  line-height: 1;
+  font-family: "Kay Pho Du", sans-serif;
 }
 
 .status {
-    font-size: 18px;  
-    color: #333;
-    text-transform: uppercase;
-    margin-bottom: 5px;
+  font-size: 18px;  
+  color: #333;
+  text-transform: uppercase;
+  margin-bottom: 5px;
 }
 
+/* Temperature Pointer */
+.temperature-pointer-spacer {
+  position: absolute;
+  width: 4px;
+  transform-origin: bottom center;
+  bottom: 50%;
+  left: 50%;
+  margin-left: -2px;
+  z-index: 10;
+  transition: transform 0.2s ease-out;
+}
+
+.temperature-pointer-tip {
+  position: absolute;
+  width: 4px;
+  background-color: #e74c3c; /* Red pointer */
+  border-radius: 2px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  transition: opacity 0.2s ease;
+}
+
+/* Support both spellings */
+.info-card.temperature .thermostat-dial,
 .info-card.temprature .thermostat-dial {
-    position: relative;
-    width: 220px;  
-    height: 220px; 
-    border-radius: 50%;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
+  position: relative;
+  width: 220px;  
+  height: 220px; 
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
-        
+      
+.info-card.temperature .dial-centre,
 .info-card.temprature .dial-center {
-    width: 150px; 
-    height: 150px;
-    border-radius: 50%;
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 150px; 
+  height: 150px;
+  border-radius: 50%;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.info-card.temperature .temperature-display,
 .info-card.temprature .temperature-display {
-    font-size: 46px; 
-    font-weight: bold;
-    color: #333;
-    font-family: "Kay Pho Du", sans-serif;
-    margin: 0;
+  font-size: 46px; 
+  font-weight: bold;
+  color: #333;
+  font-family: "Kay Pho Du", sans-serif;
+  margin: 0;
 }
 
+.info-card.temperature .status,
 .info-card.temprature .status {
-    font-size: 16px;  
-    color: #333;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-    font-family: "Kay Pho Du", sans-serif;
+  font-size: 16px;  
+  color: #333;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-family: "Kay Pho Du", sans-serif;
 }
 
+.info-card.temperature .dial-handle,
 .info-card.temprature .dial-handle {
-    position: absolute;
-    width: 220px;  
-    height: 220px; 
-    border-radius: 50%;
-    cursor: pointer;
+  position: absolute;
+  width: 220px;  
+  height: 220px; 
+  border-radius: 50%;
+  cursor: pointer;
 }
 
+.info-card.temperature .temperature-label,
 .info-card.temprature .temperature-label {
-    position: absolute;
-    font-size: 12px;  
-    color: #666;
-    font-family: "Kay Pho Du", sans-serif;
+  position: absolute;
+  font-size: 12px;  
+  color: #666;
+  font-family: "Kay Pho Du", sans-serif;
 }
 
+.info-card.temperature .dial-marker,
 .info-card.temprature .dial-marker {
-    position: absolute;
-    width: 3px;   
-    height: 10px; 
-    background-color: #999;
-    top: 5px;
-    left: 50%;
-    transform-origin: bottom center;
-    border-radius: 1px;
+  position: absolute;
+  width: 3px;   
+  height: 10px; 
+  background-color: #999;
+  transform-origin: center center;
+  border-radius: 1px;
 }
 
+.info-card.temperature .status-icon,
 .info-card.temprature .status-icon {
-    width: 18px;  
-    height: 18px; 
-    border-radius: 50%;
-    background-color: #FFDC52;
-    margin-top: 5px;
+  width: 18px;  
+  height: 18px; 
+  border-radius: 50%;
+  background-color: #e74c3c;
+  margin-top: 5px;
 }
 
 /* Analog Clock with Digital Display Styles */
 .clock {
-    margin-top: 20px;
-    margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .clock-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .clock-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 
 /* Analog Clock Styles */
 .analog-clock {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 10px auto;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 10px auto;
 }
 
 .clock-face {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-    border-radius: 50%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+  border-radius: 50%;
 }
 
 .marking {
-    position: absolute;
-    background-color: #333;
+  position: absolute;
+  background-color: #333;
 }
 
 .marking-12, .marking-6 {
-    width: 4px;
-    height: 12px;
-    left: calc(50% - 2px);
+  width: 4px;
+  height: 12px;
+  left: calc(50% - 2px);
 }
 
 .marking-12 {
-    top: 10px;
+  top: 10px;
 }
 
 .marking-6 {
-    bottom: 10px;
+  bottom: 10px;
 }
 
 .marking-3, .marking-9 {
-    width: 12px;
-    height: 4px;
-    top: calc(50% - 2px);
+  width: 12px;
+  height: 4px;
+  top: calc(50% - 2px);
 }
 
 .marking-3 {
-    right: 10px;
+  right: 10px;
 }
 
 .marking-9 {
-    left: 10px;
+  left: 10px;
 }
 
 .hand {
-    position: absolute;
-    left: 50%;
-    bottom: 50%;
-    transform-origin: 50% 100%;
-    border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform-origin: 50% 100%;
+  border-radius: 10px;
 }
 
 .hour-hand {
-    width: 6px;
-    height: 50px;
-    margin-left: -3px;
-    background-color: #333;
+  width: 6px;
+  height: 50px;
+  margin-left: -3px;
+  background-color: #333;
 }
 
 .minute-hand {
-    width: 4px;
-    height: 70px;
-    margin-left: -2px;
-    background-color: #666;
+  width: 4px;
+  height: 70px;
+  margin-left: -2px;
+  background-color: #666;
 }
 
 .second-hand {
-    width: 2px;
-    height: 75px;
-    margin-left: -1px;
-    background-color: #e74c3c;
+  width: 2px;
+  height: 75px;
+  margin-left: -1px;
+  background-color: #e74c3c;
 }
 
 .center-dot {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    top: calc(50% - 6px);
-    left: calc(50% - 6px);
-    background-color: #333;
-    border-radius: 50%;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: calc(50% - 6px);
+  left: calc(50% - 6px);
+  background-color: #333;
+  border-radius: 50%;
 }
 
 /* Digital Display Styles */
 .digital-display {
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-    border-radius: 10px;
-    padding: 8px 15px;
-    width: 100%;
-    text-align: center;
-    margin-top: 15px;
+  background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+  border-radius: 10px;
+  padding: 8px 15px;
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
 }
 
 .time {
-    font-size: 22px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 2px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 2px;
 }
 
 .date {
-    font-size: 14px;
-    color: #7f8c8d;
+  font-size: 14px;
+  color: #7f8c8d;
 }
 
 @media (max-width: 1200px) {
 
-    .thermostat-section {
-        grid-column: 1 / 2;
-        grid-row: 3 / 4;
-        max-width: 100%;
-    }
+  .thermostat-section {
+      grid-column: 1 / 2;
+      grid-row: 3 / 4;
+      max-width: 100%;
+  }
 
 }
 
 @media (max-width: 768px) {
-    .info-card.temprature .thermostat-dial {
-        width: 180px;
-        height: 180px;
-    }
-    
-    .info-card.temprature .dial-center {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .info-card.temprature .temperature-display {
-        font-size: 36px;
-    }
-    
-    .info-card.temprature .dial-handle {
-        width: 180px;
-        height: 180px;
-    }
+  .info-card.temperature .thermostat-dial,
+  .info-card.temprature .thermostat-dial {
+      width: 180px;
+      height: 180px;
+  }
+  
+  .info-card.temperature .dial-centre,
+  .info-card.temprature .dial-center {
+      width: 120px;
+      height: 120px;
+  }
+  
+  .info-card.temperature .temperature-display,
+  .info-card.temprature .temperature-display {
+      font-size: 36px;
+  }
+  
+  .info-card.temperature .dial-handle,
+  .info-card.temprature .dial-handle {
+      width: 180px;
+      height: 180px;
+  }
 }
 
 @media (max-width: 480px) {
 }
-
-
-
-
-

@@ -22,6 +22,39 @@ let selectedArea = "Meeting Room";
 let selectedTime = "daily";
 let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
 
+// Function to generate gradient shades between two colors
+function generateGradientColors(startColor, endColor, steps) {
+    function hexToRgb(hex) {
+        hex = hex.replace(/^#/, '');
+        let bigint = parseInt(hex, 16);
+        return {
+            r: (bigint >> 16) & 255,
+            g: (bigint >> 8) & 255,
+            b: bigint & 255
+        };
+    }
+
+    function rgbToHex(r, g, b) {
+        return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
+    }
+
+    let startRGB = hexToRgb(startColor);
+    let endRGB = hexToRgb(endColor);
+    let gradient = [];
+
+    for (let i = 0; i < steps; i++) {
+        let r = Math.round(startRGB.r + (endRGB.r - startRGB.r) * (i / (steps - 1)));
+        let g = Math.round(startRGB.g + (endRGB.g - startRGB.g) * (i / (steps - 1)));
+        let b = Math.round(startRGB.b + (endRGB.b - startRGB.b) * (i / (steps - 1)));
+
+        gradient.push(rgbToHex(r, g, b));
+    }
+
+    return gradient;
+}
+
+const areaShades = generateGradientColors('#486e6c', '#A7C7C5', Object.keys(areaData).length);
+
 // **Initialize Area Comparison Charts**
 function createAreaCharts() {
     areaPieChart = new Chart(areaComparisonPieCtx, {
@@ -30,8 +63,34 @@ function createAreaCharts() {
             labels: Object.keys(areaData),
             datasets: [{
                 data: Object.values(areaData),
-                backgroundColor: ['red', 'blue', 'green', 'teal']
+                backgroundColor: areaShades, // Gradient colors
+                borderWidth: 0
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom', // Place at the bottom
+                    align: 'start', // Align to the left
+                    labels: {
+                        font: {
+                            size: 13,
+                            family: 'Lato, sans-serif'
+                        },
+                        color: '#333333',
+                        boxWidth: 14,
+                        padding: 15
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    bottom: 20
+                }
+            }
         }
     });
 
@@ -42,12 +101,13 @@ function createAreaCharts() {
             datasets: [{
                 label: 'Energy Usage (kW)',
                 data: Object.values(areaData),
-                backgroundColor: 'teal'
+                backgroundColor: '#638785'
             }]
         },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 }
+
 
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
@@ -65,12 +125,18 @@ function createTimeGraphs() {
             datasets: [{
                 label: 'Energy (kW)',
                 data: energyData[selectedArea][selectedTime],
-                borderColor: 'blue',
-                fill: false
+                borderColor: '#B04242',
+                fill: false,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBackgroundColor: '#B04242'
+
             }]
         },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
+
 
     costChart = new Chart(areaTimeCostCtx, {
         type: 'line',
@@ -79,13 +145,19 @@ function createTimeGraphs() {
             datasets: [{
                 label: 'Cost (£)',
                 data: costData[selectedArea][selectedTime],
-                borderColor: 'red',
-                fill: false
+                borderColor: '#B04242',
+                fill: false,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBackgroundColor: '#B04242'
             }]
         },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 }
+
+
 
 // **Update Time Graphs Based on Period Selection**
 window.updateTimeGraphs = function (period) {
@@ -105,34 +177,31 @@ window.updateTimeGraphs = function (period) {
     costChart.data.datasets[0].data = costData[selectedArea][selectedTime];
     costChart.update();
 
-    document.querySelectorAll(".graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
+    document.querySelectorAll(".area-graph-buttons button").forEach(btn => btn.classList.remove("active-button"));
     document.getElementById(period).classList.add("active-button");
+
 };
+
+
+const areaDataShades = generateGradientColors('#ec7878', '#B04242', Object.keys(areaData).length);
 
 // **Update Device & Time Graphs When Changing Area**
 function updateAreaData() {
     console.log("Selected Area:", selectedArea);
 
-    if (!devicesByArea[selectedArea]) {
-        console.error(`No data found for selected area: '${selectedArea}'`);
-        return;
-    }
+    // Ensure devicesByArea[selectedArea] exists, or use an empty array to prevent errors
+    const devices = devicesByArea[selectedArea] || [];
 
-    let deviceHTML = "";
-    let deviceNames = [];
-    let deviceEnergy = [];
+    const deviceNames = devices.map(device => device.name);
+    const deviceEnergy = devices.map(device => device.energy);
 
-    devicesByArea[selectedArea].forEach(device => {
-        deviceHTML += `
-            <div class="device-panel">
-                <h3>${device.name}</h3>
-                <p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p>
-            </div>`;
-        deviceNames.push(device.name);
-        deviceEnergy.push(device.energy);
-    });
-
-    document.getElementById('deviceList').innerHTML = deviceHTML;
+    // Generate HTML for device panels
+    document.getElementById('deviceList').innerHTML = devices.map(device => `
+    <div class="device-panel">
+        <h3>${device.name}</h3>
+        <p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p>
+    </div>
+    `).join('');
 
     if (devicePieChart) devicePieChart.destroy();
     if (deviceBarChart) deviceBarChart.destroy();
@@ -143,8 +212,34 @@ function updateAreaData() {
             labels: deviceNames,
             datasets: [{
                 data: deviceEnergy,
-                backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']
+                backgroundColor: areaDataShades, // Gradient colors
+                borderWidth: 0
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom', // Place at the bottom
+                    align: 'start', // Align to the left
+                    labels: {
+                        font: {
+                            size: 13,
+                            family: 'Lato, sans-serif'
+                        },
+                        color: '#333333',
+                        boxWidth: 14,
+                        padding: 15
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    bottom: 20
+                }
+            }
         }
     });
 
@@ -155,7 +250,7 @@ function updateAreaData() {
             datasets: [{
                 label: 'Energy Usage (kW)',
                 data: deviceEnergy,
-                backgroundColor: 'purple'
+                backgroundColor: '#B04242'
             }]
         },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }

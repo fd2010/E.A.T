@@ -1,8 +1,9 @@
-  // Import Firebase modules
+// Import Firebase modules
 import { database } from '../database/firebase-config.js';
-import { ref, update } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
-document.addEventListener('DOMContentLoaded', function() {
+import { ref, update, get, child } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
+document.addEventListener('DOMContentLoaded', function() {
+  
   // Thermostat functionality
   const dialElement = document.getElementById('thermostat-dial');
   const handleElement = document.getElementById('dial-handle');
@@ -33,6 +34,36 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Temperature updated in Firebase:', temp);
     } catch (error) {
       console.error('Error updating temperature in Firebase:', error);
+    }
+  }
+
+  // Function to get temperature from Firebase
+  async function getTemperatureFromFirebase() {
+    try {
+      // Get the office ID from localStorage
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      if (!userData || !userData.officeID) {
+        console.error('User data or office ID not found');
+        return null;
+      }
+      
+      const officeID = userData.officeID;
+      const dbRef = ref(database);
+      
+      // Get the temperature from Firebase
+      const snapshot = await get(child(dbRef, `offices/${officeID}/temperature`));
+      
+      if (snapshot.exists()) {
+        const temp = snapshot.val();
+        console.log('Retrieved temperature from Firebase:', temp);
+        return temp;
+      } else {
+        console.log('No temperature data available in Firebase');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error getting temperature from Firebase:', error);
+      return null;
     }
   }
 
@@ -98,9 +129,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Convert angle to radians
     const rad = angle * (Math.PI / 180);
     
-    // Position the marker
-    marker.style.transformOrigin = `50% ${dialRadius}px`;
-    marker.style.transform = `rotate(${angle}deg)`;
+    // Calculate the absolute position for the marker instead of using rotation
+    const markerOuterRadius = dialRadius - 5; // Position slightly inside the dial edge
+    const markerX = centerX + markerOuterRadius * Math.cos(rad);
+    const markerY = centerY + markerOuterRadius * Math.sin(rad);
+    
+    // Set absolute position
+    marker.style.position = 'absolute';
+    marker.style.width = '3px';
+    marker.style.height = '10px';
+    marker.style.backgroundColor = '#999';
+    marker.style.transformOrigin = 'center center';
+    marker.style.transform = `translate(-50%, -50%) rotate(${angle + 90}deg)`;
+    marker.style.left = `${markerX}px`;
+    marker.style.top = `${markerY}px`;
     
     dialElement.appendChild(marker);
     
@@ -114,10 +156,11 @@ document.addEventListener('DOMContentLoaded', function() {
       label.textContent = `${temp}°`;
       
       // Position label outside the markers
-      const labelRadius = dialRadius - 15;
+      const labelRadius = dialRadius - 20; // Position labels a bit further in
       const labelX = centerX + labelRadius * Math.cos(rad);
       const labelY = centerY + labelRadius * Math.sin(rad);
       
+      label.style.position = 'absolute';
       label.style.left = `${labelX}px`;
       label.style.top = `${labelY}px`;
       label.style.transform = 'translate(-50%, -50%)';
@@ -129,8 +172,84 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentAngle = 0;
   let isDragging = false;
   
-  // Initialize temperature based on initial angle
-  updateTemperatureFromAngle(currentAngle);
+  // Create initial pointer - we'll create two elements for this effect
+  // First, create an invisible spacer that extends from center
+  const pointerSpacer = document.createElement('div');
+  pointerSpacer.className = 'temperature-pointer-spacer';
+  
+  // Style the spacer to be invisible but take up space
+  pointerSpacer.style.position = 'absolute';
+  pointerSpacer.style.width = '4px';
+  pointerSpacer.style.height = `${dialRadius - 15}px`; // Length to reach near edge
+  pointerSpacer.style.backgroundColor = 'transparent'; // Invisible
+  pointerSpacer.style.transformOrigin = 'bottom center';
+  pointerSpacer.style.bottom = '50%';
+  pointerSpacer.style.left = '50%';
+  pointerSpacer.style.marginLeft = '-2px';
+  pointerSpacer.style.zIndex = '10';
+  
+  // Create the visible pointer tip that will appear at the end of the spacer
+  const pointerTip = document.createElement('div');
+  pointerTip.className = 'temperature-pointer-tip';
+  
+  // Style the tip to be visible
+  pointerTip.style.position = 'absolute';
+  pointerTip.style.width = '4px';
+  pointerTip.style.height = '40px'; // Visible part length
+  pointerTip.style.backgroundColor = '#e74c3c'; // Red pointer
+  pointerTip.style.borderRadius = '2px';
+  pointerTip.style.top = '0';
+  pointerTip.style.left = '0';
+  pointerTip.style.zIndex = '11';
+  pointerTip.style.boxShadow = '0 0 3px rgba(0,0,0,0.3)';
+  
+  // Append the tip to the spacer, then both to the dial
+  pointerSpacer.appendChild(pointerTip);
+  dialElement.appendChild(pointerSpacer);
+  
+  // Function to convert temperature to angle
+  function temperatureToAngle(temp) {
+    // Calculate angle based on temperature (inverted formula from updateTemperatureFromAngle)
+    // Angle = (Temperature - 10) / 20 * 360
+    return ((temp - 10) / 20) * 360;
+  }
+  
+  // Initialize the thermostat based on stored temperature
+  async function initializeThermostat() {
+    // First try to get temperature from Firebase
+    let initialTemp = await getTemperatureFromFirebase();
+    
+    // If we couldn't get a temperature from Firebase, use the display value
+    if (initialTemp === null) {
+      initialTemp = parseInt(tempDisplay.textContent, 10);
+    }
+    
+    // If temp is 0, the thermostat is off
+    if (initialTemp === 0) {
+      powerToggle.checked = false;
+      tempDisplay.textContent = "OFF";
+      dialElement.style.opacity = 0.5;
+      pointerTip.style.opacity = 0;
+    } else {
+      // Ensure valid temperature (10-30)
+      initialTemp = Math.max(10, Math.min(30, initialTemp));
+      
+      // Calculate the angle based on the temperature
+      currentAngle = temperatureToAngle(initialTemp);
+      
+      // Update the thermostat display
+      tempDisplay.textContent = initialTemp;
+      
+      // Update pointer position
+      updatePointerPosition(currentAngle);
+      
+      // Ensure the power toggle is on
+      powerToggle.checked = true;
+    }
+  }
+  
+  // Call the initialization function
+  initializeThermostat();
   
   handleElement.addEventListener('mousedown', startDrag);
   handleElement.addEventListener('touchstart', startDrag, { passive: false });
@@ -190,18 +309,38 @@ document.addEventListener('DOMContentLoaded', function() {
     // Make sure the temperature is never below 10 when in 'on' mode
     const displayTemp = Math.max(10, temp);
     tempDisplay.textContent = displayTemp;
+    
+    // Update the pointer position to reflect the current temperature
+    updatePointerPosition(angle);
+  }
+  
+  // Function to create or update the temperature pointer
+  function updatePointerPosition(angle) {
+    // Update the position of the pointer spacer
+    let pointerSpacer = dialElement.querySelector('.temperature-pointer-spacer');
+    
+    // Convert the angle to the correct position for the pointer
+    // Add 90 degrees to adjust for CSS rotation starting position
+    pointerSpacer.style.transform = `rotate(${angle}deg)`;
   }
   
   // Toggle power
   powerToggle.addEventListener('change', function() {
+    const pointerSpacer = dialElement.querySelector('.temperature-pointer-spacer');
+    const pointerTip = dialElement.querySelector('.temperature-pointer-tip');
+    
     if (!this.checked) {
       tempDisplay.textContent = "OFF";
       dialElement.style.opacity = 0.5;
+      // Hide pointer when thermostat is off
+      if (pointerTip) pointerTip.style.opacity = 0;
       // Update Firebase with 0 temperature when thermostat is turned off
       updateTemperatureInFirebase(0);
     } else {
       updateTemperatureFromAngle(currentAngle);
       dialElement.style.opacity = 1;
+      // Show pointer when thermostat is on
+      if (pointerTip) pointerTip.style.opacity = 1;
       // Update Firebase with current temperature when thermostat is turned on
       const temp = parseInt(tempDisplay.textContent);
       if (!isNaN(temp)) {

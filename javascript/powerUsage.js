@@ -64,13 +64,13 @@ function createTimeGraphs() {
                     datasets: [{
                         label: 'Energy Usage (kW)',
                         data: totalEnergyData[selectedTime],
-                        borderColor: '#606952', // Line color
+                        borderColor: '#486e6c', // Line color
                         backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
                         fill: false,
                         tension: 0.4, // Makes the line curvy
                         borderWidth: 2, // Adjust line thickness
                         pointRadius: 4, // Adjust point size
-                        pointBackgroundColor: '#606952' // Point color
+                        pointBackgroundColor: '#486e6c' // Point color
                     }]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -195,47 +195,28 @@ function generateGradientColors(startColor, endColor, steps) {
             b: bigint & 255
         };
     }
-    
+
     function rgbToHex(r, g, b) {
         return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
     }
-    
+
     let startRGB = hexToRgb(startColor);
     let endRGB = hexToRgb(endColor);
     let gradient = [];
-    
+
     for (let i = 0; i < steps; i++) {
         let r = Math.round(startRGB.r + (endRGB.r - startRGB.r) * (i / (steps - 1)));
         let g = Math.round(startRGB.g + (endRGB.g - startRGB.g) * (i / (steps - 1)));
         let b = Math.round(startRGB.b + (endRGB.b - startRGB.b) * (i / (steps - 1)));
-        
+
         gradient.push(rgbToHex(r, g, b));
     }
-    
+
     return gradient;
 }
 
-const deviceNames = Object.keys(deviceData);
-const deviceUsage = Object.values(deviceData);
-
-const blueShades = generateGradientColors('#121c7b', '#c3d1ff', deviceNames.length);
-
-console.log("Device Names:", deviceNames);
-console.log("Device Usage:", deviceUsage);
-console.log("Generated Colors:", blueShades);
-
- // Create datasets dynamically for each ring
-const datasets = deviceNames.map((device, index) => ({
-    label: device,
-    data: [deviceUsage[index], 100 - deviceUsage[index]], // Usage vs remaining space
-    backgroundColor: [blueShades[index % blueShades.length], '#E5E5E5'], // Color + Gray for unused
-    borderWidth: 10, // Thicker rings
-    cutout: `${Math.min(30 + index * 10, 80)}%`, // Expands rings outward for spacing
-    circumference: 360,
-    rotation: 0, // Starts from the top
-}));
-
-console.log("Final Datasets:", datasets);
+const blueShades = generateGradientColors('#486e6c', '#e6f7f5', Object.keys(deviceData).length);
+console.log("colours:", blueShades);
 
 // **Initialize Device-wise Usage Charts**
 function createDeviceCharts() {
@@ -243,27 +224,56 @@ function createDeviceCharts() {
     console.log('Creating device charts');
     try {
         devicePieChart = new Chart(devicePieCtx, {
-            type: 'doughnut',
-            data: { labels: deviceNames, datasets },
+            type: 'pie',
+            data: {
+                labels: Object.keys(deviceData),
+                datasets: [{
+                    data: Object.values(deviceData), // kWh values (Chart.js will calculate proportions)
+                    backgroundColor: blueShades, // Gradient colors
+                    borderWidth: 0
+                }]
+            },
+
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                clip: false,
                 plugins: {
-                    legend: { display: false }, // Hide default legend
-                    tooltip: {
-                        callbacks: {
-                            title: function (tooltipItems) {
-                                return deviceNames[tooltipItems[0].datasetIndex]; // Correct device label
+                    legend: {
+                        display: true, // Show legend
+                        position: 'bottom', // Place at the bottom
+                        align: 'start', // Align to the left
+                        labels: {
+                            font: {
+                                size: 13,
+                                family: 'Lato, sans-serif' // Match your font style
                             },
-                            label: function (tooltipItem) {
-                                return `Usage: ${deviceUsage[tooltipItem.datasetIndex]}%`;
+                            color: '#333333',
+                            boxWidth: 13,
+                            padding: 13, // Increase padding for spacing between items
+                            generateLabels: (chart) => {
+                                const data = chart.data;
+                                return data.labels.map((label, index) => ({
+                                    text: `${label}: ${data.datasets[0].data[index]} kWh`, // Format as "Device: kWh"
+                                    fillStyle: data.datasets[0].backgroundColor[index],
+                                    strokeStyle: data.datasets[0].backgroundColor[index],
+                                    pointStyle: 'circle',
+                                    hidden: !chart.getDataVisibility(index),
+                                    index: index
+                                }));
                             }
                         }
+                    }
+                },
+                layout: {
+                    padding: {
+                        bottom: 20 // Add padding below the chart to space out the legend
                     }
                 }
             }
         });
+
+        devicePieChart.update();
+        console.log('Device chart created successfully');
 
         deviceBarChart = new Chart(deviceBarCtx, {
             type: 'bar',
@@ -278,7 +288,7 @@ function createDeviceCharts() {
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
         });
 
-        devicePieChart.update();
+
 
     } catch (error) {
         console.error('Error creating device charts:', error);
@@ -415,6 +425,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM Content Loaded - Power usage script running");
 
     try {
+
+        calculateTotals();
         // Setup event listeners
         setupEventListeners();
 
