@@ -228,7 +228,7 @@ function createDeviceCharts() {
             data: {
                 labels: Object.keys(deviceData),
                 datasets: [{
-                    data: Object.values(deviceData), // kWh values (Chart.js will calculate proportions)
+                    data: Object.values(deviceData),
                     backgroundColor: blueShades, // Gradient colors
                     borderWidth: 0
                 }]
@@ -256,8 +256,7 @@ function createDeviceCharts() {
                                     text: `${label}: ${data.datasets[0].data[index]} kWh`, // Format as "Device: kWh"
                                     fillStyle: data.datasets[0].backgroundColor[index],
                                     strokeStyle: data.datasets[0].backgroundColor[index],
-                                    pointStyle: 'circle',
-                                    hidden: !chart.getDataVisibility(index),
+                                    hidden: false,
                                     index: index
                                 }));
                             }
