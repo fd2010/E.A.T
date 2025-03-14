@@ -2,6 +2,7 @@ import { ref, update, onValue } from "https://www.gstatic.com/firebasejs/11.1.0/
 import { database } from '../database/firebase-config.js';
 import { deviceTypes, deviceTypesNotInverted } from './device-type.js';
 import { reapplySearchFilter } from './search-device.js';
+import { canControlDevices, showAuthorisationError } from './auth.js';
  
 function searchDevicePath(device) {
     return deviceTypes[device.type] || './images/icons/error icon inverted.png';
@@ -22,6 +23,9 @@ function createDeviceCard(device, roomName, deviceKey) {
     // Select the appropriate image based on status
     const iconPath = device.status === 'On' ? deviceTypesNotInverted[device.type] : deviceTypes[device.type];
 
+    // Check if user has permission to control devices
+    const hasControlPermission = canControlDevices();
+    
     card.innerHTML = `
         <div class="device-icon-container">
             <img src="${iconPath}" alt="${deviceType}" class="device-icon">
@@ -33,22 +37,40 @@ function createDeviceCard(device, roomName, deviceKey) {
 
         <br>
         
-        <label class="device-toggle">
-            <input type="checkbox" ${device.status === 'On' ? 'checked' : ''}>
+        <label class="device-toggle ${!hasControlPermission ? 'disabled' : ''}">
+            <input type="checkbox" ${device.status === 'On' ? 'checked' : ''} ${!hasControlPermission ? 'disabled' : ''}>
             <span class="toggle-slider"></span>
         </label>
     `;
 
-    const toggle = card.querySelector('input[type="checkbox"]');
-    toggle.addEventListener('change', (e) => {
-        deviceToggle(device, roomName, e.target.checked, deviceKey);
-    });
+    // Only add event listener if user has permission
+    if (hasControlPermission) {
+        const toggle = card.querySelector('input[type="checkbox"]');
+        toggle.addEventListener('change', (e) => {
+            deviceToggle(device, roomName, e.target.checked, deviceKey);
+        });
+    } else {
+        // Add click event to show error message for disabled toggles
+        const toggleLabel = card.querySelector('.device-toggle');
+        toggleLabel.addEventListener('click', (e) => {
+            if (!hasControlPermission) {
+                e.preventDefault();
+                showAuthorisationError('control devices');
+            }
+        });
+    }
 
     return card;
 }
 
 
 async function deviceToggle(device, roomName, isOn, deviceKey) {
+    // Double-check permission before allowing toggle
+    if (!canControlDevices()) {
+        showAuthorisationError('control devices');
+        return;
+    }
+    
     try {
         const userData = JSON.parse(localStorage.getItem('userData'));
         const officeID = userData.officeID;

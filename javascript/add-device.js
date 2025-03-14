@@ -1,6 +1,7 @@
 import { ref, update, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
 import { deviceTypes } from './device-type.js';
+import { canAddDevices, showAuthorisationError } from './auth.js';
 
 let currentStep = 1;
 let selectedRoom = null;
@@ -193,6 +194,12 @@ function showStep(step) {
 
 // Function to show the modal - make it accessible globally
 function showAddDevice() {
+    // Check if user has permission to add devices
+    if (!canAddDevices()) {
+        showAuthorisationError('add devices');
+        return;
+    }
+    
     const modal = document.getElementById('addDeviceModal');
     if (!modal) {
         initialiseAddDeviceModal();
@@ -218,6 +225,14 @@ window.showAddDevice = showAddDevice;
 // Initialize the modal when the script loads
 document.addEventListener('DOMContentLoaded', () => {
     initialiseAddDeviceModal();
+    
+    // Update the Add Device button to show/hide based on permissions
+    const addDeviceBtn = document.getElementById('addDeviceBtn');
+    if (addDeviceBtn) {
+        if (!canAddDevices()) {
+            addDeviceBtn.style.display = 'none';
+        }
+    }
 });
 
 export { showAddDevice };

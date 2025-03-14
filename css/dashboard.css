@@ -996,3 +996,28 @@ li .logout-btn img {
     height: calc(100vh - 250px);
     min-height: 400px;
 }
+
+
+/* Styles for disabled device toggles */
+.device-toggle.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.device-toggle.disabled .toggle-slider {
+    background-color: #ccc;
+}
+
+.device-toggle.disabled input[type="checkbox"]:checked + .toggle-slider {
+    background-color: #85b5c8; /* Lighter version of the active color */
+}
+
+/* Add a visual indicator that shows the toggle is locked - added emoji for ease of use*/
+.device-toggle.disabled::after {
+    content: "🔒";
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+}
