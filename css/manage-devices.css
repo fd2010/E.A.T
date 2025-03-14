@@ -244,7 +244,7 @@
 
 /* Delete device styles */
 .delete-device-button {
-    position: absolute; /* Added this to enable positioning */
+    position: absolute; 
     right: 20px;
     top: 20px;
     display: inline-block;
