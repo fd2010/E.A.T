@@ -1,8 +1,20 @@
 // Import Firebase modules
 import { database } from '../database/firebase-config.js';
 import { ref, update, get, child } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { canControlThermostat, showAuthorisationError } from './auth.js';
 
 document.addEventListener('DOMContentLoaded', function() {
+  console.log("Thermostat.js loaded");
+  
+  // Get user data and log it for debugging
+  let userData;
+  try {
+    userData = JSON.parse(localStorage.getItem('userData'));
+    console.log("User data from localStorage:", userData);
+    console.log("User role:", userData?.role);
+  } catch (error) {
+    console.error("Error parsing userData from localStorage:", error);
+  }
   
   // Thermostat functionality
   const dialElement = document.getElementById('thermostat-dial');
@@ -14,9 +26,55 @@ document.addEventListener('DOMContentLoaded', function() {
   const currentTemperatureElement = document.getElementById('current-temprature');
   const weatherDescElement = document.querySelector('.weather-desc');
 
+  // Check permission explicitly and log the result
+  const userHasThermostatPermission = canControlThermostat();
+  console.log("User has thermostat permission:", userHasThermostatPermission);
+  
+  // Log if elements are found
+  console.log("Thermostat elements found:", {
+    dialElement: !!dialElement,
+    handleElement: !!handleElement,
+    tempDisplay: !!tempDisplay,
+    powerToggle: !!powerToggle
+  });
+
+  // Apply disabled state to thermostat controls if user doesn't have permission
+  if (!userHasThermostatPermission) {
+    console.log("Applying disabled state to thermostat controls");
+    
+    if (dialElement) {
+      dialElement.classList.add('disabled-thermostat');
+      console.log("Added disabled-thermostat class to dialElement");
+    } else {
+      console.warn("dialElement not found, couldn't apply disabled state");
+    }
+    
+    if (powerToggle) {
+      powerToggle.disabled = true;
+      const toggleParent = powerToggle.closest('.power-switch');
+      if (toggleParent) {
+        toggleParent.classList.add('disabled-control');
+        console.log("Added disabled-control class to power switch");
+      } else {
+        console.warn("Power switch parent not found");
+      }
+    } else {
+      console.warn("powerToggle not found, couldn't apply disabled state");
+    }
+  
+  } else {
+    console.log("User has permission, normal thermostat controls will be enabled");
+  }
+
   // Function to update temperature in Firebase
   async function updateTemperatureInFirebase(temp) {
     try {
+      // Check permission before allowing update
+      if (!userHasThermostatPermission) {
+        showAuthorisationError('adjust the thermostat');
+        return;
+      }
+      
       // Get the office ID from localStorage
       const userData = JSON.parse(localStorage.getItem('userData'));
       if (!userData || !userData.officeID) {
@@ -67,8 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  //RIGHT NOW THIS IS RANDOM AS WE NEED TO SIGN UP FOR A API KEY TO IMPLEMENT THIS
-  // Add weather update functionality
+  // Add weather update functionality (random for now until API is implemented)
   function updateWeather() {
     const randomTemp = Math.floor(Math.random() * 20) + 5;
     
@@ -286,10 +343,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Call the initialization function
   initializeThermostat();
   
-  handleElement.addEventListener('mousedown', startDrag);
-  handleElement.addEventListener('touchstart', startDrag, { passive: false });
-  
+  // Function to handle starting thermostat drag
   function startDrag(e) {
+    // Extra check to prevent interaction if permission is revoked
+    if (!userHasThermostatPermission) {
+      console.log("Permission check failed in startDrag");
+      showAuthorisationError('adjust the thermostat');
+      return;
+    }
+    
     e.preventDefault();
     isDragging = true;
     document.addEventListener('mousemove', drag);
@@ -298,8 +360,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('touchend', endDrag);
   }
   
+  // Function to handle dragging the thermostat
   function drag(e) {
-    if (!isDragging || !powerToggle.checked) return;
+    if (!isDragging || !powerToggle.checked || !userHasThermostatPermission) return;
     
     const rect = dialElement.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -319,6 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTemperatureFromAngle(currentAngle);
   }
   
+  // Function to handle end of dragging
   function endDrag() {
     isDragging = false;
     document.removeEventListener('mousemove', drag);
@@ -338,6 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  // Function to update temperature from angle
   function updateTemperatureFromAngle(angle) {
     // Map angle (0-360) to temperature (10-40)
     const temp = Math.round(10 + (angle / 360) * 20);
@@ -362,8 +427,27 @@ document.addEventListener('DOMContentLoaded', function() {
     pointerSpacer.style.transform = `rotate(${angle}deg)`;
   }
   
-  // Toggle power
-  powerToggle.addEventListener('change', function() {
+  // Function to show permission error for thermostat
+  function showThermostatPermissionError(e) {
+    console.log("showThermostatPermissionError called", e?.type);
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    showAuthorisationError('adjust the thermostat');
+    
+    // Reset the toggle to its previous state if it was changed
+    if (e && e.target === powerToggle) {
+      // Timeout to allow the alert to be displayed first
+      setTimeout(() => {
+        console.log("Resetting power toggle state");
+        powerToggle.checked = !powerToggle.checked;
+      }, 10);
+    }
+  }
+  
+  // Handle power toggle for authorized users
+  function handlePowerToggle() {
     const pointerSpacer = dialElement.querySelector('.temperature-pointer-spacer');
     const pointerTip = dialElement.querySelector('.temperature-pointer-tip');
     
@@ -389,5 +473,41 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTemperatureInFirebase(temp);
       }
     }
-  });
+  }
+  
+  // Set up event handlers based on permissions
+  if (userHasThermostatPermission) {
+    console.log("Setting up normal event handlers for thermostat");
+    
+    // Make sure we remove any existing handlers first (safety measure)
+    handleElement.removeEventListener('mousedown', showThermostatPermissionError);
+    handleElement.removeEventListener('touchstart', showThermostatPermissionError);
+    powerToggle.removeEventListener('change', showThermostatPermissionError);
+    
+    // Add the normal control handlers
+    handleElement.addEventListener('mousedown', startDrag);
+    handleElement.addEventListener('touchstart', startDrag, { passive: false });
+    powerToggle.addEventListener('change', handlePowerToggle);
+    
+    // Make sure thermostat is fully interactive
+    if (dialElement) dialElement.style.pointerEvents = 'auto';
+  } else {
+    console.log("Setting up permission error handlers for thermostat");
+    
+    // Make sure we remove any existing handlers first (safety measure)
+    handleElement.removeEventListener('mousedown', startDrag);
+    handleElement.removeEventListener('touchstart', startDrag);
+    powerToggle.removeEventListener('change', handlePowerToggle);
+    
+    // If user doesn't have permission, display a message when they try to interact with thermostat
+    handleElement.addEventListener('mousedown', showThermostatPermissionError);
+    handleElement.addEventListener('touchstart', showThermostatPermissionError, { passive: false });
+    powerToggle.addEventListener('change', showThermostatPermissionError);
+    
+    // Force the visual state to be consistent and block interaction
+    if (dialElement) {
+      dialElement.style.pointerEvents = 'none';
+      dialElement.style.cursor = 'not-allowed';
+    }
+  }
 });

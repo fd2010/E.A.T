@@ -1,6 +1,7 @@
 import { ref, update, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
 import { deviceTypes } from './device-type.js';
+import { canDeleteDevices, showAuthorisationError } from './auth.js';
 
 let currentStep = 1;
 let selectedRoom = null;
@@ -300,6 +301,12 @@ function showStep(step) {
 
 // Function to show the modal - make it accessible globally
 function showDeleteDevice() {
+    // Check if user has permission to delete devices
+    if (!canDeleteDevices()) {
+        showAuthorisationError('delete devices');
+        return;
+    }
+    
     const modal = document.getElementById('deleteDeviceModal');
     if (!modal) {
         initialiseDeleteDeviceModal();
@@ -334,6 +341,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteDeviceBtn = document.getElementById('deleteDeviceBtn');
     if (deleteDeviceBtn) {
         deleteDeviceBtn.addEventListener('click', showDeleteDevice);
+    }
+    
+    // Hide delete button if user doesn't have permission
+    if (!canDeleteDevices()) {
+        if (deleteDeviceButton) deleteDeviceButton.style.display = 'none';
+        if (deleteDeviceBtn) deleteDeviceBtn.style.display = 'none';
     }
 });
 
