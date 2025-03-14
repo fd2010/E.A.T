@@ -1,171 +1,301 @@
-export const timeLabels = {
-    daily: ['00:00', '06:00', '12:00', '18:00', '24:00'],
-    weekly: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    monthly: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
-};
+// Example showing how to use the real-time energy data in your charts
+// This would replace parts of your existing areaWise.js, deviceWise.js, etc.
 
-export const totalEnergyData = {
-    daily: [5, 8, 10, 12, 6],
-    weekly: [40, 50, 45, 60, 55, 48, 52],
-    monthly: [150, 170, 160, 180]
-};
+// First, import the new data module with both the static exports and async methods
+import { 
+    timeLabels, 
+    // Async data fetching functions - use these for real-time data
+    fetchTotalEnergyData,
+    fetchTotalCostData,
+    fetchEnergyDataByRoom,
+    fetchCostDataByRoom,
+    fetchAreaData,
+    fetchDeviceData,
+    fetchDevicesByArea,
+    fetchDeviceEnergyData,
+    fetchDeviceCostData,
+    // Default exports for backward compatibility
+    totalEnergyData,
+    totalCostData,
+    energyData,
+    costData,
+    areaData,
+    deviceData,
+    devicesByArea,
+    deviceEnergyData,
+    deviceCostData
+} from './realEnergyData.js';
 
-export const totalCostData = {
-    daily: [2, 3, 5, 4, 6],
-    weekly: [20, 25, 22, 30, 28, 24, 26],
-    monthly: [90, 100, 95, 105]
-};
+// Initialize chart variables
+let areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart;
+let selectedArea = "Meeting Room";
+let selectedTime = "daily";
 
+// Example: Update time graphs with real-time data
+async function updateTimeGraphs(period) {
+    selectedTime = period;
+    console.log(`Updating Time Graphs for ${selectedArea} (${period})`);
 
+    try {
+        // Fetch real-time data for the selected area
+        const realEnergyData = await fetchEnergyDataByRoom();
+        const realCostData = await fetchCostDataByRoom();
 
-export const energyData = {
-    "Meeting Room": {
-        daily: [5, 8, 10, 12, 6],
-        weekly: [40, 50, 45, 60, 55, 48, 52],
-        monthly: [150, 170, 160, 180]
-    },
-    "Common Areas": {
-        daily: [3, 5, 7, 6, 4],
-        weekly: [30, 35, 40, 38, 36, 33, 31],
-        monthly: [100, 120, 130, 110]
-    },
-    "Workstations": {
-        daily: [6, 9, 11, 14, 7],
-        weekly: [45, 55, 50, 65, 60, 52, 57],
-        monthly: [180, 200, 190, 210]
-    },
-    "Special": {
-        daily: [7, 10, 12, 15, 8],
-        weekly: [50, 60, 55, 70, 65, 58, 62],
-        monthly: [200, 220, 210, 230]
+        // Check if the selected area exists in the data
+        if (!realEnergyData[selectedArea] || !realCostData[selectedArea]) {
+            console.error(`No energy or cost data found for '${selectedArea}'`);
+            return;
+        }
+
+        // Update energy chart with real-time data
+        energyChart.data.labels = timeLabels[selectedTime];
+        energyChart.data.datasets[0].data = realEnergyData[selectedArea][selectedTime];
+        energyChart.update();
+
+        // Update cost chart with real-time data
+        costChart.data.labels = timeLabels[selectedTime];
+        costChart.data.datasets[0].data = realCostData[selectedArea][selectedTime];
+        costChart.update();
+
+        // Update active button state
+        document.querySelectorAll(".graph-buttons button").forEach(btn => {
+            btn.classList.remove("active-button");
+        });
+        document.getElementById(period).classList.add("active-button");
+    } catch (error) {
+        console.error("Error updating time graphs with real-time data:", error);
+        
+        // Fallback to static data if there's an error
+        energyChart.data.labels = timeLabels[selectedTime];
+        energyChart.data.datasets[0].data = energyData[selectedArea][selectedTime];
+        energyChart.update();
+
+        costChart.data.labels = timeLabels[selectedTime];
+        costChart.data.datasets[0].data = costData[selectedArea][selectedTime];
+        costChart.update();
     }
-};
+}
 
-export const costData = {
-    "Meeting Room": {
-        daily: [10, 16, 20, 24, 12],
-        weekly: [80, 100, 90, 120, 110, 96, 104],
-        monthly: [300, 340, 320, 360]
-    },
-    "Common Areas": {
-        daily: [6, 10, 14, 12, 8],
-        weekly: [60, 70, 80, 76, 72, 66, 62],
-        monthly: [200, 240, 260, 220]
-    },
-    "Workstations": {
-        daily: [12, 18, 22, 28, 14],
-        weekly: [90, 110, 100, 130, 120, 104, 114],
-        monthly: [360, 400, 380, 420]
-    },
-    "Special": {
-        daily: [14, 20, 24, 30, 16],
-        weekly: [100, 120, 110, 140, 130, 116, 124],
-        monthly: [400, 440, 420, 460]
+// Example: Initialize area comparison charts with real-time data
+async function createAreaCharts() {
+    try {
+        // Fetch real-time area data
+        const realAreaData = await fetchAreaData();
+        
+        // Create pie chart with real data
+        areaPieChart = new Chart(areaComparisonPieCtx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(realAreaData),
+                datasets: [{
+                    data: Object.values(realAreaData),
+                    backgroundColor: ['red', 'blue', 'green', 'teal']
+                }]
+            }
+        });
+
+        // Create bar chart with real data
+        areaBarChart = new Chart(areaComparisonBarCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(realAreaData),
+                datasets: [{
+                    label: 'Energy Usage (kW)',
+                    data: Object.values(realAreaData),
+                    backgroundColor: 'teal'
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+    } catch (error) {
+        console.error("Error creating area charts with real-time data:", error);
+        
+        // Fallback to static data if there's an error
+        areaPieChart = new Chart(areaComparisonPieCtx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(areaData),
+                datasets: [{
+                    data: Object.values(areaData),
+                    backgroundColor: ['red', 'blue', 'green', 'teal']
+                }]
+            }
+        });
+
+        areaBarChart = new Chart(areaComparisonBarCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(areaData),
+                datasets: [{
+                    label: 'Energy Usage (kW)',
+                    data: Object.values(areaData),
+                    backgroundColor: 'teal'
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
     }
-};
+}
 
-export const areaData = {
-    "Meeting Room": 30,
-    "Workstations": 40,
-    "Common Areas": 25,
-    "Special": 20
-};
+// Example: Update area data when changing selected area
+async function updateAreaData() {
+    console.log("Selected Area:", selectedArea);
 
-export const deviceData = {
-    "Computers": 50,
-    "Lights": 20,
-    "Heating": 40,
-    "Monitors": 25,
-    "Speakers": 10,
-    "A/C": 22,
-    "Projector": 18,
-    "Vending Machine": 12
-};
+    try {
+        // Fetch real-time devices by area data
+        const realDevicesByArea = await fetchDevicesByArea();
+        
+        if (!realDevicesByArea[selectedArea]) {
+            console.error(`No data found for selected area: '${selectedArea}'`);
+            return;
+        }
 
-export const devicesByArea = {
-    "Meeting Room": [
-        { name: "Projector", energy: 5, cost: 2.5 },
-        { name: "Speakers", energy: 2, cost: 1.2 },
-        { name: "Lights", energy: 8, cost: 4 }
-    ],
-    "Workstations": [
-        { name: "Computers", energy: 15, cost: 8 },
-        { name: "Monitors", energy: 10, cost: 5 },
-        { name: "Printers", energy: 6, cost: 3 }
-    ],
-    "Common Areas": [
-        { name: "Lights", energy: 12, cost: 6 },
-        { name: "Air Conditioning", energy: 20, cost: 10 },
-        { name: "Vending Machine", energy: 8, cost: 4 }
-    ],
-    "Special": [
-        { name: "Heating", energy: 25, cost: 12 },
-        { name: "Speakers", energy: 10, cost: 5 }
-    ]
-};
+        let deviceHTML = "";
+        let deviceNames = [];
+        let deviceEnergy = [];
 
-export const deviceEnergyData = {
-    "Computers": {
-        daily: [2, 4, 6, 5, 3],
-        weekly: [20, 25, 30, 28, 26, 22, 24],
-        monthly: [100, 120, 110, 130]
-    },
-    "Lights": {
-        daily: [1, 2, 3, 3, 2],
-        weekly: [10, 12, 15, 14, 13, 11, 12],
-        monthly: [50, 55, 52, 58]
-    },
-    "Heating": {
-        daily: [5, 7, 10, 9, 6],
-        weekly: [40, 50, 48, 55, 52, 46, 49],
-        monthly: [200, 220, 210, 230]
-    },
-    "Monitors": {
-        daily: [1, 3, 4, 3, 2],
-        weekly: [15, 18, 20, 19, 17, 16, 18],
-        monthly: [70, 80, 75, 85]
-    },
-    "Speakers": {
-        daily: [0.5, 1, 1.5, 1, 0.7],
-        weekly: [5, 6, 7, 6.5, 6, 5.5, 5.8],
-        monthly: [25, 30, 28, 32]
-    },
-    "Vending Machine": {
-        daily: [2, 3, 4, 4, 3],
-        weekly: [20, 25, 28, 26, 24, 22, 23],
-        monthly: [90, 100, 95, 105]
+        realDevicesByArea[selectedArea].forEach(device => {
+            deviceHTML += `
+                <div class="device-panel">
+                    <h3>${device.name}</h3>
+                    <p>Usage: ${device.energy} kWh | Cost: £${device.cost}</p>
+                </div>`;
+            deviceNames.push(device.name);
+            deviceEnergy.push(device.energy);
+        });
+
+        document.getElementById('deviceList').innerHTML = deviceHTML;
+
+        if (devicePieChart) devicePieChart.destroy();
+        if (deviceBarChart) deviceBarChart.destroy();
+
+        devicePieChart = new Chart(devicePieCtx, {
+            type: 'pie',
+            data: {
+                labels: deviceNames,
+                datasets: [{
+                    data: deviceEnergy,
+                    backgroundColor: ['red', 'blue', 'green', 'orange', 'purple']
+                }]
+            }
+        });
+
+        deviceBarChart = new Chart(deviceBarCtx, {
+            type: 'bar',
+            data: {
+                labels: deviceNames,
+                datasets: [{
+                    label: 'Energy Usage (kW)',
+                    data: deviceEnergy,
+                    backgroundColor: 'purple'
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+
+        // Update time graphs with real-time data
+        await updateTimeGraphs(selectedTime);
+    } catch (error) {
+        console.error("Error updating area data with real-time data:", error);
+        
+        // Fallback to static data if there's an error
+        // Code to use static devicesByArea data would go here
     }
-};
+}
 
-export const deviceCostData = {
-    "Computers": {
-        daily: [5, 8, 12, 10, 6],
-        weekly: [40, 50, 60, 55, 52, 48, 50],
-        monthly: [200, 240, 220, 260]
-    },
-    "Lights": {
-        daily: [1, 2, 3, 2.5, 2],
-        weekly: [10, 12, 15, 14, 13, 11, 12],
-        monthly: [50, 55, 52, 58]
-    },
-    "Heating": {
-        daily: [8, 12, 15, 13, 10],
-        weekly: [70, 80, 85, 82, 78, 74, 75],
-        monthly: [300, 320, 310, 330]
-    },
-    "Monitors": {
-        daily: [2, 4, 5, 4, 3],
-        weekly: [20, 25, 28, 26, 24, 22, 23],
-        monthly: [90, 100, 95, 105]
-    },
-    "Speakers": {
-        daily: [0.8, 1.2, 1.5, 1.4, 1],
-        weekly: [8, 10, 12, 11, 9.5, 8.5, 9],
-        monthly: [40, 50, 45, 55]
-    },
-    "Vending Machine": {
-        daily: [3, 4, 5, 5, 4],
-        weekly: [30, 35, 40, 38, 36, 33, 31],
-        monthly: [120, 140, 130, 150]
+// Example: Calculate totals with real-time data
+async function calculateTotals() {
+    try {
+        // Fetch real-time data
+        const realDevicesByArea = await fetchDevicesByArea();
+        
+        let totalEnergy = 0, totalCost = 0;
+        let minRoom = "", maxRoom = "", minDevice = "", maxDevice = "";
+        let minEnergy = Infinity, maxEnergy = -Infinity;
+        let minRoomEnergy = Infinity, maxRoomEnergy = -Infinity;
+
+        Object.entries(realDevicesByArea).forEach(([room, devices]) => {
+            let roomTotal = 0;
+
+            devices.forEach(device => {
+                totalEnergy += device.energy;
+                totalCost += device.cost;
+                roomTotal += device.energy;
+
+                // Track minimum and maximum energy usage for devices
+                if (device.energy < minEnergy) {
+                    minEnergy = device.energy;
+                    minDevice = device.name;
+                }
+                if (device.energy > maxEnergy) {
+                    maxEnergy = device.energy;
+                    maxDevice = device.name;
+                }
+            });
+
+            // Track minimum and maximum energy usage for rooms
+            if (roomTotal < minRoomEnergy) {
+                minRoomEnergy = roomTotal;
+                minRoom = room;
+            }
+            if (roomTotal > maxRoomEnergy) {
+                maxRoomEnergy = roomTotal;
+                maxRoom = room;
+            }
+        });
+
+        // Update UI with real data
+        document.getElementById('totalEnergy').textContent = `${totalEnergy}`;
+        document.getElementById('totalCost').textContent = `${totalCost.toFixed(2)}`;
+        document.getElementById('minUsageRoom').textContent = ` ${minRoom}`;
+        document.getElementById('maxUsageRoom').textContent = ` ${maxRoom}`;
+        document.getElementById('minUsageDevice').textContent = ` ${minDevice}`;
+        document.getElementById('maxUsageDevice').textContent = ` ${maxDevice}`;
+    } catch (error) {
+        console.error("Error calculating totals with real-time data:", error);
+        
+        // Fallback to static data calculation if there's an error
+        // Code to calculate totals using static devicesByArea would go here
     }
-};
+}
+
+// Set up auto-refresh to keep data updated
+function setupAutoRefresh() {
+    // Refresh data every 5 minutes
+    setInterval(async () => {
+        console.log("Auto-refreshing data...");
+        
+        // Refresh all charts with latest data
+        await createAreaCharts();
+        await updateAreaData();
+        await calculateTotals();
+        
+        console.log("Data auto-refresh complete");
+    }, 5 * 60 * 1000); // 5 minutes in milliseconds
+}
+
+// Example: Initialize everything on page load
+document.addEventListener("DOMContentLoaded", async function() {
+    console.log(" Canvas elements loaded correctly!");
+    selectedArea = document.getElementById('areaTypeDropdown').value;
+
+    // Call functions with real-time data
+    await createAreaCharts();
+    await updateAreaData();
+    await calculateTotals();
+    
+    // Set up auto-refresh
+    setupAutoRefresh();
+    
+    // Event listener for dropdowns
+    document.getElementById('areaTypeDropdown').addEventListener('change', function() {
+        selectedArea = this.value;
+        console.log(" Updating area:", selectedArea);
+        updateAreaData();
+    });
+
+    // Time period buttons
+    document.getElementById('daily').addEventListener('click', () => updateTimeGraphs('daily'));
+    document.getElementById('weekly').addEventListener('click', () => updateTimeGraphs('weekly'));
+    document.getElementById('monthly').addEventListener('click', () => updateTimeGraphs('monthly'));
+});
