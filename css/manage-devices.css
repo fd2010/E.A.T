@@ -242,6 +242,21 @@
     background: #7a8763;
 }
 
+/* Delete device styles */
+.delete-device-button {
+    position: absolute; /* Added this to enable positioning */
+    right: 20px;
+    top: 20px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    align-self: auto;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 /* Zoom level and screen size media queries */
 @media screen and (min-width: 1600px) {
     .manage-devices-grid .devices-section {
