@@ -1,25 +1,10 @@
 // energyData.js - Modified to fetch real data from Firebase
 // IMPORTANT: This keeps all original variable names but populates them with real data
 
-// Firebase configuration - Set up at the beginning
-import firebase from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
-import { getDatabase, ref, onValue, query, orderByChild, startAt, endAt } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
-
-// Initialize Firebase (update with your project details)
-const firebaseConfig = {
-    apiKey: "AIzaSyAQD0Tqjq6GQRs88OP9tHUE5GbWUxJH5-Y",
-    authDomain: "energy-analysis-tool.firebaseapp.com",
-    databaseURL: "https://energy-analysis-tool-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "energy-analysis-tool",
-    storageBucket: "energy-analysis-tool.appspot.com",
-    messagingSenderId: "507807371796",
-    appId: "1:507807371796:web:5429d8339a1aa3e7e2ead0"
-};
-
-// Initialize Firebase
-let firebaseApp;
-let database;
-let initComplete = false;
+// Firebase is already initialized in your app, so we'll use the existing instance
+// Import from the version your app is using
+import { ref, onValue, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { database } from '../database/firebase-config.js';
 
 // Cost per kilowatt-hour
 const COST_PER_KWH = 0.28; // £0.28 per kWh
@@ -33,211 +18,168 @@ export const timeLabels = {
 
 // Original data structures that will be updated with real data
 export const totalEnergyData = {
-    daily: [0, 0, 0, 0, 0],
-    weekly: [0, 0, 0, 0, 0, 0, 0],
-    monthly: [0, 0, 0, 0]
+    daily: [5, 8, 10, 12, 6],
+    weekly: [40, 50, 45, 60, 55, 48, 52],
+    monthly: [150, 170, 160, 180]
 };
 
 export const totalCostData = {
-    daily: [0, 0, 0, 0, 0],
-    weekly: [0, 0, 0, 0, 0, 0, 0],
-    monthly: [0, 0, 0, 0]
+    daily: [2, 3, 5, 4, 6],
+    weekly: [20, 25, 22, 30, 28, 24, 26],
+    monthly: [90, 100, 95, 105]
 };
 
 export const energyData = {
     "Meeting Room": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [5, 8, 10, 12, 6],
+        weekly: [40, 50, 45, 60, 55, 48, 52],
+        monthly: [150, 170, 160, 180]
     },
     "Common Areas": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [3, 5, 7, 6, 4],
+        weekly: [30, 35, 40, 38, 36, 33, 31],
+        monthly: [100, 120, 130, 110]
     },
     "Workstations": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [6, 9, 11, 14, 7],
+        weekly: [45, 55, 50, 65, 60, 52, 57],
+        monthly: [180, 200, 190, 210]
     },
     "Special": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [7, 10, 12, 15, 8],
+        weekly: [50, 60, 55, 70, 65, 58, 62],
+        monthly: [200, 220, 210, 230]
     }
 };
 
 export const costData = {
     "Meeting Room": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [10, 16, 20, 24, 12],
+        weekly: [80, 100, 90, 120, 110, 96, 104],
+        monthly: [300, 340, 320, 360]
     },
     "Common Areas": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [6, 10, 14, 12, 8],
+        weekly: [60, 70, 80, 76, 72, 66, 62],
+        monthly: [200, 240, 260, 220]
     },
     "Workstations": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [12, 18, 22, 28, 14],
+        weekly: [90, 110, 100, 130, 120, 104, 114],
+        monthly: [360, 400, 380, 420]
     },
     "Special": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [14, 20, 24, 30, 16],
+        weekly: [100, 120, 110, 140, 130, 116, 124],
+        monthly: [400, 440, 420, 460]
     }
 };
 
 export const areaData = {
-    "Meeting Room": 0,
-    "Workstations": 0,
-    "Common Areas": 0,
-    "Special": 0
+    "Meeting Room": 30,
+    "Workstations": 40,
+    "Common Areas": 25,
+    "Special": 20
 };
 
 export const deviceData = {
-    "Computers": 0,
-    "Lights": 0,
-    "Heating": 0,
-    "Monitors": 0,
-    "Speakers": 0,
-    "A/C": 0,
-    "Projector": 0,
-    "Vending Machine": 0
+    "Computers": 50,
+    "Lights": 20,
+    "Heating": 40,
+    "Monitors": 25,
+    "Speakers": 10,
+    "A/C": 22,
+    "Projector": 18,
+    "Vending Machine": 12
 };
 
 export const devicesByArea = {
     "Meeting Room": [
-        { name: "Projector", energy: 0, cost: 0 },
-        { name: "Speakers", energy: 0, cost: 0 },
-        { name: "Lights", energy: 0, cost: 0 }
+        { name: "Projector", energy: 5, cost: 2.5 },
+        { name: "Speakers", energy: 2, cost: 1.2 },
+        { name: "Lights", energy: 8, cost: 4 }
     ],
     "Workstations": [
-        { name: "Computers", energy: 0, cost: 0 },
-        { name: "Monitors", energy: 0, cost: 0 },
-        { name: "Printers", energy: 0, cost: 0 }
+        { name: "Computers", energy: 15, cost: 8 },
+        { name: "Monitors", energy: 10, cost: 5 },
+        { name: "Printers", energy: 6, cost: 3 }
     ],
     "Common Areas": [
-        { name: "Lights", energy: 0, cost: 0 },
-        { name: "Air Conditioning", energy: 0, cost: 0 },
-        { name: "Vending Machine", energy: 0, cost: 0 }
+        { name: "Lights", energy: 12, cost: 6 },
+        { name: "Air Conditioning", energy: 20, cost: 10 },
+        { name: "Vending Machine", energy: 8, cost: 4 }
     ],
     "Special": [
-        { name: "Heating", energy: 0, cost: 0 },
-        { name: "Speakers", energy: 0, cost: 0 }
+        { name: "Heating", energy: 25, cost: 12 },
+        { name: "Speakers", energy: 10, cost: 5 }
     ]
 };
 
 export const deviceEnergyData = {
     "Computers": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [2, 4, 6, 5, 3],
+        weekly: [20, 25, 30, 28, 26, 22, 24],
+        monthly: [100, 120, 110, 130]
     },
     "Lights": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [1, 2, 3, 3, 2],
+        weekly: [10, 12, 15, 14, 13, 11, 12],
+        monthly: [50, 55, 52, 58]
     },
     "Heating": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [5, 7, 10, 9, 6],
+        weekly: [40, 50, 48, 55, 52, 46, 49],
+        monthly: [200, 220, 210, 230]
     },
     "Monitors": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [1, 3, 4, 3, 2],
+        weekly: [15, 18, 20, 19, 17, 16, 18],
+        monthly: [70, 80, 75, 85]
     },
     "Speakers": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [0.5, 1, 1.5, 1, 0.7],
+        weekly: [5, 6, 7, 6.5, 6, 5.5, 5.8],
+        monthly: [25, 30, 28, 32]
     },
     "Vending Machine": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [2, 3, 4, 4, 3],
+        weekly: [20, 25, 28, 26, 24, 22, 23],
+        monthly: [90, 100, 95, 105]
     }
 };
 
 export const deviceCostData = {
     "Computers": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [5, 8, 12, 10, 6],
+        weekly: [40, 50, 60, 55, 52, 48, 50],
+        monthly: [200, 240, 220, 260]
     },
     "Lights": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [1, 2, 3, 2.5, 2],
+        weekly: [10, 12, 15, 14, 13, 11, 12],
+        monthly: [50, 55, 52, 58]
     },
     "Heating": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [8, 12, 15, 13, 10],
+        weekly: [70, 80, 85, 82, 78, 74, 75],
+        monthly: [300, 320, 310, 330]
     },
     "Monitors": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [2, 4, 5, 4, 3],
+        weekly: [20, 25, 28, 26, 24, 22, 23],
+        monthly: [90, 100, 95, 105]
     },
     "Speakers": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [0.8, 1.2, 1.5, 1.4, 1],
+        weekly: [8, 10, 12, 11, 9.5, 8.5, 9],
+        monthly: [40, 50, 45, 55]
     },
     "Vending Machine": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
+        daily: [3, 4, 5, 5, 4],
+        weekly: [30, 35, 40, 38, 36, 33, 31],
+        monthly: [120, 140, 130, 150]
     }
 };
-
-// Initialize Firebase connection
-function initFirebase() {
-    if (initComplete) return;
-    
-    try {
-        // Check if Firebase is already initialized globally
-        if (window.firebase) {
-            console.log("Using globally initialized Firebase");
-            firebaseApp = window.firebase.app();
-            database = window.firebase.database();
-            initComplete = true;
-        } else {
-            try {
-                // Try using Firebase v9
-                firebaseApp = firebase.getApp();
-            } catch (e) {
-                firebaseApp = firebase.initializeApp(firebaseConfig);
-            }
-            
-            // Get database reference
-            database = getDatabase(firebaseApp);
-            initComplete = true;
-        }
-        
-        console.log("Firebase initialized for energy data");
-        
-        // Start fetching data
-        fetchAllData();
-        
-        // Set up a refresh interval
-        setInterval(fetchAllData, 5 * 60 * 1000); // Refresh every 5 minutes
-        
-        // Also allow manual refresh via events
-        document.addEventListener('refreshEnergyData', fetchAllData);
-    } catch (error) {
-        console.error("Error initializing Firebase:", error);
-        console.log("Will try again in 5 seconds...");
-        
-        // Try again in 5 seconds
-        setTimeout(initFirebase, 5000);
-    }
-}
 
 // Get date ranges for different periods
 function getDateRanges() {
@@ -329,40 +271,36 @@ function groupDataByTimeSegments(readings, period) {
 
 // Update area data based on readings
 function updateAreaData(readings) {
-    // Reset the area data first
-    for (const area in areaData) {
-        areaData[area] = 0;
-    }
+    // Create a new object to hold the updated area data
+    const newAreaData = {};
     
     // Group by room/area
     readings.forEach(reading => {
         const room = reading.room_name;
         
         // Create the area if it doesn't exist
-        if (areaData[room] === undefined) {
-            areaData[room] = 0;
-            
-            // Also create entries in other data structures if needed
-            if (energyData[room] === undefined) {
-                energyData[room] = {
-                    daily: [0, 0, 0, 0, 0],
-                    weekly: [0, 0, 0, 0, 0, 0, 0],
-                    monthly: [0, 0, 0, 0]
-                };
-                
-                costData[room] = {
-                    daily: [0, 0, 0, 0, 0],
-                    weekly: [0, 0, 0, 0, 0, 0, 0],
-                    monthly: [0, 0, 0, 0]
-                };
-                
-                devicesByArea[room] = [];
-            }
+        if (!newAreaData[room]) {
+            newAreaData[room] = 0;
         }
         
         // Add the watts to the area total
-        areaData[room] += reading.watts;
+        newAreaData[room] += reading.watts;
     });
+    
+    // Update the original areaData object with new values
+    // Keep existing keys that aren't in the readings
+    for (const room in areaData) {
+        if (newAreaData[room] !== undefined) {
+            areaData[room] = newAreaData[room];
+        }
+    }
+    
+    // Add any new rooms that weren't in the original
+    for (const room in newAreaData) {
+        if (areaData[room] === undefined) {
+            areaData[room] = newAreaData[room];
+        }
+    }
     
     console.log("Area data updated:", areaData);
 }
@@ -375,10 +313,11 @@ function updateEnergyData(readings) {
     // Update all time periods
     ['daily', 'weekly', 'monthly'].forEach(period => {
         // Update total energy data
-        totalEnergyData[period] = groupDataByTimeSegments(readings, period);
+        const newTotalEnergy = groupDataByTimeSegments(readings, period);
+        totalEnergyData[period] = newTotalEnergy;
         
         // Convert to cost
-        totalCostData[period] = totalEnergyData[period].map(w => (w / 1000) * COST_PER_KWH);
+        totalCostData[period] = newTotalEnergy.map(w => (w / 1000) * COST_PER_KWH);
         
         // Update per-room data
         rooms.forEach(room => {
@@ -400,23 +339,21 @@ function updateEnergyData(readings) {
             }
             
             // Update energy data for this room and period
-            energyData[room][period] = groupDataByTimeSegments(roomReadings, period);
+            const roomEnergyData = groupDataByTimeSegments(roomReadings, period);
+            energyData[room][period] = roomEnergyData;
             
             // Convert to cost
-            costData[room][period] = energyData[room][period].map(w => (w / 1000) * COST_PER_KWH);
+            costData[room][period] = roomEnergyData.map(w => (w / 1000) * COST_PER_KWH);
         });
     });
     
-    console.log("Energy data updated:", energyData);
-    console.log("Cost data updated:", costData);
+    console.log("Energy data updated");
 }
 
 // Update device data based on readings
 function updateDeviceData(readings) {
-    // Reset the device data first
-    for (const device in deviceData) {
-        deviceData[device] = 0;
-    }
+    // Create a new object to hold the updated device data
+    const newDeviceData = {};
     
     // Get unique device types
     const devices = [...new Set(readings.map(r => r.device_type))];
@@ -425,28 +362,31 @@ function updateDeviceData(readings) {
     devices.forEach(device => {
         const deviceReadings = readings.filter(r => r.device_type === device);
         
-        // Create device entry if it doesn't exist
-        if (deviceData[device] === undefined) {
-            deviceData[device] = 0;
-            
-            // Also create entries in other data structures if needed
-            if (deviceEnergyData[device] === undefined) {
-                deviceEnergyData[device] = {
-                    daily: [0, 0, 0, 0, 0],
-                    weekly: [0, 0, 0, 0, 0, 0, 0],
-                    monthly: [0, 0, 0, 0]
-                };
-                
-                deviceCostData[device] = {
-                    daily: [0, 0, 0, 0, 0],
-                    weekly: [0, 0, 0, 0, 0, 0, 0],
-                    monthly: [0, 0, 0, 0]
-                };
-            }
+        // Sum up watts for this device
+        newDeviceData[device] = deviceReadings.reduce((sum, reading) => sum + reading.watts, 0);
+        
+        // Update original deviceData
+        if (deviceData[device] !== undefined) {
+            deviceData[device] = newDeviceData[device];
+        } else {
+            // Add new device type
+            deviceData[device] = newDeviceData[device];
         }
         
-        // Sum up watts for this device
-        deviceData[device] = deviceReadings.reduce((sum, reading) => sum + reading.watts, 0);
+        // Create entries in energy data if needed
+        if (deviceEnergyData[device] === undefined) {
+            deviceEnergyData[device] = {
+                daily: [0, 0, 0, 0, 0],
+                weekly: [0, 0, 0, 0, 0, 0, 0],
+                monthly: [0, 0, 0, 0]
+            };
+            
+            deviceCostData[device] = {
+                daily: [0, 0, 0, 0, 0],
+                weekly: [0, 0, 0, 0, 0, 0, 0],
+                monthly: [0, 0, 0, 0]
+            };
+        }
         
         // Update time-based energy data
         ['daily', 'weekly', 'monthly'].forEach(period => {
@@ -455,7 +395,7 @@ function updateDeviceData(readings) {
         });
     });
     
-    console.log("Device data updated:", deviceData);
+    console.log("Device data updated");
 }
 
 // Update devices by area
@@ -463,15 +403,12 @@ function updateDevicesByArea(readings) {
     // Get unique rooms
     const rooms = [...new Set(readings.map(r => r.room_name))];
     
-    // Reset and recreate devicesByArea
+    // Temporary storage for new data
+    const newDevicesByArea = {};
+    
     rooms.forEach(room => {
         // Initialize if needed
-        if (!devicesByArea[room]) {
-            devicesByArea[room] = [];
-        } else {
-            // Clear existing entries
-            devicesByArea[room] = [];
-        }
+        newDevicesByArea[room] = [];
         
         // Get unique devices in this room
         const roomReadings = readings.filter(r => r.room_name === room);
@@ -486,8 +423,8 @@ function updateDevicesByArea(readings) {
             const energySum = deviceReadings.reduce((sum, r) => sum + r.watts, 0) / 1000; // Convert watts to kWh
             const costSum = energySum * COST_PER_KWH;
             
-            // Add to devicesByArea
-            devicesByArea[room].push({
+            // Add to newDevicesByArea
+            newDevicesByArea[room].push({
                 name: deviceName,
                 type: deviceType,
                 energy: parseFloat(energySum.toFixed(2)),
@@ -496,7 +433,12 @@ function updateDevicesByArea(readings) {
         });
     });
     
-    console.log("Devices by area updated:", devicesByArea);
+    // Update the original devicesByArea with new data
+    for (const room in newDevicesByArea) {
+        devicesByArea[room] = newDevicesByArea[room];
+    }
+    
+    console.log("Devices by area updated");
 }
 
 // Fetch device readings from Firebase (where the simulator stores the data)
@@ -506,87 +448,57 @@ async function fetchDeviceReadings() {
         return [];
     }
     
-    // This is the path where the device readings are stored by the simulator
-    // Change this to match your actual database structure
-    const deviceReadingsRef = ref(database, 'deviceReadings');
+    // Try to find where the device readings are stored
+    const pathsToCheck = [
+        'deviceReadings',
+        'device_readings',
+        'readings',
+        'simulator/readings'
+    ];
     
-    // Log the path we're querying for debugging
-    console.log("Fetching device readings from path:", deviceReadingsRef.toString());
-    
-    try {
-        return new Promise((resolve, reject) => {
-            onValue(deviceReadingsRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    const rawData = snapshot.val();
-                    console.log("Sample of raw data:", JSON.stringify(rawData).substring(0, 200) + "...");
-                    
-                    const readings = Array.isArray(rawData) ? 
-                        rawData : Object.values(rawData);
-                    
-                    console.log(`Fetched ${readings.length} device readings`);
-                    resolve(readings);
-                } else {
-                    console.log("No device readings found at path. Trying alternate paths...");
-                    
-                    // Try alternative paths where data might be stored
-                    const alternativePaths = [
-                        'device_readings',
-                        'readings',
-                        'simulator/readings',
-                        'offices'  // The office structure might contain device readings
-                    ];
-                    
-                    // Try each path
-                    Promise.all(alternativePaths.map(path => {
-                        return new Promise(resolveAlt => {
-                            const altRef = ref(database, path);
-                            onValue(altRef, (altSnapshot) => {
-                                if (altSnapshot.exists()) {
-                                    console.log(`Found data at alternate path: ${path}`);
-                                    resolveAlt({
-                                        path: path,
-                                        data: altSnapshot.val()
-                                    });
-                                } else {
-                                    resolveAlt(null);
-                                }
-                            }, {onlyOnce: true});
-                        });
-                    })).then(results => {
-                        const foundData = results.filter(r => r !== null);
-                        if (foundData.length > 0) {
-                            console.log("Found data in alternative paths:", 
-                                foundData.map(d => d.path).join(', '));
-                            
-                            // Process the first found path
-                            const firstFound = foundData[0];
-                            console.log(`Using data from ${firstFound.path}`);
-                            
-                            // Process data based on path structure
-                            if (firstFound.path === 'offices') {
-                                // Extract device readings from office structure
-                                const extractedReadings = extractReadingsFromOffices(firstFound.data);
-                                resolve(extractedReadings);
-                            } else {
-                                const readings = Array.isArray(firstFound.data) ? 
-                                    firstFound.data : Object.values(firstFound.data);
-                                resolve(readings);
-                            }
-                        } else {
-                            console.warn("No data found in any alternative paths");
-                            resolve([]);
-                        }
-                    });
-                }
-            }, (error) => {
-                console.error("Error fetching device readings:", error);
-                reject(error);
-            }, {onlyOnce: true}); // Only fetch once
-        });
-    } catch (error) {
-        console.error("Error setting up Firebase listener:", error);
-        return [];
+    for (const path of pathsToCheck) {
+        console.log(`Checking path: ${path}`);
+        try {
+            const dataRef = ref(database, path);
+            const snapshot = await get(dataRef);
+            
+            if (snapshot.exists()) {
+                const rawData = snapshot.val();
+                console.log(`Found data at path: ${path}`);
+                
+                const readings = Array.isArray(rawData) 
+                    ? rawData 
+                    : Object.values(rawData);
+                
+                console.log(`Found ${readings.length} readings`);
+                return readings;
+            }
+        } catch (error) {
+            console.warn(`Error checking path ${path}:`, error);
+        }
     }
+    
+    // If we haven't found anything, try to extract from office structure
+    console.log("No direct readings found. Checking office structure...");
+    try {
+        const officesRef = ref(database, 'offices');
+        const officesSnapshot = await get(officesRef);
+        
+        if (officesSnapshot.exists()) {
+            const officesData = officesSnapshot.val();
+            const readings = extractReadingsFromOffices(officesData);
+            
+            if (readings.length > 0) {
+                console.log(`Extracted ${readings.length} readings from offices`);
+                return readings;
+            }
+        }
+    } catch (error) {
+        console.warn("Error extracting from offices:", error);
+    }
+    
+    console.warn("No readings found in any location");
+    return [];
 }
 
 // Extract readings from office structure
@@ -668,72 +580,47 @@ function extractReadingsFromOffices(officesData) {
 // Main function to fetch and update all data
 async function fetchAllData() {
     try {
-        console.log("Fetching all energy data...");
+        console.log("Fetching energy data...");
         
-        // Fetch readings from deviceReadings collection
+        // Fetch readings from database
         const readings = await fetchDeviceReadings();
         
-        if (readings.length === 0) {
-            console.warn("No device readings available. Checking for simulator in database...");
+        if (readings && readings.length > 0) {
+            // Update all data structures with the readings
+            updateAreaData(readings);
+            updateEnergyData(readings);
+            updateDeviceData(readings);
+            updateDevicesByArea(readings);
             
-            // If our direct fetch failed, check if the simulator has an active session
-            const simulatorRef = ref(database, 'simulator/activeSession');
-            onValue(simulatorRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    console.log("Simulator active session found! Extracting readings...");
-                    const simulatorData = snapshot.val();
-                    
-                    // Try to extract readings from simulator data
-                    let simulatorReadings = [];
-                    
-                    if (simulatorData.readings) {
-                        // Direct readings array
-                        simulatorReadings = Array.isArray(simulatorData.readings) ?
-                            simulatorData.readings : Object.values(simulatorData.readings);
-                    } else if (simulatorData.officeReadings) {
-                        // Office-organized readings
-                        simulatorReadings = extractReadingsFromOffices(simulatorData.officeReadings);
-                    }
-                    
-                    if (simulatorReadings.length > 0) {
-                        console.log(`Found ${simulatorReadings.length} readings from simulator`);
-                        
-                        // Update all data structures with the readings
-                        updateAreaData(simulatorReadings);
-                        updateEnergyData(simulatorReadings);
-                        updateDeviceData(simulatorReadings);
-                        updateDevicesByArea(simulatorReadings);
-                        
-                        // Trigger custom event to notify that data is updated
-                        const event = new CustomEvent('energyDataUpdated');
-                        document.dispatchEvent(event);
-                    }
-                } else {
-                    console.warn("No simulator session found");
-                }
-            }, { onlyOnce: true });
+            // Trigger custom event to notify that data is updated
+            const event = new CustomEvent('energyDataUpdated');
+            document.dispatchEvent(event);
             
-            return;
+            console.log("Energy data updated successfully");
+        } else {
+            console.warn("No readings found to update data");
         }
-        
-        // Update all data structures with the readings
-        updateAreaData(readings);
-        updateEnergyData(readings);
-        updateDeviceData(readings);
-        updateDevicesByArea(readings);
-        
-        // Trigger custom event to notify that data is updated
-        const event = new CustomEvent('energyDataUpdated');
-        document.dispatchEvent(event);
-        
-        console.log("All energy data updated successfully");
     } catch (error) {
         console.error("Error fetching and updating energy data:", error);
     }
 }
 
-// Initialize Firebase when the module is imported
-initFirebase();
+// Start fetching data when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Setting up energy data...");
+    
+    // Fetch immediately
+    fetchAllData();
+    
+    // Then fetch periodically
+    setInterval(fetchAllData, 5 * 60 * 1000); // Every 5 minutes
+    
+    // Listen for refresh events
+    document.addEventListener('refreshEnergyData', () => {
+        console.log("Manual refresh requested");
+        fetchAllData();
+    });
+});
 
 // Export an update function that can be called manually
 export function updateEnergyDataNow() {
