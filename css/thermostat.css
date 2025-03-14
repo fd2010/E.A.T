@@ -184,13 +184,14 @@
   border-radius: 1px;
 }
 
-.info-card.temperature .status-icon,
-.info-card.temprature .status-icon {
+.info-card.temperature .status-icon {
   width: 18px;  
   height: 18px; 
   border-radius: 50%;
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* Default color, will be overridden by JavaScript */
   margin-top: 5px;
+  transition: background-color 0.3s ease; /* Smooth transition between colors */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
 /* Analog Clock with Digital Display Styles */

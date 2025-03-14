@@ -101,6 +101,36 @@ document.addEventListener('DOMContentLoaded', function() {
   // Call the weather update function when the page loads
   updateWeather();
 
+  // Function to update status icon color based on temperature
+  function updateStatusIconColor(temp) {
+    const statusIcon = document.querySelector('.status-icon');
+    if (!statusIcon) return;
+    
+    // If thermostat is off, set a neutral gray color
+    if (temp === "OFF" || temp === 0) {
+      statusIcon.style.backgroundColor = '#999999';
+      return;
+    }
+    
+    // Parse the temperature as a number
+    const temperature = parseInt(temp, 10);
+    
+    // Define temperature range and corresponding colors
+    const minTemp = 10; // Coldest (blue)
+    const maxTemp = 30; // Hottest (red)
+    
+    // Calculate how far along the range the current temperature is (0 to 1)
+    const normalizedTemp = Math.max(0, Math.min(1, (temperature - minTemp) / (maxTemp - minTemp)));
+    
+    // Calculate RGB values for a gradient from blue to red
+    // Blue (0, 120, 255) to Red (231, 76, 60)
+    const r = Math.round(0 + normalizedTemp * (231 - 0));
+    const g = Math.round(120 - normalizedTemp * (120 - 76));
+    const b = Math.round(255 - normalizedTemp * (255 - 60));
+    
+    // Set the background color
+    statusIcon.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+  }
 
   // Thermostat controls:
   
@@ -230,6 +260,8 @@ document.addEventListener('DOMContentLoaded', function() {
       tempDisplay.textContent = "OFF";
       dialElement.style.opacity = 0.5;
       pointerTip.style.opacity = 0;
+      // Set neutral color for status icon when off
+      updateStatusIconColor("OFF");
     } else {
       // Ensure valid temperature (10-30)
       initialTemp = Math.max(10, Math.min(30, initialTemp));
@@ -242,6 +274,9 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Update pointer position
       updatePointerPosition(currentAngle);
+      
+      // Update the status icon color
+      updateStatusIconColor(initialTemp);
       
       // Ensure the power toggle is on
       powerToggle.checked = true;
@@ -312,6 +347,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update the pointer position to reflect the current temperature
     updatePointerPosition(angle);
+    
+    // Update the status icon color based on temperature
+    updateStatusIconColor(displayTemp);
   }
   
   // Function to create or update the temperature pointer
@@ -334,6 +372,8 @@ document.addEventListener('DOMContentLoaded', function() {
       dialElement.style.opacity = 0.5;
       // Hide pointer when thermostat is off
       if (pointerTip) pointerTip.style.opacity = 0;
+      // Update status icon to neutral color
+      updateStatusIconColor("OFF");
       // Update Firebase with 0 temperature when thermostat is turned off
       updateTemperatureInFirebase(0);
     } else {
@@ -341,6 +381,8 @@ document.addEventListener('DOMContentLoaded', function() {
       dialElement.style.opacity = 1;
       // Show pointer when thermostat is on
       if (pointerTip) pointerTip.style.opacity = 1;
+      // Update status icon color based on current temperature
+      updateStatusIconColor(tempDisplay.textContent);
       // Update Firebase with current temperature when thermostat is turned on
       const temp = parseInt(tempDisplay.textContent);
       if (!isNaN(temp)) {
