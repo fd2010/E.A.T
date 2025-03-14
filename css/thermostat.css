@@ -33,6 +33,7 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto 30px;
+  
 }
 
 .temperature-markers {
@@ -184,13 +185,14 @@
   border-radius: 1px;
 }
 
-.info-card.temperature .status-icon,
-.info-card.temprature .status-icon {
+.info-card.temperature .status-icon {
   width: 18px;  
   height: 18px; 
   border-radius: 50%;
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* Default color, will be overridden by JavaScript */
   margin-top: 5px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Analog Clock with Digital Display Styles */
@@ -361,4 +363,57 @@
 }
 
 @media (max-width: 480px) {
+}
+
+
+
+/* Disabled Thermostat Styles */
+.disabled-thermostat {
+  cursor: not-allowed !important;
+  opacity: 0.8 !important;
+  filter: grayscale(0.3);
+  pointer-events: none;
+}
+
+.disabled-thermostat:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 50;
+  border-radius: 50%;
+}
+
+.disabled-control {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.power-switch.disabled-control .switch {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.power-switch.disabled-control .slider {
+  background-color: #ccc !important;
+}
+
+.thermostat-lock-indicator {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 100;
 }

@@ -1,0 +1,147 @@
+/* Delete Device Modal Styles */
+#deleteDeviceModal .modal-content {
+    background-color: #ffff;
+    max-width: 500px;
+}
+
+#deleteDeviceModal .step {
+    background-color: #D9D9D9;
+    border-radius: 23px;
+    padding: 40px;
+    margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    max-height: calc(80vh - 100px);
+}
+
+/* Room container styles */
+.room-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.room-container .room-button {
+    width: calc(100% - 40px); /* Make space for the delete button */
+    position: relative;
+    z-index: 1;
+}
+
+.delete-room-button {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    margin-left: -15px;
+    z-index: 2;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.delete-room-button:hover {
+    background-color: #ff5252;
+    transform: scale(1.05);
+}
+
+/* Delete device option styles */
+.delete-device-option {
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.delete-device-option:hover, .room-button:hover {
+    background-color: #DBC99F;
+}
+
+.device-status {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Confirmation step styles */
+.delete-confirmation {
+    background-color: #D9D9D9; 
+    border-radius: 23px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.confirmation-message {
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.warning-text {
+    color: #c62828;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.confirmation-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.confirmation-buttons button {
+    min-width: 120px;
+}
+
+#confirmDelete {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+#confirmDelete:hover {
+    background-color: #ff5252;
+    transform: scale(1.05);
+}
+
+#cancelDelete:hover {
+    background-color: #b2d98a !important; 
+}
+
+/* No devices message */
+.no-devices-message {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-family: "Kay Pho Du", sans-serif;
+    font-size: 16px;
+    grid-column: 1 / -1;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    #deleteDeviceModal .step {
+        padding: 20px;
+    }
+    
+    .confirmation-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .confirmation-buttons button {
+        width: 100%;
+    }
+}

@@ -8,6 +8,7 @@
     padding-bottom: 50px;
     margin: 0 auto;
     overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin-top: 0px;
 }
 
 .manage-devices-grid .devices-section {
@@ -240,6 +241,20 @@
 
 .manage-devices-grid .devices-grid::-webkit-scrollbar-thumb:hover {
     background: #7a8763;
+}
+
+/* Delete device styles */
+.delete-device-button {
+    position: absolute; 
+    right: 20px;
+    top: 20px;
+    display: inline-block;
+    width: 40px;
+    margin: 0;
+    align-self: auto;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 /* Zoom level and screen size media queries */

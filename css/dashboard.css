@@ -397,6 +397,8 @@
     padding: 5px;
     border-radius: 23px;
     margin-bottom: 15px;
+    margin-left: auto; 
+    margin-right: auto;
     position: relative;
     border: 2px solid #ffffff33;
     background-color: #ffffff33;
@@ -489,7 +491,7 @@
     flex-wrap: wrap;
     justify-content: center; 
     gap: 20px;
-    margin-bottom: 60px;
+    margin-bottom: 10px;
     padding: 20px;
     border-radius: 20px;
     height: 300px;
@@ -993,4 +995,29 @@ li .logout-btn img {
 .manage-devices-grid .devices-grid {
     height: calc(100vh - 250px);
     min-height: 400px;
+}
+
+
+/* Styles for disabled device toggles */
+.device-toggle.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.device-toggle.disabled .toggle-slider {
+    background-color: #ccc;
+}
+
+.device-toggle.disabled input[type="checkbox"]:checked + .toggle-slider {
+    background-color: #85b5c8; /* Lighter version of the active color */
+}
+
+/* Add a visual indicator that shows the toggle is locked - added emoji for ease of use*/
+.device-toggle.disabled::after {
+    content: "🔒";
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
 }
