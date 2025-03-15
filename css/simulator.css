@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+}
+.office-tabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.office-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
+}
+.office-tab.active {
+    background-color: #4CAF50;
+    color: white;
+}
+.reading-filters {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+.office-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.office-metric {
+    background-color: #e8f5e9;
+    padding: 10px;
+    border-radius: 5px;
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+}
+.office-metric h4 {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+.office-metric .value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+.container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+h1 {
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #45a049;
+}
+button.stop {
+    background-color: #f44336;
+}
+button.stop:hover {
+    background-color: #d32f2f;
+}
+#readings {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-top: 20px;
+}
+.reading {
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+}
+.dashboard {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.metric {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 15px;
+    width: 30%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.metric h3 {
+    margin-top: 0;
+    color: #666;
+}
+.metric .value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+.cost {
+    color: #e91e63;
+}
+.rooms-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.room-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: calc(50% - 10px);
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+.room-card h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+.device-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+.device-status {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.device-status.on {
+    background-color: #4CAF50;
+}
+.device-status.off {
+    background-color: #f44336;
+}
+.device-power {
+    color: #2196F3;
+    font-weight: bold;
+}
+.database-status {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.error {
+    color: #f44336;
+    font-weight: bold;
+}
+.success {
+    color: #4CAF50;
+}

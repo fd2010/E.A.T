@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Meter Simulator</title>
+    <link rel="stylesheet" href="./css/simulator.css">
+</head>
+<body>
+    <h1>Smart Meter Simulator</h1>
+    
+    <div class="container">
+        <div id="databaseStatus" class="database-status">Connecting to Firebase...</div>
+        
+        <h2>Controls</h2>
+        <button id="startStopButton">Start Simulation</button>
+        <label for="interval">Interval (seconds):</label>
+        <input type="number" id="interval" min="1" max="60" value="5">
+        
+        <div id="officeTabs" class="office-tabs">
+            <!-- Office tabs will be added dynamically -->
+            <div class="office-tab active" data-office="all">All Offices</div>
+        </div>
+        
+        <div class="dashboard">
+            <div class="metric">
+                <h3>Current Voltage</h3>
+                <div id="currentVoltage" class="value">0.00 V</div>
+            </div>
+            <div class="metric">
+                <h3>Total Power</h3>
+                <div id="currentPower" class="value">0.00 W</div>
+            </div>
+            <div class="metric">
+                <h3>Current Cost</h3>
+                <div id="currentCost" class="value cost">£0.00/hr</div>
+            </div>
+        </div>
+        
+        <div id="officeMetrics" class="office-metrics">
+            <!-- Office-specific metrics will be added here -->
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Office Rooms</h2>
+        <div id="officeSelector" class="reading-filters">
+            <label for="roomOfficeFilter">View rooms for:</label>
+            <select id="roomOfficeFilter">
+                <option value="all">All Offices</option>
+                <!-- Office options will be added dynamically -->
+            </select>
+        </div>
+        <div id="roomsContainer" class="rooms-container">
+            <div>Loading room data from Firebase...</div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Reading History</h2>
+        <div class="reading-filters">
+            <label for="officeFilter">Filter by Office:</label>
+            <select id="officeFilter">
+                <option value="all">All Offices</option>
+                <!-- Office options will be added dynamically -->
+            </select>
+        </div>
+        <div id="readings"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="./javascript/simulator.js"></script>
+
+</body>
+</html>
