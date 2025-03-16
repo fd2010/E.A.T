@@ -15,9 +15,11 @@ function ensureNotificationModal() {
                     
                     <h2 class="h2Light">Notifications</h2>
                     
-                    <div id="notificationsList" class="notifications-list">
-                        <!-- Notifications will be dynamically inserted here -->
-                        <div class="no-notifications-message">No notifications to display</div>
+                    <div class="notifications-container">
+                        <div id="notificationsList" class="notifications-list">
+                            <!-- Notifications will be dynamically inserted here -->
+                            <div class="no-notifications-message">No notifications to display</div>
+                        </div>
                     </div>
                 </div>
             </div>

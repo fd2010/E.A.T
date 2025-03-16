@@ -1,4 +1,18 @@
 /* Settings Modal Styles */
+#settingsModal .modal-content {
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 23px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    font-family: "Kay Pho Du", sans-serif;
+    box-sizing: border-box;
+    margin: 0 auto;
+    overflow: hidden;
+    max-height: 80vh;
+}
+
 .settings-container {
     background-color: #D9D9D9;
     border-radius: 23px;
@@ -76,6 +90,10 @@
     color: white;
 }
 
+#settingsModal .close-button:hover {
+    background-color: #ff5252;
+}
+
 #settingsModal {
     z-index: 1001;
 }
@@ -144,3 +162,33 @@
     transform: translateX(18px);
 }
 
+/* Dark mode styles */
+[data-theme="dark"] #settingsModal .modal-content {
+    background-color: #121212;
+}
+
+[data-theme="dark"] #settingsModal .settings-container {
+    background-color: #2a2a2a;
+}
+
+[data-theme="dark"] #settingsModal .setting-item {
+    background-color: #ffffff11;
+}
+
+[data-theme="dark"] #settingsModal .setting-item:hover {
+    background-color: #ffffff22;
+}
+
+[data-theme="dark"] #settingsModal .setting-label {
+    color: #fff;
+}
+
+[data-theme="dark"] #settingsModal h2.h2Light {
+    color: #fff;
+}
+
+/* Preserve button colors in dark mode */
+[data-theme="dark"] #settingsModal .setting-item .buttonHome.lightcyanButton {
+    background-color: #C1E6E3;
+    color: #000;
+}

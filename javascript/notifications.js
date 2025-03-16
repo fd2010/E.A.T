@@ -12,8 +12,28 @@ function initializeNotificationSystem() {
     }
 
     // Create notification modal if it doesn't exist
-    const notificationModal = document.getElementById('notificationModal');
-    
+    if (!document.getElementById('notificationModal')) {
+        // Create the notification modal if it doesn't exist
+        const modalHTML = `
+            <div id="notificationModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    
+                    <h2 class="h2Light">Notifications</h2>
+                    
+                    <div class="notifications-container">
+                        <div id="notificationsList" class="notifications-list">
+                            <!-- Notifications will be dynamically inserted here -->
+                            <div class="no-notifications-message">No notifications to display</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
     // Add CSS if needed
     if (!document.querySelector('link[href="./css/notification.css"]')) {
         const notificationCss = document.createElement('link');
@@ -208,7 +228,7 @@ function createNotificationElement(notification) {
     
     const item = document.createElement('div');
     item.className = `notification-item notification-${type}`;
-    item.style.backgroundColor = color || '#4285F4';
+    item.style.backgroundColor = color || '#ffffff33';
     
     // Updated to use SVG instead of PNG
     const iconPath = `./images/icons/${type}.svg`;

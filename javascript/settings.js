@@ -21,17 +21,6 @@ export function initialiseSettingsModal() {
                                 <span class="slider"></span>
                             </label>
                         </div>
-
-                        <!-- Room tabs toggle -->
-                        <!-- commented out
-                        <div class="setting-item">
-                            <div class="setting-label">Scrollable Tabs</div>
-                            <label class="switch">
-                                <input type="checkbox" id="scrollableTabsToggle">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        -->
                         
                         <!-- Export Data Setting -->
                         <div class="setting-item">
@@ -78,15 +67,6 @@ function setupSettingsEventListeners() {
         });
     }
 
-    // Scrollable Tabs Toggle
-    const scrollableTabsToggle = document.getElementById('scrollableTabsToggle');
-    if (scrollableTabsToggle) {
-        scrollableTabsToggle.addEventListener('change', function() {
-            toggleScrollableTabs(this.checked);
-            saveSettings('scrollableTabs', this.checked);
-        });
-    }
-
     // Export Data Button
     const exportDataBtn = document.getElementById('exportDataBtn');
     if (exportDataBtn) {
@@ -112,9 +92,6 @@ function setupSettingsEventListeners() {
     });
 }
 
-// Implementation plan:
-// 1. Replace the existing toggleDarkMode function in settings.js with this updated version
-// 2. Add the CSS rules to your main.css or create a new dark-mode.css file and import it
 function toggleDarkMode(isDark) {
     const body = document.body;
     
@@ -194,59 +171,11 @@ function toggleDarkMode(isDark) {
             profileIcon.style.backgroundColor = '#FFF';
         }
     }
-
-    // NEW: Update ONLY modal backgrounds for dark mode (preserve most text color)
-    const modalContents = document.querySelectorAll('.modal-content');
-    modalContents.forEach(modal => {
-        if (isDark) {
-            modal.style.backgroundColor = '#121212';
-            // Don't change text color
-        } else {
-            modal.style.backgroundColor = '#FFFFFF';
-            // Don't change text color
-        }
-    });
-    
-    // Update h2Light elements inside modals for dark mode (headers only)
-    const modalHeadings = document.querySelectorAll('.modal-content .h2Light');
-    modalHeadings.forEach(heading => {
-        if (isDark) {
-            heading.style.color = '#FFFFFF';
-        } else {
-            heading.style.color = '#000000';
-        }
-    });
-
-    // NEW: Update modal step containers for dark mode
-    const modalSteps = document.querySelectorAll('.modal-content .step');
-    modalSteps.forEach(step => {
-        if (isDark) {
-            step.style.backgroundColor = '#2a2a2a';
-        } else {
-            step.style.backgroundColor = '#D9D9D9';
-        }
-    });
-
-    // NEW: Update ONLY background of form inputs in modals for dark mode
-    const modalInputs = document.querySelectorAll('.modal-content input[type="text"]');
-    modalInputs.forEach(input => {
-        if (isDark) {
-            input.style.backgroundColor = '#333333';
-            // Don't change text color
-            input.style.borderBottomColor = '#666666';
-        } else {
-            input.style.backgroundColor = 'transparent';
-            // Don't change text color
-            input.style.borderBottomColor = '#000000';
-        }
-    });
 }
-
 
 // Function to export user data
 function exportUserData() {
-    
-    alert('This is a job for karan and muskaan lol')
+    alert('This is a job for karan and muskaan lol');
 }
 
 // Save settings to localStorage
@@ -282,16 +211,6 @@ function loadSavedSettings() {
             }
             toggleDarkMode(true);
         }
-        
-        // Apply scrollable tabs setting if it was saved
-        if (settings.hasOwnProperty('scrollableTabs')) {
-            const scrollableTabsToggle = document.getElementById('scrollableTabsToggle');
-            if (scrollableTabsToggle) {
-                scrollableTabsToggle.checked = settings.scrollableTabs;
-            }
-            toggleScrollableTabs(settings.scrollableTabs);
-        }
-        
     } catch (error) {
         console.error('Error loading settings:', error);
     }

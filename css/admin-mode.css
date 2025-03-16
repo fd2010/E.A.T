@@ -26,18 +26,60 @@
     font-size: 14px;
 }
 
-/* User List Styles */
-.users-list {
-    max-height: 400px;
-    overflow-y: auto;
-    margin-top: 15px;
-    padding-right: 5px;
+/* Admin Modal Styles */
+#adminUsersModal .modal-content {
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 23px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    font-family: "Kay Pho Du", sans-serif;
+    box-sizing: border-box;
+    margin: 0 auto;
+    overflow: hidden;
+    max-height: 80vh;
 }
 
+#adminUsersModal .close-button {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 30px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #ff6b6b;
+    color: white;
+    z-index: 1010;
+}
+
+#adminUsersModal .close-button:hover {
+    background-color: #ff5252;
+}
+
+/* User List Container */
 #usersList { 
     background-color: #D9D9D9;
     border-radius: 23px;
-    padding: 20px;
+    padding: 40px;
+    margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(80vh - 100px);
+}
+
+/* User List Styles */
+.users-list {
+    max-height: unset;
+    overflow-y: visible;
+    padding: 0;
+    width: 100%;
 }
 
 .user-item {
@@ -47,15 +89,13 @@
     padding: 12px 15px;
     border-radius: 8px;
     margin-bottom: 10px;
-    background-color: #f5f5f5;
+    background-color: #ffffff33;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .user-item:hover {
-    background-color: #e0e0e0;
+    background-color: #ffffff55;
     transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .user-detail {
@@ -104,9 +144,41 @@
 .no-users-message {
     text-align: center;
     padding: 20px;
-    color: #888;
+    color: #666;
     font-style: italic;
     font-family: "Montserrat", sans-serif;
+}
+
+/* Custom scrollbar */
+#usersList::-webkit-scrollbar {
+    width: 6px;
+    background-color: #f1f1f1;
+}
+
+#usersList::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background-color: #f1f1f1;
+    margin: 10px 0;
+}
+
+#usersList::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 3px;
+}
+
+#usersList::-webkit-scrollbar-thumb:hover {
+    background: #7a8763;
+}
+
+/* Firefox scrollbar styling */
+#usersList {
+    scrollbar-width: thin;
+    scrollbar-color: #000000 #f1f1f1;
+}
+
+/* Z-index management */
+#adminUsersModal {
+    z-index: 1001;
 }
 
 /* Media queries for responsiveness */
@@ -130,4 +202,47 @@
     .user-profile {
         margin-top: 15px;
     }
+    
+    #adminUsersModal .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    #usersList {
+        padding: 20px;
+    }
+}
+
+/* Dark mode styles */
+[data-theme="dark"] #adminUsersModal .modal-content {
+    background-color: #121212;
+}
+
+[data-theme="dark"] #adminUsersModal h2.h2Light {
+    color: #fff;
+}
+
+[data-theme="dark"] #usersList {
+    background-color: #2a2a2a;
+}
+
+[data-theme="dark"] .user-item {
+    background-color: #ffffff11;
+}
+
+[data-theme="dark"] .user-item:hover {
+    background-color: #ffffff22;
+}
+
+[data-theme="dark"] .user-name {
+    color: #fff;
+}
+
+[data-theme="dark"] .user-email, 
+[data-theme="dark"] .user-role {
+    color: #bbb;
+}
+
+[data-theme="dark"] .no-users-message {
+    color: #aaa;
 }
