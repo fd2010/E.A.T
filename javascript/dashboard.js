@@ -7,6 +7,7 @@ import { updateRoomTabs, updateUserDisplay, toggleLoadingState } from './display
 import { initialiseAddDeviceModal } from './add-device.js';
 import { initializeNotificationSystem } from './notifications.js';
 import { initializeAdminMode } from './admin-mode.js';
+import { initializeGreenEnergyRecommendation } from './green-energy.js';
 
 // Function to update user interface with user data
 async function updateUserInterface(userData) {
@@ -188,7 +189,8 @@ async function initialiseDashboard() {
             });
         }
         initializeNotificationSystem();
-        // Add this to dashboard.js at the end of the initialiseDashboard function
+        initializeGreenEnergyRecommendation();
+        initializeAdminMode();
         // or in the DOMContentLoaded event handler
         setTimeout(() => {
             const notificationCloseBtn = document.querySelector('#notificationModal .close-button');

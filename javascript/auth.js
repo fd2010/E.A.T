@@ -109,6 +109,27 @@ export function canControlThermostat() {
 }
 
 /**
+ * Check if the current user has permission to set green energy recommendations
+ * Only facilityManager and systemAdmin roles can set recommendations
+ * @returns {boolean} True if user has permission, false otherwise
+ */
+export function canSetGreenEnergyRecommendation() {
+    try {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData || !userData.role) {
+            console.error('User data or role not found');
+            return false;
+        }
+        
+        const allowedRoles = ['facilityManager', 'systemAdmin'];
+        return allowedRoles.includes(userData.role);
+    } catch (error) {
+        console.error('Error checking green energy recommendation permission:', error);
+        return false;
+    }
+}
+
+/**
  * Display an authorisation error message to the user
  * @param {string} action - The action that was attempted
  */
