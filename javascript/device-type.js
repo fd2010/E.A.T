@@ -21,7 +21,8 @@ export const deviceTypesNotInverted = {
     'Coffee Machine': './images/icons/cofee machine-inverted.png',
     'Monitor': './images/icons/monitor icon(MIT)-inverted.png',
     'Server': './images/icons/server icon-inverted.png',
-    'Electric Hoover': './images/icons/roomba-inverted.png'
+    'Electric Hoover': './images/icons/roomba-inverted.png',
+    'Electronic Desk': './images/icons/electronic desk-inverted.png'
 };
 
 // Device types with regular icons (for inactive/unselected state)
@@ -35,5 +36,6 @@ export const deviceTypes = {
     'Coffee Machine': './images/icons/cofee machine.png',
     'Monitor': './images/icons/monitor icon(MIT).png',
     'Server': './images/icons/server icon.png',
-    'Electric Hoover': './images/icons/roomba.png'
+    'Electric Hoover': './images/icons/roomba.png',
+    'Electronic Desk': './images/icons/electronic desk.png'
 };
