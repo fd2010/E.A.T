@@ -6,6 +6,7 @@ import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-dat
 import { updateRoomTabs, updateUserDisplay, toggleLoadingState } from './display-dashboard.js';
 import { initialiseAddDeviceModal } from './add-device.js';
 import { initializeNotificationSystem } from './notifications.js';
+import { initializeAdminMode } from './admin-mode.js';
 
 // Function to update user interface with user data
 async function updateUserInterface(userData) {
