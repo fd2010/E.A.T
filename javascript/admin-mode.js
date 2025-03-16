@@ -1,6 +1,6 @@
 // admin-mode.js
 import { auth, database } from '../database/firebase-config.js';
-import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { ref, get, update, set } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
 console.log('admin-mode.js loaded');
 
@@ -81,6 +81,56 @@ function createAdminModal() {
                     <!-- Users will be dynamically inserted here -->
                     <div class="no-users-message">Loading users...</div>
                 </div>
+                
+                <!-- Role Selection Modal -->
+                <div id="roleSelectionModal" class="role-selection-modal" style="display: none;">
+                    <div class="role-selection-content">
+                        <h3>Change User Role</h3>
+                        <p id="roleChangeUserName">User Name</p>
+                        
+                        <div class="role-options">
+                            <div class="role-option" data-role="systemAdmin">
+                                <div class="role-badge role-systemAdmin">System Admin</div>
+                                <p>Full system access with all permissions, with extra access to admin mode</p>
+                            </div>
+                            
+                            <div class="role-option" data-role="facilityManager">
+                                <div class="role-badge role-facilityManager">Facility Manager</div>
+                                <p>Can: Manipulate devices, add/delete devices, control thermostat, view device analytics</p>
+                            </div>
+                            
+                            <div class="role-option" data-role="lineManager">
+                                <div class="role-badge role-lineManager">Line Manager</div>
+                                <p>Can: Manipulate devices, control thermostat, view device analytics</p>
+                            </div>
+                            
+                            <div class="role-option" data-role="employee">
+                                <div class="role-badge role-employee">Employee</div>
+                                <p>Can: view analytics, view devices, view temperature</p>
+                            </div>
+                        </div>
+                        
+                        <div class="role-selection-actions">
+                            <button id="cancelRoleChange" class="cancel-button">Cancel</button>
+                            <button id="confirmRoleChange" class="confirm-button">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Delete User Confirmation Modal -->
+                <div id="deleteUserModal" class="delete-user-modal" style="display: none;">
+                    <div class="delete-user-content">
+                        <h3>Delete User</h3>
+                        <p>Are you sure you want to delete the following user?</p>
+                        <p id="deleteUserName" class="delete-user-name">User Name</p>
+                        <p class="delete-warning">This action cannot be undone. The user will lose all access to the system.</p>
+                        
+                        <div class="delete-user-actions">
+                            <button id="cancelUserDelete" class="cancel-button">Cancel</button>
+                            <button id="confirmUserDelete" class="delete-button">Delete User</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -114,6 +164,55 @@ function setupAdminEventListeners() {
             hideAdminModal();
         }
     });
+    
+    // Set up role selection modal event listeners
+    setupRoleSelectionEventListeners();
+}
+
+// Set up event listeners for the role selection modal
+function setupRoleSelectionEventListeners() {
+    // Cancel button
+    const cancelButton = document.getElementById('cancelRoleChange');
+    if (cancelButton) {
+        cancelButton.addEventListener('click', () => {
+            hideRoleSelectionModal();
+        });
+    }
+    
+    // Confirm button
+    const confirmButton = document.getElementById('confirmRoleChange');
+    if (confirmButton) {
+        confirmButton.addEventListener('click', () => {
+            updateUserRole();
+        });
+    }
+    
+    // Role option selection
+    const roleOptions = document.querySelectorAll('.role-option');
+    roleOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            // Remove selected class from all options
+            roleOptions.forEach(opt => opt.classList.remove('selected'));
+            // Add selected class to clicked option
+            option.classList.add('selected');
+        });
+    });
+    
+    // Delete user modal - Cancel button
+    const cancelDeleteButton = document.getElementById('cancelUserDelete');
+    if (cancelDeleteButton) {
+        cancelDeleteButton.addEventListener('click', () => {
+            hideDeleteConfirmationModal();
+        });
+    }
+    
+    // Delete user modal - Confirm button
+    const confirmDeleteButton = document.getElementById('confirmUserDelete');
+    if (confirmDeleteButton) {
+        confirmDeleteButton.addEventListener('click', () => {
+            deleteUser();
+        });
+    }
 }
 
 // Show admin modal and load users
@@ -130,7 +229,170 @@ function hideAdminModal() {
     const modal = document.getElementById('adminUsersModal');
     if (modal) {
         modal.style.display = 'none';
+        // Hide role selection modal if it's open
+        hideRoleSelectionModal();
+        // Hide delete confirmation modal if it's open
+        hideDeleteConfirmationModal();
     }
+}
+
+// Show role selection modal for a specific user
+function showRoleSelectionModal(userId, userName, currentRole) {
+    const roleModal = document.getElementById('roleSelectionModal');
+    if (!roleModal) return;
+    
+    // Store the user ID as a data attribute
+    roleModal.dataset.userId = userId;
+    
+    // Update user name in the modal
+    document.getElementById('roleChangeUserName').textContent = userName;
+    
+    // Reset selected options
+    document.querySelectorAll('.role-option').forEach(opt => {
+        opt.classList.remove('selected');
+    });
+    
+    // Select current role
+    const currentRoleOption = document.querySelector(`.role-option[data-role="${currentRole}"]`);
+    if (currentRoleOption) {
+        currentRoleOption.classList.add('selected');
+    }
+    
+    // Show the modal
+    roleModal.style.display = 'block';
+}
+
+// Hide role selection modal
+function hideRoleSelectionModal() {
+    const roleModal = document.getElementById('roleSelectionModal');
+    if (roleModal) {
+        roleModal.style.display = 'none';
+        // Clear user ID
+        roleModal.dataset.userId = '';
+    }
+}
+
+// Show delete user confirmation modal
+function showDeleteConfirmationModal(userId, userName) {
+    const deleteModal = document.getElementById('deleteUserModal');
+    if (!deleteModal) return;
+    
+    // Store the user ID as a data attribute
+    deleteModal.dataset.userId = userId;
+    
+    // Update user name in the modal
+    document.getElementById('deleteUserName').textContent = userName;
+    
+    // Show the modal
+    deleteModal.style.display = 'block';
+}
+
+// Hide delete user confirmation modal
+function hideDeleteConfirmationModal() {
+    const deleteModal = document.getElementById('deleteUserModal');
+    if (deleteModal) {
+        deleteModal.style.display = 'none';
+        // Clear user ID
+        deleteModal.dataset.userId = '';
+    }
+}
+
+// Delete user from the database
+async function deleteUser() {
+    try {
+        const deleteModal = document.getElementById('deleteUserModal');
+        if (!deleteModal) return;
+        
+        const userId = deleteModal.dataset.userId;
+        if (!userId) {
+            throw new Error('User ID not found');
+        }
+        
+        // Get the user's current data before deletion (to access their email)
+        const userRef = ref(database, `users/${userId}`);
+        const userSnapshot = await get(userRef);
+        
+        if (!userSnapshot.exists()) {
+            throw new Error('User not found');
+        }
+        
+        const userData = userSnapshot.val();
+        
+        // Delete user from the database
+        await set(userRef, null);
+        
+        // Hide delete confirmation modal
+        hideDeleteConfirmationModal();
+        
+        // Refresh the user list
+        await loadOfficeUsers();
+        
+        // Show success message
+        showNotification(`User ${userData.email} has been deleted`, 'success');
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        showNotification('Error deleting user: ' + error.message, 'error');
+    }
+}
+
+// Update user role in the database
+async function updateUserRole() {
+    try {
+        const roleModal = document.getElementById('roleSelectionModal');
+        if (!roleModal) return;
+        
+        const userId = roleModal.dataset.userId;
+        if (!userId) {
+            throw new Error('User ID not found');
+        }
+        
+        const selectedOption = document.querySelector('.role-option.selected');
+        if (!selectedOption) {
+            throw new Error('No role selected');
+        }
+        
+        const newRole = selectedOption.dataset.role;
+        
+        // Update user role in database
+        const userRef = ref(database, `users/${userId}`);
+        await update(userRef, { role: newRole });
+        
+        // Hide role selection modal
+        hideRoleSelectionModal();
+        
+        // Refresh the user list
+        await loadOfficeUsers();
+        
+        // Show success message
+        showNotification('User role updated successfully', 'success');
+    } catch (error) {
+        console.error('Error updating user role:', error);
+        showNotification('Error updating user role: ' + error.message, 'error');
+    }
+}
+
+// Show notification message
+function showNotification(message, type = 'info') {
+    // Create notification element if it doesn't exist
+    let notification = document.getElementById('admin-notification');
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.id = 'admin-notification';
+        notification.className = 'admin-notification';
+        document.body.appendChild(notification);
+    }
+    
+    // Set message and type
+    notification.textContent = message;
+    notification.className = `admin-notification ${type}`;
+    
+    // Show notification
+    notification.style.display = 'block';
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
 }
 
 // Load all users with the same office ID
@@ -205,8 +467,25 @@ function createUserElement(user) {
             <div class="user-name">${prefName || 'Unknown User'}</div>
             <div class="user-email">${email}</div>
         </div>
-        <div class="role-badge role-${role}">${formattedRole}</div>
+        <div class="user-actions">
+            <div class="role-badge role-${role} clickable">${formattedRole}</div>
+            <div class="delete-user-btn" title="Delete User">
+                <img src="./images/icons/bin icon.svg" alt="delete user">
+            </div>
+        </div>
     `;
+    
+    // Add click event to the role badge
+    const roleBadge = item.querySelector('.role-badge');
+    roleBadge.addEventListener('click', () => {
+        showRoleSelectionModal(id, prefName || email, role);
+    });
+    
+    // Add click event to the delete button
+    const deleteBtn = item.querySelector('.delete-user-btn');
+    deleteBtn.addEventListener('click', () => {
+        showDeleteConfirmationModal(id, prefName || email);
+    });
     
     return item;
 }
