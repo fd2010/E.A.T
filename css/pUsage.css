@@ -45,18 +45,40 @@
     margin-bottom: 6px;
 }
 
-/* Add this to pUsage.css */
+/* Styling for the Download PDF button */
 .download-pdf-button {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    background-color: #ffffff;
+    background-color: #486e6c;
+    color: white;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
     margin-left: auto; /* Pushes the button to the right */
     margin-right: 10px; /* Space between button and back arrow */
-    width: 30px; 
-    height: 30px;
+}
+
+/* Hover effect for the Download PDF button */
+.download-pdf-button:hover {
+    background-color: #3a5756;
+}
+
+/* Styling for the download icon inside the button */
+.download-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Ensure title-container layout supports the button positioning */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensures flexibility in layout */
+    padding: 10px 20px;
 }
 
 .title-icon {
