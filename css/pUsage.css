@@ -56,7 +56,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Kay Pho Du", sans-serif;
     font-size: 14px;
     margin-left: auto; /* Pushes the button to the right */
     margin-right: 10px; /* Space between button and back arrow */
@@ -76,7 +76,7 @@
 /* Loading indicator styling */
 #pdfLoading {
     z-index: 1000;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Kay Pho Du", sans-serif;
 }
 
 /* Ensure title-container layout supports the button positioning */
@@ -348,12 +348,12 @@
 
 .device-wise {
     background-color: #F6F4F4;
-    border-radius: 15px;
     padding: 20px; /* Increased padding for better spacing */
     margin-top: 20px;
     position: relative;
     height: auto;
-    min-height: 450px; /* Increased to accommodate chart and legend */
+    justify-content: center;
+    min-height: 400px; /* Increased to accommodate chart and legend */
     display: flex;
     flex-direction: column;
     align-items: center; /* Center the content */
@@ -372,8 +372,8 @@
 /* Update pie-chart-container to be more flexible */
 .pie-chart-container {
     width: 100%;
-    max-width: 350px; /* Reduced max-width to prevent overflow */
-    min-width: 300px;
+    max-width: 450px; /* Reduced max-width to prevent overflow */
+    min-width: 200px;
     height: auto;
     min-height: 300px; /* Increased to fit the chart and legend */
     display: flex;

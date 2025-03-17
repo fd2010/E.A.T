@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="stylesheet" href="./css/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 
 <body class="bodyLight">
@@ -49,6 +50,10 @@
         <main class="main-content">
             <div class="title-container">
                 <h1 class="power-usage-title">Generated Energy</h1>
+                <button class="download-pdf-button" onclick="downloadPageAsPDF()">
+                    <img src="./images/icons/download.png" alt="Download PDF" class="download-icon">
+                    Download PDF
+                </button>
             </div>
 
             <!-- time buttons -->

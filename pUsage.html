@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 
 <body class="bodyLight">
@@ -47,7 +48,15 @@
     <div class="power-container">
         <!-- Main Content (Middle) -->
         <main class="main-content">
-            <h1 class="power-usage-title">Power Usage</h1>
+
+            <div class="title-container">
+                <h1 class="power-usage-title">Power Usage</h1>
+                <button class="download-pdf-button" onclick="downloadPageAsPDF()">
+                    <img src="./images/icons/download.png" alt="Download PDF" class="download-icon">
+                    Download PDF
+                </button>
+            </div>
+
             <p class="energy-consumption">Here's your device energy consumption rate</p>
 
             <!-- Overall Usage -->

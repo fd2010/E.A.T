@@ -64,31 +64,44 @@ function downloadPageAsPDF() {
     loadingDiv.innerText = 'Generating PDF...';
     document.body.appendChild(loadingDiv);
 
-    // Get the content to convert to PDF (exclude side-nav and notification modal for cleaner output)
-    const element = document.querySelector('.power-container'); // Target the main content area
+    // Get the content to convert to PDF (include power-container and ensure right-panel is captured)
+    const powerContainer = document.querySelector('.power-container');
     const sideNav = document.querySelector('.side-nav');
     const notificationModal = document.querySelector('#notificationModal');
-    const rightPanel = document.querySelector('.right-panel'); // Reference to the right panel
+    const rightPanel = document.querySelector('.right-panel');
 
     // Store original styles to restore later
     const originalSideNavDisplay = sideNav ? sideNav.style.display : '';
     const originalMainContentMargin = document.querySelector('.main-content').style.marginLeft;
+    const originalMainContentMarginRight = document.querySelector('.main-content').style.marginRight;
     const originalRightPanelPosition = rightPanel ? rightPanel.style.position : '';
     const originalRightPanelRight = rightPanel ? rightPanel.style.right : '';
+    const originalRightPanelWidth = rightPanel ? rightPanel.style.width : '';
+    const originalBodyOverflow = document.body.style.overflow;
 
     // Hide side-nav and notification modal during PDF generation
     if (sideNav) sideNav.style.display = 'none';
     if (notificationModal) notificationModal.style.display = 'none';
 
-    // Adjust layout to fill the space left by the side-nav
+    // Adjust layout to include right-panel in the flow
     if (document.querySelector('.main-content')) {
         document.querySelector('.main-content').style.marginLeft = '20px'; // Reset margin to a small value
+        document.querySelector('.main-content').style.marginRight = '0'; // Remove right margin to allow right-panel to flow
     }
     if (rightPanel) {
-        rightPanel.style.position = 'static'; // Remove fixed positioning
-        rightPanel.style.right = '0'; // Ensure it aligns to the right edge
+        rightPanel.style.position = 'relative'; // Change to relative to include in flow
+        rightPanel.style.right = 'auto'; // Reset right positioning
         rightPanel.style.width = '250px'; // Ensure fixed width
+        rightPanel.style.float = 'right'; // Float right to align beside main content
+        document.body.style.overflow = 'visible'; // Ensure no hidden overflow
     }
+
+    // Temporarily wrap power-container and right-panel to ensure they are captured together
+    const wrapper = document.createElement('div');
+    wrapper.style.display = 'flex';
+    wrapper.style.width = '100%';
+    wrapper.appendChild(powerContainer.cloneNode(true)); // Clone to avoid modifying the live DOM
+    document.body.appendChild(wrapper);
 
     // Configure html2pdf options to capture the full content
     const opt = {
@@ -99,6 +112,8 @@ function downloadPageAsPDF() {
             scale: 2, // Increase resolution for better chart quality
             useCORS: true, // Handle cross-origin images if any
             windowWidth: document.body.scrollWidth, // Ensure full width is captured
+            width: wrapper.scrollWidth, // Use the wrapper's width
+            height: wrapper.scrollHeight, // Use the wrapper's height
         },
         jsPDF: {
             unit: 'mm',
@@ -109,21 +124,42 @@ function downloadPageAsPDF() {
         pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
     };
 
-    // Generate and download the PDF
-    html2pdf().set(opt).from(element).save().then(() => {
-        // Restore original styles after download
+    // Generate and download the PDF from the wrapper
+    html2pdf().set(opt).from(wrapper).save().then(() => {
+        // Clean up and restore original styles
+        document.body.removeChild(wrapper); // Remove the temporary wrapper
         if (sideNav) sideNav.style.display = originalSideNavDisplay;
         if (notificationModal) notificationModal.style.display = 'none'; // Ensure modal stays hidden unless triggered
         if (document.querySelector('.main-content')) {
             document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
+            document.querySelector('.main-content').style.marginRight = originalMainContentMarginRight;
         }
         if (rightPanel) {
             rightPanel.style.position = originalRightPanelPosition;
             rightPanel.style.right = originalRightPanelRight;
+            rightPanel.style.width = originalRightPanelWidth;
+            rightPanel.style.float = 'none'; // Reset float
         }
+        document.body.style.overflow = originalBodyOverflow;
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
         console.error('Error generating PDF:', error);
+        // Clean up and restore original styles on error
+        document.body.removeChild(wrapper);
+        if (sideNav) sideNav.style.display = originalSideNavDisplay;
+        if (notificationModal) notificationModal.style.display = 'none';
+        if (document.querySelector('.main-content')) {
+            document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
+            document.querySelector('.main-content').style.marginRight = originalMainContentMarginRight;
+        }
+        if (rightPanel) {
+            rightPanel.style.position = originalRightPanelPosition;
+            rightPanel.style.right = originalRightPanelRight;
+            rightPanel.style.width = originalRightPanelWidth;
+            rightPanel.style.float = 'none';
+        }
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.removeChild(loadingDiv); // Remove loading indicator on error
     });
 }
 
