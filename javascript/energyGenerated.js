@@ -1,10 +1,9 @@
 // Import all shared data from energyData.js
 import { timeLabels, totalEnergyDataGenerated } from './energyData.js';
 
-
 // Chart Elements - Get only if they exist
 let energyUsageCtx;
-
+let energyChart;
 
 const energyUsageElement = document.getElementById('energyGeneratedChart');
 if (energyUsageElement) {
@@ -85,7 +84,6 @@ function downloadPageAsPDF() {
 
 // **DEFAULT SELECTION**
 let selectedTime = "daily";
-let energyChart;
 
 // **Initialize Time-Based Graphs**
 function createTimeGraphs() {
@@ -98,7 +96,7 @@ function createTimeGraphs() {
                 data: {
                     labels: timeLabels[selectedTime],
                     datasets: [{
-                        label: 'Energy Usage (kW)',
+                        label: 'Energy Generated (kW)',
                         data: totalEnergyDataGenerated[selectedTime],
                         borderColor: '#486e6c', // Line color
                         backgroundColor: 'rgba(96, 105, 82, 0.2)', // Optional for soft fill
@@ -109,7 +107,40 @@ function createTimeGraphs() {
                         pointBackgroundColor: '#486e6c' // Point color
                     }]
                 },
-                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                options: { 
+                    responsive: true, 
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Generated Energy (kWh)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: selectedTime === 'daily' ? 'Time' : selectedTime === 'weekly' ? 'Day' : 'Week'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Renewable Energy Generation',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.raw} kWh`;
+                                }
+                            }
+                        }
+                    }
+                }
             });
         } catch (error) {
             console.error('Error creating energy usage chart:', error);
@@ -117,16 +148,20 @@ function createTimeGraphs() {
     }
 }
 
-
 // **Update Time Graphs Based on Period Selection**
 function updateTimeGraphs(period) {
-    console.log(`Updating time graphs to ${period}`);
+    console.log(`Updating time graphs to ${period} with data:`, totalEnergyDataGenerated[period]);
     selectedTime = period;
 
     // Update energy chart if it exists
     if (energyChart) {
         console.log('Updating energy chart');
         try {
+            // Update x-axis title based on period
+            energyChart.options.scales.x.title.text = 
+                period === 'daily' ? 'Time' : 
+                period === 'weekly' ? 'Day' : 'Week';
+                
             energyChart.data.labels = timeLabels[period];
             energyChart.data.datasets[0].data = totalEnergyDataGenerated[period];
             energyChart.update();
@@ -200,6 +235,12 @@ function setupEventListeners() {
             });
         }
 
+        // Add listener for energy generation data updates from Firebase
+        document.addEventListener('energyGenerationDataUpdated', () => {
+            console.log('Received energyGenerationDataUpdated event');
+            updateTimeGraphs(selectedTime);
+        });
+
     } catch (error) {
         console.error('Error setting up event listeners:', error);
     }
@@ -207,10 +248,9 @@ function setupEventListeners() {
 
 // **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM Content Loaded - Power usage script running");
+    console.log("DOM Content Loaded - Energy generation script running");
 
     try {
-
         setupEventListeners();
 
         // Create charts based on which page we're on
