@@ -243,14 +243,16 @@ function createDeviceCharts() {
                         position: 'bottom', // Place at the bottom
                         align: 'start', // Align to the left
                         fullWidth: false,
+                        maxWidth: 500, 
+                        maxHeight: 150,
                         labels: {
                             font: {
-                                size: 10,
+                                size: 120,
                                 family: 'Lato, sans-serif' // Match your font style
                             },
                             color: '#333333',
                             boxWidth: 13,
-                            padding: 13, // Increase padding for spacing between items
+                            padding: 7, // Increase padding for spacing between items
                             generateLabels: (chart) => {
                                 const data = chart.data;
                                 console.log("All labels from data:", data.labels); // Log all labels
@@ -273,7 +275,7 @@ function createDeviceCharts() {
                 },
                 layout: {
                     padding: {
-                        bottom: 20 // Add padding below the chart to space out the legend
+                        bottom: 100 
                     }
                 }
             }
