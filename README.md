@@ -67,11 +67,9 @@ Merge after approval
 
 ### TODO's
 
-FIX THE LOGIN Bottom margin
-FIX ADD DEVICE BUTTONS
-NOTIFICATIONS  - partially implemented, needs to be implemented for all other pages
-FDADE AFFECT NEEDS FIXED
-
+LOGIN ERROR MESSAGE DISPLAYING
+lowkey the admin mode needs to be tested
+signupUser adding devices needs to be fixed
 
 
 
