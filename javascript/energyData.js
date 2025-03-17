@@ -1,13 +1,12 @@
-// energyData.js - Modified to fetch real data from Firebase
-// IMPORTANT: This keeps all original variable names but populates them with real data
+// energyData.js - Modified to fetch real data from Firebase for both generation and usage
+// This keeps all original variable names but populates them with real data from the user's office
 
 // Firebase is already initialized in your app, so we'll use the existing instance
-// Import from the version your app is using
 import { ref, onValue, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
 
 // Cost per kilowatt-hour
-const COST_PER_KWH = 0.28; // £0.28 per kWh
+const COST_PER_KWH = 0.28; // £0.28 per kWh (28 pence)
 
 // Original time labels structure - kept exactly the same
 export const timeLabels = {
@@ -122,71 +121,22 @@ export const devicesByArea = {
     ]
 };
 
-export const deviceEnergyData = {
-    "Computers": {
-        daily: [2, 4, 6, 5, 3],
-        weekly: [20, 25, 30, 28, 26, 22, 24],
-        monthly: [100, 120, 110, 130]
-    },
-    "Lights": {
-        daily: [1, 2, 3, 3, 2],
-        weekly: [10, 12, 15, 14, 13, 11, 12],
-        monthly: [50, 55, 52, 58]
-    },
-    "Heating": {
-        daily: [5, 7, 10, 9, 6],
-        weekly: [40, 50, 48, 55, 52, 46, 49],
-        monthly: [200, 220, 210, 230]
-    },
-    "Monitors": {
-        daily: [1, 3, 4, 3, 2],
-        weekly: [15, 18, 20, 19, 17, 16, 18],
-        monthly: [70, 80, 75, 85]
-    },
-    "Speakers": {
-        daily: [0.5, 1, 1.5, 1, 0.7],
-        weekly: [5, 6, 7, 6.5, 6, 5.5, 5.8],
-        monthly: [25, 30, 28, 32]
-    },
-    "Vending Machine": {
-        daily: [2, 3, 4, 4, 3],
-        weekly: [20, 25, 28, 26, 24, 22, 23],
-        monthly: [90, 100, 95, 105]
-    }
-};
+// Current user's office ID
+let currentOfficeID = null;
 
-export const deviceCostData = {
-    "Computers": {
-        daily: [5, 8, 12, 10, 6],
-        weekly: [40, 50, 60, 55, 52, 48, 50],
-        monthly: [200, 240, 220, 260]
-    },
-    "Lights": {
-        daily: [1, 2, 3, 2.5, 2],
-        weekly: [10, 12, 15, 14, 13, 11, 12],
-        monthly: [50, 55, 52, 58]
-    },
-    "Heating": {
-        daily: [8, 12, 15, 13, 10],
-        weekly: [70, 80, 85, 82, 78, 74, 75],
-        monthly: [300, 320, 310, 330]
-    },
-    "Monitors": {
-        daily: [2, 4, 5, 4, 3],
-        weekly: [20, 25, 28, 26, 24, 22, 23],
-        monthly: [90, 100, 95, 105]
-    },
-    "Speakers": {
-        daily: [0.8, 1.2, 1.5, 1.4, 1],
-        weekly: [8, 10, 12, 11, 9.5, 8.5, 9],
-        monthly: [40, 50, 45, 55]
-    },
-    "Vending Machine": {
-        daily: [3, 4, 5, 5, 4],
-        weekly: [30, 35, 40, 38, 36, 33, 31],
-        monthly: [120, 140, 130, 150]
+// Function to get the current user's office ID from localStorage
+function getCurrentOfficeID() {
+    try {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            const parsed = JSON.parse(userData);
+            return parsed.officeID || null;
+        }
+    } catch (error) {
+        console.error('Error getting office ID from localStorage:', error);
     }
-};
+    return null;
+}
 
 // Get date ranges for different periods
 function getDateRanges() {
@@ -379,30 +329,9 @@ function updateDeviceData(readings) {
             // Add new device type
             deviceData[device] = newDeviceData[device];
         }
-        
-        // Create entries in energy data if needed
-        if (deviceEnergyData[device] === undefined) {
-            deviceEnergyData[device] = {
-                daily: [0, 0, 0, 0, 0],
-                weekly: [0, 0, 0, 0, 0, 0, 0],
-                monthly: [0, 0, 0, 0]
-            };
-            
-            deviceCostData[device] = {
-                daily: [0, 0, 0, 0, 0],
-                weekly: [0, 0, 0, 0, 0, 0, 0],
-                monthly: [0, 0, 0, 0]
-            };
-        }
-        
-        // Update time-based energy data
-        ['daily', 'weekly', 'monthly'].forEach(period => {
-            deviceEnergyData[device][period] = groupDataByTimeSegments(deviceReadings, period);
-            deviceCostData[device][period] = deviceEnergyData[device][period].map(w => (w / 1000) * COST_PER_KWH);
-        });
     });
     
-    console.log("Device data updated");
+    console.log("Device data updated:", deviceData);
 }
 
 // Update devices by area
@@ -446,6 +375,176 @@ function updateDevicesByArea(readings) {
     }
     
     console.log("Devices by area updated");
+}
+
+// POWER USAGE DATA FETCHING - Specific to user's office
+// Fetch device readings from Firebase for the user's office
+async function fetchOfficeDeviceReadings() {
+    if (!database) {
+        console.error("Firebase database not initialized");
+        return [];
+    }
+    
+    // Get current user's office ID
+    const officeID = getCurrentOfficeID();
+    if (!officeID) {
+        console.warn("No office ID found for current user");
+        return [];
+    }
+    
+    console.log(`Fetching device readings for office: ${officeID}`);
+    
+    // Try to find device readings for this office
+    try {
+        // First try to get simulator readings for this office
+        const readingsRef = ref(database, 'simulator/readings');
+        const snapshot = await get(readingsRef);
+        
+        if (snapshot.exists()) {
+            const rawData = snapshot.val();
+            console.log(`Found simulator readings, filtering for office: ${officeID}`);
+            
+            // Convert to array and filter by office ID
+            const readings = Array.isArray(rawData) 
+                ? rawData.filter(r => r.office_id === officeID) 
+                : Object.values(rawData).filter(r => r.office_id === officeID);
+            
+            console.log(`Found ${readings.length} readings for this office`);
+            
+            if (readings.length > 0) {
+                return readings;
+            }
+        }
+        
+        // If no simulator readings, try to extract from office structure
+        console.log("No direct readings found. Checking office structure...");
+        const officeRef = ref(database, `offices/${officeID}`);
+        const officeSnapshot = await get(officeRef);
+        
+        if (officeSnapshot.exists()) {
+            const officeData = officeSnapshot.val();
+            const readings = extractReadingsFromOffice(officeData, officeID);
+            
+            if (readings.length > 0) {
+                console.log(`Extracted ${readings.length} readings from office structure`);
+                return readings;
+            }
+        }
+        
+        console.warn(`No readings found for office: ${officeID}`);
+        return [];
+        
+    } catch (error) {
+        console.error("Error fetching office device readings:", error);
+        return [];
+    }
+}
+
+// Extract readings from a single office's structure
+function extractReadingsFromOffice(officeData, officeID) {
+    const readings = [];
+    
+    if (!officeData || !officeData.rooms) {
+        return readings;
+    }
+    
+    // Function to process a single device
+    function processDevice(device, roomName) {
+        if (!device || typeof device !== 'object') return;
+        
+        // Skip devices that are turned off
+        if (device.status !== 'On') return;
+        
+        // Generate a realistic power value based on device type
+        const deviceType = device.type || 'Unknown';
+        const powerRanges = {
+            'Desktop Computer': [80, 175],
+            'Laptop': [20, 50],
+            'Printer': [30, 350],
+            'Coffee Machine': [200, 1200],
+            'Monitor': [20, 40],
+            'Server': [200, 500],
+            'A/C': [500, 1500],
+            'Lights': [10, 100],
+            'Projector': [150, 300],
+            'Speakers': [15, 80],
+            'Electric Hoover': [30, 70],
+            'Default': [20, 100]
+        };
+        
+        const range = powerRanges[deviceType] || powerRanges.Default;
+        const watts = Math.random() * (range[1] - range[0]) + range[0];
+        
+        readings.push({
+            timestamp: new Date().toISOString(),
+            office_id: officeID,
+            room_name: roomName,
+            device_name: device.name || 'Unknown Device',
+            device_type: deviceType,
+            status: device.status,
+            volts: 220 + (Math.random() * 10 - 5), // Random voltage around 220V
+            watts: watts
+        });
+    }
+    
+    // Process all rooms and devices in this office
+    for (const roomName in officeData.rooms) {
+        const room = officeData.rooms[roomName];
+        
+        if (Array.isArray(room)) {
+            // Room is an array of devices
+            room.forEach(device => {
+                processDevice(device, roomName);
+            });
+        } else if (typeof room === 'object') {
+            // Room is an object with device keys
+            for (const deviceId in room) {
+                processDevice(room[deviceId], roomName);
+            }
+        }
+    }
+    
+    console.log(`Extracted ${readings.length} device readings from office: ${officeID}`);
+    return readings;
+}
+
+// Setup real-time listener for the current office's device data
+function setupOfficeDeviceListener() {
+    const officeID = getCurrentOfficeID();
+    if (!officeID || !database) {
+        console.warn("Cannot setup listener: Office ID missing or database not initialized");
+        return;
+    }
+    
+    console.log(`Setting up real-time listener for office: ${officeID}`);
+    
+    // Listen for changes to the office structure
+    const officeRef = ref(database, `offices/${officeID}`);
+    onValue(officeRef, async (snapshot) => {
+        if (snapshot.exists()) {
+            console.log(`Received update for office: ${officeID}`);
+            const officeData = snapshot.val();
+            
+            // Extract readings from the updated office data
+            const readings = extractReadingsFromOffice(officeData, officeID);
+            
+            if (readings.length > 0) {
+                // Update all data structures with the readings
+                updateAreaData(readings);
+                updateEnergyData(readings);
+                updateDeviceData(readings);
+                updateDevicesByArea(readings);
+                
+                // Trigger custom event to notify that data is updated
+                const event = new CustomEvent('energyDataUpdated');
+                document.dispatchEvent(event);
+                
+                console.log("Energy data updated from real-time listener");
+            }
+        }
+    }, (error) => {
+        console.error(`Error in real-time listener for office ${officeID}:`, error);
+    });
 }
 
 // Fetch renewable energy generation data from Firebase
@@ -533,152 +632,20 @@ function setupRenewableEnergyListener() {
     });
 }
 
-// Fetch device readings from Firebase (where the simulator stores the data)
-async function fetchDeviceReadings() {
-    if (!database) {
-        console.error("Firebase database not initialized");
-        return [];
-    }
-    
-    // Try to find where the device readings are stored
-    const pathsToCheck = [
-        'deviceReadings',
-        'device_readings',
-        'readings',
-        'simulator/readings'
-    ];
-    
-    for (const path of pathsToCheck) {
-        console.log(`Checking path: ${path}`);
-        try {
-            const dataRef = ref(database, path);
-            const snapshot = await get(dataRef);
-            
-            if (snapshot.exists()) {
-                const rawData = snapshot.val();
-                console.log(`Found data at path: ${path}`);
-                
-                const readings = Array.isArray(rawData) 
-                    ? rawData 
-                    : Object.values(rawData);
-                
-                console.log(`Found ${readings.length} readings`);
-                return readings;
-            }
-        } catch (error) {
-            console.warn(`Error checking path ${path}:`, error);
-        }
-    }
-    
-    // If we haven't found anything, try to extract from office structure
-    console.log("No direct readings found. Checking office structure...");
-    try {
-        const officesRef = ref(database, 'offices');
-        const officesSnapshot = await get(officesRef);
-        
-        if (officesSnapshot.exists()) {
-            const officesData = officesSnapshot.val();
-            const readings = extractReadingsFromOffices(officesData);
-            
-            if (readings.length > 0) {
-                console.log(`Extracted ${readings.length} readings from offices`);
-                return readings;
-            }
-        }
-    } catch (error) {
-        console.warn("Error extracting from offices:", error);
-    }
-    
-    console.warn("No readings found in any location");
-    return [];
-}
-
-// Extract readings from office structure
-function extractReadingsFromOffices(officesData) {
-    const readings = [];
-    
-    // Function to process a single device
-    function processDevice(device, roomName, officeId) {
-        if (!device || typeof device !== 'object') return;
-        
-        // Check if it's already a reading format
-        if (device.watts !== undefined && device.timestamp !== undefined) {
-            readings.push(device);
-            return;
-        }
-        
-        // Otherwise create a reading from device data
-        if (device.status === 'On') {
-            // Generate a realistic power value based on device type
-            const deviceType = device.type || 'Unknown';
-            const powerRanges = {
-                'Desktop Computer': [80, 175],
-                'Laptop': [20, 50],
-                'Printer': [30, 350],
-                'Coffee Machine': [200, 1200],
-                'Monitor': [20, 40],
-                'Server': [200, 500],
-                'A/C': [500, 1500],
-                'Lights': [10, 100],
-                'Projector': [150, 300],
-                'Speakers': [15, 80],
-                'Electric Hoover': [30, 70],
-                'Default': [20, 100]
-            };
-            
-            const range = powerRanges[deviceType] || powerRanges.Default;
-            const watts = Math.random() * (range[1] - range[0]) + range[0];
-            
-            readings.push({
-                timestamp: new Date().toISOString(),
-                office_id: officeId,
-                room_name: roomName,
-                device_name: device.name || 'Unknown Device',
-                device_type: deviceType,
-                status: device.status,
-                volts: 220 + (Math.random() * 10 - 5), // Random voltage around 220V
-                watts: watts
-            });
-        }
-    }
-    
-    // Process all offices, rooms, and devices
-    for (const officeId in officesData) {
-        const office = officesData[officeId];
-        
-        if (office && office.rooms) {
-            for (const roomName in office.rooms) {
-                const room = office.rooms[roomName];
-                
-                if (Array.isArray(room)) {
-                    // Room is an array of devices
-                    room.forEach(device => {
-                        processDevice(device, roomName, officeId);
-                    });
-                } else if (typeof room === 'object') {
-                    // Room is an object with device keys
-                    for (const deviceId in room) {
-                        processDevice(room[deviceId], roomName, officeId);
-                    }
-                }
-            }
-        }
-    }
-    
-    console.log(`Extracted ${readings.length} device readings from offices structure`);
-    return readings;
-}
-
 // Main function to fetch and update all data
 async function fetchAllData() {
     try {
         console.log("Fetching all energy data...");
         
+        // Update current office ID
+        currentOfficeID = getCurrentOfficeID();
+        console.log("Current office ID:", currentOfficeID);
+        
         // First, fetch renewable energy generation data
         await fetchRenewableEnergyData();
         
-        // Then fetch consumption readings from database
-        const readings = await fetchDeviceReadings();
+        // Then fetch consumption readings for the current office
+        const readings = await fetchOfficeDeviceReadings();
         
         if (readings && readings.length > 0) {
             // Update all data structures with the readings
@@ -691,9 +658,9 @@ async function fetchAllData() {
             const event = new CustomEvent('energyDataUpdated');
             document.dispatchEvent(event);
             
-            console.log("Energy data updated successfully");
+            console.log("Energy data updated successfully for office:", currentOfficeID);
         } else {
-            console.warn("No readings found to update consumption data");
+            console.warn("No readings found to update consumption data for office:", currentOfficeID);
         }
     } catch (error) {
         console.error("Error fetching and updating energy data:", error);
@@ -704,8 +671,9 @@ async function fetchAllData() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Setting up energy data...");
     
-    // Set up real-time listener for renewable energy data
+    // Set up real-time listeners
     setupRenewableEnergyListener();
+    setupOfficeDeviceListener();
     
     // Fetch immediately
     fetchAllData();
@@ -717,6 +685,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('refreshEnergyData', () => {
         console.log("Manual refresh requested");
         fetchAllData();
+    });
+    
+    // Listen for user login/change events
+    window.addEventListener('storage', (event) => {
+        if (event.key === 'userData') {
+            console.log("User data changed, refreshing energy data");
+            fetchAllData();
+        }
     });
 });
 

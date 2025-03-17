@@ -1,5 +1,24 @@
 // Import all shared data from energyData.js
-import { timeLabels, totalEnergyDataGenerated } from './energyData.js';
+import { timeLabels, totalEnergyDataGenerated, updateEnergyDataNow } from './energyData.js';
+
+// Check if user data is available
+function getUserOfficeID() {
+    try {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            const parsed = JSON.parse(userData);
+            console.log("Current user office ID:", parsed.officeID);
+            return parsed.officeID;
+        }
+    } catch (error) {
+        console.error("Error retrieving user data:", error);
+    }
+    return null;
+}
+
+// Get current user's office ID
+const currentOfficeID = getUserOfficeID();
+console.log("Current office ID for energy generation:", currentOfficeID);
 
 // Chart Elements - Get only if they exist
 let energyUsageCtx;
@@ -89,7 +108,7 @@ let selectedTime = "daily";
 function createTimeGraphs() {
     // Create energy usage chart if the element exists
     if (energyUsageCtx) {
-        console.log('Creating energy usage chart');
+        console.log('Creating energy generation chart with data:', totalEnergyDataGenerated[selectedTime]);
         try {
             energyChart = new Chart(energyUsageCtx, {
                 type: 'line',
@@ -143,7 +162,7 @@ function createTimeGraphs() {
                 }
             });
         } catch (error) {
-            console.error('Error creating energy usage chart:', error);
+            console.error('Error creating energy generation chart:', error);
         }
     }
 }
@@ -155,7 +174,7 @@ function updateTimeGraphs(period) {
 
     // Update energy chart if it exists
     if (energyChart) {
-        console.log('Updating energy chart');
+        console.log('Updating energy generation chart');
         try {
             // Update x-axis title based on period
             energyChart.options.scales.x.title.text = 
@@ -166,7 +185,7 @@ function updateTimeGraphs(period) {
             energyChart.data.datasets[0].data = totalEnergyDataGenerated[period];
             energyChart.update();
         } catch (error) {
-            console.error('Error updating energy chart:', error);
+            console.error('Error updating energy generation chart:', error);
         }
     }
 
@@ -182,19 +201,13 @@ function updateTimeGraphs(period) {
 
 // Setup event listeners for the period selection buttons
 function setupEventListeners() {
-    console.log('Setting up event listeners');
+    console.log('Setting up event listeners for energy generation');
 
     try {
-        // Add event listeners to all period buttons that exist on the page
+        // Add event listeners to time period buttons
         const dailyBtn = document.getElementById("daily");
         const weeklyBtn = document.getElementById("weekly");
         const monthlyBtn = document.getElementById("monthly");
-
-        console.log('Buttons found:', {
-            daily: !!dailyBtn,
-            weekly: !!weeklyBtn,
-            monthly: !!monthlyBtn
-        });
 
         if (dailyBtn) {
             console.log('Adding click listener to daily button');
@@ -240,9 +253,32 @@ function setupEventListeners() {
             console.log('Received energyGenerationDataUpdated event');
             updateTimeGraphs(selectedTime);
         });
+        
+        // Listen for user data changes (in case the office changes)
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'userData') {
+                console.log('User data changed, refreshing energy generation data');
+                updateEnergyDataNow().then(() => {
+                    updateTimeGraphs(selectedTime);
+                });
+            }
+        });
 
     } catch (error) {
         console.error('Error setting up event listeners:', error);
+    }
+}
+
+// Update all charts when data changes
+function updateCharts() {
+    console.log('Updating energy generation chart with new data');
+    
+    // If chart exists, destroy it and recreate
+    if (energyChart) {
+        energyChart.destroy();
+        createTimeGraphs();
+    } else {
+        createTimeGraphs();
     }
 }
 
@@ -251,10 +287,14 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM Content Loaded - Energy generation script running");
 
     try {
-        setupEventListeners();
-
-        // Create charts based on which page we're on
-        createTimeGraphs();
+        // Fetch the latest data
+        updateEnergyDataNow().then(() => {
+            // Setup UI interactions
+            setupEventListeners();
+            
+            // Create charts
+            createTimeGraphs();
+        });
 
     } catch (error) {
         console.error('Error in DOMContentLoaded handler:', error);
