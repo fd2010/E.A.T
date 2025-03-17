@@ -17,109 +17,6 @@ const areaTimeEnergyCtx = document.getElementById('areaTimeEnergyChart').getCont
 const devicePieCtx = document.getElementById('devicePieChart').getContext('2d');
 const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 
-// **DOWNLOAD**
-function downloadPageAsPDF() {
-    // Create a loading indicator
-    const loadingDiv = document.createElement('div');
-    loadingDiv.id = 'pdfLoading';
-    loadingDiv.style.position = 'fixed';
-    loadingDiv.style.top = '50%';
-    loadingDiv.style.left = '50%';
-    loadingDiv.style.transform = 'translate(-50%, -50%)';
-    loadingDiv.style.padding = '20px';
-    loadingDiv.style.background = 'rgba(0, 0, 0, 0.7)';
-    loadingDiv.style.color = 'white';
-    loadingDiv.style.borderRadius = '10px';
-    loadingDiv.style.zIndex = '1000';
-    loadingDiv.innerText = 'Generating PDF...';
-    document.body.appendChild(loadingDiv);
-
-    // Get the content to convert to PDF (target the power-container)
-    const powerContainer = document.querySelector('.power-container');
-    const sideNav = document.querySelector('.side-nav');
-    const notificationModal = document.querySelector('#notificationModal');
-    const mainContent = document.querySelector('.main-content');
-
-    // Store original styles to restore later
-    const originalSideNavDisplay = sideNav ? sideNav.style.display : '';
-    const originalMainContentMarginLeft = mainContent ? mainContent.style.marginLeft : '';
-    const originalBodyOverflow = document.body.style.overflow;
-
-    // Ensure all charts are updated and rendered before capturing
-    const charts = [areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart];
-    charts.forEach(chart => {
-        if (chart) {
-            chart.resize(); // Force resize to ensure proper rendering
-            chart.update({ duration: 0 }); // Force update without animation
-        }
-    });
-
-    // Hide side-nav and notification modal during PDF generation
-    if (sideNav) sideNav.style.display = 'none';
-    if (notificationModal) notificationModal.style.display = 'none';
-
-    // Adjust layout to fill the space left by the side-nav
-    if (mainContent) {
-        mainContent.style.marginLeft = '20px'; // Reset margin to a small value
-    }
-    document.body.style.overflow = 'visible'; // Ensure no hidden overflow
-
-    // Temporarily wrap power-container to ensure proper capture
-    const wrapper = document.createElement('div');
-    wrapper.style.display = 'block';
-    wrapper.style.width = '100%';
-    wrapper.style.maxWidth = '1440px'; // Match max-width of power-container
-    wrapper.style.margin = '0 auto';
-    wrapper.appendChild(powerContainer.cloneNode(true)); // Clone to avoid modifying the live DOM
-    document.body.appendChild(wrapper);
-
-    // Configure html2pdf options to capture the full content
-    const opt = {
-        margin: 10, // Margin in mm
-        filename: `energy_usage_report_${new Date().toISOString().split('T')[0]}.pdf`, // Dynamic filename with date
-        image: { type: 'jpeg', quality: 0.98 }, // High-quality image for charts
-        html2canvas: {
-            scale: 2, // Increase resolution for better chart quality
-            useCORS: true, // Handle cross-origin images if any
-            windowWidth: document.body.scrollWidth, // Ensure full width is captured
-            width: wrapper.scrollWidth, // Use the wrapper's width
-            height: wrapper.scrollHeight, // Use the wrapper's height
-        },
-        jsPDF: {
-            unit: 'mm',
-            format: 'a4',
-            orientation: 'portrait',
-            putOnlyUsedFonts: true, // Optimize PDF size
-        },
-        pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
-    };
-
-    // Generate and download the PDF
-    html2pdf().set(opt).from(wrapper).save().then(() => {
-        // Clean up and restore original styles
-        document.body.removeChild(wrapper);
-        if (sideNav) sideNav.style.display = originalSideNavDisplay;
-        if (notificationModal) notificationModal.style.display = 'none'; // Ensure modal stays hidden unless triggered
-        if (mainContent) {
-            mainContent.style.marginLeft = originalMainContentMarginLeft;
-        }
-        document.body.style.overflow = originalBodyOverflow;
-        document.body.removeChild(loadingDiv); // Remove loading indicator
-    }).catch(error => {
-        console.error('Error generating PDF:', error);
-        alert('Failed to generate PDF. Please check the console for details.');
-        // Clean up and restore original styles on error
-        document.body.removeChild(wrapper);
-        if (sideNav) sideNav.style.display = originalSideNavDisplay;
-        if (notificationModal) notificationModal.style.display = 'none';
-        if (mainContent) {
-            mainContent.style.marginLeft = originalMainContentMarginLeft;
-        }
-        document.body.style.overflow = originalBodyOverflow;
-        document.body.removeChild(loadingDiv); // Remove loading indicator on error
-    });
-}
-
 // **Set Default Values**
 let selectedArea = "Meeting Room";
 let selectedTime = "daily";
@@ -406,6 +303,109 @@ function calculateTotals() {
     document.getElementById('maxUsageRoom').textContent = ` ${maxRoom}`;
     document.getElementById('minUsageDevice').textContent = ` ${minDevice}`;
     document.getElementById('maxUsageDevice').textContent = ` ${maxDevice}`;
+}
+
+// **DOWNLOAD**
+function downloadPageAsPDF() {
+    // Create a loading indicator
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'pdfLoading';
+    loadingDiv.style.position = 'fixed';
+    loadingDiv.style.top = '50%';
+    loadingDiv.style.left = '50%';
+    loadingDiv.style.transform = 'translate(-50%, -50%)';
+    loadingDiv.style.padding = '20px';
+    loadingDiv.style.background = 'rgba(0, 0, 0, 0.7)';
+    loadingDiv.style.color = 'white';
+    loadingDiv.style.borderRadius = '10px';
+    loadingDiv.style.zIndex = '1000';
+    loadingDiv.innerText = 'Generating PDF...';
+    document.body.appendChild(loadingDiv);
+
+    // Get the content to convert to PDF (target the power-container)
+    const powerContainer = document.querySelector('.power-container');
+    const sideNav = document.querySelector('.side-nav');
+    const notificationModal = document.querySelector('#notificationModal');
+    const mainContent = document.querySelector('.main-content');
+
+    // Store original styles to restore later
+    const originalSideNavDisplay = sideNav ? sideNav.style.display : '';
+    const originalMainContentMarginLeft = mainContent ? mainContent.style.marginLeft : '';
+    const originalBodyOverflow = document.body.style.overflow;
+
+    // Ensure all charts are updated and rendered before capturing
+    const charts = [areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart];
+    charts.forEach(chart => {
+        if (chart) {
+            chart.resize(); // Force resize to ensure proper rendering
+            chart.update({ duration: 0 }); // Force update without animation
+        }
+    });
+
+    // Hide side-nav and notification modal during PDF generation
+    if (sideNav) sideNav.style.display = 'none';
+    if (notificationModal) notificationModal.style.display = 'none';
+
+    // Adjust layout to fill the space left by the side-nav
+    if (mainContent) {
+        mainContent.style.marginLeft = '20px'; // Reset margin to a small value
+    }
+    document.body.style.overflow = 'visible'; // Ensure no hidden overflow
+
+    // Temporarily wrap power-container to ensure proper capture
+    const wrapper = document.createElement('div');
+    wrapper.style.display = 'block';
+    wrapper.style.width = '100%';
+    wrapper.style.maxWidth = '1440px'; // Match max-width of power-container
+    wrapper.style.margin = '0 auto';
+    wrapper.appendChild(powerContainer.cloneNode(true)); // Clone to avoid modifying the live DOM
+    document.body.appendChild(wrapper);
+
+    // Configure html2pdf options to capture the full content
+    const opt = {
+        margin: 10, // Margin in mm
+        filename: `area_wise_report_${new Date().toISOString().split('T')[0]}.pdf`, // Dynamic filename with date
+        image: { type: 'jpeg', quality: 0.98 }, // High-quality image for charts
+        html2canvas: {
+            scale: 2, // Increase resolution for better chart quality
+            useCORS: true, // Handle cross-origin images if any
+            windowWidth: document.body.scrollWidth, // Ensure full width is captured
+            width: wrapper.scrollWidth, // Use the wrapper's width
+            height: wrapper.scrollHeight, // Use the wrapper's height
+        },
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait',
+            putOnlyUsedFonts: true, // Optimize PDF size
+        },
+        pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
+    };
+
+    // Generate and download the PDF
+    html2pdf().set(opt).from(wrapper).save().then(() => {
+        // Clean up and restore original styles
+        document.body.removeChild(wrapper);
+        if (sideNav) sideNav.style.display = originalSideNavDisplay;
+        if (notificationModal) notificationModal.style.display = 'none';
+        if (mainContent) {
+            mainContent.style.marginLeft = originalMainContentMarginLeft;
+        }
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.removeChild(loadingDiv); // Remove loading indicator
+    }).catch(error => {
+        console.error('Error generating PDF:', error);
+        alert('Failed to generate PDF. Please check the console for details.');
+        // Clean up and restore original styles on error
+        document.body.removeChild(wrapper);
+        if (sideNav) sideNav.style.display = originalSideNavDisplay;
+        if (notificationModal) notificationModal.style.display = 'none';
+        if (mainContent) {
+            mainContent.style.marginLeft = originalMainContentMarginLeft;
+        }
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.removeChild(loadingDiv); // Remove loading indicator on error
+    });
 }
 
 // Event listener for Download PDF button
