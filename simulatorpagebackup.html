@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Meter Simulator</title>
     <link rel="stylesheet" href="./css/simulator.css">
+    <link rel="stylesheet" href="./css/simulator-generated-energy.css">
 </head>
 <body>
     <h1>Smart Meter Simulator</h1>
@@ -41,6 +42,43 @@
             <!-- Office-specific metrics will be added here -->
         </div>
     </div>
+
+    <!-- New Renewable Energy Generation Simulator -->
+    <div class="container">
+        <h2>Renewable Energy Generation Simulator</h2>
+        <div id="generatorDatabaseStatus" class="database-status">Connecting to Firebase Energy Generation database...</div>
+        
+        <div class="generator-controls">
+            <button id="generatorStartStopButton">Start Generation Simulation</button>
+            
+            <div class="control-group">
+                <label for="generatorInterval">Interval (simulated hours):</label>
+                <input type="number" id="generatorInterval" min="1" max="24" value="6">
+                
+                <label for="generatorSpeed">Simulation Speed (seconds per interval):</label>
+                <input type="number" id="generatorSpeed" min="1" max="60" value="10">
+            </div>
+        </div>
+        
+        <div class="dashboard">
+            <div class="metric">
+                <h3>Current Generation</h3>
+                <div id="currentGeneration" class="value generation">0.00 kWh</div>
+            </div>
+        </div>
+        
+        <div class="generator-details">
+            <h3>Generated Data</h3>
+            <div class="data-group">
+                <div><strong>Daily Data (6-hour intervals):</strong> <span id="dailyGenerationData">[...]</span></div>
+                <div><strong>Weekly Data (daily totals):</strong> <span id="weeklyGenerationData">[...]</span></div>
+                <div><strong>Monthly Data (weekly totals):</strong> <span id="monthlyGenerationData">[...]</span></div>
+            </div>
+        </div>
+        
+        <h3>Generation History</h3>
+        <div id="generationReadings" class="readings-container"></div>
+    </div>
     
     <div class="container">
         <h2>Office Rooms</h2>
@@ -70,6 +108,8 @@
 
     <!-- Firebase SDK -->
     <script type="module" src="./javascript/simulator2.js"></script>
+    <!-- New Energy Generation Simulator -->
+    <script type="module" src="./javascript/generated-simulator.js"></script>
 
 </body>
 </html>
