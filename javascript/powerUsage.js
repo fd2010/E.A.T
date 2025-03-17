@@ -368,7 +368,7 @@ function calculateTotals() {
     }
 }
 
-/* **DOWNLOAD**
+// **DOWNLOAD**
 function downloadPageAsPDF() {
     // Create a loading indicator
     const loadingDiv = document.createElement('div');
@@ -451,92 +451,9 @@ function downloadPageAsPDF() {
     }).catch(error => {
         console.error('Error generating PDF:', error);
     });
-}*/
-
-// **DOWNLOAD**
-function downloadPageAsPDF() {
-    // Create a loading indicator
-    const loadingDiv = document.createElement('div');
-    loadingDiv.id = 'pdfLoading';
-    loadingDiv.style.position = 'fixed';
-    loadingDiv.style.top = '50%';
-    loadingDiv.style.left = '50%';
-    loadingDiv.style.transform = 'translate(-50%, -50%)';
-    loadingDiv.style.padding = '20px';
-    loadingDiv.style.background = 'rgba(0, 0, 0, 0.7)';
-    loadingDiv.style.color = 'white';
-    loadingDiv.style.borderRadius = '10px';
-    loadingDiv.style.zIndex = '1000';
-    loadingDiv.innerText = 'Generating PDF...';
-    document.body.appendChild(loadingDiv);
-
-    // Get the content to convert to PDF (exclude side-nav and notification modal for cleaner output)
-    const element = document.querySelector('.power-container'); // Target the main content area
-    const sideNav = document.querySelector('.side-nav');
-    const notificationModal = document.querySelector('#notificationModal');
-    const rightPanel = document.querySelector('.right-panel'); // Reference to the right panel
-
-    // Store original styles to restore later
-    const originalSideNavDisplay = sideNav ? sideNav.style.display : '';
-    const originalMainContentMargin = document.querySelector('.main-content').style.marginLeft;
-    const originalRightPanelStyle = rightPanel ? rightPanel.style.display : '';
-
-    // Hide side-nav and notification modal during PDF generation
-    if (sideNav) sideNav.style.display = 'none';
-    if (notificationModal) notificationModal.style.display = 'none';
-
-    // Ensure right panel is always visible in PDF
-    if (rightPanel) {
-        rightPanel.style.display = 'block';
-        rightPanel.style.position = 'static';
-        rightPanel.style.float = 'right';
-        rightPanel.style.width = '250px'; // Ensure fixed width
-        rightPanel.style.marginLeft = '20px';
-    }
-
-    // Adjust layout to fill the space left by the side-nav
-    if (document.querySelector('.main-content')) {
-        document.querySelector('.main-content').style.marginLeft = '20px';
-        document.querySelector('.main-content').style.marginRight = '0'; 
-    }
-
-    // Configure html2pdf options to capture the full content
-    const opt = {
-        margin: 10, // Margin in mm
-        filename: `power_usage_report_${new Date().toISOString().split('T')[0]}.pdf`, // Dynamic filename with date
-        image: { type: 'jpeg', quality: 0.98 }, // High-quality image for charts
-        html2canvas: {
-            scale: 2, // Increase resolution for better chart quality
-            useCORS: true, // Handle cross-origin images if any
-            windowWidth: document.body.scrollWidth, // Ensure full width is captured
-        },
-        jsPDF: {
-            unit: 'mm',
-            format: 'a4',
-            orientation: 'portrait',
-            putOnlyUsedFonts: true, // Optimize PDF size
-        },
-        pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
-    };
-
-    // Generate and download the PDF
-    html2pdf().set(opt).from(element).save().then(() => {
-        // Restore original styles after download
-        if (sideNav) sideNav.style.display = originalSideNavDisplay;
-        if (notificationModal) notificationModal.style.display = 'none'; // Ensure modal stays hidden unless triggered
-        if (document.querySelector('.main-content')) {
-            document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
-        }
-        if (rightPanel) {
-            rightPanel.style.display = originalRightPanelStyle;
-            rightPanel.style.float = 'none';
-            rightPanel.style.marginLeft = '';
-        }
-        document.body.removeChild(loadingDiv); // Remove loading indicator
-    }).catch(error => {
-        console.error('Error generating PDF:', error);
-    });
 }
+
+
 
 
 // Setup event listeners for the period selection buttons
