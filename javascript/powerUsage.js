@@ -294,6 +294,9 @@ function createDeviceCharts() {
     }
 }
 
+console.log("Pie chart labels:", Object.keys(deviceData));
+console.log("Pie chart data:", Object.values(deviceData));
+
 // **Calculate Totals for Footer**
 function calculateTotals() {
     // Only calculate totals on the power usage page

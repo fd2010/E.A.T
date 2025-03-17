@@ -319,8 +319,8 @@
 
 .pie-container {
     width: 100%;
-    max-width: 280px;
-    min-height: 280px; /* Reduce minimum height */
+    max-width: 500px;
+    min-height: 500px; /* Reduce minimum height */
     display: flex;
     justify-content: center;
     align-items: center;
