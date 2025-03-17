@@ -27,6 +27,14 @@
     position: relative;
 }
 
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 .power-usage-title {
     font-family: "Kay Pho Du", sans-serif;
     font-weight: 700;
@@ -34,6 +42,17 @@
     line-height: 59px;
     color: #827868 ;
     margin-bottom: 6px;
+}
+
+.title-icon {
+    display: flex;
+    align-items: center;
+}
+
+.title-icon .nav-icon {
+    width: 24px; /* Adjust size as needed */
+    height: 24px;
+    margin-right: 10px; /* Space from the right edge */
 }
 
 .energy-consumption {
@@ -290,7 +309,7 @@
 .device-wise {
     background-color: #F6F4F4;
     border-radius: 15px;
-    padding: 20px;
+    padding: 5px;
     margin-top: 20px;
     position: relative;
     height: auto;
@@ -356,12 +375,6 @@
     color: rgba(22, 26, 65, 0.41);
     margin-right: 10px;
     width: 80px;
-}
-
-.color-bar {
-    width: 93px;
-    height: 5px;
-    border-radius: 5px;
 }
 
 /* Responsive styles */

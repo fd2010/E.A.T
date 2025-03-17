@@ -46,7 +46,12 @@
     <div class="power-container">
         <!-- Main Content (Middle) -->
         <main class="main-content">
-            <h1 class="power-usage-title">Energy Usage by Area</h1>
+            <div class="title-container">
+                <h1 class="power-usage-title">Energy Usage by Area</h1>
+                <a href="pUsage.html" class="title-icon">
+                    <img src="./images/icons/view stats icon.svg" alt="Power Usage" class="nav-icon">
+                </a>
+            </div>
             <p class="energy-consumption">Analyze energy consumption in different office areas</p>
 
             <!-- Overall Usage by area -->
@@ -126,20 +131,6 @@
 
             </section>
         </main>
-
-        <!-- Right Panel -->
-        <aside class="right-panel">
-            <div class="panel expenses-panel pUsageSection">
-                <h3>Minimum Energy </h3>
-                <p><span id="minUsageRoom"></span></p>
-
-            </div>
-            <div class="panel power-usage-panel pUsageSection">
-                <h3>Maximum Energy </h3>
-                <p><span id="maxUsageRoom"></span> </p>
-            </div>
-
-        </aside>
     </div>
 
     <!-- Company Name -->

@@ -215,7 +215,7 @@ function generateGradientColors(startColor, endColor, steps) {
     return gradient;
 }
 
-const blueShades = generateGradientColors('#486e6c', '#e6f7f5', Object.keys(deviceData).length);
+const blueShades = generateGradientColors('rgb(51, 79, 77)', '#cfe3e1', Object.keys(deviceData).length);
 console.log("colours:", blueShades);
 
 // **Initialize Device-wise Usage Charts**
@@ -245,35 +245,18 @@ function createDeviceCharts() {
                         fullWidth: false,
                         labels: {
                             font: {
-                                size: 12,
-                                family: 'Lato, sans-serif' // Match your font style
+                                size: 13,
+                                family: 'Kay Pho Du' 
                             },
                             color: '#333333',
                             boxWidth: 13,
                             padding: 6, 
-                           /* generateLabels: (chart) => {
-                                const data = chart.data;
-                                console.log("All labels from data:", data.labels); // Log all labels
-                                console.log("All data values:", data.datasets[0].data); // Log all data
-                                console.log("All colors:", data.datasets[0].backgroundColor);
-
-                                return data.labels.map((label, index) => ({
-                                    text: `${label}: ${data.datasets[0].data[index]} kWh`, // Format as "Device: kWh"
-                                    fillStyle: data.datasets[0].backgroundColor[index],
-                                    strokeStyle: data.datasets[0].backgroundColor[index],
-                                    hidden: false,
-                                    index: index
-                                }));
-                                console.log("Generated legend items:", legendItems); // Log generated items
-                                console.log("Number of legend items:", legendItems.length); // Log length
-                                return legendItems;
-                            }*/
                         }
                     }
                 },
                 layout: {
                     padding: {
-                        bottom: 50 // Add padding below the chart to space out the legend
+                        bottom: 80 // Add padding below the chart to space out the legend
                     }
                 }
             }

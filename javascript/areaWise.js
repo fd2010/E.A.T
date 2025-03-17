@@ -78,7 +78,7 @@ function createAreaCharts() {
                     labels: {
                         font: {
                             size: 13,
-                            family: 'Lato, sans-serif'
+                            family: 'Kay Pho Du'
                         },
                         color: '#333333',
                         boxWidth: 14,
@@ -227,7 +227,7 @@ function updateAreaData() {
                     labels: {
                         font: {
                             size: 13,
-                            family: 'Lato, sans-serif'
+                            family: 'Kay Pho Du'
                         },
                         color: '#333333',
                         boxWidth: 14,
