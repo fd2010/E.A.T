@@ -215,7 +215,7 @@ function generateGradientColors(startColor, endColor, steps) {
     return gradient;
 }
 
-const blueShades = generateGradientColors('rgb(51, 79, 77)', '#cfe3e1', Object.keys(deviceData).length);
+const blueShades = generateGradientColors('#486e6c', '#cfe3e1', Object.keys(deviceData).length);
 console.log("colours:", blueShades);
 
 // **Initialize Device-wise Usage Charts**
@@ -249,14 +249,14 @@ function createDeviceCharts() {
                                 family: 'Kay Pho Du' 
                             },
                             color: '#333333',
-                            boxWidth: 13,
-                            padding: 6, 
+                            boxWidth: 14,
+                            padding: 15, 
                         }
                     }
                 },
                 layout: {
                     padding: {
-                        bottom: 80 // Add padding below the chart to space out the legend
+                        bottom: 20
                     }
                 }
             }

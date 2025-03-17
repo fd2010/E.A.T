@@ -50,8 +50,8 @@
 }
 
 .title-icon .nav-icon {
-    width: 24px; /* Adjust size as needed */
-    height: 24px;
+    width: 30px; /* Adjust size as needed */
+    height: 30px;
     margin-right: 10px; /* Space from the right edge */
 }
 
@@ -329,7 +329,10 @@
 
 .pie-chart-container {
     width: 100%;
+    max-width: 400px;
+    min-width: 300px; 
     height: auto;
+    min-height: 200px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
