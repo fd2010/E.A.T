@@ -41,7 +41,7 @@
     font-weight: 700;
     font-size: 48px;
     line-height: 59px;
-    color: #827868 ;
+    color: #B3A99A;
     margin-bottom: 6px;
 }
 
@@ -90,11 +90,12 @@
 .title-icon {
     margin-left: 10px; 
     display: flex;
-    background-color: #ffffff;
+    background-color: #486e6c;
     align-items: center;
     width: 30px; 
     height: 30px;
     margin-right: 10px; 
+    border-radius: 20px;
 }
 
 .energy-consumption {
