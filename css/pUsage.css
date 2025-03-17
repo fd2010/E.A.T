@@ -41,7 +41,7 @@
     font-weight: 700;
     font-size: 48px;
     line-height: 59px;
-    color: #B3A99A;
+    color: #486e6c;
     margin-bottom: 6px;
 }
 
@@ -95,7 +95,7 @@
     width: 30px; 
     height: 30px;
     margin-right: 10px; 
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .energy-consumption {
@@ -103,7 +103,7 @@
     font-weight: 400;
     font-size: 25px;
     line-height: 24px;
-    color: #B3A99A;
+    color: #638785;
     margin-bottom: 10px;
 }
 
