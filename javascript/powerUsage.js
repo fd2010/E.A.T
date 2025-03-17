@@ -242,9 +242,10 @@ function createDeviceCharts() {
                         display: true, // Show legend
                         position: 'bottom', // Place at the bottom
                         align: 'start', // Align to the left
+                        fullWidth: false,
                         labels: {
                             font: {
-                                size: 13,
+                                size: 10,
                                 family: 'Lato, sans-serif' // Match your font style
                             },
                             color: '#333333',
@@ -252,6 +253,10 @@ function createDeviceCharts() {
                             padding: 13, // Increase padding for spacing between items
                             generateLabels: (chart) => {
                                 const data = chart.data;
+                                console.log("All labels from data:", data.labels); // Log all labels
+                                console.log("All data values:", data.datasets[0].data); // Log all data
+                                console.log("All colors:", data.datasets[0].backgroundColor);
+
                                 return data.labels.map((label, index) => ({
                                     text: `${label}: ${data.datasets[0].data[index]} kWh`, // Format as "Device: kWh"
                                     fillStyle: data.datasets[0].backgroundColor[index],
@@ -259,6 +264,9 @@ function createDeviceCharts() {
                                     hidden: false,
                                     index: index
                                 }));
+                                console.log("Generated legend items:", legendItems); // Log generated items
+                                console.log("Number of legend items:", legendItems.length); // Log length
+                                return legendItems;
                             }
                         }
                     }
@@ -273,6 +281,8 @@ function createDeviceCharts() {
 
         devicePieChart.update();
         console.log('Device chart created successfully');
+        console.log("Chart.js legend items after creation:", devicePieChart.legend.legendItems); // Log final legend items
+        console.log("Number of rendered legend items:", devicePieChart.legend.legendItems.length); // Log length
 
         deviceBarChart = new Chart(deviceBarCtx, {
             type: 'bar',

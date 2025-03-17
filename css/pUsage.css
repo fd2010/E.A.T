@@ -294,6 +294,8 @@
     margin-top: 20px;
     position: relative;
     height: auto;
+    min-height: 400px;
+    overflow: visible !important;
 }
 
 .device-wise h3 {
@@ -311,21 +313,21 @@
     height: auto;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Ensure it starts at the top */
+    align-items: flex-start;
     overflow: visible !important;
-    padding: 0; /* Remove extra padding */
-    margin: 0 auto 10px; /* Reduce space at the bottom */
+    padding: 0;
+    margin: 0 auto 20px;
 }
 
 .pie-container {
     width: 100%;
     max-width: 500px;
-    min-height: 500px; /* Reduce minimum height */
+    min-height: 280px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margins */
+    padding: 0;
+    margin: 0;
 }
 
 
@@ -360,6 +362,15 @@
     width: 93px;
     height: 5px;
     border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .pie-container {
+        max-width: 300px;
+    }
+    .device-wise {
+        min-height: 350px;
+    }
 }
 
 /* Responsive styles */
@@ -399,8 +410,9 @@
 @media (max-width: 768px) {
     
     .power-usage-title {
-        font-size: 36px;
-        line-height: 44px;
+        font-family: "Kay Pho Du", sans-serif;
+        font-size: 14px;
+        font-weight: 300;
     }
     
     .energy-consumption {
