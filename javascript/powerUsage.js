@@ -368,7 +368,7 @@ function calculateTotals() {
     }
 }
 
-// **DOWNLOAD**
+/* **DOWNLOAD**
 function downloadPageAsPDF() {
     // Create a loading indicator
     const loadingDiv = document.createElement('div');
@@ -398,15 +398,6 @@ function downloadPageAsPDF() {
     const originalRightPanelPosition = rightPanel ? rightPanel.style.position : '';
     const originalRightPanelRight = rightPanel ? rightPanel.style.right : '';
 
-    // Ensure all charts are updated and rendered before capturing
-    const charts = [energyChart, costChart, areaPieChart, areaBarChart, devicePieChart, deviceBarChart];
-    charts.forEach(chart => {
-        if (chart) {
-            chart.resize(); // Force resize to ensure proper rendering
-            chart.update({ duration: 0 }); // Force update without animation
-        }
-    });
-
     // Hide side-nav and notification modal
     if (sideNav) sideNav.style.display = 'none';
     if (notificationModal) notificationModal.style.display = 'none';
@@ -420,15 +411,26 @@ function downloadPageAsPDF() {
         rightPanel.style.float = 'right'; // Align beside main content
     }
 
-    // Configure html2pdf options
+
+    // Configure html2pdf options to capture the full content
     const opt = {
-        margin: 10,
-        filename: `power_usage_report_${new Date().toISOString().split('T')[0]}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['css', 'legacy'] }
+        margin: 10, // Margin in mm
+        filename: `power_usage_report_${new Date().toISOString().split('T')[0]}.pdf`, // Dynamic filename with date
+        image: { type: 'jpeg', quality: 0.98 }, // High-quality image for charts
+        html2canvas: {
+            scale: 2, // Increase resolution for better chart quality
+            useCORS: true, // Handle cross-origin images if any
+            windowWidth: document.body.scrollWidth, // Ensure full width is captured
+        },
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait',
+            putOnlyUsedFonts: true, // Optimize PDF size
+        },
+        pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
     };
+
 
     // Generate and download the PDF
     html2pdf().set(opt).from(powerContainer).save().then(() => {
@@ -440,6 +442,86 @@ function downloadPageAsPDF() {
             rightPanel.style.position = originalRightPanelPosition;
             rightPanel.style.right = originalRightPanelRight;
             rightPanel.style.float = 'none';
+        }
+        document.body.removeChild(loadingDiv); // Remove loading indicator
+    }).catch(error => {
+        console.error('Error generating PDF:', error);
+    });
+}*/
+
+// **DOWNLOAD**
+function downloadPageAsPDF() {
+    // Create a loading indicator
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'pdfLoading';
+    loadingDiv.style.position = 'fixed';
+    loadingDiv.style.top = '50%';
+    loadingDiv.style.left = '50%';
+    loadingDiv.style.transform = 'translate(-50%, -50%)';
+    loadingDiv.style.padding = '20px';
+    loadingDiv.style.background = 'rgba(0, 0, 0, 0.7)';
+    loadingDiv.style.color = 'white';
+    loadingDiv.style.borderRadius = '10px';
+    loadingDiv.style.zIndex = '1000';
+    loadingDiv.innerText = 'Generating PDF...';
+    document.body.appendChild(loadingDiv);
+
+    // Get the content to convert to PDF (exclude side-nav and notification modal for cleaner output)
+    const element = document.querySelector('.power-container'); // Target the main content area
+    const sideNav = document.querySelector('.side-nav');
+    const notificationModal = document.querySelector('#notificationModal');
+    const rightPanel = document.querySelector('.right-panel'); // Reference to the right panel
+
+    // Store original styles to restore later
+    const originalSideNavDisplay = sideNav ? sideNav.style.display : '';
+    const originalMainContentMargin = document.querySelector('.main-content').style.marginLeft;
+    const originalRightPanelPosition = rightPanel ? rightPanel.style.position : '';
+    const originalRightPanelRight = rightPanel ? rightPanel.style.right : '';
+
+    // Hide side-nav and notification modal during PDF generation
+    if (sideNav) sideNav.style.display = 'none';
+    if (notificationModal) notificationModal.style.display = 'none';
+
+    // Adjust layout to fill the space left by the side-nav
+    if (document.querySelector('.main-content')) {
+        document.querySelector('.main-content').style.marginLeft = '20px'; // Reset margin to a small value
+    }
+    if (rightPanel) {
+        rightPanel.style.position = 'static'; // Remove fixed positioning
+        rightPanel.style.right = '0'; // Ensure it aligns to the right edge
+        rightPanel.style.width = '250px'; // Ensure fixed width
+    }
+
+    // Configure html2pdf options to capture the full content
+    const opt = {
+        margin: 10, // Margin in mm
+        filename: `power_usage_report_${new Date().toISOString().split('T')[0]}.pdf`, // Dynamic filename with date
+        image: { type: 'jpeg', quality: 0.98 }, // High-quality image for charts
+        html2canvas: {
+            scale: 2, // Increase resolution for better chart quality
+            useCORS: true, // Handle cross-origin images if any
+            windowWidth: document.body.scrollWidth, // Ensure full width is captured
+        },
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait',
+            putOnlyUsedFonts: true, // Optimize PDF size
+        },
+        pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
+    };
+
+    // Generate and download the PDF
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Restore original styles after download
+        if (sideNav) sideNav.style.display = originalSideNavDisplay;
+        if (notificationModal) notificationModal.style.display = 'none'; // Ensure modal stays hidden unless triggered
+        if (document.querySelector('.main-content')) {
+            document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
+        }
+        if (rightPanel) {
+            rightPanel.style.position = originalRightPanelPosition;
+            rightPanel.style.right = originalRightPanelRight;
         }
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
