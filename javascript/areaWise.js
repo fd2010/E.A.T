@@ -85,15 +85,6 @@ function downloadPageAsPDF() {
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
         console.error('Error generating PDF:', error);
-        alert('Failed to generate PDF. Please check the console for details.');
-        // Restore original styles on error
-        if (sideNav) sideNav.style.display = originalSideNavDisplay;
-        if (notificationModal) notificationModal.style.display = 'none';
-        if (document.querySelector('.main-content')) {
-            document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
-        }
-        document.body.style.overflow = originalBodyOverflow;
-        document.body.removeChild(loadingDiv); // Remove loading indicator on error
     });
 }
 
@@ -385,8 +376,7 @@ function calculateTotals() {
     document.getElementById('maxUsageDevice').textContent = ` ${maxDevice}`;
 }
 
-
-// **Setup Event Listeners**
+// Setup event listeners for the period selection buttons
 function setupEventListeners() {
     console.log('Setting up event listeners');
 
@@ -401,20 +391,17 @@ function setupEventListeners() {
             });
         }
 
-        // Add event listener for the area dropdown
-        const areaDropdown = document.getElementById('areaTypeDropdown');
-        if (areaDropdown) {
-            console.log('Adding change listener to area dropdown');
-            areaDropdown.addEventListener('change', function () {
-                selectedArea = this.value;
-                console.log("Updating area:", selectedArea);
-                updateAreaData();
-            });
-        }
     } catch (error) {
         console.error('Error setting up event listeners:', error);
     }
 }
+
+// **Dropdown Event Listener**
+document.getElementById('areaTypeDropdown').addEventListener('change', function () {
+    selectedArea = this.value; // Store the dropdown value
+    console.log(" Updating area:", selectedArea);
+    updateAreaData();
+});
 
 // **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {

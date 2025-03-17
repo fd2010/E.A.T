@@ -80,15 +80,6 @@ function downloadPageAsPDF() {
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
         console.error('Error generating PDF:', error);
-        alert('Failed to generate PDF. Please check the console for details.');
-        // Restore original styles on error
-        if (sideNav) sideNav.style.display = originalSideNavDisplay;
-        if (notificationModal) notificationModal.style.display = 'none';
-        if (document.querySelector('.main-content')) {
-            document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
-        }
-        document.body.style.overflow = originalBodyOverflow;
-        document.body.removeChild(loadingDiv); // Remove loading indicator on error
     });
 }
 
@@ -208,7 +199,7 @@ function setupEventListeners() {
                 downloadPageAsPDF();
             });
         }
-        
+
     } catch (error) {
         console.error('Error setting up event listeners:', error);
     }
