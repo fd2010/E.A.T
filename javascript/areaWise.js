@@ -38,21 +38,40 @@ function downloadPageAsPDF() {
     const powerContainer = document.querySelector('.power-container');
     const sideNav = document.querySelector('.side-nav');
     const notificationModal = document.querySelector('#notificationModal');
+    const mainContent = document.querySelector('.main-content');
 
     // Store original styles to restore later
     const originalSideNavDisplay = sideNav ? sideNav.style.display : '';
-    const originalMainContentMargin = document.querySelector('.main-content').style.marginLeft;
+    const originalMainContentMarginLeft = mainContent ? mainContent.style.marginLeft : '';
     const originalBodyOverflow = document.body.style.overflow;
+
+    // Ensure all charts are updated and rendered before capturing
+    const charts = [areaPieChart, areaBarChart, energyChart, costChart, devicePieChart, deviceBarChart];
+    charts.forEach(chart => {
+        if (chart) {
+            chart.resize(); // Force resize to ensure proper rendering
+            chart.update({ duration: 0 }); // Force update without animation
+        }
+    });
 
     // Hide side-nav and notification modal during PDF generation
     if (sideNav) sideNav.style.display = 'none';
     if (notificationModal) notificationModal.style.display = 'none';
 
     // Adjust layout to fill the space left by the side-nav
-    if (document.querySelector('.main-content')) {
-        document.querySelector('.main-content').style.marginLeft = '20px'; // Reset margin to a small value
+    if (mainContent) {
+        mainContent.style.marginLeft = '20px'; // Reset margin to a small value
     }
     document.body.style.overflow = 'visible'; // Ensure no hidden overflow
+
+    // Temporarily wrap power-container to ensure proper capture
+    const wrapper = document.createElement('div');
+    wrapper.style.display = 'block';
+    wrapper.style.width = '100%';
+    wrapper.style.maxWidth = '1440px'; // Match max-width of power-container
+    wrapper.style.margin = '0 auto';
+    wrapper.appendChild(powerContainer.cloneNode(true)); // Clone to avoid modifying the live DOM
+    document.body.appendChild(wrapper);
 
     // Configure html2pdf options to capture the full content
     const opt = {
@@ -63,6 +82,8 @@ function downloadPageAsPDF() {
             scale: 2, // Increase resolution for better chart quality
             useCORS: true, // Handle cross-origin images if any
             windowWidth: document.body.scrollWidth, // Ensure full width is captured
+            width: wrapper.scrollWidth, // Use the wrapper's width
+            height: wrapper.scrollHeight, // Use the wrapper's height
         },
         jsPDF: {
             unit: 'mm',
@@ -74,17 +95,28 @@ function downloadPageAsPDF() {
     };
 
     // Generate and download the PDF
-    html2pdf().set(opt).from(powerContainer).save().then(() => {
-        // Restore original styles after download
+    html2pdf().set(opt).from(wrapper).save().then(() => {
+        // Clean up and restore original styles
+        document.body.removeChild(wrapper);
         if (sideNav) sideNav.style.display = originalSideNavDisplay;
         if (notificationModal) notificationModal.style.display = 'none'; // Ensure modal stays hidden unless triggered
-        if (document.querySelector('.main-content')) {
-            document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
+        if (mainContent) {
+            mainContent.style.marginLeft = originalMainContentMarginLeft;
         }
         document.body.style.overflow = originalBodyOverflow;
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
         console.error('Error generating PDF:', error);
+        alert('Failed to generate PDF. Please check the console for details.');
+        // Clean up and restore original styles on error
+        document.body.removeChild(wrapper);
+        if (sideNav) sideNav.style.display = originalSideNavDisplay;
+        if (notificationModal) notificationModal.style.display = 'none';
+        if (mainContent) {
+            mainContent.style.marginLeft = originalMainContentMarginLeft;
+        }
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.removeChild(loadingDiv); // Remove loading indicator on error
     });
 }
 
@@ -381,15 +413,15 @@ function setupEventListeners() {
     console.log('Setting up event listeners');
 
     try {
-        // Add event listener for the Download PDF button
-        const downloadButton = document.querySelector('.download-pdf-button');
-        if (downloadButton) {
-            console.log('Adding click listener to download PDF button');
-            downloadButton.addEventListener('click', () => {
-                console.log('Download PDF button clicked');
-                downloadPageAsPDF();
-            });
-        }
+       // Add event listener for the Download PDF button
+       const downloadButton = document.querySelector('.download-pdf-button');
+       if (downloadButton) {
+           console.log('Adding click listener to download PDF button');
+           downloadButton.addEventListener('click', () => {
+               console.log('Download PDF button clicked');
+               downloadPageAsPDF();
+           });
+       }
 
     } catch (error) {
         console.error('Error setting up event listeners:', error);

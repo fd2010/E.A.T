@@ -136,8 +136,18 @@ function downloadPageAsPDF() {
         pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
     };
 
+    // Set a timeout to catch if PDF generation hangs
+    const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+            reject(new Error('PDF generation timed out after 10 seconds'));
+        }, 10000); // 10-second timeout
+    });
+
     // Generate and download the PDF
-    html2pdf().set(opt).from(wrapper).save().then(() => {
+    Promise.race([
+        html2pdf().set(opt).from(wrapper).save(),
+        timeoutPromise
+    ]).then(() => {
         // Clean up and restore original styles
         document.body.removeChild(wrapper);
         if (sideNav) sideNav.style.display = originalSideNavDisplay;
@@ -156,6 +166,23 @@ function downloadPageAsPDF() {
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
         console.error('Error generating PDF:', error);
+        alert('Failed to generate PDF: ' + error.message);
+        // Clean up and restore original styles on error
+        document.body.removeChild(wrapper);
+        if (sideNav) sideNav.style.display = originalSideNavDisplay;
+        if (notificationModal) notificationModal.style.display = 'none';
+        if (mainContent) {
+            mainContent.style.marginLeft = originalMainContentMarginLeft;
+            mainContent.style.marginRight = originalMainContentMarginRight;
+        }
+        if (rightPanel) {
+            rightPanel.style.position = originalRightPanelPosition;
+            rightPanel.style.right = originalRightPanelRight;
+            rightPanel.style.width = originalRightPanelWidth;
+            rightPanel.style.float = 'none';
+        }
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.removeChild(loadingDiv); // Remove loading indicator on error
     });
 }
 
