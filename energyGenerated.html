@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="./css/notification.css">
     <link rel="stylesheet" href="./css/settings.css">
     <link rel="stylesheet" href="./css/pUsage.css">
-    <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -30,8 +30,7 @@
             <a href="manage devices.html"><img src="./images/icons/tablet device.svg" alt="Manage Devices"
                     class="nav-icon"></a>
             <img src="./images/icons/add device icon.svg" alt="Add Device" class="nav-icon" onclick="showAddDevice()">
-            <a href="pUsage.html" id="nav-selected"><img src="./images/icons/view stats icon.svg" alt="Stats"
-                    class="nav-icon"></a>
+            <a href="pUsage.html"><img src="./images/icons/view stats icon.svg" alt="Stats" class="nav-icon"></a>
 
             <img src="./images/icons/settings.svg" alt="Settings" class="nav-icon" onclick="showSettingsModal()">
 
@@ -47,90 +46,33 @@
         <!-- Main Content (Middle) -->
         <main class="main-content">
             <div class="title-container">
-                <h1 class="power-usage-title">Energy Usage by Area</h1>
+                <h1 class="power-usage-title">Generated Energy</h1>
                 <a href="pUsage.html" class="title-icon">
                     <img src="./images/icons/view stats icon.svg" alt="Power Usage" class="nav-icon">
                 </a>
             </div>
-            <p class="energy-consumption">Analyze energy consumption in different office areas</p>
 
-            <!-- Overall Usage by area -->
+            <!-- time buttons -->
+            <div class="graph-buttons">
+                <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
+                <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
+                <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
+            </div>
+
+            <!-- Overall Usage (Empty Section) -->
+
+
             <section class="graph-section overall-usage pUsageSection">
-
                 <div class="section-header">
-                    <h3 class="graph-title">Overall Energy Usage Office Areas</h3>
+                    <h3 class="graph-title">Here's your energy generation rate</h3>
                 </div>
 
-                <div class="graph-container-wrapper">
-                    <div class="area-graph-container">
-                        <canvas id="areaComparisonPie"></canvas>
-                    </div>
-                    <div class="area-graph-container">
-                        <canvas id="areaComparisonBar"></canvas>
-                    </div>
+                <div class="graph-container">
+                    <canvas id="energyGeneratedChart"></canvas>
                 </div>
-
-            </section>
-
-
-            <!-- Usage by Area selection -->
-
-            <section class="graph-section usage-by-area pUsageSection">
-
-                <div class="section-header">
-                    <h3 class="graph-title">Energy & Cost Usage in Selected Area</h3>
-                </div>
-
-                <select id="areaTypeDropdown">
-                    <option value="Meeting Room">Meeting Room</option>
-                    <option value="Common Areas">Common Areas</option>
-                    <option value="Workstations">Workstations</option>
-                    <option value="Special">Special</option>
-                </select>
-
-                <div class="section-header">
-                    <p class="graphData">Energy & Cost Usage Over Time in Selected Area</p>
-                </div>
-
-                <div class="area-graph-buttons">
-                    <button id="daily" onclick="updateTimeGraphs('daily')">Daily</button>
-                    <button id="weekly" onclick="updateTimeGraphs('weekly')">Weekly</button>
-                    <button id="monthly" onclick="updateTimeGraphs('monthly')">Monthly</button>
-                </div>
-
-                <div class="graph-container-wrapper">
-                    <div class="area-graph-container">
-                        <canvas id="areaTimeCostChart"></canvas>
-                    </div>
-                    <div class="area-graph-container">
-                        <canvas id="areaTimeEnergyChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="section-header">
-                    <p class="graphData">Energy Usage in Selected Area </p>
-                </div>
-
-                <div class="graph-container-wrapper">
-                    <div class="area-graph-container">
-                        <canvas id="devicePieChart"></canvas>
-                    </div>
-                    <div class="area-graph-container">
-                        <canvas id="deviceBarChart"></canvas>
-                    </div>
-                </div>
-
-                <div class=" device-panel-container">
-                    <div class="section-header">
-                        <p class="graphData">Device List in Selected Area</p>
-                    </div>
-                    <div id="deviceList">
-                        <!-- Device details will be dynamically inserted here -->
-                    </div>
-                </div>
-
             </section>
         </main>
+
     </div>
 
     <!-- Company Name -->
@@ -163,7 +105,7 @@
         };
     </script>
 
-    <script type="module" src="./javascript/areaWise.js"></script>
+    <script type="module" src="./javascript/energyGenerated.js"></script>
     <script type="module" src="./javascript/dashboard.js"></script>
     <script type="module" src="./javascript/add-device.js"></script>
     <script type="module" src="./javascript/settings.js"></script>

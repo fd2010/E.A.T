@@ -17,6 +17,13 @@ export const timeLabels = {
 };
 
 // Original data structures that will be updated with real data
+export const totalEnergyDataGenerated = {
+    daily: [7, 8, 10, 12, 6],
+    weekly: [40, 50, 45, 60, 55, 48, 52],
+    monthly: [150, 170, 160, 180]
+};
+
+// Original data structures that will be updated with real data
 export const totalEnergyData = {
     daily: [5, 8, 10, 12, 6],
     weekly: [40, 50, 45, 60, 55, 48, 52],
