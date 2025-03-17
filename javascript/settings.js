@@ -22,14 +22,6 @@ export function initialiseSettingsModal() {
                             </label>
                         </div>
                         
-                        <!-- Export Data Setting -->
-                        <div class="setting-item">
-                            <div class="setting-label">Export Data</div>
-                            <button id="exportDataBtn" class="buttonHome lightcyanButton">
-                                Export
-                            </button>
-                        </div>
-                        
                         <!-- About Section -->
                         <div class="setting-item">
                             <div class="setting-label">About</div>
@@ -67,13 +59,6 @@ function setupSettingsEventListeners() {
         });
     }
 
-    // Export Data Button
-    const exportDataBtn = document.getElementById('exportDataBtn');
-    if (exportDataBtn) {
-        exportDataBtn.addEventListener('click', function() {
-            exportUserData();
-        });
-    }
 
     // About Button
     const aboutBtn = document.getElementById('aboutBtn');
@@ -173,10 +158,6 @@ function toggleDarkMode(isDark) {
     }
 }
 
-// Function to export user data
-function exportUserData() {
-    alert('This is a job for karan and muskaan lol');
-}
 
 // Save settings to localStorage
 function saveSettings(key, value) {
