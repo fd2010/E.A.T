@@ -385,32 +385,34 @@ function downloadPageAsPDF() {
     loadingDiv.innerText = 'Generating PDF...';
     document.body.appendChild(loadingDiv);
 
-    // Get the content to convert to PDF
-    const powerContainer = document.querySelector('.power-container');
+    // Get the content to convert to PDF (exclude side-nav and notification modal for cleaner output)
+    const element = document.querySelector('.power-container'); // Target the main content area
     const sideNav = document.querySelector('.side-nav');
     const notificationModal = document.querySelector('#notificationModal');
-    const mainContent = document.querySelector('.main-content');
-    const rightPanel = document.querySelector('.right-panel');
+    const rightPanel = document.querySelector('.right-panel'); // Reference to the right panel
 
     // Store original styles to restore later
     const originalSideNavDisplay = sideNav ? sideNav.style.display : '';
-    const originalMainContentMarginLeft = mainContent ? mainContent.style.marginLeft : '';
+    const originalMainContentMargin = document.querySelector('.main-content').style.marginLeft;
     const originalRightPanelPosition = rightPanel ? rightPanel.style.position : '';
     const originalRightPanelRight = rightPanel ? rightPanel.style.right : '';
 
-    // Hide side-nav and notification modal
+    // Hide side-nav and notification modal during PDF generation
     if (sideNav) sideNav.style.display = 'none';
     if (notificationModal) notificationModal.style.display = 'none';
 
-    // Adjust layout for PDF
-    if (mainContent) mainContent.style.marginLeft = '20px'; // Fill space left by side-nav
-    if (rightPanel) {
-        rightPanel.style.position = 'relative'; // Include in document flow
-        rightPanel.style.right = 'auto'; // Reset right positioning
-        rightPanel.style.width = '250px'; // Fixed width
-        rightPanel.style.float = 'right'; // Align beside main content
+    // Adjust layout to fill the space left by the side-nav
+    if (document.querySelector('.main-content')) {
+        document.querySelector('.main-content').style.marginLeft = '20px';
+        document.querySelector('.main-content').style.marginRight = '0'; 
     }
-
+    if (rightPanel) {
+        rightPanel.style.position = 'static'; // Remove fixed positioning
+        rightPanel.style.right = 'auto'; // Ensure it aligns to the right edge
+        rightPanel.style.width = '250px'; // Ensure fixed width
+        rightPanel.style.float = 'right';
+        rightPanel.style.marginLeft = '20px';
+    }
 
     // Configure html2pdf options to capture the full content
     const opt = {
@@ -431,17 +433,19 @@ function downloadPageAsPDF() {
         pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
     };
 
-
     // Generate and download the PDF
-    html2pdf().set(opt).from(powerContainer).save().then(() => {
-        // Restore original styles
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Restore original styles after download
         if (sideNav) sideNav.style.display = originalSideNavDisplay;
-        if (notificationModal) notificationModal.style.display = 'none';
-        if (mainContent) mainContent.style.marginLeft = originalMainContentMarginLeft;
+        if (notificationModal) notificationModal.style.display = 'none'; // Ensure modal stays hidden unless triggered
+        if (document.querySelector('.main-content')) {
+            document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
+        }
         if (rightPanel) {
             rightPanel.style.position = originalRightPanelPosition;
             rightPanel.style.right = originalRightPanelRight;
             rightPanel.style.float = 'none';
+            rightPanel.style.marginLeft = '';
         }
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
@@ -475,21 +479,25 @@ function downloadPageAsPDF() {
     // Store original styles to restore later
     const originalSideNavDisplay = sideNav ? sideNav.style.display : '';
     const originalMainContentMargin = document.querySelector('.main-content').style.marginLeft;
-    const originalRightPanelPosition = rightPanel ? rightPanel.style.position : '';
-    const originalRightPanelRight = rightPanel ? rightPanel.style.right : '';
+    const originalRightPanelStyle = rightPanel ? rightPanel.style.display : '';
 
     // Hide side-nav and notification modal during PDF generation
     if (sideNav) sideNav.style.display = 'none';
     if (notificationModal) notificationModal.style.display = 'none';
 
+    // Ensure right panel is always visible in PDF
+    if (rightPanel) {
+        rightPanel.style.display = 'block';
+        rightPanel.style.position = 'static';
+        rightPanel.style.float = 'right';
+        rightPanel.style.width = '250px'; // Ensure fixed width
+        rightPanel.style.marginLeft = '20px';
+    }
+
     // Adjust layout to fill the space left by the side-nav
     if (document.querySelector('.main-content')) {
-        document.querySelector('.main-content').style.marginLeft = '20px'; // Reset margin to a small value
-    }
-    if (rightPanel) {
-        rightPanel.style.position = 'static'; // Remove fixed positioning
-        rightPanel.style.right = '0'; // Ensure it aligns to the right edge
-        rightPanel.style.width = '250px'; // Ensure fixed width
+        document.querySelector('.main-content').style.marginLeft = '20px';
+        document.querySelector('.main-content').style.marginRight = '0'; 
     }
 
     // Configure html2pdf options to capture the full content
@@ -520,14 +528,16 @@ function downloadPageAsPDF() {
             document.querySelector('.main-content').style.marginLeft = originalMainContentMargin;
         }
         if (rightPanel) {
-            rightPanel.style.position = originalRightPanelPosition;
-            rightPanel.style.right = originalRightPanelRight;
+            rightPanel.style.display = originalRightPanelStyle;
+            rightPanel.style.float = 'none';
+            rightPanel.style.marginLeft = '';
         }
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
         console.error('Error generating PDF:', error);
     });
 }
+
 
 // Setup event listeners for the period selection buttons
 function setupEventListeners() {
