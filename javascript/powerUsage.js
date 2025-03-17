@@ -447,6 +447,16 @@ function setupEventListeners() {
         if (dailyBtn) {
             dailyBtn.classList.add("active-button");
         }
+
+        // Add event listener for the Download PDF button
+        const downloadButton = document.querySelector('.download-pdf-button');
+        if (downloadButton) {
+            console.log('Adding click listener to download PDF button');
+            downloadButton.addEventListener('click', () => {
+                console.log('Download PDF button clicked');
+                downloadPageAsPDF();
+            });
+        }
         
     } catch (error) {
         console.error('Error setting up event listeners:', error);

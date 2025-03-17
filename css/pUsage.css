@@ -51,7 +51,7 @@
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    color: #827868 ;
+    background-color: #ffffff;
     border: none;
     margin-left: auto; /* Pushes the button to the right */
     margin-right: 10px; /* Space between button and back arrow */
@@ -62,7 +62,7 @@
 .title-icon {
     margin-left: 10px; 
     display: flex;
-    color: #827868 ;
+    background-color: #ffffff;
     align-items: center;
     width: 30px; 
     height: 30px;
