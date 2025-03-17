@@ -33,6 +33,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 10px 20px;
 }
 
 .power-usage-title {
@@ -44,15 +45,28 @@
     margin-bottom: 6px;
 }
 
-.title-icon {
+/* Add this to pUsage.css */
+.download-pdf-button {
     display: flex;
     align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    color: #827868 ;
+    border: none;
+    margin-left: auto; /* Pushes the button to the right */
+    margin-right: 10px; /* Space between button and back arrow */
+    width: 30px; 
+    height: 30px;
 }
 
-.title-icon .nav-icon {
-    width: 30px; /* Adjust size as needed */
+.title-icon {
+    margin-left: 10px; 
+    display: flex;
+    color: #827868 ;
+    align-items: center;
+    width: 30px; 
     height: 30px;
-    margin-right: 10px; /* Space from the right edge */
+    margin-right: 10px; 
 }
 
 .energy-consumption {
@@ -117,8 +131,6 @@
 .graph-section h2 {
     margin-bottom: 20px;
 }
-
-
 
 /* General Graph Container Styling */
 .graph-container {
@@ -314,7 +326,6 @@
     position: relative;
     height: auto;
     min-height: 400px;
-    overflow: visible !important;
 }
 
 .device-wise h3 {
@@ -335,8 +346,6 @@
     min-height: 200px;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    overflow: visible !important;
     padding: 0;
     margin: 0 auto 20px;
 }

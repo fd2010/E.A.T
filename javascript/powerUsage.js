@@ -47,6 +47,43 @@ if (deviceBarElement) {
     deviceBarCtx = deviceBarElement.getContext('2d');
 }
 
+// **DOWNLOAD**
+function downloadPageAsPDF() {
+    // Get the content to convert to PDF (exclude side-nav and notification modal for cleaner output)
+    const element = document.querySelector('.power-container'); // Target the main content area
+    const sideNav = document.querySelector('.side-nav');
+    const notificationModal = document.querySelector('#notificationModal');
+
+    // Hide side-nav and notification modal during PDF generation
+    if (sideNav) sideNav.style.display = 'none';
+    if (notificationModal) notificationModal.style.display = 'none';
+
+    // Configure html2pdf options
+    const opt = {
+        margin: 10, // Margin in mm
+        filename: `power_usage_report_${new Date().toISOString().split('T')[0]}.pdf`, // Dynamic filename with date
+        image: { type: 'jpeg', quality: 0.98 }, // High-quality image for charts
+        html2canvas: { scale: 2 }, // Increase resolution for better chart quality
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } // A4 size, portrait orientation
+    };
+
+    // Generate and download the PDF
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Restore visibility after download
+        if (sideNav) sideNav.style.display = '';
+        if (notificationModal) notificationModal.style.display = 'none'; // Ensure modal stays hidden unless triggered
+    }).catch(error => {
+        console.error('Error generating PDF:', error);
+        alert('Failed to generate PDF. Please check the console for details.');
+    });
+}
+
+// Ensure this is called after DOM is loaded to set up the button event
+document.addEventListener("DOMContentLoaded", function () {
+    // ... (existing code remains unchanged) ...
+
+});
+
 // **DEFAULT SELECTION**
 let selectedTime = "daily";
 let energyChart, costChart, areaPieChart, areaBarChart, devicePieChart, deviceBarChart;
@@ -410,6 +447,7 @@ function setupEventListeners() {
         if (dailyBtn) {
             dailyBtn.classList.add("active-button");
         }
+        
     } catch (error) {
         console.error('Error setting up event listeners:', error);
     }
