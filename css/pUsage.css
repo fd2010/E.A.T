@@ -73,6 +73,12 @@
     height: 20px;
 }
 
+/* Loading indicator styling */
+#pdfLoading {
+    z-index: 1000;
+    font-family: 'Montserrat', sans-serif;
+}
+
 /* Ensure title-container layout supports the button positioning */
 .title-container {
     display: flex;
@@ -343,11 +349,14 @@
 .device-wise {
     background-color: #F6F4F4;
     border-radius: 15px;
-    padding: 5px;
+    padding: 20px; /* Increased padding for better spacing */
     margin-top: 20px;
     position: relative;
     height: auto;
-    min-height: 400px;
+    min-height: 450px; /* Increased to accommodate chart and legend */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content */
 }
 
 .device-wise h3 {
@@ -360,22 +369,24 @@
 }
 
 
+/* Update pie-chart-container to be more flexible */
 .pie-chart-container {
     width: 100%;
-    max-width: 400px;
-    min-width: 300px; 
+    max-width: 350px; /* Reduced max-width to prevent overflow */
+    min-width: 300px;
     height: auto;
-    min-height: 200px;
+    min-height: 300px; /* Increased to fit the chart and legend */
     display: flex;
     justify-content: center;
     padding: 0;
     margin: 0 auto 20px;
 }
 
+/* Update pie-container to match the parent and prevent overflow */
 .pie-container {
     width: 100%;
-    max-width: 500px;
-    min-height: 280px;
+    max-width: 350px; /* Match the parent max-width */
+    min-height: 300px; /* Match the parent min-height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -383,10 +394,12 @@
     margin: 0;
 }
 
-
-#devicePieChart{ 
-    width: 100%; 
-    height:100%;
+/* Update the canvas styling to ensure it fits within the container */
+#devicePieChart {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 250px; /* Keep the chart size constrained */
+    max-height: 250px; /* Reduced max-height to leave space for the legend */
 }
 
 
