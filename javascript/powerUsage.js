@@ -64,7 +64,7 @@ function downloadPageAsPDF() {
     loadingDiv.innerText = 'Generating PDF...';
     document.body.appendChild(loadingDiv);
 
-    // Get the content to convert to PDF
+    // Get the content to convert to PDF (target the power-container)
     const powerContainer = document.querySelector('.power-container');
     const sideNav = document.querySelector('.side-nav');
     const notificationModal = document.querySelector('#notificationModal');
@@ -103,6 +103,7 @@ function downloadPageAsPDF() {
         rightPanel.style.right = 'auto'; // Reset right positioning
         rightPanel.style.width = '250px'; // Ensure fixed width
         rightPanel.style.float = 'right'; // Float right to align beside main content
+        rightPanel.style.marginLeft = '20px'; // Add small left margin for spacing
     }
     document.body.style.overflow = 'visible'; // Ensure no hidden overflow
 
@@ -136,18 +137,8 @@ function downloadPageAsPDF() {
         pagebreak: { mode: ['css', 'legacy'] }, // Handle page breaks properly
     };
 
-    // Set a timeout to catch if PDF generation hangs
-    const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => {
-            reject(new Error('PDF generation timed out after 10 seconds'));
-        }, 10000); // 10-second timeout
-    });
-
     // Generate and download the PDF
-    Promise.race([
-        html2pdf().set(opt).from(wrapper).save(),
-        timeoutPromise
-    ]).then(() => {
+    html2pdf().set(opt).from(wrapper).save().then(() => {
         // Clean up and restore original styles
         document.body.removeChild(wrapper);
         if (sideNav) sideNav.style.display = originalSideNavDisplay;
@@ -161,12 +152,13 @@ function downloadPageAsPDF() {
             rightPanel.style.right = originalRightPanelRight;
             rightPanel.style.width = originalRightPanelWidth;
             rightPanel.style.float = 'none';
+            rightPanel.style.marginLeft = ''; // Reset margin
         }
         document.body.style.overflow = originalBodyOverflow;
         document.body.removeChild(loadingDiv); // Remove loading indicator
     }).catch(error => {
         console.error('Error generating PDF:', error);
-        alert('Failed to generate PDF: ' + error.message);
+        alert('Failed to generate PDF. Please check the console for details.');
         // Clean up and restore original styles on error
         document.body.removeChild(wrapper);
         if (sideNav) sideNav.style.display = originalSideNavDisplay;
@@ -180,6 +172,7 @@ function downloadPageAsPDF() {
             rightPanel.style.right = originalRightPanelRight;
             rightPanel.style.width = originalRightPanelWidth;
             rightPanel.style.float = 'none';
+            rightPanel.style.marginLeft = ''; // Reset margin
         }
         document.body.style.overflow = originalBodyOverflow;
         document.body.removeChild(loadingDiv); // Remove loading indicator on error

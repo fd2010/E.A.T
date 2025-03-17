@@ -408,24 +408,13 @@ function calculateTotals() {
     document.getElementById('maxUsageDevice').textContent = ` ${maxDevice}`;
 }
 
-// Setup event listeners for the period selection buttons
-function setupEventListeners() {
-    console.log('Setting up event listeners');
-
-    try {
-       // Add event listener for the Download PDF button
-       const downloadButton = document.querySelector('.download-pdf-button');
-       if (downloadButton) {
-           console.log('Adding click listener to download PDF button');
-           downloadButton.addEventListener('click', () => {
-               console.log('Download PDF button clicked');
-               downloadPageAsPDF();
-           });
-       }
-
-    } catch (error) {
-        console.error('Error setting up event listeners:', error);
-    }
+// Event listener for Download PDF button
+const downloadButton = document.querySelector('.download-pdf-button');
+if (downloadButton) {
+    downloadButton.addEventListener('click', function () {
+        console.log('Download PDF button clicked');
+        downloadPageAsPDF();
+    });
 }
 
 // **Dropdown Event Listener**
