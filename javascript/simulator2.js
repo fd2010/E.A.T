@@ -39,12 +39,12 @@ class SmartMeterSimulator {
         // Per-office metrics
         this.officeMetrics = {};
         
-        // NEW: Total expenses tracking for each office
+        // Total expenses tracking for each office
         this.officeTotalExpenses = {
             all: 0
         };
         
-        // NEW: Track the last reading timestamp to calculate elapsed time
+        // Track the last reading timestamp to calculate elapsed time
         this.lastReadingTimestamp = null;
         
         // Connect to Firebase
@@ -176,7 +176,7 @@ class SmartMeterSimulator {
             }
         };
         
-        // NEW: Initialize total expenses for each office
+        // Initialize total expenses for each office
         this.officeTotalExpenses = {
             all: 0
         };
@@ -189,7 +189,7 @@ class SmartMeterSimulator {
                 roomCount: 0
             };
             
-            // NEW: Initialize total expenses for this office
+            // Initialize total expenses for this office
             this.officeTotalExpenses[officeId] = 0;
         }
         
@@ -212,7 +212,7 @@ class SmartMeterSimulator {
         const roomCountMetric = this.createMetricElement('Rooms', metrics.roomCount);
         const costMetric = this.createMetricElement('Est. Cost/hr', `£${((metrics.totalPower / 1000) * this.costPerKwh).toFixed(2)}`);
         
-        // NEW: Add total expenses metric
+        // Add total expenses metric
         const totalExpensesMetric = this.createMetricElement('Total Expenses', `£${this.officeTotalExpenses[this.selectedOffice].toFixed(2)}`);
         
         // Add to container
@@ -488,7 +488,7 @@ class SmartMeterSimulator {
         
         this.readings.push(reading);
         
-        // NEW: Calculate elapsed time since last reading for expense calculation
+        // Calculate elapsed time since last reading for expense calculation
         const currentTimestamp = reading.timestamp;
         let elapsedHours = 0;
         
@@ -542,7 +542,7 @@ class SmartMeterSimulator {
             this.officeMetrics[officeId].totalPower = officePower;
             this.officeMetrics.all.totalPower += officePower;
             
-            // NEW: Update total expenses
+            // Update total expenses
             // Calculate cost for this time period based on power usage and elapsed time
             const periodCost = officeCost * elapsedHours;
             
@@ -622,7 +622,7 @@ class SmartMeterSimulator {
         return false;
     }
     
-    // NEW: Add method to reset total expenses
+    // Add method to reset total expenses
     resetTotalExpenses() {
         // Reset all expense tracking
         for (const officeId in this.officeTotalExpenses) {
