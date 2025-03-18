@@ -1,7 +1,26 @@
 // Import all shared data from energyData.js
-import { timeLabels, totalEnergyData, totalCostData, areaData, deviceData, devicesByArea } from './energyData.js';
+import { timeLabels, totalEnergyData, totalCostData, areaData, deviceData, devicesByArea, updateEnergyDataNow } from './energyData.js';
 
 console.log("powerUsage.js loaded successfully!");
+
+// Check if user data is available
+function getUserOfficeID() {
+    try {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            const parsed = JSON.parse(userData);
+            console.log("Current user office ID:", parsed.officeID);
+            return parsed.officeID;
+        }
+    } catch (error) {
+        console.error("Error retrieving user data:", error);
+    }
+    return null;
+}
+
+// Get current user's office ID
+const currentOfficeID = getUserOfficeID();
+console.log("Current office ID for power usage:", currentOfficeID);
 
 // Chart Elements - Get only if they exist
 let energyUsageCtx, areaBarCtx, devicePieCtx;
@@ -75,7 +94,7 @@ function downloadPageAsPDF() {
     // Configure html2pdf options
     const opt = {
         margin: 10,
-        filename: `power_usage_report_${new Date().toISOString().split('T')[0]}.pdf`,
+        filename: `overall_usage_report_${new Date().toISOString().split('T')[0]}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
             scale: 2,
@@ -162,50 +181,54 @@ function generateGradientColors(startColor, endColor, steps) {
 function createEnergyChart() {
     if (energyUsageCtx) {
         console.log('Creating energy usage chart with data:', totalEnergyData[selectedTime]);
-        energyChart = new Chart(energyUsageCtx, {
-            type: 'line',
-            data: {
-                labels: timeLabels[selectedTime],
-                datasets: [{
-                    label: 'Energy Usage (kW)',
-                    data: totalEnergyData[selectedTime],
-                    borderColor: '#486e6c', 
-                    backgroundColor: 'rgba(72, 110, 108, 0.2)',
-                    fill: true,
-                    tension: 0.4,
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#486e6c'
-                }]
-            },
-            options: { 
-                responsive: true, 
-                scales: { 
-                    y: { 
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Energy Usage (kW)'
+        try {
+            energyChart = new Chart(energyUsageCtx, {
+                type: 'line',
+                data: {
+                    labels: timeLabels[selectedTime],
+                    datasets: [{
+                        label: 'Energy Usage (kW)',
+                        data: totalEnergyData[selectedTime],
+                        borderColor: '#486e6c', 
+                        backgroundColor: 'rgba(72, 110, 108, 0.2)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#486e6c'
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Energy Usage (kW)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: selectedTime === 'daily' ? 'Time' : selectedTime === 'weekly' ? 'Day' : 'Week'
+                            }
                         }
                     },
-                    x: {
+                    plugins: {
                         title: {
                             display: true,
-                            text: selectedTime === 'daily' ? 'Time' : selectedTime === 'weekly' ? 'Day' : 'Week'
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Energy Usage Over Time',
-                        font: {
-                            size: 16
+                            text: 'Energy Usage Over Time',
+                            font: {
+                                size: 16
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        } catch (error) {
+            console.error('Error creating energy usage chart:', error);
+        }
     }
 }
 
@@ -213,40 +236,44 @@ function createEnergyChart() {
 function createAreaChart() {
     if (areaBarCtx) {
         console.log('Creating area bar chart with data:', Object.keys(areaData));
-        const areaColors = generateColors(Object.keys(areaData).length);
-        
-        areaBarChart = new Chart(areaBarCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(areaData),
-                datasets: [{
-                    label: 'Energy Usage (kW)',
-                    data: Object.values(areaData),
-                    backgroundColor: areaColors
-                }]
-            },
-            options: { 
-                responsive: true, 
-                scales: { 
-                    y: { 
-                        beginAtZero: true,
+        try {
+            const areaColors = generateColors(Object.keys(areaData).length);
+            
+            areaBarChart = new Chart(areaBarCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(areaData),
+                    datasets: [{
+                        label: 'Energy Usage (kW)',
+                        data: Object.values(areaData),
+                        backgroundColor: areaColors
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Energy Usage (kW)'
+                            }
+                        }
+                    },
+                    plugins: {
                         title: {
                             display: true,
-                            text: 'Energy Usage (kW)'
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Energy Usage by Area',
-                        font: {
-                            size: 16
+                            text: 'Energy Usage by Area',
+                            font: {
+                                size: 16
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        } catch (error) {
+            console.error('Error creating area bar chart:', error);
+        }
     }
 }
 
@@ -254,39 +281,43 @@ function createAreaChart() {
 function createDeviceChart() {
     if (devicePieCtx) {
         console.log('Creating device pie chart with data:', Object.keys(deviceData));
-        const deviceColors = generateGradientColors('rgb(57, 89, 87)','rgb(225, 243, 241)', Object.keys(deviceData).length);
-        
-        devicePieChart = new Chart(devicePieCtx, {
-            type: 'pie',
-            data: {
-                labels: Object.keys(deviceData),
-                datasets: [{
-                    data: Object.values(deviceData),
-                    backgroundColor: deviceColors,
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                        align: 'start',
-                        labels: {
-                            font: {
-                                size: 13,
-                                family: 'Kay Pho Du'
-                            },
-                            color: '#333333',
-                            boxWidth: 14,
-                            padding: 15
+        try {
+            const deviceColors = generateGradientColors('#354f4d', '#ebf4f3', Object.keys(deviceData).length);
+            
+            devicePieChart = new Chart(devicePieCtx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(deviceData),
+                    datasets: [{
+                        data: Object.values(deviceData),
+                        backgroundColor: deviceColors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            align: 'start',
+                            labels: {
+                                font: {
+                                    size: 13,
+                                    family: 'Kay Pho Du'
+                                },
+                                color: '#333333',
+                                boxWidth: 14,
+                                padding: 15
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        } catch (error) {
+            console.error('Error creating device pie chart:', error);
+        }
     }
 }
 
@@ -298,14 +329,18 @@ function updateTimeGraphs(period) {
     // Update energy chart if it exists
     if (energyChart) {
         console.log('Updating energy chart');
-        // Update x-axis title based on period
-        energyChart.options.scales.x.title.text = 
-            period === 'daily' ? 'Time' : 
-            period === 'weekly' ? 'Day' : 'Week';
-            
-        energyChart.data.labels = timeLabels[period];
-        energyChart.data.datasets[0].data = totalEnergyData[period];
-        energyChart.update();
+        try {
+            // Update x-axis title based on period
+            energyChart.options.scales.x.title.text = 
+                period === 'daily' ? 'Time' : 
+                period === 'weekly' ? 'Day' : 'Week';
+                
+            energyChart.data.labels = timeLabels[period];
+            energyChart.data.datasets[0].data = totalEnergyData[period];
+            energyChart.update();
+        } catch (error) {
+            console.error('Error updating energy chart:', error);
+        }
     }
 
     // Highlight the active button
@@ -325,30 +360,35 @@ function calculateTotals() {
     
     if (!totalEnergyElement && !totalCostElement) return;
 
-    let totalEnergy = 0, totalCost = 0;
-    
-    // Calculate totals from devicesByArea
-    Object.entries(devicesByArea).forEach(([_, devices]) => {
-        devices.forEach(device => {
-            totalEnergy += device.energy;
-            totalCost += device.cost;
+    console.log('Calculating totals');
+    try {
+        let totalEnergy = 0, totalCost = 0;
+        
+        // Calculate totals from devicesByArea
+        Object.entries(devicesByArea).forEach(([_, devices]) => {
+            devices.forEach(device => {
+                totalEnergy += device.energy;
+                totalCost += device.cost;
+            });
         });
-    });
-    
-    // Update total energy display
-    if (totalEnergyElement) {
-        totalEnergyElement.textContent = `${totalEnergy.toFixed(2)}`;
-    }
-    
-    // Update total cost display
-    if (totalCostElement) {
-        totalCostElement.textContent = `£${totalCost.toFixed(2)}`;
+        
+        // Update total energy display
+        if (totalEnergyElement) {
+            totalEnergyElement.textContent = `${totalEnergy.toFixed(2)}`;
+        }
+        
+        // Update total cost display
+        if (totalCostElement) {
+            totalCostElement.textContent = `£${totalCost.toFixed(2)}`;
+        }
+    } catch (error) {
+        console.error('Error calculating totals:', error);
     }
 }
 
 // Update all charts when data changes
 function updateAllCharts() {
-    console.log('Updating all charts with data from energyData.js');
+    console.log('Updating all charts with new data');
     
     // Update time-based charts
     if (energyChart) {
@@ -373,40 +413,61 @@ function updateAllCharts() {
 
 // Setup event listeners for UI interactions
 function setupEventListeners() {
-    // Explicitly set function on window
-    window.updateTimeGraphs = updateTimeGraphs;
-    
-    // Set daily as default active button
-    const dailyButton = document.getElementById('daily');
-    if (dailyButton) {
-        dailyButton.classList.add("active-button");
-    }
+    console.log('Setting up event listeners');
 
-    // Add event listener for the Download PDF button
-    const downloadButton = document.querySelector('.download-pdf-button');
-    if (downloadButton) {
-        downloadButton.addEventListener('click', downloadPageAsPDF);
-    }
+    try {
+        // Explicitly set function on window
+        window.updateTimeGraphs = updateTimeGraphs;
+        
+        // Set daily as default active button
+        document.getElementById('daily').classList.add("active-button");
 
-    // Listen for energy data updates
-    document.addEventListener('energyDataUpdated', () => {
-        console.log('Received energyDataUpdated event');
-        updateAllCharts();
-    });
+        // Add event listener for the Download PDF button
+        const downloadButton = document.querySelector('.download-pdf-button');
+        if (downloadButton) {
+            downloadButton.addEventListener('click', downloadPageAsPDF);
+        }
+
+        // Listen for energy data updates
+        document.addEventListener('energyDataUpdated', () => {
+            console.log('Received energyDataUpdated event');
+            updateAllCharts();
+        });
+        
+        // Listen for user data changes (in case the office changes)
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'userData') {
+                console.log('User data changed, refreshing charts');
+                updateEnergyDataNow().then(() => {
+                    updateAllCharts();
+                });
+            }
+        });
+
+    } catch (error) {
+        console.error('Error setting up event listeners:', error);
+    }
 }
 
 // **Run Scripts on Page Load**
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM Content Loaded - Power usage script running");
 
-    // Create initial charts
-    createEnergyChart();
-    createAreaChart();
-    createDeviceChart();
-    
-    // Calculate totals for display
-    calculateTotals();
-    
-    // Setup event listeners for UI interactions
-    setupEventListeners();
+    try {
+        // First fetch the latest data based on current user's office
+        updateEnergyDataNow().then(() => {
+            // Create initial charts
+            createEnergyChart();
+            createAreaChart();
+            createDeviceChart();
+            
+            // Calculate totals for display
+            calculateTotals();
+            
+            // Setup event listeners for UI interactions
+            setupEventListeners();
+        });
+    } catch (error) {
+        console.error('Error in DOMContentLoaded handler:', error);
+    }
 });

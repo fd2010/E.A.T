@@ -664,7 +664,7 @@
     }
 
     .main-content {
-        margin-left: 60px; /* Adjust sidebar space for mobile */
+        margin-left: 70px; /* Adjust sidebar space for mobile */
         margin-right: 5px;
         padding: 10px;
     }
@@ -687,7 +687,7 @@
 
     .right-panel {
         padding: 10px;
-        margin-left: 60px; /* Keep a small margin for sidebar */
+        margin-left: 70px; /* Keep a small margin for sidebar */
         margin-right: 5px;
     }
 
