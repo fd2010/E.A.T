@@ -621,7 +621,7 @@ class SmartMeterSimulator {
         return false;
     }
     
-    // NEW: Add method to reset total expenses
+    // Add method to reset total expenses
     resetTotalExpenses() {
         // Reset all expense tracking
         for (const officeId in this.officeTotalExpenses) {
