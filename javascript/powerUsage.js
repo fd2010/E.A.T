@@ -84,20 +84,17 @@ function downloadPageAsPDF() {
     // Adjust layout
     if (document.querySelector('.main-content')) {
         document.querySelector('.main-content').style.marginLeft = '20px';
-        document.querySelector('.main-content').style.marginRight = '0';
     }
     if (rightPanel) {
         rightPanel.style.position = 'static';
-        rightPanel.style.right = 'auto';
+        rightPanel.style.right = '0';
         rightPanel.style.width = '250px';
-        rightPanel.style.float = 'right';
-        rightPanel.style.marginLeft = '20px';
     }
 
     // Configure html2pdf options
     const opt = {
         margin: 10,
-        filename: `power_usage_report_${new Date().toISOString().split('T')[0]}.pdf`,
+        filename: `overall_usage_report_${new Date().toISOString().split('T')[0]}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
             scale: 2,
@@ -110,7 +107,6 @@ function downloadPageAsPDF() {
             orientation: 'portrait',
             putOnlyUsedFonts: true,
         },
-        pagebreak: { mode: ['css', 'legacy'] },
     };
 
     // Generate and download the PDF
@@ -124,8 +120,6 @@ function downloadPageAsPDF() {
         if (rightPanel) {
             rightPanel.style.position = originalRightPanelPosition;
             rightPanel.style.right = originalRightPanelRight;
-            rightPanel.style.float = 'none';
-            rightPanel.style.marginLeft = '';
         }
         document.body.removeChild(loadingDiv);
     }).catch(error => {
