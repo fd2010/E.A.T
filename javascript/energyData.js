@@ -23,19 +23,19 @@ export let totalEnergyDataGenerated = {
 };
 
 // Original data structures that will be updated with real data
-export const totalEnergyData = {
+export let totalEnergyData = {
     daily: [5, 8, 10, 12, 6],
     weekly: [40, 50, 45, 60, 55, 48, 52],
     monthly: [150, 170, 160, 180]
 };
 
-export const totalCostData = {
+export let totalCostData = {
     daily: [2, 3, 5, 4, 6],
     weekly: [20, 25, 22, 30, 28, 24, 26],
     monthly: [90, 100, 95, 105]
 };
 
-export const energyData = {
+export let energyData = {
     "Meeting Room": {
         daily: [5, 8, 10, 12, 6],
         weekly: [40, 50, 45, 60, 55, 48, 52],
@@ -58,7 +58,7 @@ export const energyData = {
     }
 };
 
-export const costData = {
+export let costData = {
     "Meeting Room": {
         daily: [10, 16, 20, 24, 12],
         weekly: [80, 100, 90, 120, 110, 96, 104],
@@ -81,25 +81,40 @@ export const costData = {
     }
 };
 
-export const areaData = {
+export let areaData = {
     "Meeting Room": 30,
     "Workstations": 40,
     "Common Areas": 25,
     "Special": 20
 };
 
-export const deviceData = {
-    "Computers": 50,
-    "Lights": 20,
-    "Heating": 40,
-    "Monitors": 25,
-    "Speakers": 10,
-    "A/C": 22,
-    "Projector": 18,
-    "Vending Machine": 12
+export let deviceData = {
+    "Lights": 50,
+    "A/C": 20,
+    "Speaker": 40,
+    "Projector": 25,
+    "Laptop": 10,
+    "Printer": 22,
+    "Coffee Machine": 18,
+    "Monitor": 14,
+    "Server": 18,
+    "Electric Hoover": 18,
+    "Electronic Desk": 12
 };
 
-export const devicesByArea = {
+//     'Lights': './images/icons/Lights.png',
+//     'A/C': './images/icons/AC(MIT).png',
+//     'Speaker': './images/icons/Speaker(MIT).png',
+//     'Projector': './images/icons/Projector.png',
+//     'Laptop': './images/icons/laptop icon(MIT).png',
+//     'Printer': './images/icons/printer icon(MIT).png',
+//     'Coffee Machine': './images/icons/cofee machine.png',
+//     'Monitor': './images/icons/monitor icon(MIT).png',
+//     'Server': './images/icons/server icon.png',
+//     'Electric Hoover': './images/icons/roomba.png',
+//     'Electronic Desk': './images/icons/electronic desk.png'
+
+export let devicesByArea = {
     "Meeting Room": [
         { name: "Projector", energy: 5, cost: 2.5 },
         { name: "Speakers", energy: 2, cost: 1.2 },
