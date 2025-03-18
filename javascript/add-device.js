@@ -17,7 +17,7 @@ export function initialiseAddDeviceModal() {
                     
                     <!-- Step 1: Room Selection -->
                     <div id="step1" class="step">
-                        <h2 class="h2Light">Select Room</h2>
+                        <h2 class="h2Light">Add Device</h2>
                         <div id="roomsList" class="rooms-list">
                             <!-- Rooms will be inserted here -->
                         </div>
