@@ -17,8 +17,9 @@ class SmartMeterSimulator {
             'A/C': { wattsRange: [500, 1500] },
             'Lights': { wattsRange: [10, 100] },
             'Projector': { wattsRange: [150, 300] },
-            'Speakers': { wattsRange: [15, 80] },
-            'Electric Hoover': { wattsRange: [30, 70] }
+            'Speaker': { wattsRange: [15, 80] },         
+            'Electric Hoover': { wattsRange: [30, 70] },
+            'Electronic Desk': { wattsRange: [50, 150] } 
         };
         
         // Simulation variables
@@ -621,7 +622,7 @@ class SmartMeterSimulator {
         return false;
     }
     
-    // Add method to reset total expenses
+    // NEW: Add method to reset total expenses
     resetTotalExpenses() {
         // Reset all expense tracking
         for (const officeId in this.officeTotalExpenses) {

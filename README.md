@@ -74,6 +74,7 @@ signupUser adding devices needs to be fixed
 DO THIS requirment!!!:
 Users should be able to report faults with the system using a built in report button, this report will be stored as logs.
 
+Fix the signupOffice button
 
 ...
 
