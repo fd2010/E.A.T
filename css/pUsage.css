@@ -569,6 +569,8 @@
         height: auto;
         padding: 15px;
         margin-top: 20px;
+        margin-left: 100px; /* Space for sidebar */
+        margin-right: 20px;
     }
 
     .graph-section {
@@ -610,6 +612,8 @@
     }
 
     .right-panel {
+        margin-left: 80px; /* Leave space for sidebar */
+        margin-right: 10px;
         width: 100%;
         position: relative;
     }
@@ -681,6 +685,12 @@
         gap: 5px;
     }
 
+    .right-panel {
+        padding: 10px;
+        margin-left: 60px; /* Keep a small margin for sidebar */
+        margin-right: 5px;
+    }
+
     .device-wise {
         padding: 15px;
         min-height: auto;
@@ -727,6 +737,8 @@
 
     .right-panel {
         padding: 10px;
+        margin-left: 50px; /* Keep a small margin for sidebar */
+        margin-right: 5px;
     }
 
     .download-pdf-button {
