@@ -23,20 +23,51 @@ export let totalEnergyDataGenerated = {
 };
 
 // Original data structures that will be updated with real data
+//TODO
 export let totalEnergyData = {
     daily: [5, 8, 10, 12, 6],
     weekly: [40, 50, 45, 60, 55, 48, 52],
     monthly: [150, 170, 160, 180]
 };
 
+//TODO
 export let totalCostData = {
-    daily: [2, 3, 5, 4, 6],
+    daily: [2, 3, 5, 400, 6],
     weekly: [20, 25, 22, 30, 28, 24, 26],
     monthly: [90, 100, 95, 105]
 };
 
+//TODO
+export let areaData = {
+    "Meeting Room": 30,
+    "Workstations": 40,
+    "Common Areas": 25,
+    "Special": 20
+};
+
+//TODO
+export let deviceData = {
+    "Lights": 50,
+    "A/C": 20,
+    "Speaker": 40,
+    "Projector": 25,
+    "Laptop": 10,
+    "Printer": 22,
+    "Coffee Machine": 18,
+    "Monitor": 14,
+    "Server": 18,
+    "Electric Hoover": 18,
+    "Electronic Desk": 12
+};
+
+
+
+
+
+
+//REMOVE
 export let energyData = {
-    "Meeting Room": {
+    "AOHGAHGHA": {
         daily: [5, 8, 10, 12, 6],
         weekly: [40, 50, 45, 60, 55, 48, 52],
         monthly: [150, 170, 160, 180]
@@ -58,6 +89,7 @@ export let energyData = {
     }
 };
 
+//REMOVE
 export let costData = {
     "Meeting Room": {
         daily: [10, 16, 20, 24, 12],
@@ -81,56 +113,24 @@ export let costData = {
     }
 };
 
-export let areaData = {
-    "Meeting Room": 30,
-    "Workstations": 40,
-    "Common Areas": 25,
-    "Special": 20
-};
-
-export let deviceData = {
-    "Lights": 50,
-    "A/C": 20,
-    "Speaker": 40,
-    "Projector": 25,
-    "Laptop": 10,
-    "Printer": 22,
-    "Coffee Machine": 18,
-    "Monitor": 14,
-    "Server": 18,
-    "Electric Hoover": 18,
-    "Electronic Desk": 12
-};
-
-//     'Lights': './images/icons/Lights.png',
-//     'A/C': './images/icons/AC(MIT).png',
-//     'Speaker': './images/icons/Speaker(MIT).png',
-//     'Projector': './images/icons/Projector.png',
-//     'Laptop': './images/icons/laptop icon(MIT).png',
-//     'Printer': './images/icons/printer icon(MIT).png',
-//     'Coffee Machine': './images/icons/cofee machine.png',
-//     'Monitor': './images/icons/monitor icon(MIT).png',
-//     'Server': './images/icons/server icon.png',
-//     'Electric Hoover': './images/icons/roomba.png',
-//     'Electronic Desk': './images/icons/electronic desk.png'
-
+//THIS MAY BE REMOVED
 export let devicesByArea = {
-    "Meeting Room": [
+    "REMOVE": [
         { name: "Projector", energy: 5, cost: 2.5 },
         { name: "Speakers", energy: 2, cost: 1.2 },
         { name: "Lights", energy: 8, cost: 4 }
     ],
-    "Workstations": [
+    "REMOVE ME": [
         { name: "Computers", energy: 15, cost: 8 },
         { name: "Monitors", energy: 10, cost: 5 },
         { name: "Printers", energy: 6, cost: 3 }
     ],
-    "Common Areas": [
+    "REMOVE ME": [
         { name: "Lights", energy: 12, cost: 6 },
         { name: "Air Conditioning", energy: 20, cost: 10 },
         { name: "Vending Machine", energy: 8, cost: 4 }
     ],
-    "Special": [
+    "REMOVE ME": [
         { name: "Heating", energy: 25, cost: 12 },
         { name: "Speakers", energy: 10, cost: 5 }
     ]
