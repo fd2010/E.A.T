@@ -38,6 +38,14 @@ class SmartMeterSimulator {
         // Per-office metrics
         this.officeMetrics = {};
         
+        // NEW: Total expenses tracking for each office
+        this.officeTotalExpenses = {
+            all: 0
+        };
+        
+        // NEW: Track the last reading timestamp to calculate elapsed time
+        this.lastReadingTimestamp = null;
+        
         // Connect to Firebase
         this.connectToFirebase();
     }
@@ -167,6 +175,11 @@ class SmartMeterSimulator {
             }
         };
         
+        // NEW: Initialize total expenses for each office
+        this.officeTotalExpenses = {
+            all: 0
+        };
+        
         for (const officeId of Object.keys(this.officesData)) {
             this.officeMetrics[officeId] = {
                 totalPower: 0,
@@ -174,6 +187,9 @@ class SmartMeterSimulator {
                 activeDevices: 0,
                 roomCount: 0
             };
+            
+            // NEW: Initialize total expenses for this office
+            this.officeTotalExpenses[officeId] = 0;
         }
         
         // Update UI
@@ -195,11 +211,15 @@ class SmartMeterSimulator {
         const roomCountMetric = this.createMetricElement('Rooms', metrics.roomCount);
         const costMetric = this.createMetricElement('Est. Cost/hr', `£${((metrics.totalPower / 1000) * this.costPerKwh).toFixed(2)}`);
         
+        // NEW: Add total expenses metric
+        const totalExpensesMetric = this.createMetricElement('Total Expenses', `£${this.officeTotalExpenses[this.selectedOffice].toFixed(2)}`);
+        
         // Add to container
         metricsContainer.appendChild(deviceCountMetric);
         metricsContainer.appendChild(activeDevicesMetric);
         metricsContainer.appendChild(roomCountMetric);
         metricsContainer.appendChild(costMetric);
+        metricsContainer.appendChild(totalExpensesMetric);
     }
     
     createMetricElement(label, value) {
@@ -467,6 +487,21 @@ class SmartMeterSimulator {
         
         this.readings.push(reading);
         
+        // NEW: Calculate elapsed time since last reading for expense calculation
+        const currentTimestamp = reading.timestamp;
+        let elapsedHours = 0;
+        
+        if (this.lastReadingTimestamp) {
+            // Calculate hours between readings (converts milliseconds to hours)
+            elapsedHours = (currentTimestamp - this.lastReadingTimestamp) / (1000 * 60 * 60);
+        } else {
+            // First reading - use the simulation interval as elapsed time
+            elapsedHours = this.interval / (60 * 60); // Convert seconds to hours
+        }
+        
+        // Update last timestamp
+        this.lastReadingTimestamp = currentTimestamp;
+        
         // Display in UI
         const readingsEl = document.getElementById('readings');
         const readingEl = document.createElement('div');
@@ -506,6 +541,14 @@ class SmartMeterSimulator {
             this.officeMetrics[officeId].totalPower = officePower;
             this.officeMetrics.all.totalPower += officePower;
             
+            // NEW: Update total expenses
+            // Calculate cost for this time period based on power usage and elapsed time
+            const periodCost = officeCost * elapsedHours;
+            
+            // Update running totals
+            this.officeTotalExpenses[officeId] += periodCost;
+            this.officeTotalExpenses.all += periodCost;
+            
             // Count active devices
             let officeActiveDevices = 0;
             for (const roomName in reading.officeReadings[officeId].rooms) {
@@ -519,7 +562,8 @@ class SmartMeterSimulator {
                     <strong>Office ${officeId}:</strong> 
                     Power: ${officePower.toFixed(2)}W, 
                     Active Devices: ${officeActiveDevices}, 
-                    Cost: £${officeCost.toFixed(4)}/hr
+                    Cost: £${officeCost.toFixed(4)}/hr,
+                    Total Expense: £${this.officeTotalExpenses[officeId].toFixed(2)}
                 </div>
             `;
         }
@@ -577,6 +621,17 @@ class SmartMeterSimulator {
         return false;
     }
     
+    // NEW: Add method to reset total expenses
+    resetTotalExpenses() {
+        // Reset all expense tracking
+        for (const officeId in this.officeTotalExpenses) {
+            this.officeTotalExpenses[officeId] = 0;
+        }
+        
+        // Update the UI
+        this.updateMetricsDisplay();
+    }
+    
     start(interval) {
         if (this.isRunning) return;
         
@@ -599,6 +654,20 @@ class SmartMeterSimulator {
         // Update button text
         document.getElementById('startStopButton').textContent = 'Stop Simulation';
         document.getElementById('startStopButton').classList.add('stop');
+        
+        // Create reset expenses button if it doesn't exist
+        if (!document.getElementById('resetExpensesButton')) {
+            const controlsContainer = document.getElementById('startStopButton').parentElement;
+            const resetButton = document.createElement('button');
+            resetButton.id = 'resetExpensesButton';
+            resetButton.textContent = 'Reset Total Expenses';
+            resetButton.addEventListener('click', () => {
+                if (confirm('Are you sure you want to reset all total expenses to zero?')) {
+                    this.resetTotalExpenses();
+                }
+            });
+            controlsContainer.appendChild(resetButton);
+        }
     }
     
     stop() {
