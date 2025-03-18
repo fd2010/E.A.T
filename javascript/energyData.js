@@ -1,5 +1,4 @@
-// energyData.js - Modified to fetch real data from Firebase for both generation and usage
-// This keeps all original variable names but populates them with real data from the user's office
+// energyData.js - Modified to prevent automatic data fetch
 
 // Firebase is already initialized in your app, so we'll use the existing instance
 import { ref, onValue, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
@@ -15,29 +14,25 @@ export const timeLabels = {
     monthly: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
 };
 
-// Original data structures that will be updated with real data
+// Static data that won't be automatically updated
 export let totalEnergyDataGenerated = {
     daily: [7, 8, 10, 12, 6],
     weekly: [40, 50, 45, 60, 55, 48, 52],
     monthly: [150, 170, 160, 180]
 };
 
-// Original data structures that will be updated with real data
-//TODO
 export let totalEnergyData = {
     daily: [5, 8, 10, 12, 6],
     weekly: [40, 50, 45, 60, 55, 48, 52],
     monthly: [150, 170, 160, 180]
 };
 
-//TODO
 export let totalCostData = {
-    daily: [2, 3, 5, 400, 6],
+    daily: [2, 3, 5, 4, 6],
     weekly: [20, 25, 22, 30, 28, 24, 26],
     monthly: [90, 100, 95, 105]
 };
 
-//TODO
 export let areaData = {
     "Meeting Room": 30,
     "Workstations": 40,
@@ -45,7 +40,6 @@ export let areaData = {
     "Special": 20
 };
 
-//TODO
 export let deviceData = {
     "Lights": 50,
     "A/C": 20,
@@ -60,14 +54,8 @@ export let deviceData = {
     "Electronic Desk": 12
 };
 
-
-
-
-
-
-//REMOVE
 export let energyData = {
-    "AOHGAHGHA": {
+    "Meeting Room": {
         daily: [5, 8, 10, 12, 6],
         weekly: [40, 50, 45, 60, 55, 48, 52],
         monthly: [150, 170, 160, 180]
@@ -89,7 +77,6 @@ export let energyData = {
     }
 };
 
-//REMOVE
 export let costData = {
     "Meeting Room": {
         daily: [10, 16, 20, 24, 12],
@@ -113,24 +100,23 @@ export let costData = {
     }
 };
 
-//THIS MAY BE REMOVED
 export let devicesByArea = {
-    "REMOVE": [
+    "Meeting Room": [
         { name: "Projector", energy: 5, cost: 2.5 },
         { name: "Speakers", energy: 2, cost: 1.2 },
         { name: "Lights", energy: 8, cost: 4 }
     ],
-    "REMOVE ME": [
+    "Workstations": [
         { name: "Computers", energy: 15, cost: 8 },
         { name: "Monitors", energy: 10, cost: 5 },
         { name: "Printers", energy: 6, cost: 3 }
     ],
-    "REMOVE ME": [
+    "Common Areas": [
         { name: "Lights", energy: 12, cost: 6 },
         { name: "Air Conditioning", energy: 20, cost: 10 },
         { name: "Vending Machine", energy: 8, cost: 4 }
     ],
-    "REMOVE ME": [
+    "Special": [
         { name: "Heating", energy: 25, cost: 12 },
         { name: "Speakers", energy: 10, cost: 5 }
     ]
@@ -682,7 +668,8 @@ async function fetchAllData() {
     }
 }
 
-// Start fetching data when the page loads
+// Commenting out the auto-load functionality
+/* 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Setting up energy data...");
     
@@ -710,8 +697,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+*/
 
-// Export an update function that can be called manually
+// Export an update function that can be called manually if needed
 export function updateEnergyDataNow() {
     return fetchAllData();
 }
