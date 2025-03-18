@@ -1,5 +1,7 @@
 // Import all shared data from energyData.js
 import { timeLabels, totalEnergyData, totalCostData, areaData, deviceData, devicesByArea, updateEnergyDataNow } from './energyData.js';
+import { ref, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { database } from '../database/firebase-config.js';
 
 console.log("powerUsage.js loaded successfully!");
 
@@ -44,6 +46,9 @@ if (devicePieElement) {
     console.log('Found devicePieChart element');
     devicePieCtx = devicePieElement.getContext('2d');
 }
+
+// Store the office rooms data
+let officeRooms = {};
 
 // **DEFAULT SELECTION**
 let selectedTime = "daily";
@@ -232,11 +237,113 @@ function createEnergyChart() {
     }
 }
 
+// Fetch room data from Firebase for the user's office
+async function fetchOfficeRoomData() {
+    const officeID = getUserOfficeID();
+    if (!officeID || !database) {
+        console.warn("Cannot fetch room data: Office ID missing or database not initialized");
+        return null;
+    }
+    
+    try {
+        console.log(`Fetching room data for office: ${officeID}`);
+        const officeRef = ref(database, `offices/${officeID}`);
+        const snapshot = await get(officeRef);
+        
+        if (snapshot.exists()) {
+            const officeData = snapshot.val();
+            if (officeData.rooms) {
+                console.log(`Found ${Object.keys(officeData.rooms).length} rooms for office ${officeID}`);
+                return officeData.rooms;
+            }
+        }
+        
+        console.warn(`No rooms found for office: ${officeID}`);
+        return null;
+    } catch (error) {
+        console.error("Error fetching office room data:", error);
+        return null;
+    }
+}
+
 // **Create Area Bar Chart**
-function createAreaChart() {
+async function createAreaChart() {
     if (areaBarCtx) {
-        console.log('Creating area bar chart with data:', Object.keys(areaData));
         try {
+            // First try to use room data from the user's office
+            const roomsData = await fetchOfficeRoomData();
+            
+            // Prepare the data for the chart
+            let chartLabels = [];
+            let chartData = [];
+            
+            if (roomsData) {
+                // Use rooms from the user's office
+                console.log('Creating area bar chart with office rooms:', Object.keys(roomsData));
+                
+                // Create custom area data from room names
+                const roomNames = Object.keys(roomsData);
+                
+                // First check if we have energy data for these rooms
+                const roomEnergyData = {};
+                
+                roomNames.forEach(roomName => {
+                    // Try to get energy data from the areaData if it exists
+                    if (areaData[roomName] !== undefined) {
+                        roomEnergyData[roomName] = areaData[roomName];
+                    } else {
+                        // If no data exists, assign random values for now (0-50kW)
+                        roomEnergyData[roomName] = Math.floor(Math.random() * 50);
+                    }
+                });
+                
+                chartLabels = Object.keys(roomEnergyData);
+                chartData = Object.values(roomEnergyData);
+            } else {
+                // Fallback to existing areaData if we couldn't get rooms
+                console.log('Falling back to default area data:', Object.keys(areaData));
+                chartLabels = Object.keys(areaData);
+                chartData = Object.values(areaData);
+            }
+            
+            const areaColors = generateColors(chartLabels.length);
+            
+            areaBarChart = new Chart(areaBarCtx, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Energy Usage (kW)',
+                        data: chartData,
+                        backgroundColor: areaColors
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Energy Usage (kW)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Energy Usage by Area',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Error creating area bar chart:', error);
+            
+            // Fallback to the original implementation if there was an error
             const areaColors = generateColors(Object.keys(areaData).length);
             
             areaBarChart = new Chart(areaBarCtx, {
@@ -271,8 +378,6 @@ function createAreaChart() {
                     }
                 }
             });
-        } catch (error) {
-            console.error('Error creating area bar chart:', error);
         }
     }
 }
@@ -387,7 +492,7 @@ function calculateTotals() {
 }
 
 // Update all charts when data changes
-function updateAllCharts() {
+async function updateAllCharts() {
     console.log('Updating all charts with new data');
     
     // Update time-based charts
@@ -399,7 +504,7 @@ function updateAllCharts() {
     if (areaBarChart) {
         areaBarChart.destroy();
     }
-    createAreaChart();
+    await createAreaChart();
     
     // Destroy and recreate device chart
     if (devicePieChart) {
@@ -455,10 +560,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
         // First fetch the latest data based on current user's office
-        updateEnergyDataNow().then(() => {
+        updateEnergyDataNow().then(async () => {
             // Create initial charts
             createEnergyChart();
-            createAreaChart();
+            await createAreaChart(); // Now async to fetch office room data
             createDeviceChart();
             
             // Calculate totals for display
