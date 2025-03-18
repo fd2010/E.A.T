@@ -424,171 +424,6 @@
     width: 80px;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .main-content {
-        margin: 0;
-        padding: 15px;
-    }
-
-    .right-panel {
-        position: static;
-        width: 100%;
-        height: auto;
-        padding: 15px;
-        margin-top: 20px;
-    }
-
-    .graph-section {
-        height: auto;
-    }
-
-    .graph-container {
-        min-width: 100%;
-        max-width: 100%;
-    }
-
-    .graph-buttons {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .pie-chart-container {
-        max-width: 400px;
-    }
-
-    .title-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-}
-
-/* Tablet View */
-@media (max-width: 992px) {
-    .power-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .main-content {
-        margin: 0;
-        padding: 10px;
-    }
-
-    .right-panel {
-        width: 100%;
-        position: relative;
-    }
-
-    .graph-container {
-        min-width: 90%;
-        max-width: 100%;
-    }
-
-    .pie-chart-container {
-        max-width: 350px;
-        min-width: 250px;
-    }
-
-    .title-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .download-pdf-button {
-        margin: 10px 0;
-    }
-
-    .power-usage-title {
-        font-size: 36px;
-        line-height: 44px;
-    }
-
-    .energy-consumption {
-        font-size: 18px;
-    }
-}
-
-/* Mobile View */
-@media (max-width: 768px) {
-    .power-usage-title {
-        font-size: 28px;
-        line-height: 34px;
-    }
-
-    .energy-consumption {
-        font-size: 16px;
-    }
-
-    .graph-title {
-        font-size: 18px;
-    }
-
-    .graph-container {
-        min-width: 100%;
-        max-width: 100%;
-        padding: 10px;
-    }
-
-    .pie-chart-container {
-        max-width: 280px;
-        min-width: 220px;
-    }
-
-    .graph-buttons {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .device-wise {
-        padding: 15px;
-        min-height: auto;
-    }
-
-    .download-pdf-button {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-/* Small Mobile View */
-@media (max-width: 576px) {
-    .power-usage-title {
-        font-size: 24px;
-        line-height: 30px;
-    }
-
-    .graph-section {
-        padding: 15px;
-    }
-
-    .pie-chart-container {
-        max-width: 250px;
-        min-width: 200px;
-    }
-
-    .section-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .graph-buttons {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .right-panel {
-        padding: 10px;
-    }
-
-    .download-pdf-button {
-        width: 100%;
-    }
-}
-
 
 /******  AREA PAGE ******/
 /* Drop down */
@@ -720,3 +555,181 @@
     background-color: #66553e !important;
 }
 
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-content {
+        margin-left: 100px; /* Space for sidebar */
+        margin-right: 20px;
+        padding: 15px;
+    }
+
+    .right-panel {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .graph-section {
+        height: auto;
+    }
+
+    .graph-container {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .graph-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .pie-chart-container {
+        max-width: 400px;
+    }
+
+    .title-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* Tablet View */
+@media (max-width: 992px) {
+    .power-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .main-content {
+        margin-left: 80px; /* Leave space for sidebar */
+        margin-right: 10px;
+        padding: 10px;
+    }
+
+    .right-panel {
+        width: 100%;
+        position: relative;
+    }
+
+    .graph-container {
+        min-width: 90%;
+        max-width: 100%;
+    }
+
+    .pie-chart-container {
+        max-width: 350px;
+        min-width: 250px;
+    }
+
+    .title-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .download-pdf-button {
+        margin: 10px 0;
+    }
+
+    .power-usage-title {
+        font-size: 36px;
+        line-height: 44px;
+    }
+
+    .energy-consumption {
+        font-size: 18px;
+    }
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+    .power-usage-title {
+        font-size: 28px;
+        line-height: 34px;
+    }
+
+    .energy-consumption {
+        font-size: 16px;
+    }
+
+    .graph-title {
+        font-size: 18px;
+    }
+
+    .main-content {
+        margin-left: 60px; /* Adjust sidebar space for mobile */
+        margin-right: 5px;
+        padding: 10px;
+    }
+
+    .graph-container {
+        min-width: 100%;
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .pie-chart-container {
+        max-width: 280px;
+        min-width: 220px;
+    }
+
+    .graph-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .device-wise {
+        padding: 15px;
+        min-height: auto;
+    }
+
+    .download-pdf-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Small Mobile View */
+@media (max-width: 576px) {
+    .power-usage-title {
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .main-content {
+        margin-left: 50px; /* Keep a small margin for sidebar */
+        margin-right: 5px;
+        padding: 10px;
+    }
+
+    .graph-section {
+        padding: 15px;
+    }
+
+    .pie-chart-container {
+        max-width: 250px;
+        min-width: 200px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .graph-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .right-panel {
+        padding: 10px;
+    }
+
+    .download-pdf-button {
+        width: 100%;
+    }
+}
