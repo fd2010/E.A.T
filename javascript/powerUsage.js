@@ -288,7 +288,7 @@ function createDeviceChart() {
     if (devicePieCtx) {
         console.log('Creating device pie chart with data:', Object.keys(deviceData));
         try {
-            const deviceColors = generateColors(Object.keys(deviceData).length);
+            const deviceColors = generateGradientColors('rgb(57, 89, 87)','rgb(225, 243, 241)', Object.keys(deviceData).length);
             
             devicePieChart = new Chart(devicePieCtx, {
                 type: 'pie',
