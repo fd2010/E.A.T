@@ -178,3 +178,25 @@ button.stop:hover {
 .success {
     color: #4CAF50;
 }
+
+/* Add a style for the reset expenses button */
+#resetExpensesButton {
+    background-color: #ff9800;
+    margin-left: 10px;
+}
+
+#resetExpensesButton:hover {
+    background-color: #f57c00;
+}
+
+/* Highlight the total expenses in the office metrics */
+.office-metric:last-child .value {
+    color: #ff9800;
+    font-size: 20px;
+}
+
+/* Highlight the total expense in the reading details */
+.office-reading {
+    margin-top: 5px;
+    padding: 3px 0;
+}
