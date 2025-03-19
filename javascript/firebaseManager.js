@@ -76,6 +76,24 @@ class FirebaseManager {
         
         return true;
     }
+
+    saveOfficeTotalCostsToFirebase(totalCostsData) {
+        if (!this.database) {
+            console.error("Firebase database not initialized");
+            return;
+        }
+        
+        try {
+            // Get reference to the total-costs node in Firebase
+            const totalCostsRef = ref(this.database, 'total-costs');
+            
+            // Update the existing data with new values
+            update(totalCostsRef, totalCostsData);
+            console.log("Successfully saved total costs to Firebase:", totalCostsData);
+        } catch (error) {
+            console.error("Error saving total costs to Firebase:", error);
+        }
+    }
     
     // Method to save office-specific data to Firebase
     saveOfficeDataToFirebase(reading) {

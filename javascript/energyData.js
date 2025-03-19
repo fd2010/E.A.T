@@ -633,6 +633,32 @@ function setupRenewableEnergyListener() {
     });
 }
 
+// Function to fetch total costs from Firebase
+export async function fetchTotalCosts() {
+    if (!database) {
+        console.error("Firebase database not initialized");
+        return null;
+    }
+    
+    try {
+        console.log("Fetching total costs from Firebase");
+        const totalCostsRef = ref(database, 'total-costs');
+        const snapshot = await get(totalCostsRef);
+        
+        if (snapshot.exists()) {
+            const totalCosts = snapshot.val();
+            console.log("Total costs data retrieved:", totalCosts);
+            return totalCosts;
+        } else {
+            console.warn("No total costs data found in Firebase");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching total costs:", error);
+        return null;
+    }
+}
+
 // Main function to fetch and update all data
 async function fetchAllData() {
     try {
@@ -648,6 +674,9 @@ async function fetchAllData() {
         // Then fetch consumption readings for the current office
         const readings = await fetchOfficeDeviceReadings();
         
+        // Also fetch total costs
+        const totalCosts = await fetchTotalCosts();
+        
         if (readings && readings.length > 0) {
             // Update all data structures with the readings
             updateAreaData(readings);
@@ -656,12 +685,22 @@ async function fetchAllData() {
             updateDevicesByArea(readings);
             
             // Trigger custom event to notify that data is updated
-            const event = new CustomEvent('energyDataUpdated');
+            const event = new CustomEvent('energyDataUpdated', { 
+                detail: { totalCosts: totalCosts } 
+            });
             document.dispatchEvent(event);
             
             console.log("Energy data updated successfully for office:", currentOfficeID);
         } else {
             console.warn("No readings found to update consumption data for office:", currentOfficeID);
+            
+            // Even if no readings, still trigger the event with the total costs
+            if (totalCosts) {
+                const event = new CustomEvent('energyDataUpdated', { 
+                    detail: { totalCosts: totalCosts } 
+                });
+                document.dispatchEvent(event);
+            }
         }
     } catch (error) {
         console.error("Error fetching and updating energy data:", error);
