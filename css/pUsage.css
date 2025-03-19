@@ -606,13 +606,13 @@
     }
 
     .main-content {
-        margin-left: 80px; /* Leave space for sidebar */
+        margin-left: 90px; /* Leave space for sidebar */
         margin-right: 10px;
         padding: 10px;
     }
 
     .right-panel {
-        margin-left: 80px; /* Leave space for sidebar */
+        margin-left: 90px; /* Leave space for sidebar */
         margin-right: 10px;
         width: 100%;
         position: relative;
@@ -664,7 +664,7 @@
     }
 
     .main-content {
-        margin-left: 70px; /* Adjust sidebar space for mobile */
+        margin-left: 80px; /* Adjust sidebar space for mobile */
         margin-right: 5px;
         padding: 10px;
     }
@@ -687,7 +687,7 @@
 
     .right-panel {
         padding: 10px;
-        margin-left: 70px; /* Keep a small margin for sidebar */
+        margin-left: 80px; /* Keep a small margin for sidebar */
         margin-right: 5px;
     }
 
@@ -710,7 +710,7 @@
     }
 
     .main-content {
-        margin-left: 50px; /* Keep a small margin for sidebar */
+        margin-left: 60px; /* Keep a small margin for sidebar */
         margin-right: 5px;
         padding: 10px;
     }
@@ -737,7 +737,7 @@
 
     .right-panel {
         padding: 10px;
-        margin-left: 50px; /* Keep a small margin for sidebar */
+        margin-left: 60px; /* Keep a small margin for sidebar */
         margin-right: 5px;
     }
 
