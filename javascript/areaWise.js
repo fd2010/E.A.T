@@ -36,10 +36,10 @@ const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 // **Normalize Area Names**
 function normalizeArea(area) {
     const mapping = {
-        "meeting": "Break Room",
-        "work": "Main Office",
-        "common": "Garden",
-        "special": "Reception"
+        "meeting": "Meeting Room",
+        "work": "Workstations",
+        "common": "Common Areas",
+        "special": "Special"
     };
     return mapping[area] || area;
 }
