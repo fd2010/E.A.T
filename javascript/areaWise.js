@@ -99,7 +99,7 @@ function generateGradientColors(startColor, endColor, steps) {
     return gradient;
 }
 
-// **Initialize Area Comparison Charts**
+/* *Initialize Area Comparison Charts**
 function createAreaCharts() {
     console.log("Creating area comparison charts with data:", Object.keys(areaData));
     const areaColors = generateColors(Object.keys(areaData).length);
@@ -110,7 +110,8 @@ function createAreaCharts() {
             labels: Object.keys(areaData),
             datasets: [{
                 data: Object.values(areaData),
-                backgroundColor: areaColors
+                backgroundColor: areaColors,
+                borderWidth: 0
             }]
         },
         options: {
@@ -159,6 +160,123 @@ function createAreaCharts() {
             }
         }
     });
+}
+*/
+
+// **Create Area Bar Chart**
+async function createAreaCharts() {
+    if (areaBarCtx) {
+        try {
+            // First try to use room data from the user's office
+            const roomsData = await fetchOfficeRoomData();
+            
+            // Prepare the data for the chart
+            let chartLabels = [];
+            let chartData = [];
+            
+            if (roomsData) {
+                // Use rooms from the user's office
+                console.log('Creating area bar chart with office rooms:', Object.keys(roomsData));
+                
+                // Create custom area data from room names
+                const roomNames = Object.keys(roomsData);
+                
+                // First check if we have energy data for these rooms
+                const roomEnergyData = {};
+                
+                roomNames.forEach(roomName => {
+                    // Try to get energy data from the areaData if it exists
+                    if (areaData[roomName] !== undefined) {
+                        roomEnergyData[roomName] = areaData[roomName];
+                    } else {
+                        // If no data exists, assign random values for now (0-50kW)
+                        roomEnergyData[roomName] = Math.floor(Math.random() * 50);
+                    }
+                });
+                
+                chartLabels = Object.keys(roomEnergyData);
+                chartData = Object.values(roomEnergyData);
+            } else {
+                // Fallback to existing areaData if we couldn't get rooms
+                console.log('Falling back to default area data:', Object.keys(areaData));
+                chartLabels = Object.keys(areaData);
+                chartData = Object.values(areaData);
+            }
+            
+            const areaColors = generateColors(chartLabels.length);
+            
+            areaBarChart = new Chart(areaBarCtx, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Energy Usage (kW)',
+                        data: chartData,
+                        backgroundColor: areaColors
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Energy Usage (kW)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Energy Usage by Area',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Error creating area bar chart:', error);
+            
+            // Fallback to the original implementation if there was an error
+            const areaColors = generateColors(Object.keys(areaData).length);
+            
+            areaBarChart = new Chart(areaBarCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(areaData),
+                    datasets: [{
+                        label: 'Energy Usage (kW)',
+                        data: Object.values(areaData),
+                        backgroundColor: areaColors
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Energy Usage (kW)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Energy Usage by Area',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
 }
 
 // **Initialize Time-Based Graphs**

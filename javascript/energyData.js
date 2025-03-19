@@ -22,103 +22,156 @@ export let totalEnergyDataGenerated = {
 };
 
 export let totalEnergyData = {
-    daily: [5, 8, 10, 12, 6],
-    weekly: [40, 50, 45, 60, 55, 48, 52],
-    monthly: [150, 170, 160, 180]
+    daily: [6752, 0, 0, 0, 0],
+    weekly: [0, 0, 0, 6752, 0, 0, 0],
+    monthly: [0, 0, 6752, 0]
 };
 
 export let totalCostData = {
-    daily: [2, 3, 5, 4, 6],
-    weekly: [20, 25, 22, 30, 28, 24, 26],
-    monthly: [90, 100, 95, 105]
+    daily: [795, 0, 0, 0, 0],
+    weekly: [0, 0, 0, 795, 0, 0, 0],
+    monthly: [0, 0, 795, 0]
 };
 
 export let areaData = {
-    "Meeting Room": 30,
-    "Workstations": 40,
-    "Common Areas": 25,
-    "Special": 20
-};
-
-export let deviceData = {
-    "Lights": 50,
-    "A/C": 20,
-    "Speaker": 40,
-    "Projector": 25,
-    "Laptop": 10,
-    "Printer": 22,
-    "Coffee Machine": 18,
-    "Monitor": 14,
-    "Server": 18,
-    "Electric Hoover": 18,
-    "Electronic Desk": 12
+    "Room 1": 2410,
+    "Room 2": 876,
+    "Room 3": 1323,
+    "Room 4": 19,
+    "Room 5": 39,
+    "Room 6": 0,    
+    "Room 7": 0,
+    "Room 8": 1830,
+    "vv": 212
 };
 
 export let energyData = {
-    "Meeting Room": {
-        daily: [5, 8, 10, 12, 6],
-        weekly: [40, 50, 45, 60, 55, 48, 52],
-        monthly: [150, 170, 160, 180]
+    "Room 1": {
+        daily: [2410, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 2410, 0, 0, 0],
+        monthly: [0, 0, 2410, 0]
     },
-    "Common Areas": {
-        daily: [3, 5, 7, 6, 4],
-        weekly: [30, 35, 40, 38, 36, 33, 31],
-        monthly: [100, 120, 130, 110]
+    "Room 2": {
+        daily: [876, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 876, 0, 0, 0],
+        monthly: [0, 0, 876, 0]
     },
-    "Workstations": {
-        daily: [6, 9, 11, 14, 7],
-        weekly: [45, 55, 50, 65, 60, 52, 57],
-        monthly: [180, 200, 190, 210]
+    "Room 3": {
+        daily: [1323, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 1323, 0, 0, 0],
+        monthly: [0, 0, 1323, 0]
     },
-    "Special": {
-        daily: [7, 10, 12, 15, 8],
-        weekly: [50, 60, 55, 70, 65, 58, 62],
-        monthly: [200, 220, 210, 230]
+    "Room 4": {
+        daily: [19, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 19, 0, 0, 0],
+        monthly: [0, 0, 19, 0]
+    },
+    "Room 5": {
+        daily: [39, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 39, 0, 0, 0],
+        monthly: [0, 0, 39, 0]
+    },
+    "Room 6": {
+        daily: [0, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 0, 0, 0, 0],
+        monthly: [0, 0, 0, 0]
+    },
+    "Room 7": {
+        daily: [0, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 0, 0, 0, 0],
+        monthly: [0, 0, 0, 0]
+    },
+    "Room 8": {
+        daily: [1830, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 1830, 0, 0, 0],
+        monthly: [0, 0, 1830, 0]
+    },
+    "vv": {
+        daily: [212, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 212, 0, 0, 0],
+        monthly: [0, 0, 212, 0]
     }
 };
 
 export let costData = {
-    "Meeting Room": {
-        daily: [10, 16, 20, 24, 12],
-        weekly: [80, 100, 90, 120, 110, 96, 104],
-        monthly: [300, 340, 320, 360]
+    "Room 1": {
+        daily: [284, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 284, 0, 0, 0],
+        monthly: [0, 0, 284, 0]
     },
-    "Common Areas": {
-        daily: [6, 10, 14, 12, 8],
-        weekly: [60, 70, 80, 76, 72, 66, 62],
-        monthly: [200, 240, 260, 220]
+    "Room 2": {
+        daily: [103, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 103, 0, 0, 0],
+        monthly: [0, 0, 103, 0]
     },
-    "Workstations": {
-        daily: [12, 18, 22, 28, 14],
-        weekly: [90, 110, 100, 130, 120, 104, 114],
-        monthly: [360, 400, 380, 420]
+    "Room 3": {
+        daily: [156, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 156, 0, 0, 0],
+        monthly: [0, 0, 156, 0]
     },
-    "Special": {
-        daily: [14, 20, 24, 30, 16],
-        weekly: [100, 120, 110, 140, 130, 116, 124],
-        monthly: [400, 440, 420, 460]
+    "Room 4": {
+        daily: [2, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 2, 0, 0, 0],
+        monthly: [0, 0, 2, 0]
+    },
+    "Room 5": {
+        daily: [5, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 5, 0, 0, 0],
+        monthly: [0, 0, 5, 0]
+    },
+    "Room 6": {
+        daily: [0, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 0, 0, 0, 0],
+        monthly: [0, 0, 0, 0]
+    },
+    "Room 7": {
+        daily: [0, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 0, 0, 0, 0],
+        monthly: [0, 0, 0, 0]
+    },
+    "Room 8": {
+        daily: [216, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 216, 0, 0, 0],
+        monthly: [0, 0, 216, 0]
+    },
+    "vv": {
+        daily: [25, 0, 0, 0, 0],
+        weekly: [0, 0, 0, 25, 0, 0, 0],
+        monthly: [0, 0, 25, 0]
     }
 };
 
 export let devicesByArea = {
-    "Meeting Room": [
-        { name: "Projector", energy: 5, cost: 2.5 },
-        { name: "Speakers", energy: 2, cost: 1.2 },
-        { name: "Lights", energy: 8, cost: 4 }
+    "Room 1": [
+        { name: "Projector", energy: 476, cost: 56 },
+        { name: "Speaker", energy: 300, cost: 35 },
+        { name: "Lights", energy: 300, cost: 35 }
     ],
-    "Workstations": [
-        { name: "Computers", energy: 15, cost: 8 },
-        { name: "Monitors", energy: 10, cost: 5 },
-        { name: "Printers", energy: 6, cost: 3 }
+    "Room 2": [
+        { name: "A/C", energy: 4800, cost: 566 },
+        { name: "Monitor", energy: 60, cost: 7 }
     ],
-    "Common Areas": [
-        { name: "Lights", energy: 12, cost: 6 },
-        { name: "Air Conditioning", energy: 20, cost: 10 },
-        { name: "Vending Machine", energy: 8, cost: 4 }
+    "Room 3": [
+        { name: "Server", energy: 405, cost: 48 },
+        { name: "Laptop", energy: 200, cost: 24 },
+        { name: "Printer", energy: 120, cost: 14 }
     ],
-    "Special": [
-        { name: "Heating", energy: 25, cost: 12 },
-        { name: "Speakers", energy: 10, cost: 5 }
+    "Room 4": [
+        { name: "Lights", energy: 19, cost: 2 }
+    ],
+    "Room 5": [
+        { name: "Electronic Desk", energy: 39, cost: 5 }
+    ],
+    "Room 6": [],
+    "Room 7": [],
+    "Room 8": [
+        { name: "Electric Hoover", energy: 50, cost: 6 },
+        { name: "Lights", energy: 300, cost: 35 },
+        { name: "A/C", energy: 1480, cost: 175 }
+    ],
+    "vv": [
+        { name: "Laptop", energy: 200, cost: 24 },
+        { name: "Monitor", energy: 12, cost: 1 }
     ]
 };
 
