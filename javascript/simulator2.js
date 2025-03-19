@@ -1,10 +1,11 @@
 // Main simulator file - imports components and initializes the simulator
-import { onValue, ref } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { onValue, ref, update } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
 import DeviceManager from './deviceManager.js';
 import UIManager from './uiManager.js';
 import DataManager from './dataManager.js';
 import FirebaseManager from './firebaseManager.js';
+
 
 class SmartMeterSimulator {
     constructor() {
@@ -183,6 +184,34 @@ class SmartMeterSimulator {
             officeReadings: officeReadings
         };
     }
+
+    saveTotalCostsToFirebase() {
+        // First check if we have the update method imported
+        if (typeof update !== 'function') {
+            console.error("Firebase update function not available");
+            return;
+        }
+        
+        try {
+            // Create a reference to the total-costs node in Firebase
+            const totalCostsRef = ref(database, 'total-costs');
+            
+            // Convert the officeTotalExpenses object to a format we can save to Firebase
+            const totalCostsData = {};
+            
+            for (const [officeId, totalCost] of Object.entries(this.officeTotalExpenses)) {
+                // Format to 2 decimal places for display and storage
+                totalCostsData[officeId] = parseFloat(totalCost.toFixed(2));
+            }
+            
+            // Update the Firebase database with the new totals
+            update(totalCostsRef, totalCostsData);
+            console.log("Successfully saved total costs to Firebase:", totalCostsData);
+        } catch (error) {
+            console.error("Error saving total costs to Firebase:", error);
+        }
+    }
+    
     
     saveReading(reading) {
         if (!reading) return false;
@@ -215,10 +244,13 @@ class SmartMeterSimulator {
             console.log("Saving reading to Firebase...");
             this.firebaseManager.saveEnergyConsumptionToFirebase(reading);
             console.log("Successfully saved reading to Firebase");
+            
+            // Also save the accumulated total costs
+            this.saveTotalCostsToFirebase();
         } catch (error) {
             console.error("Error saving to Firebase:", error);
         }
-
+    
         return true;
     }
     
@@ -251,10 +283,13 @@ class SmartMeterSimulator {
     }
     
     resetTotalExpenses() {
-        // Reset all expense tracking
+        // Reset all expense tracking locally
         for (const officeId in this.officeTotalExpenses) {
             this.officeTotalExpenses[officeId] = 0;
         }
+        
+        // Also reset the values in Firebase
+        this.saveTotalCostsToFirebase();
         
         // Update the UI
         this.uiManager.updateMetricsDisplay();

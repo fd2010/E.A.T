@@ -41,6 +41,17 @@
         <div id="officeMetrics" class="office-metrics">
             <!-- Office-specific metrics will be added here -->
         </div>
+        
+        <!-- Database Cleanup Section -->
+        <div class="cleanup-container">
+            <h3>Database Maintenance</h3>
+            <p>Use this button to clean up large database tables that are filling up your Firebase storage quota.</p>
+            <div class="cleanup-button-group">
+                <button id="cleanupDatabaseBtn">Clean Up energy-consumed Table</button>
+                <button id="resetExpensesButton">Reset Total Expenses</button>
+            </div>
+            <div id="cleanupStatus" class="cleanup-status"></div>
+        </div>
     </div>
 
     <!-- New Renewable Energy Generation Simulator -->
@@ -110,6 +121,31 @@
     <script type="module" src="./javascript/simulator2.js"></script>
     <!-- New Energy Generation Simulator -->
     <script type="module" src="./javascript/generated-simulator.js"></script>
+    <!-- Database Cleanup Utility -->
+    <script type="module" src="./javascript/database-cleanup.js"></script>
 
+    <script type="module">
+        // Wire up the Reset Total Expenses button
+        document.addEventListener('DOMContentLoaded', () => {
+            const resetExpensesButton = document.getElementById('resetExpensesButton');
+            if (resetExpensesButton) {
+                resetExpensesButton.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to reset all total expenses to zero?')) {
+                        if (window.simulator) {
+                            window.simulator.resetTotalExpenses();
+                            document.getElementById('cleanupStatus').textContent = 'Total expenses reset successfully!';
+                            document.getElementById('cleanupStatus').className = 'cleanup-status success';
+                            document.getElementById('cleanupStatus').style.display = 'block';
+                        } else {
+                            console.error('Simulator not initialized');
+                            document.getElementById('cleanupStatus').textContent = 'Error: Simulator not initialized';
+                            document.getElementById('cleanupStatus').className = 'cleanup-status error';
+                            document.getElementById('cleanupStatus').style.display = 'block';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
