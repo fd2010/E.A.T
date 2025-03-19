@@ -36,10 +36,10 @@ const deviceBarCtx = document.getElementById('deviceBarChart').getContext('2d');
 // **Normalize Area Names**
 function normalizeArea(area) {
     const mapping = {
-        "meeting": "Meeting Room",
-        "work": "Workstations",
-        "common": "Common Areas",
-        "special": "Special"
+        "meeting": "Break Room",
+        "work": "Main Office",
+        "common": "Garden",
+        "special": "Reception"
     };
     return mapping[area] || area;
 }
@@ -110,7 +110,8 @@ function createAreaCharts() {
             labels: Object.keys(areaData),
             datasets: [{
                 data: Object.values(areaData),
-                backgroundColor: areaColors
+                backgroundColor: areaColors,
+                borderWidth: 0
             }]
         },
         options: {
