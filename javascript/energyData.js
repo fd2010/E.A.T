@@ -1,11 +1,13 @@
-// energyData.js - Modified to prevent automatic data fetch
+// energyData.js - Modified to fetch real data from Firebase
+// IMPORTANT: This keeps all original variable names but populates them with real data
 
 // Firebase is already initialized in your app, so we'll use the existing instance
+// Import from the version your app is using
 import { ref, onValue, get } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 import { database } from '../database/firebase-config.js';
 
 // Cost per kilowatt-hour
-const COST_PER_KWH = 0.28; // £0.28 per kWh (28 pence)
+const COST_PER_KWH = 0.28; // £0.28 per kWh
 
 // Original time labels structure - kept exactly the same
 export const timeLabels = {
@@ -14,183 +16,177 @@ export const timeLabels = {
     monthly: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
 };
 
-// Static data that won't be automatically updated
-export let totalEnergyDataGenerated = {
-    daily: [7, 8, 10, 12, 6],
+// Original data structures that will be updated with real data
+export const totalEnergyDataGenerated = {
+    daily: [5, 8, 10, 12, 6],
     weekly: [40, 50, 45, 60, 55, 48, 52],
     monthly: [150, 170, 160, 180]
 };
 
-export let totalEnergyData = {
-    daily: [6752, 0, 0, 0, 0],
-    weekly: [0, 0, 0, 6752, 0, 0, 0],
-    monthly: [0, 0, 6752, 0]
+// Original data structures that will be updated with real data
+export const totalEnergyData = {
+    daily: [5, 8, 10, 12, 6],
+    weekly: [40, 50, 45, 60, 55, 48, 52],
+    monthly: [150, 170, 160, 180]
 };
 
-export let totalCostData = {
-    daily: [795, 0, 0, 0, 0],
-    weekly: [0, 0, 0, 795, 0, 0, 0],
-    monthly: [0, 0, 795, 0]
+export const totalCostData = {
+    daily: [2, 3, 5, 4, 6],
+    weekly: [20, 25, 22, 30, 28, 24, 26],
+    monthly: [90, 100, 95, 105]
 };
 
-export let areaData = {
-    "Room 1": 2410,
-    "Room 2": 876,
-    "Room 3": 1323,
-    "Room 4": 19,
-    "Room 5": 39,
-    "Room 6": 0,    
-    "Room 7": 0,
-    "Room 8": 1830,
-    "vv": 212
-};
-
-export let energyData = {
-    "Room 1": {
-        daily: [2410, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 2410, 0, 0, 0],
-        monthly: [0, 0, 2410, 0]
+export const energyData = {
+    "Meeting Room": {
+        daily: [5, 8, 10, 12, 6],
+        weekly: [40, 50, 45, 60, 55, 48, 52],
+        monthly: [150, 170, 160, 180]
     },
-    "Room 2": {
-        daily: [876, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 876, 0, 0, 0],
-        monthly: [0, 0, 876, 0]
+    "Common Areas": {
+        daily: [3, 5, 7, 6, 4],
+        weekly: [30, 35, 40, 38, 36, 33, 31],
+        monthly: [100, 120, 130, 110]
     },
-    "Room 3": {
-        daily: [1323, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 1323, 0, 0, 0],
-        monthly: [0, 0, 1323, 0]
+    "Workstations": {
+        daily: [6, 9, 11, 14, 7],
+        weekly: [45, 55, 50, 65, 60, 52, 57],
+        monthly: [180, 200, 190, 210]
     },
-    "Room 4": {
-        daily: [19, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 19, 0, 0, 0],
-        monthly: [0, 0, 19, 0]
-    },
-    "Room 5": {
-        daily: [39, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 39, 0, 0, 0],
-        monthly: [0, 0, 39, 0]
-    },
-    "Room 6": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
-    },
-    "Room 7": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
-    },
-    "Room 8": {
-        daily: [1830, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 1830, 0, 0, 0],
-        monthly: [0, 0, 1830, 0]
-    },
-    "vv": {
-        daily: [212, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 212, 0, 0, 0],
-        monthly: [0, 0, 212, 0]
+    "Special": {
+        daily: [7, 10, 12, 15, 8],
+        weekly: [50, 60, 55, 70, 65, 58, 62],
+        monthly: [200, 220, 210, 230]
     }
 };
 
-export let costData = {
-    "Room 1": {
-        daily: [284, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 284, 0, 0, 0],
-        monthly: [0, 0, 284, 0]
+export const costData = {
+    "Meeting Room": {
+        daily: [10, 16, 20, 24, 12],
+        weekly: [80, 100, 90, 120, 110, 96, 104],
+        monthly: [300, 340, 320, 360]
     },
-    "Room 2": {
-        daily: [103, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 103, 0, 0, 0],
-        monthly: [0, 0, 103, 0]
+    "Common Areas": {
+        daily: [6, 10, 14, 12, 8],
+        weekly: [60, 70, 80, 76, 72, 66, 62],
+        monthly: [200, 240, 260, 220]
     },
-    "Room 3": {
-        daily: [156, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 156, 0, 0, 0],
-        monthly: [0, 0, 156, 0]
+    "Workstations": {
+        daily: [12, 18, 22, 28, 14],
+        weekly: [90, 110, 100, 130, 120, 104, 114],
+        monthly: [360, 400, 380, 420]
     },
-    "Room 4": {
-        daily: [2, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 2, 0, 0, 0],
-        monthly: [0, 0, 2, 0]
-    },
-    "Room 5": {
-        daily: [5, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 5, 0, 0, 0],
-        monthly: [0, 0, 5, 0]
-    },
-    "Room 6": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
-    },
-    "Room 7": {
-        daily: [0, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 0, 0, 0, 0],
-        monthly: [0, 0, 0, 0]
-    },
-    "Room 8": {
-        daily: [216, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 216, 0, 0, 0],
-        monthly: [0, 0, 216, 0]
-    },
-    "vv": {
-        daily: [25, 0, 0, 0, 0],
-        weekly: [0, 0, 0, 25, 0, 0, 0],
-        monthly: [0, 0, 25, 0]
+    "Special": {
+        daily: [14, 20, 24, 30, 16],
+        weekly: [100, 120, 110, 140, 130, 116, 124],
+        monthly: [400, 440, 420, 460]
     }
 };
 
-export let devicesByArea = {
-    "Room 1": [
-        { name: "Projector", energy: 476, cost: 56 },
-        { name: "Speaker", energy: 300, cost: 35 },
-        { name: "Lights", energy: 300, cost: 35 }
+export const areaData = {
+    "Meeting Room": 30,
+    "Workstations": 40,
+    "Common Areas": 25,
+    "Special": 20
+};
+
+export const deviceData = {
+    "Computers": 50,
+    "Lights": 20,
+    "Heating": 40,
+    "Monitors": 25,
+    "Speakers": 10,
+    "A/C": 22,
+    "Projector": 18,
+    "Vending Machine": 12
+};
+
+export const devicesByArea = {
+    "Meeting Room": [
+        { name: "Projector", energy: 5, cost: 2.5 },
+        { name: "Speakers", energy: 2, cost: 1.2 },
+        { name: "Lights", energy: 8, cost: 4 }
     ],
-    "Room 2": [
-        { name: "A/C", energy: 4800, cost: 566 },
-        { name: "Monitor", energy: 60, cost: 7 }
+    "Workstations": [
+        { name: "Computers", energy: 15, cost: 8 },
+        { name: "Monitors", energy: 10, cost: 5 },
+        { name: "Printers", energy: 6, cost: 3 }
     ],
-    "Room 3": [
-        { name: "Server", energy: 405, cost: 48 },
-        { name: "Laptop", energy: 200, cost: 24 },
-        { name: "Printer", energy: 120, cost: 14 }
+    "Common Areas": [
+        { name: "Lights", energy: 12, cost: 6 },
+        { name: "Air Conditioning", energy: 20, cost: 10 },
+        { name: "Vending Machine", energy: 8, cost: 4 }
     ],
-    "Room 4": [
-        { name: "Lights", energy: 19, cost: 2 }
-    ],
-    "Room 5": [
-        { name: "Electronic Desk", energy: 39, cost: 5 }
-    ],
-    "Room 6": [],
-    "Room 7": [],
-    "Room 8": [
-        { name: "Electric Hoover", energy: 50, cost: 6 },
-        { name: "Lights", energy: 300, cost: 35 },
-        { name: "A/C", energy: 1480, cost: 175 }
-    ],
-    "vv": [
-        { name: "Laptop", energy: 200, cost: 24 },
-        { name: "Monitor", energy: 12, cost: 1 }
+    "Special": [
+        { name: "Heating", energy: 25, cost: 12 },
+        { name: "Speakers", energy: 10, cost: 5 }
     ]
 };
 
-// Current user's office ID
-let currentOfficeID = null;
-
-// Function to get the current user's office ID from localStorage
-function getCurrentOfficeID() {
-    try {
-        const userData = localStorage.getItem('userData');
-        if (userData) {
-            const parsed = JSON.parse(userData);
-            return parsed.officeID || null;
-        }
-    } catch (error) {
-        console.error('Error getting office ID from localStorage:', error);
+export const deviceEnergyData = {
+    "Computers": {
+        daily: [2, 4, 6, 5, 3],
+        weekly: [20, 25, 30, 28, 26, 22, 24],
+        monthly: [100, 120, 110, 130]
+    },
+    "Lights": {
+        daily: [1, 2, 3, 3, 2],
+        weekly: [10, 12, 15, 14, 13, 11, 12],
+        monthly: [50, 55, 52, 58]
+    },
+    "Heating": {
+        daily: [5, 7, 10, 9, 6],
+        weekly: [40, 50, 48, 55, 52, 46, 49],
+        monthly: [200, 220, 210, 230]
+    },
+    "Monitors": {
+        daily: [1, 3, 4, 3, 2],
+        weekly: [15, 18, 20, 19, 17, 16, 18],
+        monthly: [70, 80, 75, 85]
+    },
+    "Speakers": {
+        daily: [0.5, 1, 1.5, 1, 0.7],
+        weekly: [5, 6, 7, 6.5, 6, 5.5, 5.8],
+        monthly: [25, 30, 28, 32]
+    },
+    "Vending Machine": {
+        daily: [2, 3, 4, 4, 3],
+        weekly: [20, 25, 28, 26, 24, 22, 23],
+        monthly: [90, 100, 95, 105]
     }
-    return null;
-}
+};
+
+export const deviceCostData = {
+    "Computers": {
+        daily: [5, 8, 12, 10, 6],
+        weekly: [40, 50, 60, 55, 52, 48, 50],
+        monthly: [200, 240, 220, 260]
+    },
+    "Lights": {
+        daily: [1, 2, 3, 2.5, 2],
+        weekly: [10, 12, 15, 14, 13, 11, 12],
+        monthly: [50, 55, 52, 58]
+    },
+    "Heating": {
+        daily: [8, 12, 15, 13, 10],
+        weekly: [70, 80, 85, 82, 78, 74, 75],
+        monthly: [300, 320, 310, 330]
+    },
+    "Monitors": {
+        daily: [2, 4, 5, 4, 3],
+        weekly: [20, 25, 28, 26, 24, 22, 23],
+        monthly: [90, 100, 95, 105]
+    },
+    "Speakers": {
+        daily: [0.8, 1.2, 1.5, 1.4, 1],
+        weekly: [8, 10, 12, 11, 9.5, 8.5, 9],
+        monthly: [40, 50, 45, 55]
+    },
+    "Vending Machine": {
+        daily: [3, 4, 5, 5, 4],
+        weekly: [30, 35, 40, 38, 36, 33, 31],
+        monthly: [120, 140, 130, 150]
+    }
+};
 
 // Get date ranges for different periods
 function getDateRanges() {
@@ -383,9 +379,30 @@ function updateDeviceData(readings) {
             // Add new device type
             deviceData[device] = newDeviceData[device];
         }
+        
+        // Create entries in energy data if needed
+        if (deviceEnergyData[device] === undefined) {
+            deviceEnergyData[device] = {
+                daily: [0, 0, 0, 0, 0],
+                weekly: [0, 0, 0, 0, 0, 0, 0],
+                monthly: [0, 0, 0, 0]
+            };
+            
+            deviceCostData[device] = {
+                daily: [0, 0, 0, 0, 0],
+                weekly: [0, 0, 0, 0, 0, 0, 0],
+                monthly: [0, 0, 0, 0]
+            };
+        }
+        
+        // Update time-based energy data
+        ['daily', 'weekly', 'monthly'].forEach(period => {
+            deviceEnergyData[device][period] = groupDataByTimeSegments(deviceReadings, period);
+            deviceCostData[device][period] = deviceEnergyData[device][period].map(w => (w / 1000) * COST_PER_KWH);
+        });
     });
     
-    console.log("Device data updated:", deviceData);
+    console.log("Device data updated");
 }
 
 // Update devices by area
@@ -431,304 +448,149 @@ function updateDevicesByArea(readings) {
     console.log("Devices by area updated");
 }
 
-// POWER USAGE DATA FETCHING - Specific to user's office
-// Fetch device readings from Firebase for the user's office
-async function fetchOfficeDeviceReadings() {
+// Fetch device readings from Firebase (where the simulator stores the data)
+async function fetchDeviceReadings() {
     if (!database) {
         console.error("Firebase database not initialized");
         return [];
     }
     
-    // Get current user's office ID
-    const officeID = getCurrentOfficeID();
-    if (!officeID) {
-        console.warn("No office ID found for current user");
-        return [];
+    // Try to find where the device readings are stored
+    const pathsToCheck = [
+        'deviceReadings',
+        'device_readings',
+        'readings',
+        'simulator/readings'
+    ];
+    
+    for (const path of pathsToCheck) {
+        console.log(`Checking path: ${path}`);
+        try {
+            const dataRef = ref(database, path);
+            const snapshot = await get(dataRef);
+            
+            if (snapshot.exists()) {
+                const rawData = snapshot.val();
+                console.log(`Found data at path: ${path}`);
+                
+                const readings = Array.isArray(rawData) 
+                    ? rawData 
+                    : Object.values(rawData);
+                
+                console.log(`Found ${readings.length} readings`);
+                return readings;
+            }
+        } catch (error) {
+            console.warn(`Error checking path ${path}:`, error);
+        }
     }
     
-    console.log(`Fetching device readings for office: ${officeID}`);
-    
-    // Try to find device readings for this office
+    // If we haven't found anything, try to extract from office structure
+    console.log("No direct readings found. Checking office structure...");
     try {
-        // First try to get simulator readings for this office
-        const readingsRef = ref(database, 'simulator/readings');
-        const snapshot = await get(readingsRef);
+        const officesRef = ref(database, 'offices');
+        const officesSnapshot = await get(officesRef);
         
-        if (snapshot.exists()) {
-            const rawData = snapshot.val();
-            console.log(`Found simulator readings, filtering for office: ${officeID}`);
-            
-            // Convert to array and filter by office ID
-            const readings = Array.isArray(rawData) 
-                ? rawData.filter(r => r.office_id === officeID) 
-                : Object.values(rawData).filter(r => r.office_id === officeID);
-            
-            console.log(`Found ${readings.length} readings for this office`);
+        if (officesSnapshot.exists()) {
+            const officesData = officesSnapshot.val();
+            const readings = extractReadingsFromOffices(officesData);
             
             if (readings.length > 0) {
+                console.log(`Extracted ${readings.length} readings from offices`);
                 return readings;
             }
         }
-        
-        // If no simulator readings, try to extract from office structure
-        console.log("No direct readings found. Checking office structure...");
-        const officeRef = ref(database, `offices/${officeID}`);
-        const officeSnapshot = await get(officeRef);
-        
-        if (officeSnapshot.exists()) {
-            const officeData = officeSnapshot.val();
-            const readings = extractReadingsFromOffice(officeData, officeID);
-            
-            if (readings.length > 0) {
-                console.log(`Extracted ${readings.length} readings from office structure`);
-                return readings;
-            }
-        }
-        
-        console.warn(`No readings found for office: ${officeID}`);
-        return [];
-        
     } catch (error) {
-        console.error("Error fetching office device readings:", error);
-        return [];
+        console.warn("Error extracting from offices:", error);
     }
+    
+    console.warn("No readings found in any location");
+    return [];
 }
 
-// Extract readings from a single office's structure
-function extractReadingsFromOffice(officeData, officeID) {
+// Extract readings from office structure
+function extractReadingsFromOffices(officesData) {
     const readings = [];
     
-    if (!officeData || !officeData.rooms) {
-        return readings;
-    }
-    
     // Function to process a single device
-    function processDevice(device, roomName) {
+    function processDevice(device, roomName, officeId) {
         if (!device || typeof device !== 'object') return;
         
-        // Skip devices that are turned off
-        if (device.status !== 'On') return;
+        // Check if it's already a reading format
+        if (device.watts !== undefined && device.timestamp !== undefined) {
+            readings.push(device);
+            return;
+        }
         
-        // Generate a realistic power value based on device type
-        const deviceType = device.type || 'Unknown';
-        const powerRanges = {
-            'Desktop Computer': [80, 175],
-            'Laptop': [20, 50],
-            'Printer': [30, 350],
-            'Coffee Machine': [200, 1200],
-            'Monitor': [20, 40],
-            'Server': [200, 500],
-            'A/C': [500, 1500],
-            'Lights': [10, 100],
-            'Projector': [150, 300],
-            'Speakers': [15, 80],
-            'Electric Hoover': [30, 70],
-            'Default': [20, 100]
-        };
-        
-        const range = powerRanges[deviceType] || powerRanges.Default;
-        const watts = Math.random() * (range[1] - range[0]) + range[0];
-        
-        readings.push({
-            timestamp: new Date().toISOString(),
-            office_id: officeID,
-            room_name: roomName,
-            device_name: device.name || 'Unknown Device',
-            device_type: deviceType,
-            status: device.status,
-            volts: 220 + (Math.random() * 10 - 5), // Random voltage around 220V
-            watts: watts
-        });
-    }
-    
-    // Process all rooms and devices in this office
-    for (const roomName in officeData.rooms) {
-        const room = officeData.rooms[roomName];
-        
-        if (Array.isArray(room)) {
-            // Room is an array of devices
-            room.forEach(device => {
-                processDevice(device, roomName);
+        // Otherwise create a reading from device data
+        if (device.status === 'On') {
+            // Generate a realistic power value based on device type
+            const deviceType = device.type || 'Unknown';
+            const powerRanges = {
+                'Desktop Computer': [80, 175],
+                'Laptop': [20, 50],
+                'Printer': [30, 350],
+                'Coffee Machine': [200, 1200],
+                'Monitor': [20, 40],
+                'Server': [200, 500],
+                'A/C': [500, 1500],
+                'Lights': [10, 100],
+                'Projector': [150, 300],
+                'Speakers': [15, 80],
+                'Electric Hoover': [30, 70],
+                'Default': [20, 100]
+            };
+            
+            const range = powerRanges[deviceType] || powerRanges.Default;
+            const watts = Math.random() * (range[1] - range[0]) + range[0];
+            
+            readings.push({
+                timestamp: new Date().toISOString(),
+                office_id: officeId,
+                room_name: roomName,
+                device_name: device.name || 'Unknown Device',
+                device_type: deviceType,
+                status: device.status,
+                volts: 220 + (Math.random() * 10 - 5), // Random voltage around 220V
+                watts: watts
             });
-        } else if (typeof room === 'object') {
-            // Room is an object with device keys
-            for (const deviceId in room) {
-                processDevice(room[deviceId], roomName);
+        }
+    }
+    
+    // Process all offices, rooms, and devices
+    for (const officeId in officesData) {
+        const office = officesData[officeId];
+        
+        if (office && office.rooms) {
+            for (const roomName in office.rooms) {
+                const room = office.rooms[roomName];
+                
+                if (Array.isArray(room)) {
+                    // Room is an array of devices
+                    room.forEach(device => {
+                        processDevice(device, roomName, officeId);
+                    });
+                } else if (typeof room === 'object') {
+                    // Room is an object with device keys
+                    for (const deviceId in room) {
+                        processDevice(room[deviceId], roomName, officeId);
+                    }
+                }
             }
         }
     }
     
-    console.log(`Extracted ${readings.length} device readings from office: ${officeID}`);
+    console.log(`Extracted ${readings.length} device readings from offices structure`);
     return readings;
-}
-
-// Setup real-time listener for the current office's device data
-function setupOfficeDeviceListener() {
-    const officeID = getCurrentOfficeID();
-    if (!officeID || !database) {
-        console.warn("Cannot setup listener: Office ID missing or database not initialized");
-        return;
-    }
-    
-    console.log(`Setting up real-time listener for office: ${officeID}`);
-    
-    // Listen for changes to the office structure
-    const officeRef = ref(database, `offices/${officeID}`);
-    onValue(officeRef, async (snapshot) => {
-        if (snapshot.exists()) {
-            console.log(`Received update for office: ${officeID}`);
-            const officeData = snapshot.val();
-            
-            // Extract readings from the updated office data
-            const readings = extractReadingsFromOffice(officeData, officeID);
-            
-            if (readings.length > 0) {
-                // Update all data structures with the readings
-                updateAreaData(readings);
-                updateEnergyData(readings);
-                updateDeviceData(readings);
-                updateDevicesByArea(readings);
-                
-                // Trigger custom event to notify that data is updated
-                const event = new CustomEvent('energyDataUpdated');
-                document.dispatchEvent(event);
-                
-                console.log("Energy data updated from real-time listener");
-            }
-        }
-    }, (error) => {
-        console.error(`Error in real-time listener for office ${officeID}:`, error);
-    });
-}
-
-// Fetch renewable energy generation data from Firebase
-async function fetchRenewableEnergyData() {
-    try {
-        console.log("Fetching renewable energy generation data...");
-        
-        if (!database) {
-            console.error("Firebase database not initialized");
-            return false;
-        }
-        
-        // Try to get the data from window.renewableGenerator if it exists
-        if (window.renewableGenerator && typeof window.renewableGenerator.getAggregatedData === 'function') {
-            console.log("Using window.renewableGenerator for energy generation data");
-            const data = window.renewableGenerator.getAggregatedData();
-            
-            // Update totalEnergyDataGenerated
-            if (data.daily && data.daily.length > 0) totalEnergyDataGenerated.daily = data.daily;
-            if (data.weekly && data.weekly.length > 0) totalEnergyDataGenerated.weekly = data.weekly;
-            if (data.monthly && data.monthly.length > 0) totalEnergyDataGenerated.monthly = data.monthly;
-            
-            console.log("Updated totalEnergyDataGenerated from renewableGenerator:", totalEnergyDataGenerated);
-            return true;
-        }
-        
-        // Otherwise fetch from Firebase
-        const generatedRef = ref(database, 'energy-generated/aggregated');
-        const snapshot = await get(generatedRef);
-        
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            console.log("Found energy generation data in Firebase:", data);
-            
-            // Update totalEnergyDataGenerated
-            if (data.daily && data.daily.length > 0) totalEnergyDataGenerated.daily = data.daily;
-            if (data.weekly && data.weekly.length > 0) totalEnergyDataGenerated.weekly = data.weekly;
-            if (data.monthly && data.monthly.length > 0) totalEnergyDataGenerated.monthly = data.monthly;
-            
-            console.log("Updated totalEnergyDataGenerated from Firebase:", totalEnergyDataGenerated);
-            
-            // Trigger event for charts to update
-            const event = new CustomEvent('energyGenerationDataUpdated');
-            document.dispatchEvent(event);
-            
-            return true;
-        } else {
-            console.log("No energy generation data found in Firebase");
-            return false;
-        }
-    } catch (error) {
-        console.error("Error fetching renewable energy data:", error);
-        return false;
-    }
-}
-
-// Set up real-time listener for renewable energy data
-function setupRenewableEnergyListener() {
-    if (!database) {
-        console.error("Firebase database not initialized");
-        return;
-    }
-    
-    // Set up Firebase listener for energy generation data
-    const generatedRef = ref(database, 'energy-generated/aggregated');
-    
-    onValue(generatedRef, (snapshot) => {
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            console.log("Received updated energy generation data:", data);
-            
-            // Update totalEnergyDataGenerated
-            if (data.daily && data.daily.length > 0) totalEnergyDataGenerated.daily = data.daily;
-            if (data.weekly && data.weekly.length > 0) totalEnergyDataGenerated.weekly = data.weekly;
-            if (data.monthly && data.monthly.length > 0) totalEnergyDataGenerated.monthly = data.monthly;
-            
-            console.log("Updated totalEnergyDataGenerated in real-time:", totalEnergyDataGenerated);
-            
-            // Trigger event for charts to update
-            const event = new CustomEvent('energyGenerationDataUpdated');
-            document.dispatchEvent(event);
-        }
-    }, (error) => {
-        console.error("Error setting up renewable energy data listener:", error);
-    });
-}
-
-// Function to fetch total costs from Firebase
-export async function fetchTotalCosts() {
-    if (!database) {
-        console.error("Firebase database not initialized");
-        return null;
-    }
-    
-    try {
-        console.log("Fetching total costs from Firebase");
-        const totalCostsRef = ref(database, 'total-costs');
-        const snapshot = await get(totalCostsRef);
-        
-        if (snapshot.exists()) {
-            const totalCosts = snapshot.val();
-            console.log("Total costs data retrieved:", totalCosts);
-            return totalCosts;
-        } else {
-            console.warn("No total costs data found in Firebase");
-            return null;
-        }
-    } catch (error) {
-        console.error("Error fetching total costs:", error);
-        return null;
-    }
 }
 
 // Main function to fetch and update all data
 async function fetchAllData() {
     try {
-        console.log("Fetching all energy data...");
+        console.log("Fetching energy data...");
         
-        // Update current office ID
-        currentOfficeID = getCurrentOfficeID();
-        console.log("Current office ID:", currentOfficeID);
-        
-        // First, fetch renewable energy generation data
-        await fetchRenewableEnergyData();
-        
-        // Then fetch consumption readings for the current office
-        const readings = await fetchOfficeDeviceReadings();
-        
-        // Also fetch total costs
-        const totalCosts = await fetchTotalCosts();
+        // Fetch readings from database
+        const readings = await fetchDeviceReadings();
         
         if (readings && readings.length > 0) {
             // Update all data structures with the readings
@@ -738,36 +600,21 @@ async function fetchAllData() {
             updateDevicesByArea(readings);
             
             // Trigger custom event to notify that data is updated
-            const event = new CustomEvent('energyDataUpdated', { 
-                detail: { totalCosts: totalCosts } 
-            });
+            const event = new CustomEvent('energyDataUpdated');
             document.dispatchEvent(event);
             
-            console.log("Energy data updated successfully for office:", currentOfficeID);
+            console.log("Energy data updated successfully");
         } else {
-            console.warn("No readings found to update consumption data for office:", currentOfficeID);
-            
-            // Even if no readings, still trigger the event with the total costs
-            if (totalCosts) {
-                const event = new CustomEvent('energyDataUpdated', { 
-                    detail: { totalCosts: totalCosts } 
-                });
-                document.dispatchEvent(event);
-            }
+            console.warn("No readings found to update data");
         }
     } catch (error) {
         console.error("Error fetching and updating energy data:", error);
     }
 }
 
-// Commenting out the auto-load functionality
-/* 
+// Start fetching data when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Setting up energy data...");
-    
-    // Set up real-time listeners
-    setupRenewableEnergyListener();
-    setupOfficeDeviceListener();
     
     // Fetch immediately
     fetchAllData();
@@ -780,18 +627,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Manual refresh requested");
         fetchAllData();
     });
-    
-    // Listen for user login/change events
-    window.addEventListener('storage', (event) => {
-        if (event.key === 'userData') {
-            console.log("User data changed, refreshing energy data");
-            fetchAllData();
-        }
-    });
 });
-*/
 
-// Export an update function that can be called manually if needed
+// Export an update function that can be called manually
 export function updateEnergyDataNow() {
     return fetchAllData();
 }
