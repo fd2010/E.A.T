@@ -69,6 +69,11 @@
                     <h3 class="graph-title">Overall Energy Usage by Office Areas</h3>
                 </div>
 
+
+                <div class="graph-container">
+                    <canvas id="areaComparisonBar"></canvas>
+                </div>
+            <!-- 
                 <div class="graph-container-wrapper">
                     <div class="area-graph-container">
                         <canvas id="areaComparisonPie"></canvas>
@@ -76,20 +81,23 @@
                     <div class="area-graph-container">
                         <canvas id="areaComparisonBar"></canvas>
                     </div>
-                </div>
+                </div> -->
 
             </section>
-
+            "meeting": "Break Room",
+            "work": "Main Office",
+            "common": "Garden",
+            "special": "Reception"
 
             <!-- Usage by Area selection -->
 
             <section class="graph-section usage-by-area pUsageSection">
 
                 <select id="areaTypeDropdown">
-                    <option value="Meeting Room">Meeting Room</option>
-                    <option value="Common Areas">Common Areas</option>
-                    <option value="Workstations">Workstations</option>
-                    <option value="Special">Special</option>
+                    <option value="Break Room">Break Room</option>
+                    <option value="Main Office">Main Office</option>
+                    <option value="Garden">Garden</option>
+                    <option value="Reception">Reception</option>
                 </select>
 
                 <div class="section-header">
