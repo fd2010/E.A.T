@@ -165,6 +165,78 @@
     <script type="module" src="./javascript/add-device.js"></script>
     <script type="module" src="./javascript/settings.js"></script>
     <script type="module" src="./javascript/load-notifications.js"></script>
+    <!-- Add this right before the closing </body> tag in pUsage.html -->
+<div class="simulation-controls" style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; z-index: 1000; display: none;">
+    <label>
+      <input type="checkbox" id="simulationModeToggle"> Simulation Mode
+    </label>
+    <button id="refreshSimData" style="display: none; margin-left: 10px;">Refresh Data</button>
+  </div>
+  
+  <!-- Update this in pUsage.html -->
+<script type="module">
+    // Check if this is a development environment
+    const isDev = window.location.hostname === 'localhost' || 
+                  window.location.hostname === '127.0.0.1' ||
+                  window.location.search.includes('dev=true');
+    
+    if (isDev) {
+      // Show simulation controls in development mode
+      document.querySelector('.simulation-controls').style.display = 'block';
+      
+      // Setup simulation mode toggle
+      const simToggle = document.getElementById('simulationModeToggle');
+      const refreshBtn = document.getElementById('refreshSimData');
+      
+      // Check if simulation mode is already active
+      simToggle.checked = localStorage.getItem('useSimulator') === 'true';
+      refreshBtn.style.display = simToggle.checked ? 'inline-block' : 'none';
+      
+      // Toggle simulation mode
+      simToggle.addEventListener('change', async function() {
+        localStorage.setItem('useSimulator', this.checked);
+        refreshBtn.style.display = this.checked ? 'inline-block' : 'none';
+        
+        if (this.checked) {
+          try {
+            console.log('Loading simulation data bridge...');
+            // Fix path to match your directory structure
+            const module = await import('./javascript/simulator-data-bridge.js');
+            console.log('Module loaded:', module);
+            module.injectSimulatedData();
+          } catch (error) {
+            console.error('Error loading simulation modules:', error);
+          }
+        } else {
+          // Reload page to use real data
+          window.location.reload();
+        }
+      });
+      
+      // Refresh simulation data button
+      refreshBtn.addEventListener('click', function() {
+        console.log('Manually refreshing simulation data');
+        if (window.updateEnergyDataNow) {
+          window.updateEnergyDataNow();
+        }
+      });
+      
+      // If simulation mode is active, load the simulator bridge
+      if (simToggle.checked) {
+        try {
+          console.log('Auto-loading simulation bridge on page load');
+          import('./javascript/simulator-data-bridge.js')
+            .then(module => {
+              console.log('Bridge module loaded successfully');
+              module.injectSimulatedData();
+            })
+            .catch(err => console.error('Error auto-loading bridge:', err));
+        } catch (error) {
+          console.error('Error setting up simulation:', error);
+        }
+      }
+    }
+  </script>
 </body>
 
 </html>
