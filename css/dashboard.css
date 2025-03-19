@@ -904,6 +904,21 @@ li .logout-btn img {
         max-width: 350px;
         width: 100%;
     }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto; /* Allow sections to stack */
+    }
+
+    .devices-section {
+        width: 100%;
+    }
+
+    .sidebar-section {
+        width: 100%;
+        grid-column: 1 / 2; /* Ensure it takes up the full width */
+        grid-row: auto; /* Allow it to naturally flow to the bottom */
+    }
 }
 
 /* Media Query for screens smaller than 768px */
