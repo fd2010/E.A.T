@@ -970,8 +970,8 @@ li .logout-btn img {
 
     .sidebar-section {
         width: 100%;
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
+        grid-column: 1 / 2; /* Ensure it takes up the full width */
+        grid-row: auto; /* Allow it to naturally flow to the bottom */
     }
 }
 
@@ -1024,6 +1024,12 @@ li .logout-btn img {
     .devices-section, .energy-section {
         width: 100%;
         padding: 10px;
+    }
+
+    .sidebar-section {
+        width: 100%;
+        grid-column: 1 / 2; /* Ensure it takes up the full width */
+        grid-row: auto; /* Allow it to naturally flow to the bottom */
     }
 }
 

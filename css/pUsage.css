@@ -375,7 +375,7 @@
     max-width: 450px; /* Reduced max-width to prevent overflow */
     min-width: 200px;
     height: auto;
-    min-height: 300px; /* Increased to fit the chart and legend */
+    min-height: 400px; /* Increased to fit the chart and legend */
     display: flex;
     justify-content: center;
     padding: 0;
@@ -385,7 +385,7 @@
 /* Update pie-container to match the parent and prevent overflow */
 .pie-container {
     width: 100%;
-    max-width: 350px; /* Match the parent max-width */
+    max-width: 450px; /* Match the parent max-width */
     min-height: 300px; /* Match the parent min-height */
     display: flex;
     justify-content: center;
@@ -399,7 +399,7 @@
     width: 100% !important;
     height: auto !important;
     max-width: 250px; /* Keep the chart size constrained */
-    max-height: 250px; /* Reduced max-height to leave space for the legend */
+    max-height: 300px; /* Reduced max-height to leave space for the legend */
 }
 
 
@@ -558,7 +558,7 @@
 /* Responsive Design */
 @media (max-width: 1200px) {
     .main-content {
-        margin-left: 100px; /* Space for sidebar */
+        margin-left: 130px; /* Space for sidebar */
         margin-right: 20px;
         padding: 15px;
     }
@@ -569,7 +569,7 @@
         height: auto;
         padding: 15px;
         margin-top: 20px;
-        margin-left: 100px; /* Space for sidebar */
+        margin-left: 20px; /* Space for sidebar */
         margin-right: 20px;
     }
 
