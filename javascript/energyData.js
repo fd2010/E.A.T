@@ -38,7 +38,7 @@ export const totalCostData = {
 
 export const energyData = {
     "Meeting Room": {
-        daily: [5, 8, 10, 12, 6],
+        daily: [5, 8, 10, 12, 7],
         weekly: [40, 50, 45, 60, 55, 48, 52],
         monthly: [150, 170, 160, 180]
     },
