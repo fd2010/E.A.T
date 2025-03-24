@@ -49,6 +49,7 @@
             <div class="cleanup-button-group">
                 <button id="cleanupDatabaseBtn">Clean Up energy-consumed Table</button>
                 <button id="resetExpensesButton">Reset Total Expenses</button>
+                <button id="deleteEnergyGeneratedBtn" class="danger">DELETE energy-generated Field</button>
             </div>
             <div id="cleanupStatus" class="cleanup-status"></div>
         </div>
@@ -123,6 +124,8 @@
     <script type="module" src="./javascript/generated-simulator.js"></script>
     <!-- Database Cleanup Utility -->
     <script type="module" src="./javascript/database-cleanup.js"></script>
+    <!-- Energy Generated Delete Utility -->
+    <script type="module" src="./javascript/energy-generated-delete.js"></script>
 
     <script type="module">
         // Wire up the Reset Total Expenses button
