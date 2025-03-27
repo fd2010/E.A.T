@@ -1,2 +1,5 @@
 # Ignore the firebase-config.js file
 database/firebase-config.js
+
+# Ignore the serviceAccountKey.json file
+config/serviceAccountKey.json
