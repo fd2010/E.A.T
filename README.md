@@ -11,6 +11,9 @@ The Energy Analysis Tool (E.A.T) is designed to provide organisations with compr
 
 * Live Application: https://energy-analysis-tool.web.app/index.html
 * Company Website: https://wdl2000.wixsite.com/pearcare
+* Manage notifications page: https://energy-analysis-tool.web.app/manage-notifications.html
+* Simulator & energy generation page: https://energy-analysis-tool.web.app/simulatorpagebackup.html
+* Original simulator page: https://energy-analysis-tool.web.app/simulator_dev_page.html
 
 ## Key features
 
